@@ -20,3 +20,4 @@
         <mapping class="com.shopReview.model.entity.ShopReview"/>
     </session-factory>
 </hibernate-configuration>
+

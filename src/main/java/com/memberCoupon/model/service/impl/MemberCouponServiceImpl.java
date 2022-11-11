@@ -45,6 +45,12 @@ public class MemberCouponServiceImpl implements MemberCouponService {
     }
 
     @Override
+    public List<MemberCoupon> listOwnCoupon(Integer memId) {
+        MemberCouponDAO memberCouponDAO = new MemberCouponDAOImpl();
+        return memberCouponDAO.getDetail(memId);
+    }
+
+    @Override
     public Integer getNewsCount() {
         return null;
     }

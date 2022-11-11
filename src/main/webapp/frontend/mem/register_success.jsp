@@ -5,18 +5,20 @@
 <title>login_success.jsp</title>
 </head>
 <body>
-				<form method="post" action="<%=request.getContextPath()%>/frontend/mem/mem.do">
+				<form method="post" action="/CGA104G1/MemServlet">
 <table border='1' cellpadding='5' cellspacing='0' width="500" height="300">
 		<tr bgcolor='orange' align='center' valign='middle' height='20'>
 			<th>驗證信已發送，請至信箱查收驗證碼： <br> 
 			系統將在<span style="color: red">120</span>秒後跳轉回首頁!<br>
 
-				請輸入驗證碼: <input type="text"> <br>
+				請輸入驗證碼: <input type="text" name="regpasschk"> <br>
 
 
 
 					<input type="hidden" name="action" value="confirmreg">
 					<input id="1" type="submit" value="確認送出" style="margin-left: 100px">
+					
+					
 				</form>
 
 			</th>

@@ -1,5 +1,7 @@
 package com.memberCoupon.controller;
 
+import com.coupon.model.service.CouponService;
+import com.coupon.model.service.impl.CouponServiceImpl;
 import com.memberCoupon.model.service.impl.MemberCouponServiceImpl;
 import com.memberCoupon.model.service.MemberCouponService;
 import org.json.JSONArray;
@@ -12,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-
 @WebServlet(name = "MemberCouponServlet", value = "/MemberCouponServlet")
 public class MemberCouponServlet extends HttpServlet {
 
@@ -22,7 +23,6 @@ public class MemberCouponServlet extends HttpServlet {
     public void init() throws ServletException {
         service = new MemberCouponServiceImpl();
     }
-
 
 
     @Override
@@ -46,17 +46,17 @@ public class MemberCouponServlet extends HttpServlet {
 
         String action = req.getParameter("action");
 
-        if ("list_Own_Coupon".equals(action)) {
+        Integer memId = null;
+        memId = Integer.valueOf(req.getParameter("memberId"));
+        System.out.println(memId);
 
-            Integer memId = null;
-            memId = Integer.valueOf(req.getParameter("memberId"));
+        PrintWriter pw = res.getWriter();
 
-            PrintWriter pw = res.getWriter();
+        CouponService couponService = new CouponServiceImpl();
 
-            MemberCouponService memberCouponService = new MemberCouponServiceImpl();
-            JSONArray items = memberCouponService.getOwnCoupon(memId);
+        MemberCouponService memberCouponService = new MemberCouponServiceImpl();
+        JSONArray items = memberCouponService.getOwnCoupon(memId);
 
-            pw.println(items);
-        }
+        pw.println(items);
     }
 }

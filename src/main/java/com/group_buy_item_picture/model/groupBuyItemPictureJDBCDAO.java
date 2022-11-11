@@ -22,10 +22,10 @@ public class groupBuyItemPictureJDBCDAO implements groupBuyItemPictureDAO_interf
 	String url = "jdbc:mysql://localhost:3306/ba_rei?serverTimezone=Asia/Taipei";
 	String userid = "root";
 	String passwd = "password";
-	
+
 	private static final String INSERT_STMT = "INSERT INTO GROUP_BUY_ITEM_PICTURE (GBITEM_ID, GBIP_CONTENT) VALUES (?, ?)";
-	
-	private static final String GET_ALL_STMT = "SELECT * FROM GROUP_BUY_ITEM_PICTURE";
+
+	private static final String GET_ALL_STMT = "SELECT GBIP_ID, GBITEM_ID, GBIP_CONTENT FROM GROUP_BUY_ITEM_PICTURE";
 
 	private static final String GET_ONE_STMT = "SELECT GBIP_ID, GBITEM_ID, GBIP_CONTENT FROM GROUP_BUY_ITEM_PICTURE where GBIP_ID = ?";
 
@@ -33,11 +33,15 @@ public class groupBuyItemPictureJDBCDAO implements groupBuyItemPictureDAO_interf
 
 	private static final String UPDATE = "UPDATE GROUP_BUY_ITEM_PICTURE set GBITEM_ID=?, GBIP_CONTENT=? where GBIP_ID = ?";
 
+	private static final String GET_ALL_STMT_GBITEM_ID = "SELECT GBIP_ID, GBITEM_ID, GBIP_CONTENT FROM GROUP_BUY_ITEM_PICTURE where GBIP_ID = ?";
+
+	private static final String GET_ONE_STMT_GBITEM_ID = "SELECT GBIP_ID, GBITEM_ID, GBIP_CONTENT FROM GROUP_BUY_ITEM_PICTURE where GBIP_ID = ? limit 1";
+
 	@Override
 	public void insert(groupBuyItemPictureVO groupBuyItemPictureVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 
 			Class.forName(driver);
@@ -50,11 +54,9 @@ public class groupBuyItemPictureJDBCDAO implements groupBuyItemPictureDAO_interf
 			pstmt.executeUpdate();
 
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -87,18 +89,15 @@ public class groupBuyItemPictureJDBCDAO implements groupBuyItemPictureDAO_interf
 			pstmt.setInt(1, groupBuyItemPictureVO.getGbitem_id());
 			pstmt.setBytes(2, groupBuyItemPictureVO.getGbip_content());
 			pstmt.setInt(3, groupBuyItemPictureVO.getGbip_id());
-			
 
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (pstmt != null) {
@@ -134,11 +133,9 @@ public class groupBuyItemPictureJDBCDAO implements groupBuyItemPictureDAO_interf
 			pstmt.executeUpdate();
 
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (pstmt != null) {
 				try {
@@ -183,12 +180,10 @@ public class groupBuyItemPictureJDBCDAO implements groupBuyItemPictureDAO_interf
 
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 			// Handle any SQL errors
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
@@ -237,15 +232,68 @@ public class groupBuyItemPictureJDBCDAO implements groupBuyItemPictureDAO_interf
 				groupBuyItemPictureVO.setGbip_id(rs.getInt("gbip_id"));
 				groupBuyItemPictureVO.setGbitem_id(rs.getInt("gbitem_id"));
 				groupBuyItemPictureVO.setGbip_content(rs.getBytes("gbip_content"));
-				list.add(groupBuyItemPictureVO); 
+				list.add(groupBuyItemPictureVO);
 			}
 
 		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<groupBuyItemPictureVO> findByGbitemID(Integer gbitem_id) {
+		List<groupBuyItemPictureVO> list = new ArrayList<groupBuyItemPictureVO>();
+		groupBuyItemPictureVO groupBuyItemPictureVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ALL_STMT_GBITEM_ID);
+			pstmt.setInt(1, gbitem_id);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				groupBuyItemPictureVO = new groupBuyItemPictureVO();
+				groupBuyItemPictureVO.setGbip_id(rs.getInt("gbip_id"));
+				groupBuyItemPictureVO.setGbitem_id(rs.getInt("gbitem_id"));
+				groupBuyItemPictureVO.setGbip_content(rs.getBytes("gbip_content"));
+				list.add(groupBuyItemPictureVO);
+			}
+
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (rs != null) {
 				try {
@@ -272,10 +320,57 @@ public class groupBuyItemPictureJDBCDAO implements groupBuyItemPictureDAO_interf
 		return list;
 
 	}
-	
-//	public static void main(String[] args) {
+
+	@Override
+	public groupBuyItemPictureVO findFirstPICByGbitemID(Integer gbitem_id) {
+		groupBuyItemPictureVO groupBuyItemPictureVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ONE_STMT_GBITEM_ID);
+			pstmt.setInt(1, gbitem_id);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				groupBuyItemPictureVO = new groupBuyItemPictureVO();
+				groupBuyItemPictureVO.setGbip_id(rs.getInt("gbip_id"));
+				groupBuyItemPictureVO.setGbitem_id(rs.getInt("gbitem_id"));
+				groupBuyItemPictureVO.setGbip_content(rs.getBytes("gbip_content"));
+			}
+
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return groupBuyItemPictureVO;
+	}
+
+	public static void main(String[] args) {
 //		// 測試建立一個dao物件
-//		groupBuyItemPictureJDBCDAO dao = new groupBuyItemPictureJDBCDAO();
+		groupBuyItemPictureJDBCDAO dao = new groupBuyItemPictureJDBCDAO();
 //		// 測試dao insert方法
 //		// 測試建立一個bidpic物件
 //		
@@ -334,8 +429,19 @@ public class groupBuyItemPictureJDBCDAO implements groupBuyItemPictureDAO_interf
 //			System.out.println(groupBuyItemPictureVO.getGbitem_id());
 //			System.out.println("------------------------------------");
 //		}
+//		// 測試dao findByGbitemID
+
+		List<groupBuyItemPictureVO> list2 = dao.findByGbitemID(2);
+		for (groupBuyItemPictureVO groupBuyItemPictureVO : list2) {
+			System.out.println(groupBuyItemPictureVO.getGbip_id());
+			System.out.println(groupBuyItemPictureVO.getGbitem_id());
+			System.out.println("------------------------------------");
+		}
+		list2.forEach(System.out::println);
+//		// 測試dao findFirstPICByGbitemID
+//		groupBuyItemPictureVO groupBuyItemPictureVO4 = dao.findFirstPICByGbitemID(1);
+//		System.out.println(groupBuyItemPictureVO4.getGbip_id());
+//		System.out.println(groupBuyItemPictureVO4.getGbitem_id());
 //		
-//	}
+	}
 }
-
-

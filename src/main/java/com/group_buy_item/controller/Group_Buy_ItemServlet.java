@@ -17,6 +17,8 @@ import com.discount.model.DiscountService;
 import com.discount.model.DiscountVO;
 import com.group_buy_item.model.Group_Buy_ItemService;
 import com.group_buy_item.model.Group_Buy_ItemVO;
+import com.group_buy_item_picture.model.groupBuyItemPictureService;
+import com.group_buy_item_picture.model.groupBuyItemPictureVO;
 import com.mysql.cj.jdbc.result.UpdatableResultSet;
 
 @WebServlet("/Group_Buy_Item/groupBuyItem.do")
@@ -94,17 +96,35 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 
 			req.setAttribute("errorMsgs", errorMsgs1);
 
-			/*************************** 1.接收請求參數 ****************************************/
-			Integer gbitem_id = Integer.valueOf(req.getParameter("gbitem_id"));
+			try {
+				/*************************** 1.接收請求參數 ****************************************/
+				Integer gbitem_id = Integer.valueOf(req.getParameter("gbitem_id"));
 
-			/*************************** 2.開始查詢資料 ****************************************/
-			Group_Buy_ItemService group_Buy_ItemService = new Group_Buy_ItemService();
-			Group_Buy_ItemVO group_Buy_ItemVO = group_Buy_ItemService.getOneGbi(gbitem_id);
-			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-			req.setAttribute("Group_Buy_ItemVO", group_Buy_ItemVO);
-			String url = "/backend/Group_Buy_Item/update_groupBuyItem_input.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url);
-			successView.forward(req, res);
+				/*************************** 2.開始查詢資料 ****************************************/
+				Group_Buy_ItemService group_Buy_ItemService = new Group_Buy_ItemService();
+				Group_Buy_ItemVO group_Buy_ItemVO = group_Buy_ItemService.getOneGbi(gbitem_id);
+				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+				req.setAttribute("Group_Buy_ItemVO", group_Buy_ItemVO);
+				
+				// 從資料庫讀取 groupBuyItemPictureVO 存入 list 中
+				
+				groupBuyItemPictureService gbipSvc = new groupBuyItemPictureService();
+				List<groupBuyItemPictureVO> list2 = gbipSvc.getAllGroupBuyItemPictureByGbitemID(gbitem_id);
+				req.setAttribute("list2", list2);
+				System.out.println(list2);
+				
+				// 成功轉交 update_groupBuyItem_input.jsp
+				String url = "/backend/Group_Buy_Item/update_groupBuyItem_input.jsp";
+				RequestDispatcher failView = req.getRequestDispatcher(url);
+				failView.forward(req, res);
+				// 其他可能的錯誤處理
+			}  catch (IOException e) {
+//				e.printStackTrace();
+				String url = "/backend/Group_Buy_Item/listAllGroupBuyItem.jsp";
+				errorMsgs1.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher(url);
+				failureView.forward(req, res);
+			}
 		}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		if ("update".equals(action)) { // 來自update_groupBuyItem_input.jsp的請求

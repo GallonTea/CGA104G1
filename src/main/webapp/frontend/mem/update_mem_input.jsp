@@ -50,7 +50,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 <table id="table-1">
 	<tr><td>
 		 <h3>會員資料修改 </h3>
-		 <h4><a href="select_page.jsp">回首頁</a></h4>
+		 <h4><a href="<%=request.getContextPath()%>/frontend/mem/select_page.jsp">回首頁</a></h4>
 	</td></tr>
 </table>
 
@@ -66,7 +66,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="mem.do" name="form1">
+<FORM METHOD="post" ACTION="/CGA104G1/MemServlet" name="form1">
 <table>
 
 <!-- 	<tr> -->

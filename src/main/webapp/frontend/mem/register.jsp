@@ -69,7 +69,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 </c:if>
 
 <!-- <FORM METHOD="post" ACTION="mem.do" name="form1"> -->
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/mem/mem.do">
+<FORM METHOD="post" ACTION="/CGA104G1/MemServlet">
 
 
 <table>
@@ -77,18 +77,18 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 	<tr>
 		<td>會員帳號:</td>
 		<td><input type="TEXT" name="mem_account" size="45" 
-			 value="<%= (memVO==null)? "xyz" : memVO.getMem_account()%>" /></td>
+			 value="<%= (memVO==null)? "admin" : memVO.getMem_account()%>" /></td>
 	</tr>
 	<tr>
 		<td>會員密碼:</td>
 		<td><input type="TEXT" name="mem_password" size="45"
-			 value="<%= (memVO==null)? "123456" : memVO.getMem_password()%>" /></td>
+			 value="<%= (memVO==null)? "admin" : memVO.getMem_password()%>" /></td>
 	</tr>
 		<tr>
 	<tr>
 		<td>會員姓名:</td>
 		<td><input type="TEXT" name="mem_name" size="45" 
-			 value="<%= (memVO==null)? "Amy" : memVO.getMem_name()%>" /></td>
+			 value="<%= (memVO==null)? "Howard" : memVO.getMem_name()%>" /></td>
 	</tr>
 		<tr>
 		<td>會員地址:</td>
@@ -108,12 +108,12 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 		<tr>
 		<td>會員Email:</td>
 		<td><input type="TEXT" name="mem_email" size="45"
-			 value="<%= (memVO==null)? "abc123@gmail.com" : memVO.getMem_email()%>" /></td>
+			 value="<%= (memVO==null)? "dragondazs17@gmail.com" : memVO.getMem_email()%>" /></td>
 	</tr>
 		<tr>
 		<td>會員性別:</td>
 		<td><input type="TEXT" name="mem_sex" size="45"
-			 value="<%= (memVO==null)? "女" : memVO.getMem_sex()%>" /></td>
+			 value="<%= (memVO==null)? "男" : memVO.getMem_sex()%>" /></td>
 	</tr>
 	<tr>
 		<td>會員生日:</td>

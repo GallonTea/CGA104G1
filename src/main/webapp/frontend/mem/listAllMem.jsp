@@ -52,7 +52,7 @@ MemService memSvc = new MemService();
 <table id="table-1">
 	<tr><td>
 		 <h3>所有會員資料查詢</h3>
-		 <h4><a href="select_page.jsp">回首頁</a></h4>
+		 <h4><a href="<%=request.getContextPath()%>/frontend/mem/select_page.jsp">回首頁</a></h4>
 	</td></tr>
 </table>
 
@@ -101,13 +101,13 @@ MemService memSvc = new MemService();
 
 
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/mem/mem.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="/CGA104G1/MemServlet" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
 			     <input type="hidden" name="mem_id"  value="${memVO.mem_id}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/mem/mem.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="/CGA104G1/MemServlet" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
 			     <input type="hidden" name="mem_id"  value="${memVO.mem_id}">
 			     <input type="hidden" name="action" value="delete"></FORM>

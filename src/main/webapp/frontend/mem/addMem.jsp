@@ -68,7 +68,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="mem.do" name="form1">
+<FORM METHOD="post" ACTION="/CGA104G1/MemServlet" name="form1">
 <table>
 
 	<tr>

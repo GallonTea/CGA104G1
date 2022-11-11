@@ -9,7 +9,6 @@ import org.json.JSONObject;
 
 import com.google.gson.JsonObject;
 
-import netscape.javascript.JSObject;
 import redis.clients.jedis.params.SetParams;
 
 public class ItemDAO implements ItemDAO_interface {

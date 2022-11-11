@@ -1,8 +1,13 @@
 package com.coupon.controller;
 
+import com.coupon.model.entity.Coupon;
 import com.coupon.model.service.CouponService;
 import com.coupon.model.service.impl.CouponServiceImpl;
+import com.memberCoupon.model.entity.MemberCoupon;
+import com.memberCoupon.model.service.MemberCouponService;
+import com.memberCoupon.model.service.impl.MemberCouponServiceImpl;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,6 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+
+import static java.lang.System.out;
 
 @WebServlet(name = "listAllCouponServlet", value = "/listAllCouponServlet")
 public class listAllCouponServlet extends HttpServlet {
@@ -23,7 +31,7 @@ public class listAllCouponServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
         res.setCharacterEncoding("UTF-8");
 
@@ -31,11 +39,46 @@ public class listAllCouponServlet extends HttpServlet {
 
         res.setContentType("text/html;charset=utf-8");
 
+        final Integer memId = Integer.valueOf(req.getParameter("memberId"));
+
         PrintWriter pw = res.getWriter();
 
-        CouponService couponService = new CouponServiceImpl();
-        JSONArray array = couponService.listAllCouponJSON();
+        MemberCouponService couponService = new MemberCouponServiceImpl();
 
-        pw.println(array);
+        List<Coupon> allCoupon = service.listAllCoupon();
+
+        List<MemberCoupon> ownCoupon = couponService.listOwnCoupon(memId);
+
+        List<Integer> all = allCoupon
+                .stream()
+                .map(Coupon::getCouponId)
+                .toList();
+
+        List<Integer> own = ownCoupon
+                .stream()
+                .map(MemberCoupon::getCouponId)
+                .toList();
+
+        List<Integer> result = all
+                .stream()
+                .filter(item -> !own.contains(item))
+                .toList();
+
+        JSONArray items = new JSONArray();
+        JSONObject jsonObj;
+
+        try {
+            for (Integer integer : result) {
+                JSONArray jsonArr = service.getById(integer);
+                for (int i = 0; i < jsonArr.length(); i++) {
+                    jsonObj = jsonArr.getJSONObject(i);
+                    items.put(jsonObj);
+                }
+            }
+        } catch (Exception e) {
+            out.println("ERROR: " + e.getMessage());
+            e.printStackTrace();
+        }
+        pw.println(items);
     }
 }

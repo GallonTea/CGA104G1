@@ -21,6 +21,8 @@ public interface MemberCouponService {
 
     List<MemberCoupon> listAllCoupon();
 
+    List<MemberCoupon> listOwnCoupon(Integer memId);
+
     Integer getNewsCount();
 
     MemberCoupon updateCouponStatus(Integer memberId, Integer couponId);

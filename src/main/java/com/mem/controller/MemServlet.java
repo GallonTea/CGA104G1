@@ -1,8 +1,6 @@
 package com.mem.controller;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -15,12 +13,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
 
+import com.mem.model.MailService;
 import com.mem.model.MemService;
 import com.mem.model.MemVO;
 
-//@WebServlet("/frontend/mem/mem.do")
+@WebServlet("/MemServlet")
 public class MemServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String Date = null;
@@ -384,11 +382,11 @@ public class MemServlet extends HttpServlet {
 				errorMsgs.put("mem_dob", "請輸入日期");
 			}
 			
-			byte[]picupload=null;
-			Part part = req.getPart(mem_up);
-			InputStream in =getServletContext().getResourceAsStream("/NoData/null.jpg");
-			byte[]picup=new byte[in.available()];
-			in.read(picupload);
+//			byte[]picupload=null;
+//			Part part = req.getPart(mem_up);
+//			InputStream in =getServletContext().getResourceAsStream("/NoData/null.jpg");
+//			byte[]picup=new byte[in.available()];
+//			in.read(picupload);
 			
 			MemVO memVO = new MemVO();
 			memVO.setMem_account(mem_account);
@@ -400,7 +398,7 @@ public class MemServlet extends HttpServlet {
 			memVO.setMem_email(mem_email);
 			memVO.setMem_sex(mem_sex);
 			memVO.setMem_dob(mem_dob);
-			memVO.setMem_up(mem_up);			
+//			memVO.setMem_up(mem_up);			
 
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
@@ -414,8 +412,10 @@ public class MemServlet extends HttpServlet {
 			MemService memSvc = new MemService();
 			memSvc.addMem(mem_account, mem_password, mem_name, mem_address, mem_phone, mem_uid, mem_email, mem_sex,
 					mem_dob);
+			
 
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
+//			mailSvc.sendMail("dragondazs17@gmail.com","主旨","內文");
 			String url = "/frontend/mem/listAllMem.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 			successView.forward(req, res);
@@ -516,16 +516,55 @@ public class MemServlet extends HttpServlet {
 				return;
 			}
 
-			/*************************** 2.開始新增資料 ***************************************/
+			/*************************** 2. 發送驗證碼 ***************************************/
 			MemService memSvc = new MemService();
-			memSvc.register(mem_account, mem_password, mem_name, mem_address, mem_phone, mem_uid, mem_email, mem_sex,
-					mem_dob);
 
-			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-			String url = "/frontend/mem/register_success.jsp";
-			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-			successView.forward(req, res);
-		}
+//			RandomString ranString = new RandomString();
+
+			
+			
+			String to = req.getParameter("mem_email");
+		      
+		      String subject = "Ba-rei購物商城 會員註冊信";
+		      
+		      String reg_name = req.getParameter("mem_name");
+		      String regpass = memSvc.getAuthCode();
+		      String messageText = "Hello ! " + reg_name +  "  先生/小姐\n" +"歡迎您加入 Ba-rei 購物商城"+ "\n" +"您註冊帳號的驗證碼為: " + regpass + "\n" +"請在5分鐘內完成驗證並重新登入"; 
+		       
+		      System.out.println(regpass);
+		      MailService mailService = new MailService();
+		      mailService.sendMail(to, subject, messageText);
+		      
+
+
+			/*************************** 5.準備轉交驗證資料(Send the Success view) ***********/
+			
+		    
+		    String urlchk = "/frontend/mem/register_success.jsp";
+			RequestDispatcher successViewchk = req.getRequestDispatcher(urlchk); // 新增成功後轉交listAllEmp.jsp
+			successViewchk.forward(req, res);
+			
+//			if ("confirmreg".equals(action)) {
+////				req.getRequestDispatcher("/frontend/mem/select_page.jsp").forward(req, res);
+				String regpasschk = req.getParameter("regpasschk");
+				
+				  if(regpasschk!=regpass) {
+						req.setAttribute("msg", "驗證碼錯誤!請重新輸入");
+						req.getRequestDispatcher("/frontend/mem/register_success.jsp").forward(req, res);
+
+				    }else {         
+						/*************************** 4.開始新增資料 ***************************************/
+						memSvc.register(mem_account, mem_password, mem_name, mem_address, mem_phone, mem_uid, mem_email, mem_sex,
+								mem_dob);
+
+				    	String url = "/frontend/mem/login.jsp";
+						RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+						successView.forward(req, res);
+					}
+				
+			}
+
+//		}
 		
 		if ("login".equals(action)) { // 來自addEmp.jsp的請求
 			
@@ -536,8 +575,7 @@ public class MemServlet extends HttpServlet {
 			MemVO memVO = memSvc.getMemUser(username,password);
 			session.setAttribute("memVO", memVO); // 資料庫取出的物件,存入req
 
-//System.out.println(username);
-//System.out.println(password);
+
 			  if(memVO==null) {
 				req.setAttribute("msg", "帳號或密碼錯誤!請重新輸入");
 				req.getRequestDispatcher("/frontend/mem/login.jsp").forward(req, res);
@@ -561,10 +599,7 @@ public class MemServlet extends HttpServlet {
 			}
 		}
 
-		if ("confirmreg".equals(action)) {
-			req.getRequestDispatcher("/frontend/mem/select_page.jsp").forward(req, res);
-			
-		}
+
 
 	}
 }

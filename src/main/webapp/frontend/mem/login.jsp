@@ -10,7 +10,7 @@
 </head>
 <body>
 	<center>
-		<form action="<%=request.getContextPath()%>/frontend/mem/mem.do" method="post">
+		<form action="/CGA104G1/MemServlet" method="post">
 
 			<table border=1>
 				<tr>
@@ -54,7 +54,7 @@
 			     <input type="hidden" name="action"	value="register"></FORM>
 		</span>
 		<span>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/mem/mem.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="/CGA104G1/MemServlet" style="margin-bottom: 0px;">
 			     <input type="submit" value="忘記密碼">
 			     <input type="hidden" name="action" value="forget"></FORM>
 		</span>

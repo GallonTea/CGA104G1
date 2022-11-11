@@ -52,11 +52,11 @@ MemVO memVO = (MemVO) session.getAttribute("memVO"); //EmpServlet.java(Concrolle
 </c:if>
 
 <ul>
-  <li><b>查詢所有會員:</b><a href='listAllMem.jsp'>  List All</a>  <br><br></li>
+  <li><b>查詢所有會員:</b><a href='<%=request.getContextPath()%>/frontend/mem/listAllMem.jsp'>  List All</a>  <br><br></li>
   
   
   <li>
-    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/mem/mem.do" >
+    <FORM METHOD="post" ACTION="/CGA104G1/MemServlet" >
         <b>輸入會員編號 (如1,2,3):</b>
         <input type="text" name="mem_id">
         <input type="hidden" name="action" value="getOne_For_Display">
@@ -67,7 +67,7 @@ MemVO memVO = (MemVO) session.getAttribute("memVO"); //EmpServlet.java(Concrolle
   <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
    
   <li>
-     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/mem/mem.do" >
+     <FORM METHOD="post" ACTION="/CGA104G1/MemServlet" >
        <b>選擇會員編號:</b>
        <select size="1" name=mem_id>
          <c:forEach var="memVO" items="${memSvc.all}" > 
@@ -80,7 +80,7 @@ MemVO memVO = (MemVO) session.getAttribute("memVO"); //EmpServlet.java(Concrolle
   </li>
   
   <li>
-     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/mem/mem.do" >
+     <FORM METHOD="post" ACTION="/CGA104G1/MemServlet" >
        <b>選擇會員姓名:</b>
        <select size="1" name="mem_id">
          <c:forEach var="memVO" items="${memSvc.all}" > 
@@ -98,7 +98,7 @@ MemVO memVO = (MemVO) session.getAttribute("memVO"); //EmpServlet.java(Concrolle
 
 
 	<td>
-		<FORM ACTION="<%=request.getContextPath()%>/frontend/mem/mem.do" style="margin-bottom: 0px;">
+		<FORM ACTION="/CGA104G1/MemServlet" style="margin-bottom: 0px;">
 
 		<input type="submit" value="修改基本資料">
 			<input type="hidden" name="mem_id"  value="${memVO.mem_id }">

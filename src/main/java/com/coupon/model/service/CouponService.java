@@ -17,6 +17,8 @@ public interface CouponService {
 
     JSONArray listAllCouponJSON();
 
+    JSONArray getById(Integer couponId);
+
     List<Coupon> listAllCoupon();
 
     Integer getNewsCount();

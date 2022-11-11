@@ -107,7 +107,12 @@
             width: 110px;
             margin-bottom: 0;
         }
-
+        @media all and (min-width: 992px) {
+            .navbar .nav-item .dropdown-menu{ display: none; }
+            .navbar .nav-item:hover .nav-link{   }
+            .navbar .nav-item:hover .dropdown-menu{ display: block; }
+            .navbar .nav-item .dropdown-menu{ margin-top:0; }
+        }
     </style>
 
 </head>
@@ -116,7 +121,6 @@
 
 
 <div class="home_main"></div>
-
 
 <header>
 
@@ -127,6 +131,7 @@
 </header>
 
 <main>
+
 
 </main>
 

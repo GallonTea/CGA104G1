@@ -17,15 +17,15 @@ public class MemVO implements java.io.Serializable {
 	private String mem_sex;
 	private Date mem_dob;
 	private Integer mem_status;
-	private byte[] mem_up;
+//	private byte[] mem_up;
 	
 	
-	public byte[] getMem_up() {
-		return mem_up;
-	}
-	public void setMem_up(byte[] mem_up) {
-		this.mem_up = mem_up;
-	}
+//	public byte[] getMem_up() {
+//		return mem_up;
+//	}
+//	public void setMem_up(byte[] mem_up) {
+//		this.mem_up = mem_up;
+//	}
 	public Integer getMem_id() {
 		return mem_id;
 	}

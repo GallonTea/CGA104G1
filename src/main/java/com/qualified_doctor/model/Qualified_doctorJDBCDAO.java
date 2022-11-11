@@ -12,7 +12,7 @@ import java.util.List;
 public class Qualified_doctorJDBCDAO implements Qualified_doctorDAO_interface {
 	
 	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/Ba-Rei?serverTimezone=Asia/Taipei";
+	String url = "jdbc:mysql://localhost:3306/Ba_Rei?serverTimezone=Asia/Taipei";
 	String userid = "root";
 	String passwd = "password";
 
@@ -285,39 +285,39 @@ public class Qualified_doctorJDBCDAO implements Qualified_doctorDAO_interface {
 		Qualified_doctorJDBCDAO dao = new Qualified_doctorJDBCDAO();
 
 		
-		// 新增
-		Qualified_doctorVO qualified_doctorVO1 = new Qualified_doctorVO();
-		qualified_doctorVO1.setMem_id(3);
-		qualified_doctorVO1.setDoc_status(0);
-		dao.insert(qualified_doctorVO1);
-
-		// 修改
-		Qualified_doctorVO qualified_doctorVO2 = new Qualified_doctorVO();
-		qualified_doctorVO2.setMem_id(2);
-		qualified_doctorVO2.setDoc_status(1);
-		qualified_doctorVO2.setDoc_id(3);
-		dao.update(qualified_doctorVO2);
-
-		// 刪除
-		dao.delete(3);
-
-		// 查詢
-		Qualified_doctorVO qualified_doctorVO3 = dao.findByPrimaryKey(1);
-		System.out.print(qualified_doctorVO3.getDoc_id() + ",");
-		System.out.print(qualified_doctorVO3.getMem_id() + ",");
-		System.out.print(qualified_doctorVO3.getDoc_status() + ",");
-	
-
-
-		System.out.println("---------------------");
-
-		// 查詢
-		List<Qualified_doctorVO> list = dao.getAll();
-		for (Qualified_doctorVO aqualified_doctorVO : list) {
-			System.out.print(aqualified_doctorVO.getDoc_id() + ",");
-			System.out.print(aqualified_doctorVO.getMem_id() + ",");
-			System.out.print(aqualified_doctorVO.getDoc_status() + ",");
-			System.out.println();
-		}
+//		// 新增
+//		Qualified_doctorVO qualified_doctorVO1 = new Qualified_doctorVO();
+//		qualified_doctorVO1.setMem_id(2);
+//		qualified_doctorVO1.setDoc_status(0);
+//		dao.insert(qualified_doctorVO1);
+//
+//		// 修改
+//		Qualified_doctorVO qualified_doctorVO2 = new Qualified_doctorVO();
+//		qualified_doctorVO2.setMem_id(3);
+//		qualified_doctorVO2.setDoc_status(1);
+//		qualified_doctorVO2.setDoc_id(2);
+//		dao.update(qualified_doctorVO2);
+//
+//		// 刪除
+//		dao.delete(2);
+//
+//		// 查詢
+//		Qualified_doctorVO qualified_doctorVO3 = dao.findByPrimaryKey(1);
+//		System.out.print(qualified_doctorVO3.getDoc_id() + ",");
+//		System.out.print(qualified_doctorVO3.getMem_id() + ",");
+//		System.out.print(qualified_doctorVO3.getDoc_status() + ",");
+//	
+//
+//
+//		System.out.println("---------------------");
+//
+//		// 查詢
+//		List<Qualified_doctorVO> list = dao.getAll();
+//		for (Qualified_doctorVO aqualified_doctorVO : list) {
+//			System.out.print(aqualified_doctorVO.getDoc_id() + ",");
+//			System.out.print(aqualified_doctorVO.getMem_id() + ",");
+//			System.out.print(aqualified_doctorVO.getDoc_status() + ",");
+//			System.out.println();
+//		}
 }
 }

@@ -87,7 +87,7 @@ public class ItemDAO implements ItemDAO_interface {
         return jsonArray;
     }
 
-    //	index.html
+    //	shop.html
     @Override
     public JSONArray getAllJS(int pageNumber) {
         JSONArray jsonArray = new JSONArray();

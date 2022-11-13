@@ -29,7 +29,7 @@ public class ItemService implements ServiceCommon {
 			return list;
 		} catch (Exception e) {
 			e.printStackTrace();
-			
+
 			return null;
 		}
 
@@ -110,13 +110,13 @@ public class ItemService implements ServiceCommon {
 			ItemVO itemVO=itemDao.findByPrimaryKey(itemId);
 			commit();
 			return itemVO;
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
 			return null;
 		}
-		
+
 	}
 
 	public void deleteItem(Integer itemId) {
@@ -129,11 +129,11 @@ public class ItemService implements ServiceCommon {
 			e.printStackTrace();
 			rollback();
 		}
-		
+
 
 	}
 
-//	index.html
+//	shop.html
 	public JSONArray getAllJs(int pageNumber) {
 		try {
 			beginTranscation();
@@ -145,9 +145,9 @@ public class ItemService implements ServiceCommon {
 			rollback();
 			return null;
 		}
-		
-		
-		
+
+
+
 	}
 
 	//listAllItems.html

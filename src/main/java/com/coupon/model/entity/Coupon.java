@@ -1,10 +1,23 @@
 package com.coupon.model.entity;
 
-import javax.persistence.*;
-import java.sql.Date;
+import com.memberCoupon.model.entity.MemberCoupon;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.sql.Date;
+import java.util.List;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-public class Coupon {
+@Table(name = "COUPON", schema = "ba_rei")
+public class Coupon implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "COUPON_ID")
@@ -31,68 +44,7 @@ public class Coupon {
     @Column(name = "MINIMUM")
     private Double minimum;
 
-    public Integer getCouponId() {
-        return couponId;
-    }
-
-    public void setCouponId(Integer couponId) {
-        this.couponId = couponId;
-    }
-
-    public String getCouponNar() {
-        return couponNar;
-    }
-
-    public void setCouponNar(String couponNar) {
-        this.couponNar = couponNar;
-    }
-
-    public Double getCouponVal() {
-        return couponVal;
-    }
-
-    public void setCouponVal(Double couponVal) {
-        this.couponVal = couponVal;
-    }
-
-    public Date getReceiveStart() {
-        return receiveStart;
-    }
-
-    public void setReceiveStart(Date receiveStart) {
-        this.receiveStart = receiveStart;
-    }
-
-    public Date getReceiveOver() {
-        return receiveOver;
-    }
-
-    public void setReceiveOver(Date receiveOver) {
-        this.receiveOver = receiveOver;
-    }
-
-    public Date getUseStart() {
-        return useStart;
-    }
-
-    public void setUseStart(Date useStart) {
-        this.useStart = useStart;
-    }
-
-    public Date getUseOver() {
-        return useOver;
-    }
-
-    public void setUseOver(Date useOver) {
-        this.useOver = useOver;
-    }
-
-    public Double getMinimum() {
-        return minimum;
-    }
-
-    public void setMinimum(Double minimum) {
-        this.minimum = minimum;
-    }
+    @OneToMany(mappedBy = "coupon")
+    private List<MemberCoupon> memberCoupon;
 
 }

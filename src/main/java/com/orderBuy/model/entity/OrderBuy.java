@@ -1,11 +1,23 @@
 package com.orderBuy.model.entity;
 
-import javax.persistence.*;
-import java.sql.Timestamp;
+import com.commodityDetails.model.entity.CommodityDetails;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.List;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "order_buy", schema = "ba_rei", catalog = "")
-public class OrderBuy {
+@Table(name = "ORDER_BUY", schema = "ba_rei")
+public class OrderBuy implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ORDER_ID")
@@ -53,125 +65,7 @@ public class OrderBuy {
     @Column(name = "PICKUP_TIME")
     private Timestamp pickupTime;
 
-    public Integer getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
-    }
-
-    public Integer getMemId() {
-        return memId;
-    }
-
-    public void setMemId(Integer memId) {
-        this.memId = memId;
-    }
-
-    public Double getOriginalPrice() {
-        return originalPrice;
-    }
-
-    public void setOriginalPrice(Double originalPrice) {
-        this.originalPrice = originalPrice;
-    }
-
-    public Double getDiscountPrice() {
-        return discountPrice;
-    }
-
-    public void setDiscountPrice(Double discountPrice) {
-        this.discountPrice = discountPrice;
-    }
-
-    public Double getFinalPrice() {
-        return finalPrice;
-    }
-
-    public void setFinalPrice(Double finalPrice) {
-        this.finalPrice = finalPrice;
-    }
-
-    public Timestamp getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(Timestamp orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public byte getOrderPaying() {
-        return orderPaying;
-    }
-
-    public void setOrderPaying(byte orderPaying) {
-        this.orderPaying = orderPaying;
-    }
-
-    public byte getOrderSend() {
-        return orderSend;
-    }
-
-    public void setOrderSend(byte orderSend) {
-        this.orderSend = orderSend;
-    }
-
-    public byte getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(byte orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
-    public String getOrderOther() {
-        return orderOther;
-    }
-
-    public void setOrderOther(String orderOther) {
-        this.orderOther = orderOther;
-    }
-
-    public String getTrackingNum() {
-        return trackingNum;
-    }
-
-    public void setTrackingNum(String trackingNum) {
-        this.trackingNum = trackingNum;
-    }
-
-    public String getReceiverName() {
-        return receiverName;
-    }
-
-    public void setReceiverName(String receiverName) {
-        this.receiverName = receiverName;
-    }
-
-    public String getReceiverAddress() {
-        return receiverAddress;
-    }
-
-    public void setReceiverAddress(String receiverAddress) {
-        this.receiverAddress = receiverAddress;
-    }
-
-    public String getReceiverPhone() {
-        return receiverPhone;
-    }
-
-    public void setReceiverPhone(String receiverPhone) {
-        this.receiverPhone = receiverPhone;
-    }
-
-    public Timestamp getPickupTime() {
-        return pickupTime;
-    }
-
-    public void setPickupTime(Timestamp pickupTime) {
-        this.pickupTime = pickupTime;
-    }
-
+    @OneToMany(mappedBy = "orderBuy")
+    private List<CommodityDetails> orderBuys;
 
 }

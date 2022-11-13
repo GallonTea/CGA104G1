@@ -8,6 +8,10 @@ import org.json.JSONObject;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.List;
@@ -17,6 +21,17 @@ public class MemberCouponDAOImpl implements MemberCouponDAO {
 
     public MemberCouponDAOImpl() {
 
+    }
+
+    private static DataSource ds = null;
+
+    static {
+        try {
+            Context ctx = new InitialContext();
+            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/hikariCP-BaRei");
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -77,13 +92,14 @@ public class MemberCouponDAOImpl implements MemberCouponDAO {
     }
 
     @Override
-    public MemberCoupon getByMemIdCouponId(Integer memId, Integer couponId) {
+    public List<MemberCoupon> getByMemIdCouponId(Integer memId, Integer couponId) {
         beginTransaction();
-        MemberCoupon memberCoupon = (MemberCoupon) getSession()
-                .createNativeQuery("SELECT * FROM member_coupon where MEM_ID = :memId and COUPON_ID = :couponId")
+        List<MemberCoupon> memberCoupon = getSession()
+                .createNativeQuery("SELECT * FROM member_coupon where MEM_ID = :memId and COUPON_ID = :couponId", MemberCoupon.class)
                 .setParameter("memId", memId)
                 .setParameter("couponId", couponId)
-                        .list();
+                .list();
+
         commit();
         return memberCoupon;
     }
@@ -92,21 +108,9 @@ public class MemberCouponDAOImpl implements MemberCouponDAO {
     @Transactional(readOnly = true)
     public JSONArray listById(Integer memId) {
 
-        final String DRIVER = "com.mysql.cj.jdbc.Driver";
-        final String URL = "jdbc:mysql://localhost:3306/ba_rei?useUnicode=yes&characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Taipei";
-        final String USER = "root";
-        final String PASSWORD = "P@ssw0rd";
-
-        try {
-            Class.forName(DRIVER);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
         JSONArray items = null;
-        try (
-                Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-                PreparedStatement pstmt = conn.prepareStatement("select C.COUPON_ID, C.COUPON_VAL, C.COUPON_NAR, C.USE_START, C.USE_OVER, M.MCPN_GETTIME, M.MCPN_USE, C.MINIMUM from MEMBER_COUPON as M inner join COUPON as C on M.COUPON_ID = C.COUPON_ID where MEM_ID = ?")) {
+        try (Connection conn = ds.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement("select C.COUPON_ID, C.COUPON_VAL, C.COUPON_NAR, C.USE_START, C.USE_OVER, M.MCPN_GETTIME, M.MCPN_USE, C.MINIMUM from MEMBER_COUPON as M inner join COUPON as C on M.COUPON_ID = C.COUPON_ID where MEM_ID = ?")) {
 
             items = new JSONArray();
 

@@ -8,6 +8,10 @@ import org.json.JSONObject;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
 import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.List;
@@ -17,6 +21,17 @@ public class CouponDAOImpl implements CouponDAO {
 
     public CouponDAOImpl() {
 
+    }
+
+    private static DataSource ds = null;
+
+    static {
+        try {
+            Context ctx = new InitialContext();
+            ds = (DataSource) ctx.lookup("java:comp/env/jdbc/hikariCP-BaRei");
+        } catch (NamingException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -70,21 +85,9 @@ public class CouponDAOImpl implements CouponDAO {
     @Override
     public JSONArray listAll() {
 
-        final String DRIVER = "com.mysql.cj.jdbc.Driver";
-        final String URL = "jdbc:mysql://localhost:3306/ba_rei?useUnicode=yes&characterEncoding=utf8&useSSL=true&serverTimezone=Asia/Taipei";
-        final String USER = "root";
-        final String PASSWORD = "P@ssw0rd";
-
-        try {
-            Class.forName(DRIVER);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
         JSONArray items = null;
-        try (
-                Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-                PreparedStatement pstmt = conn.prepareStatement("select * from coupon")) {
+        try (Connection conn = ds.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement("select * from coupon")) {
 
             items = new JSONArray();
 
@@ -112,6 +115,44 @@ public class CouponDAOImpl implements CouponDAO {
             e.printStackTrace();
         }
         return items;
+    }
+
+    @Override
+    public JSONArray getById(Integer couponId) {
+
+        JSONArray item = null;
+
+        try (Connection conn = ds.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement("select * from COUPON where COUPON_ID = ?")) {
+
+
+            item = new JSONArray();
+
+            pstmt.setInt(1, couponId);
+            ResultSet rs = pstmt.executeQuery();
+            // 取得列數
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount = metaData.getColumnCount();
+            // 遍瀝 ResultSet
+            while (rs.next()) {
+                JSONObject jsonObj = new JSONObject();
+                for (int i = 1; i <= columnCount; i++) {
+                    String value = null;
+                    String columnName = metaData.getColumnLabel(i);// 列名稱
+                    if (rs.getString(columnName) != null && !rs.getString(columnName).equals("")) {
+                        value = new String(rs.getBytes(columnName), StandardCharsets.UTF_8);
+
+                    } else {
+                        value = "";
+                    }
+                    jsonObj.put(columnName, value);
+                }
+                item.put(jsonObj);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return item;
     }
 
 

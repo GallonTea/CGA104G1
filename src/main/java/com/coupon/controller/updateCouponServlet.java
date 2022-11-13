@@ -140,7 +140,7 @@ public class updateCouponServlet extends HttpServlet {
             }
 
             //*************************** 2.開始修改資料 ***************************************/
-            CouponServiceImpl couponService = new CouponServiceImpl();
+            CouponService couponService = new CouponServiceImpl();
             couponService.updateCoupon(coupon);
 
             //*************************** 3.新增完成,準備轉交(Send the Success view) ***********/

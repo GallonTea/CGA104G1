@@ -16,6 +16,8 @@ public interface CouponDAO extends CoreDao {
 
     JSONArray listAll();
 
+    JSONArray getById(Integer couponId);
+
     Coupon selectById(Integer couponId);
 
     List<Coupon> selectAll();

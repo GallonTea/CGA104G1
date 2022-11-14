@@ -62,16 +62,16 @@ public class MemberCouponServiceImpl implements MemberCouponService {
         MemberCouponDAO memberCouponDAO = new MemberCouponDAOImpl();
         MemberCoupon memberCoupon = new MemberCoupon();
         List<MemberCoupon> list = memberCouponDAO.getByMemIdCouponId(memberId, couponId);
-
+        System.out.println(list);
         Timestamp date = null;
         for (MemberCoupon coupon : list) {
             date = coupon.getMcpnGettime();
         }
-
         memberCoupon.setCouponId(couponId);
         memberCoupon.setMemId(memberId);
         memberCoupon.setMcpnGettime(date);
         memberCoupon.setMcpnUse((byte) 1);
+        memberCouponDAO.updateById(memberCoupon);
         return memberCoupon;
     }
 }

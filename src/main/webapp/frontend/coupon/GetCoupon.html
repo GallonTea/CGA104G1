@@ -119,7 +119,7 @@
             let member = sessionStorage.getItem('mem-info');
             let memberId = JSON.parse(member).memberId
             let qs = Qs;
-            axios.post('/CGA104G1/listAllCouponServlet', qs.stringify({
+            axios.post('/CGA104G1/ListAllCouponServlet', qs.stringify({
                 memberId: memberId
             }))
                 .then(res => {
@@ -139,7 +139,7 @@
         methods: {
             getCoupon: function (coupon, index) {
                 qs = Qs;
-                axios.post('/CGA104G1/getCouponServlet', qs.stringify({
+                axios.post('/CGA104G1/GetCouponServlet', qs.stringify({
                     action: this.action,
                     memberId: this.memberId,
                     couponId: this.coupon[index].COUPON_ID

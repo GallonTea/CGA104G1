@@ -60,19 +60,16 @@
 
 <div class="home_main"></div>
 
-<header>
-
-    <article class="container">
-
-    </article>
-
-</header>
-
 <main>
 
-    <div id="app">
-        <button class="btn" @click="storeIntoSession()">測試</button>
+<div id="app">
+
+    <div class="container">
+        <h4>測試以會員編號3身份登入</h4>
+        <button class="btn btn-danger" @click="storeIntoSession()">測試</button>
     </div>
+
+</div>
 
 </main>
 
@@ -93,7 +90,7 @@
 <script>
 
     let vm = Vue.createApp({
-        data(){
+        data() {
             return {
                 memInfo: {
                     memberId: 3,
@@ -104,6 +101,7 @@
         methods: {
             storeIntoSession: function () {
                 sessionStorage.setItem('mem-info', JSON.stringify(this.memInfo));
+                alert(' #測試用\r\n 登入資訊 \r\n 會員編號: 3 會員名稱: Wade')
             }
         }
     })

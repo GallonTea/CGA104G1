@@ -110,7 +110,7 @@ public class MemberCouponDAOImpl implements MemberCouponDAO {
 
         JSONArray items = null;
         try (Connection conn = ds.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement("select C.COUPON_ID, C.COUPON_VAL, C.COUPON_NAR, C.USE_START, C.USE_OVER, M.MCPN_GETTIME, M.MCPN_USE, C.MINIMUM from MEMBER_COUPON as M inner join COUPON as C on M.COUPON_ID = C.COUPON_ID where MEM_ID = ?")) {
+             PreparedStatement pstmt = conn.prepareStatement("select C.COUPON_ID, C.COUPON_VAL, C.COUPON_NAR, C.USE_START, C.USE_OVER, M.MCPN_GETTIME, M.MCPN_USE, C.MINIMUM from MEMBER_COUPON as M inner join COUPON as C on M.COUPON_ID = C.COUPON_ID where MEM_ID = ? and MCPN_USE = 0 ")) {
 
             items = new JSONArray();
 

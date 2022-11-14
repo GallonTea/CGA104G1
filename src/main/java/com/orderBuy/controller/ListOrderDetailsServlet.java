@@ -1,29 +1,26 @@
-package com.memberCoupon.controller;
+package com.orderBuy.controller;
 
-import com.coupon.model.service.CouponService;
-import com.coupon.model.service.impl.CouponServiceImpl;
-import com.memberCoupon.model.service.impl.MemberCouponServiceImpl;
-import com.memberCoupon.model.service.MemberCouponService;
+import com.orderBuy.model.entity.OrderBuy;
+import com.orderBuy.model.service.OrderBuyService;
+import com.orderBuy.model.service.impl.OrderBuyServiceImpl;
 import org.json.JSONArray;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
-@WebServlet(name = "MemberCouponServlet", value = "/MemberCouponServlet")
-public class MemberCouponServlet extends HttpServlet {
+@WebServlet(name = "ListOrderDetailsServlet", value = "/ListOrderDetailsServlet")
+public class ListOrderDetailsServlet extends HttpServlet {
 
-    private MemberCouponService service;
+    private OrderBuyService service;
 
     @Override
     public void init() throws ServletException {
-        service = new MemberCouponServiceImpl();
+        service = new OrderBuyServiceImpl();
     }
-
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -47,10 +44,15 @@ public class MemberCouponServlet extends HttpServlet {
         final Integer memId = Integer.valueOf(req.getParameter("memberId"));
 
         PrintWriter pw = res.getWriter();
+        OrderBuyService orderBuyService = new OrderBuyServiceImpl();
 
-        MemberCouponService memberCouponService = new MemberCouponServiceImpl();
-        JSONArray items = memberCouponService.getOwnCoupon(memId);
+        try {
+            JSONArray details = orderBuyService.getAllDetails(memId);
+            pw.println(details);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        pw.println(items);
+
     }
 }

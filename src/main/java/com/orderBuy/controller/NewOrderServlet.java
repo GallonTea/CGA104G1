@@ -7,21 +7,16 @@ import com.coupon.model.entity.Coupon;
 import com.coupon.model.service.CouponService;
 import com.coupon.model.service.impl.CouponServiceImpl;
 import com.item.model.ItemVO;
-import com.mem.model.MemService;
 import com.memberCoupon.model.service.impl.MemberCouponServiceImpl;
 import com.memberCoupon.model.service.MemberCouponService;
 import com.orderBuy.model.entity.OrderBuy;
 import com.orderBuy.model.service.impl.OrderBuyServiceImpl;
 import com.orderBuy.model.service.OrderBuyService;
 import com.item.model.ItemService;
-import core.util.MailServiceForOrder;
-import core.util.UUIDGenerator;
 import ecpay.payment.integration.AllInOne;
-import ecpay.payment.integration.domain.AioCheckOutALL;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import javax.persistence.criteria.Order;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
@@ -32,8 +27,8 @@ import java.util.*;
 
 import static java.lang.System.out;
 
-@WebServlet(name = "newOrderServlet", value = "/newOrderServlet")
-public class newOrderServlet extends HttpServlet {
+@WebServlet(name = "NewOrderServlet", value = "/NewOrderServlet")
+public class NewOrderServlet extends HttpServlet {
 
 
     private OrderBuyService service;
@@ -72,7 +67,6 @@ public class newOrderServlet extends HttpServlet {
         Integer couponId = null;
         couponId = Integer.valueOf(req.getParameter("couponId"));
 
-
         Byte orderPaying = null;
         orderPaying = Byte.valueOf(req.getParameter("orderPaying"));
 
@@ -102,9 +96,14 @@ public class newOrderServlet extends HttpServlet {
         Double discountPrice;
         Double finalPrice = 0.0;
 
-        CouponService couponSvc = new CouponServiceImpl();
-        Coupon coupon = couponSvc.getCouponById(couponId);
-        discountPrice = coupon.getCouponVal();
+
+        if (couponId != 0) {
+            CouponService couponSvc = new CouponServiceImpl();
+            Coupon coupon = couponSvc.getCouponById(couponId);
+            discountPrice = coupon.getCouponVal();
+        } else {
+            discountPrice = 0.0;
+        }
 
 
         try {
@@ -173,9 +172,11 @@ public class newOrderServlet extends HttpServlet {
 
             Integer orderId = orderBuy.getOrderId();
 
-            MemberCouponService memberCouponSvc = new MemberCouponServiceImpl();
-            // 將優惠券切換為 1: 已使用
-            memberCouponSvc.updateCouponStatus(1, memberId);
+            if (orderId != 0) {
+                MemberCouponService memberCouponSvc = new MemberCouponServiceImpl();
+                // 將優惠券切換為 1: 已使用
+                memberCouponSvc.updateCouponStatus(memberId, couponId);
+            }
 
             Integer itemId;
             String itemName;
@@ -201,7 +202,7 @@ public class newOrderServlet extends HttpServlet {
                 commodityDetailsSvc.addDetails(commodityDetails);
             }
 
-//            // 資料轉交綠界
+            // 資料轉交綠界
             AllInOne all;
             SimpleDateFormat sd = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 //
@@ -221,11 +222,11 @@ public class newOrderServlet extends HttpServlet {
 //                obj.setMerchantTradeDate(sd.format(new Date())); // 交易時間
 //                obj.setTotalAmount(String.valueOf(finalPrice)); // 訂單總金額
 //                obj.setTradeDesc("A test order."); // 訂單描述
-//                obj.setItemName(memName + "的 Ba-Rei 商品訂單"); // 商品項目
+//                obj.setItemName(memName + "的 Ba-Rei 商品訂單，訂單編號: " + orderId); // 商品項目
 //                obj.setReturnURL("https://??????????/CGA104G1/EcpayReturn");
-//                obj.setClientBackURL("http://localhost:8081/CGA104G1/frontend/orderBuy/redirect.jsp?orderid="
-//                        + String.valueOf(orderId) + "&tradetime=" + sd.format(new Date())); // 回傳URL
+//                obj.setClientBackURL("http://localhost:8081/CGA104G1/frontend/commodityDetails/OrderDetail.html); // 回傳URL
 //                obj.setNeedExtraPaidInfo("N");
+
 //
 //                System.out.println(obj);
 //                String form = all.aioCheckOut(obj, null);

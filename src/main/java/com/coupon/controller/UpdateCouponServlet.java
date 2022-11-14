@@ -11,8 +11,8 @@ import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
-@WebServlet(name = "updateCouponServlet", value = "/backend/coupon/updateCoupon.do")
-public class updateCouponServlet extends HttpServlet {
+@WebServlet(name = "UpdateCouponServlet", value = "/backend/coupon/updateCoupon.do")
+public class UpdateCouponServlet extends HttpServlet {
     private CouponService service;
 
     @Override

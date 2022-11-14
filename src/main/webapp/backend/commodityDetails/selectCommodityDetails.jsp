@@ -212,7 +212,7 @@
                                 <c:if test = "${orderBuyVO.orderStatus == 4}"><span class="test">正在運輸途中</span> </c:if>
                                 <c:if test = "${orderBuyVO.orderStatus == 5}">未取貨，退回平台</c:if>
                                 <c:if test = "${orderBuyVO.orderStatus == 6}">已完成取貨</c:if>
-                                <c:if test = "${orderBuyVO.orderStatus == 7}">信用卡付款</c:if>
+                                <c:if test = "${orderBuyVO.orderStatus == 7}">退貨處理中</c:if>
                                 <c:if test = "${orderBuyVO.orderStatus == 8}">換貨處理中</c:if>
                                 <c:if test = "${orderBuyVO.orderStatus == 9}"><strong style=" color: red">訂單已銷毀</strong></c:if>
                             </div>

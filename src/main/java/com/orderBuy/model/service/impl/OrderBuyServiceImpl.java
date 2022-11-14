@@ -4,6 +4,7 @@ import com.orderBuy.model.dao.impl.OrderBuyDAOImpl;
 import com.orderBuy.model.dao.OrderBuyDAO;
 import com.orderBuy.model.entity.OrderBuy;
 import com.orderBuy.model.service.OrderBuyService;
+import org.json.JSONArray;
 
 import java.util.List;
 
@@ -33,6 +34,11 @@ public class OrderBuyServiceImpl implements OrderBuyService {
     @Override
     public OrderBuy getOrderById(Integer orderId) {
         return dao.selectById(orderId);
+    }
+
+    @Override
+    public JSONArray getAllDetails(Integer memId) {
+        return dao.listById(memId);
     }
 
     @Override

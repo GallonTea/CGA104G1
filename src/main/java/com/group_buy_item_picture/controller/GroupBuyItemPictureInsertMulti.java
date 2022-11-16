@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +21,7 @@ import com.group_buy_item_picture.model.groupBuyItemPictureService;
 import com.group_buy_item_picture.model.groupBuyItemPictureVO;
 
 @WebServlet("/groupBuyItemPicture/groupBuyItemPictureInsertMulti.do")
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class GroupBuyItemPictureInsertMulti extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -34,18 +36,14 @@ public class GroupBuyItemPictureInsertMulti extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
-
 		List<String> errorMsgs = new LinkedList<String>();
 		req.setAttribute("errorMsgs", errorMsgs);
-		try {
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			// Integer gbitem_id = Integer.valueOf(req.getParameter("gbitem_id").trim());
 			Integer gbitem_id = null;
 			try {
 				gbitem_id = Integer.valueOf(req.getParameter("gbitem_id").trim());
-				if (gbitem_id == null) {
-					errorMsgs.add("團購商品編號': 請勿空白");
-				}
+				System.out.println(gbitem_id);
 			} catch (NumberFormatException e1) {
 				errorMsgs.add("團購商品編號請填數字.");
 				e1.printStackTrace();
@@ -70,9 +68,7 @@ public class GroupBuyItemPictureInsertMulti extends HttpServlet {
 
 			try {
 				gbitem_price = Integer.valueOf(req.getParameter("gbitem_price").trim());
-				if (gbitem_price == null) {
-					errorMsgs.add("團購商品價格: 請勿空白");
-				}
+				
 			} catch (NumberFormatException e) {
 				errorMsgs.add("團購商品價格請填數字");
 				e.printStackTrace();
@@ -82,9 +78,7 @@ public class GroupBuyItemPictureInsertMulti extends HttpServlet {
 
 			try {
 				gbitem_status = Integer.valueOf(req.getParameter("gbitem_status"));
-				if (gbitem_status == null) {
-					errorMsgs.add("團購商品狀態: 請勿空白");
-				}
+				
 			} catch (NumberFormatException e) {
 				errorMsgs.add("團購商品狀態請填數字");
 				e.printStackTrace();
@@ -122,7 +116,7 @@ public class GroupBuyItemPictureInsertMulti extends HttpServlet {
 			groupBuyItemPictureService gbipSvc = new groupBuyItemPictureService();
 
 			List<groupBuyItemPictureVO> originalList = gbipSvc.getAllGroupBuyItemPictureByGbitemID(gbitem_id);
-			req.setAttribute("list", originalList);
+			req.setAttribute("list2", originalList);
 
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("Group_Buy_ItemVO", group_Buy_ItemVO);
@@ -134,7 +128,6 @@ public class GroupBuyItemPictureInsertMulti extends HttpServlet {
 			/*************************** 2.開始修改資料 *****************************************/
 
 			// 開始執行上傳檔案
-			groupBuyItemPictureVO gbipVO = new groupBuyItemPictureVO();
 			Collection<Part> list = req.getParts();
 			List<byte[]> picList = new ArrayList<byte[]>();
 			BufferedInputStream bis = null;
@@ -158,8 +151,8 @@ public class GroupBuyItemPictureInsertMulti extends HttpServlet {
 			if (!errorMsgs.isEmpty()) {
 				// 從資料庫讀取 groupBuyItemPictureVO 存入 list 中
 				List<groupBuyItemPictureVO> list2 = gbipSvc.getAllGroupBuyItemPictureByGbitemID(gbitem_id);
-				req.setAttribute("list", list2);
-				req.setAttribute("group_Buy_ItemVO", group_Buy_ItemVO);
+				req.setAttribute("list2", list2);
+				req.setAttribute("Group_Buy_ItemVO", group_Buy_ItemVO);
 
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/backend/Group_Buy_Item/update_groupBuyItem_input.jsp");
@@ -173,20 +166,11 @@ public class GroupBuyItemPictureInsertMulti extends HttpServlet {
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 			// 從資料庫讀取 groupBuyItemPictureVO 存入 list 中
 			List<groupBuyItemPictureVO> list2 = gbipSvc.getAllGroupBuyItemPictureByGbitemID(gbitem_id);
-			req.setAttribute("list", list2);
-			req.setAttribute("group_Buy_ItemVO", group_Buy_ItemVO);
+			req.setAttribute("list2", list2);
+			req.setAttribute("Group_Buy_ItemVO", group_Buy_ItemVO);
 			RequestDispatcher successView = req
 					.getRequestDispatcher("/backend/Group_Buy_Item/update_groupBuyItem_input.jsp");
 			successView.forward(req, res);
-		} catch (ServletException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			errorMsgs.add(e.getMessage());
-			RequestDispatcher failureView = req.getRequestDispatcher("/backend/Group_Buy_Item/update_groupBuyItem_input.jsp");
-			failureView.forward(req, res);
-		}
 
 	}
 

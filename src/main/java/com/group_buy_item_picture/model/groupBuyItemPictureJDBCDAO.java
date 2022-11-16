@@ -33,9 +33,9 @@ public class groupBuyItemPictureJDBCDAO implements groupBuyItemPictureDAO_interf
 
 	private static final String UPDATE = "UPDATE GROUP_BUY_ITEM_PICTURE set GBITEM_ID=?, GBIP_CONTENT=? where GBIP_ID = ?";
 
-	private static final String GET_ALL_STMT_GBITEM_ID = "SELECT GBIP_ID, GBITEM_ID, GBIP_CONTENT FROM GROUP_BUY_ITEM_PICTURE where GBIP_ID = ?";
+	private static final String GET_ALL_STMT_GBITEM_ID = "SELECT GBIP_ID, GBITEM_ID, GBIP_CONTENT FROM GROUP_BUY_ITEM_PICTURE where GBITEM_ID = ?";
 
-	private static final String GET_ONE_STMT_GBITEM_ID = "SELECT GBIP_ID, GBITEM_ID, GBIP_CONTENT FROM GROUP_BUY_ITEM_PICTURE where GBIP_ID = ? limit 1";
+	private static final String GET_ONE_STMT_GBITEM_ID = "SELECT GBIP_ID, GBITEM_ID, GBIP_CONTENT FROM GROUP_BUY_ITEM_PICTURE where GBITEM_ID = ? limit 1";
 
 	@Override
 	public void insert(groupBuyItemPictureVO groupBuyItemPictureVO) {
@@ -368,9 +368,9 @@ public class groupBuyItemPictureJDBCDAO implements groupBuyItemPictureDAO_interf
 		return groupBuyItemPictureVO;
 	}
 
-	public static void main(String[] args) {
+//	public static void main(String[] args) {
 //		// 測試建立一個dao物件
-		groupBuyItemPictureJDBCDAO dao = new groupBuyItemPictureJDBCDAO();
+//		groupBuyItemPictureJDBCDAO dao = new groupBuyItemPictureJDBCDAO();
 //		// 測試dao insert方法
 //		// 測試建立一個bidpic物件
 //		
@@ -431,17 +431,17 @@ public class groupBuyItemPictureJDBCDAO implements groupBuyItemPictureDAO_interf
 //		}
 //		// 測試dao findByGbitemID
 
-		List<groupBuyItemPictureVO> list2 = dao.findByGbitemID(2);
-		for (groupBuyItemPictureVO groupBuyItemPictureVO : list2) {
-			System.out.println(groupBuyItemPictureVO.getGbip_id());
-			System.out.println(groupBuyItemPictureVO.getGbitem_id());
-			System.out.println("------------------------------------");
-		}
-		list2.forEach(System.out::println);
+//		List<groupBuyItemPictureVO> list2 = dao.findByGbitemID(2);
+//		for (groupBuyItemPictureVO groupBuyItemPictureVO : list2) {
+//			System.out.println(groupBuyItemPictureVO.getGbip_id());
+//			System.out.println(groupBuyItemPictureVO.getGbitem_id());
+//			System.out.println("------------------------------------");
+//		}
+//		list2.forEach(System.out::println);
 //		// 測試dao findFirstPICByGbitemID
 //		groupBuyItemPictureVO groupBuyItemPictureVO4 = dao.findFirstPICByGbitemID(1);
 //		System.out.println(groupBuyItemPictureVO4.getGbip_id());
 //		System.out.println(groupBuyItemPictureVO4.getGbitem_id());
 //		
-	}
+//	}
 }

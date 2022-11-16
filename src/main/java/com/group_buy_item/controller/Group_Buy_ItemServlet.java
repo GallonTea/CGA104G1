@@ -1,10 +1,11 @@
 package com.group_buy_item.controller;
 
-import java.io.*;
 import java.io.IOException;
-import java.sql.Date;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,13 +14,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.discount.model.DiscountService;
-import com.discount.model.DiscountVO;
 import com.group_buy_item.model.Group_Buy_ItemService;
 import com.group_buy_item.model.Group_Buy_ItemVO;
 import com.group_buy_item_picture.model.groupBuyItemPictureService;
 import com.group_buy_item_picture.model.groupBuyItemPictureVO;
-import com.mysql.cj.jdbc.result.UpdatableResultSet;
 
 @WebServlet("/Group_Buy_Item/groupBuyItem.do")
 public class Group_Buy_ItemServlet extends HttpServlet {
@@ -110,8 +108,17 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 				
 				groupBuyItemPictureService gbipSvc = new groupBuyItemPictureService();
 				List<groupBuyItemPictureVO> list2 = gbipSvc.getAllGroupBuyItemPictureByGbitemID(gbitem_id);
+				
+				//以下兩種移除null的方式
+//				list2.removeAll(Collections.singleton(null));
+				
+				
+//				List<groupBuyItemPictureVO> listWithoutNulls = list2.stream()
+//						.filter(Objects::nonNull)
+//						.collect(Collectors.toList());
+				
 				req.setAttribute("list2", list2);
-				System.out.println(list2);
+//				System.out.println(list2);
 				
 				// 成功轉交 update_groupBuyItem_input.jsp
 				String url = "/backend/Group_Buy_Item/update_groupBuyItem_input.jsp";

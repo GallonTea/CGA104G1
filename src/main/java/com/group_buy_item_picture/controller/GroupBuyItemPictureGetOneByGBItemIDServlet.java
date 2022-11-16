@@ -34,8 +34,8 @@ public class GroupBuyItemPictureGetOneByGBItemIDServlet extends HttpServlet {
 		groupBuyItemPictureService gbipSvc = new groupBuyItemPictureService();
 		groupBuyItemPictureVO gbipVO = gbipSvc.getOneGroupBuyItemPicture(gbip_id);
 		
-		ServletOutputStream out = res.getOutputStream();
-		out.write(gbipVO.getGbip_content());
+			ServletOutputStream out = res.getOutputStream();
+			out.write(gbipVO.getGbip_content());
 	}
 
 }

@@ -16,7 +16,6 @@ Group_Buy_ItemVO group_Buy_ItemVO = (Group_Buy_ItemVO) request.getAttribute("Gro
 <title>團購商品資料修改 - update_groupBuyItem_input.jsp</title>
 
 
-</script>
 
 
 <style>
@@ -116,7 +115,7 @@ th, td {
 						</c:if>
 						<c:if test="${Group_Buy_ItemVO.gbitem_status == '1'}">
 							<option value="${Group_Buy_ItemVO.gbitem_status}"><c:out
-									value="(now)上架中"></option>
+value="(now)上架中"></option>
 							</c:out>
 						</c:if>
 						<c:if test="${Group_Buy_ItemVO.gbitem_status == '2'}">
@@ -151,17 +150,10 @@ th, td {
 	</FORM>
 
 
-	<img
-		src="<%=request.getContextPath()%>/groupBuyItemPicture/groupBuyItemPictureGetOneByGBItemID.do?gbip_id=1"
-		height="128px" width="128px" class="uploadedImg">
-	<!-- 	<img -->
-	<%-- 		src="<%=request.getContextPath()%>/groupBuyItemPicture/groupBuyItemPictureGetOneByGBItemID.do?gbip_id=${gbipVO.gbip_id}" --%>
-	<!-- 		height="128px" width="128px" class="uploadedImg">  -->
-
-
+	
 	圖片顯示區及刪除 -->
-	<div id="" delete-form
-		style="position: relative; left: 480px; bottom: 750px">
+	<div id="delete-form" 
+		style="position: relative; left: 480px; bottom: 500px">
 		<form method="post"
 			action="<%=request.getContextPath()%>/groupBuyItemPicture/groupBuyItemPictureDelete.do"
 			onsubmit="return checkConfirm();"
@@ -178,8 +170,7 @@ th, td {
 						type="checkbox" name="gbip_ids" value="${gbipVO.gbip_id}"
 						class="delete_checkbox">
 				</c:forEach>
-
-				<input type="hidden" name="gbitem_id" value="${gbipVO.gbitem_id}">
+				<input type="hidden" name="gbitem_id" value="${Group_Buy_ItemVO.gbitem_id}">
 				<input type="hidden" name="gbitem_name"value="${Group_Buy_ItemVO.gbitem_name}">
 				<input type="hidden" name="gbitem_content"value="${Group_Buy_ItemVO.gbitem_content}">
 				<input type="hidden" name="gbitem_price"value="${Group_Buy_ItemVO.gbitem_price}">
@@ -192,25 +183,23 @@ th, td {
 		</form>
 	</div>
 	<!-- 	上傳圖片區 -->
-	<div style="position: relative; left: 490px; bottom: 700px">
+	<div style="position: relative; left: 490px; bottom: 300px">
 		<form id="upload"
 			action="<%=request.getContextPath()%>/groupBuyItemPicture/groupBuyItemPictureInsertMulti.do"
-			method="POST" enctype="multipart/form-data" name="form2"
-			onsubmit="return ">
-			<a href="javascript:;" class="file">選擇圖片 <input type="file"
-				name="upfile1" multiple id="upfile">
-			</a> <input type="hidden" name="gbitem_id" value="${gbipVO.gbitem_id}">
+			method="POST" enctype="multipart/form-data" name="form2" onsubmit="return">
+			<a href="javascript:;" class="file">選擇圖片 
+			<input type="file" name="upfile1" multiple id="upfile">
+			</a> 
+			<input type="hidden" name="gbitem_id" value="${Group_Buy_ItemVO.gbitem_id}">
 			<input type="hidden" name="gbitem_name"value="${Group_Buy_ItemVO.gbitem_name}"> 
-				<input type="hidden" name="gbitem_content"value="${Group_Buy_ItemVO.gbitem_content}"> 
-				<input type="hidden" name="gbitem_price"value="${Group_Buy_ItemVO.gbitem_price}"> 
-				<input type="hidden" name="gbitem_status"value="${Group_Buy_ItemVO.gbitem_status}"> 
-				<input type="hidden" name="gbitem_startdate"value="${Group_Buy_ItemVO.gbitem_startdate}"> 
-				<input type="hidden" name="gbitem_enddate"value="${Group_Buy_ItemVO.gbitem_enddate}"> 
-				<input class="button btn btn-primary" type="submit" value="上傳圖片"style="margin: 0 0 27px 10px">
+			<input type="hidden" name="gbitem_content"value="${Group_Buy_ItemVO.gbitem_content}"> 
+			<input type="hidden" name="gbitem_price"value="${Group_Buy_ItemVO.gbitem_price}"> 
+			<input type="hidden" name="gbitem_status"value="${Group_Buy_ItemVO.gbitem_status}"> 
+			<input type="hidden" name="gbitem_startdate"value="${Group_Buy_ItemVO.gbitem_startdate}"> 
+			<input type="hidden" name="gbitem_enddate"value="${Group_Buy_ItemVO.gbitem_enddate}"> 
+			<input class="button btn btn-primary" type="submit" value="上傳圖片"style="margin: 0 0 27px 10px">
 		</form>
-		<div id="picPreview"
-			style="position: absolute; top: 80px; display: flex; flex-wrap: wrap; width: 450px"></div>
-	</div>
+		<div id="picPreview" style="position: absolute; top: 80px; display: flex; flex-wrap: wrap; width: 450px"></div>
 	</div>
 </body>
 
@@ -272,8 +261,7 @@ try {
 		   value: '<%=gbitem_enddate%>', // value:   new Date(),
 	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
 	//startDate:	            '2017/07/10',  // 起始日
-	minDate:               '"-"+<%=gbitem_startdate%>
-	' // 去除今日(不含)之前
+	minDate:               '"-"+<%=gbitem_startdate%>' // 去除今日(不含)之前
 	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
 	});
 </script>
@@ -296,7 +284,45 @@ try {
 	// 			break;
 	// 	}
 	// });
-</script>
 
+</script>
+<script type="text/javascript">
+ //上傳多選圖片
+
+ window.addEventListener("load", function(){
+
+	
+		
+ 		let upfile = document.getElementById("upfile");
+ 		upfile.addEventListener("change", function(event) {
+ 			let files = event.target.files || event.dataTransfer.files;
+ 			for (let i = 0; i < files.length; i++) {
+ 				previewfile(files[i])
+ 			}
+ 		}, false);
+
+
+ 		function previewfile(file) {
+			
+ 				let reader = new FileReader();
+ 				reader.onload = function(event) {
+ 					let image = new Image();
+ 					image.src = event.target.result;
+ 					image.width = 128;
+ 					image.classList.add("imgCss");
+ 					picPreview.appendChild(image);
+ 				};
+ 				reader.readAsDataURL(file);
+ 		}
+
+		
+ 		// 當upload重新選擇 清空舊有資料
+ 		$("#upload").change(function(){
+ 		    $("#picPreview").empty() // 清空當下預覽
+ 		    previewfile(this.files) // this即為<input>元素
+ 		})
+ })
+
+ </script> 
 
 </html>

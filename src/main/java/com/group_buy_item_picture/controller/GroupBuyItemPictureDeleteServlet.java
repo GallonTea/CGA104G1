@@ -39,9 +39,6 @@ public class GroupBuyItemPictureDeleteServlet extends HttpServlet {
 			Integer gbitem_id = null;
 			try {
 				gbitem_id = Integer.valueOf(req.getParameter("gbitem_id").trim());
-				if (gbitem_id == null) {
-					errorMsgs.add("團購商品編號': 請勿空白");
-				}
 			} catch (NumberFormatException e1) {
 				errorMsgs.add("團購商品編號請填數字.");
 				e1.printStackTrace();
@@ -66,9 +63,6 @@ public class GroupBuyItemPictureDeleteServlet extends HttpServlet {
 
 			try {
 				gbitem_price = Integer.valueOf(req.getParameter("gbitem_price").trim());
-				if (gbitem_price == null) {
-					errorMsgs.add("團購商品價格: 請勿空白");
-				}
 			} catch (NumberFormatException e) {
 				errorMsgs.add("團購商品價格請填數字");
 				e.printStackTrace();
@@ -78,9 +72,6 @@ public class GroupBuyItemPictureDeleteServlet extends HttpServlet {
 
 			try {
 				gbitem_status = Integer.valueOf(req.getParameter("gbitem_status"));
-				if (gbitem_status == null) {
-					errorMsgs.add("團購商品狀態: 請勿空白");
-				}
 			} catch (NumberFormatException e) {
 				errorMsgs.add("團購商品狀態請填數字");
 				e.printStackTrace();
@@ -125,17 +116,16 @@ public class GroupBuyItemPictureDeleteServlet extends HttpServlet {
 			/*************************** 2.開始修改資料 *****************************************/
 			// 取得多選圖片的陣列 用 for 迴圈取得gbitem_id 刪除
 			groupBuyItemPictureService gbipSvc = new groupBuyItemPictureService();
-			String[] gbip_ids = req.getParameterValues("gbip_id");
+			String[] gbip_ids = req.getParameterValues("gbip_ids");
 
 			if (gbip_ids == null) {
 				errorMsgs.add("請選擇要刪除的圖片");
 			}
 
 			if (!errorMsgs.isEmpty()) {
-				List<groupBuyItemPictureVO> list = gbipSvc
-						.getAllGroupBuyItemPictureByGbitemID(group_Buy_ItemVO.getGbitem_id());
+				List<groupBuyItemPictureVO> list = gbipSvc.getAllGroupBuyItemPictureByGbitemID(group_Buy_ItemVO.getGbitem_id());
 				req.setAttribute("List", list);
-				req.setAttribute("group_Buy_ItemVO", group_Buy_ItemVO);
+				req.setAttribute("Group_Buy_ItemVO", group_Buy_ItemVO);
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/backend/Group_Buy_Item/update_groupBuyItem_input.jsp");
 				failureView.forward(req, res);
@@ -149,9 +139,9 @@ public class GroupBuyItemPictureDeleteServlet extends HttpServlet {
 			}
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			// 從資料庫讀取 groupBuyItemPictureVO 存入 list 中
-			List<groupBuyItemPictureVO> list = gbipSvc
+			List<groupBuyItemPictureVO> list2 = gbipSvc
 					.getAllGroupBuyItemPictureByGbitemID(group_Buy_ItemVO.getGbitem_id());
-			req.setAttribute("list", list);
+			req.setAttribute("list2", list2);
 
 			req.setAttribute("Group_Buy_ItemVO", group_Buy_ItemVO);
 			String url = "/backend/Group_Buy_Item/update_groupBuyItem_input.jsp";

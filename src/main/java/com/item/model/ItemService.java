@@ -3,10 +3,10 @@ package com.item.model;
 import java.sql.Date;
 import java.util.List;
 
-import org.hibernate.Transaction;
+
 import org.json.JSONArray;
 
-import com.itemPhotos.model.ItemPhotosDAO11;
+import com.itemPhotos.model.ItemPhotosDAO;
 import com.itemPhotos.model.ItemPhotosVO;
 import com.util.ServiceCommon;
 import com.itemPhotos.model.ItemPhotosInterface;
@@ -18,7 +18,7 @@ public class ItemService implements ServiceCommon {
 
 	public ItemService() {
 		itemDao = new ItemDAO();
-		itemPhotoDao = new ItemPhotosDAO11();
+		itemPhotoDao = new ItemPhotosDAO();
 	}
 
 	public List<ItemVO> getAll() {
@@ -29,12 +29,13 @@ public class ItemService implements ServiceCommon {
 			return list;
 		} catch (Exception e) {
 			e.printStackTrace();
-
+			rollback();
 			return null;
 		}
 
 	}
 
+	//可刪
 	public ItemVO addItem(String itemName, String itemContent, Integer itemPrice, Integer itemAmount,
 
 			Date startDate, Date enddate, Integer itemStatus, Integer itemtId, List<byte[]> item_photo) {
@@ -71,6 +72,7 @@ public class ItemService implements ServiceCommon {
 
 	}
 
+	//可刪
 	public void update(String itemName, String itemContent, Integer itemPrice, Integer itemAmount, Date startDate,
 			Date endDate, Integer itemStatus, Integer itemtType, List<byte[]> itemPhoto, Integer itemId) {
 		try {
@@ -104,19 +106,44 @@ public class ItemService implements ServiceCommon {
 		}
 	}
 
+
+	public void updateJS(ItemVO itemVO){
+		try {
+			beginTranscation();
+			itemDao.updateJS(itemVO);
+			commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+
+		}
+	}
+	public Integer addItemJS(ItemVO itemVO){
+		try {
+			beginTranscation();
+			Integer itemId=itemDao.insert(itemVO);
+			commit();
+			return itemId;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			return -1;
+		}
+	}
 	public ItemVO getItem(Integer itemId) {
 		try {
 			beginTranscation();
 			ItemVO itemVO=itemDao.findByPrimaryKey(itemId);
 			commit();
 			return itemVO;
-
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
 			return null;
 		}
-
+		
 	}
 
 	public void deleteItem(Integer itemId) {
@@ -129,7 +156,7 @@ public class ItemService implements ServiceCommon {
 			e.printStackTrace();
 			rollback();
 		}
-
+		
 
 	}
 
@@ -145,9 +172,9 @@ public class ItemService implements ServiceCommon {
 			rollback();
 			return null;
 		}
-
-
-
+		
+		
+		
 	}
 
 	//listAllItems.html
@@ -171,6 +198,19 @@ public class ItemService implements ServiceCommon {
 			commit();
 			return jsonObject;
 		} catch (Exception e) {
+			e.printStackTrace();
+			rollback();
+			return null;
+		}
+	}
+
+	public JSONArray search(String keyWords){
+		try{
+			beginTranscation();
+			JSONArray jsonArray=itemDao.search(keyWords);
+			commit();
+			return jsonArray;
+		}catch (Exception e){
 			e.printStackTrace();
 			rollback();
 			return null;

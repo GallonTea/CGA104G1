@@ -95,7 +95,7 @@
     <div id="newImgInfo"></div>
     <form method="post" class="form1" action="/CGA104G1/Article_identityServlet">
         <input type="hidden" name="action" value="insert">
-        <input type="hidden" name="mem_id" value=1>
+        <input type="hidden" name="mem_id" value=3>
         <textarea class="picHtml" name="article_pic" style="display: none;"></textarea>
         <button type="submit" class="btn btn-success">確認送出</button>
     </form>

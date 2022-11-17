@@ -8,6 +8,7 @@ EffectService effectSvc = new EffectService();
 List<EffectVO> list = effectSvc.getAll();
 pageContext.setAttribute("list", list);
 %>
+<%@include file="/backend/backNavbar.jsp"%>
 <html>
 <head>
 <title>所有權限資料</title>
@@ -59,6 +60,8 @@ pageContext.setAttribute("list", list);
 		<th>權限編號</th>
 		<th>權限名稱</th>
 		<th>權限說明</th>
+		<th>修改資料</th>
+		<th>刪除資料</th>
 
 	</tr>
 
@@ -68,15 +71,16 @@ pageContext.setAttribute("list", list);
 			<td>${effectVO.effect_id}</td>
 			<td>${effectVO.effect_name}</td>
 			<td>${effectVO.effect_info}</td>
+			
 
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/effect/effect.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="EffectServlet" style="margin-bottom: 0px;">
 			     <input type="submit" value="修改">
 			     <input type="hidden" name="effect_id"  value="${effectVO.effect_id}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
-			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/effect/effect.do" style="margin-bottom: 0px;">
+			  <FORM METHOD="post" ACTION="EffectServlet" style="margin-bottom: 0px;">
 			     <input type="submit" value="刪除">
 			     <input type="hidden" name="effect_id"  value="${effectVO.effect_id}">
 			     <input type="hidden" name="action" value="delete"></FORM>

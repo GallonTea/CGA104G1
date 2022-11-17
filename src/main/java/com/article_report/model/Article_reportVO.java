@@ -61,5 +61,11 @@ public class Article_reportVO implements java.io.Serializable{
 		this.afrep_date = afrep_date;
 	}
 	
+	
+	public com.article.model.ArticleVO getArticleVO() {
+		com.article.model.ArticleService articleSvc = new com.article.model.ArticleService();
+		com.article.model.ArticleVO articlVO = articleSvc.getOneArticle(article_id);
+	    return articlVO;
+    }
 
 }

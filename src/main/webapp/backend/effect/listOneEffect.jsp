@@ -3,6 +3,7 @@
 <% 
 EffectVO effectVO = (EffectVO) request.getAttribute("effectVO");
 %>
+<%@include file="/backend/backNavbar.jsp"%>
 <html>
 <head>
 <title>權限資料</title>

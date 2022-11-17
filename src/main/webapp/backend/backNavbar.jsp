@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
         <!doctype html>
         <html lang="en">
 
@@ -35,6 +35,16 @@
                 #none {
                     height: 66px;
                 }
+                
+                body {
+		            background-image: url(<%=request.getContextPath()%>/backend/asset/img/share_icon/bg.jpg);
+		            background-repeat: no-repeat;
+		            background-attachment: fixed;
+		            background-position: center;
+		            background-size: cover;
+		            background-color: rgba(29, 29, 29, 0.8);
+		            background-blend-mode: multiply;
+      			  }
             </style>
         </head>
 
@@ -46,7 +56,7 @@
                 <header>
                     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
                         <div class="container-fluid">
-                            <a class="navbar-brand" href="#"><img
+                            <a class="navbar-brand" href="<%=request.getContextPath()%>/backend/index.jsp"><img
                                     src="<%=request.getContextPath()%>/backend/asset/img/share_icon/ba-rei 02.png"
                                     width="100px" height="40px"></a>
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -67,7 +77,7 @@
                                     <li class="nav-item dropdown"><a class="nav-link" href="#" role="button"
                                             aria-expanded="false"> 商城管理 </a>
                                         <ul class="dropdown-menu bg-dark">
-                                            <li><a class="dropdown-item bg-dark text-white-50" href="#">商品管理</a></li>
+                                            <li><a class="dropdown-item bg-dark text-white-50" href="<%=request.getContextPath()%>/backend/commodityDetails/selectCommodityDetails.jsp">商品管理</a></li>
                                             <li><a class="dropdown-item bg-dark text-white-50" href="#">商城訂單管理</a></li>
                                             <li><a class="dropdown-item bg-dark text-white-50" href="#">折價券管理</a></li>
                                         </ul>
@@ -75,25 +85,31 @@
                                     <li class="nav-item dropdown"><a class="nav-link" href="#" role="button"
                                             aria-expanded="false"> 團購管理 </a>
                                         <ul class="dropdown-menu bg-dark">
-                                            <li><a class="dropdown-item bg-dark text-white-50" href="#">團購規則管理</a></li>
+                                            <li><a class="dropdown-item bg-dark text-white-50" href="<%=request.getContextPath()%>/backend/Discount/select_page.jsp">團購折扣管理</a></li>
+                                            <li><a class="dropdown-item bg-dark text-white-50" href="<%=request.getContextPath()%>/backend/Group_Buy_Item/select_page.jsp">團購商品管理</a></li>
                                             <li><a class="dropdown-item bg-dark text-white-50" href="#">團購訂單管理</a></li>
                                             <li><a class="dropdown-item bg-dark text-white-50" href="#">團購檢舉管理</a></li>
                                         </ul>
                                     </li>
-                                    <li class="nav-item"><a class="nav-link" href="#">討論區管理</a></li>
+                                    <li class="nav-item dropdown"><a class="nav-link" href="#" role="button"
+                                            aria-expanded="false"> 討論區管理 </a>
+                                        <ul class="dropdown-menu bg-dark">
+                                            <li><a class="dropdown-item bg-dark text-white-50" href="#">文章分類管理</a></li>
+                                            <li><a class="dropdown-item bg-dark text-white-50" href="<%=request.getContextPath()%>/backend/article/selectPage.jsp">文章檢舉管理</a></li>
+                                        </ul>
+                                    </li>
                                     <li class="nav-item dropdown"><a class="nav-link" href="#" role="button"
                                             aria-expanded="false"> 資訊管理 </a>
                                         <ul class="dropdown-menu bg-dark">
-                                            <li><a class="dropdown-item bg-dark text-white-50" href="#">公告管理</a></li>
+                                            <li><a class="dropdown-item bg-dark text-white-50" href="#">最新消息管理</a></li>
                                             <li><a class="dropdown-item bg-dark text-white-50" href="#">Q&A管理</a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item dropdown"><a class="nav-link" href="#" role="button"
                                             aria-expanded="false"> 員工管理 </a>
                                         <ul class="dropdown-menu bg-dark">
-                                            <li><a class="dropdown-item bg-dark text-white-50" href="#">員工資料查詢</a></li>
-                                            <li><a class="dropdown-item bg-dark text-white-50" href="#">員工資料管理</a></li>
-                                            <li><a class="dropdown-item bg-dark text-white-50" href="#">權限查詢與管理</a></li>
+                                            <li><a class="dropdown-item bg-dark text-white-50" href="<%=request.getContextPath()%>/backend/emp/select_page.jsp">員工資料查詢與管理</a></li>
+                                            <li><a class="dropdown-item bg-dark text-white-50" href="<%=request.getContextPath()%>/backend/effect/select_page.jsp">權限查詢與管理</a></li>
                                         </ul>
                                     </li>
                                 </ul>

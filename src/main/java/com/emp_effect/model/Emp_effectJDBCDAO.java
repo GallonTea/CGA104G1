@@ -20,6 +20,7 @@ public class Emp_effectJDBCDAO implements Emp_effectDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT emp_id, effect_id FROM emp_effect where emp_id = ?";
 	private static final String DELETE = "DELETE FROM emp_effect where emp_id = ?";
 	private static final String UPDATE = "UPDATE emp_effect set effect_id=? where emp_id = ?";
+//	private static final String UPDATE = "UPDATE emp_effect set effect_id=? where emp_id = ? and effect_id = ?";
 
 	@Override
 	public void insert(Emp_effectVO emp_effectVO) {
@@ -64,6 +65,7 @@ public class Emp_effectJDBCDAO implements Emp_effectDAO_interface {
 			pstmt.setInt(1, emp_effectVO.getEffect_id());
 			pstmt.setInt(2, emp_effectVO.getEmp_id());
 			
+			
 			pstmt.executeUpdate();
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
@@ -100,8 +102,9 @@ public class Emp_effectJDBCDAO implements Emp_effectDAO_interface {
 	}
 
 	@Override
-	public Emp_effectVO findBypk(Integer emp_id) {
-
+	public List<Emp_effectVO> findBypk(Integer emp_id) {
+		
+		List<Emp_effectVO> list = new ArrayList<Emp_effectVO>();
 		Emp_effectVO emp_effectVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -121,6 +124,7 @@ public class Emp_effectJDBCDAO implements Emp_effectDAO_interface {
 				
 				emp_effectVO.setEffect_id(rs.getInt("effect_id"));
 				emp_effectVO.setEmp_id(rs.getInt("emp_id"));
+				list.add(emp_effectVO);
 				
 			}
 		} catch (ClassNotFoundException e) {
@@ -136,7 +140,7 @@ public class Emp_effectJDBCDAO implements Emp_effectDAO_interface {
 				}
 			}
 		}
-		return emp_effectVO;
+		return list;
 	}
 
 	@Override
@@ -187,18 +191,23 @@ public static void main(String[] args) {
 		// 修改
 //		Emp_effectVO emp_effectVO2 =new Emp_effectVO();
 //		
-//		
-//		emp_effectVO2.setEmp_id(1);
 //		emp_effectVO2.setEffect_id(2);
+//		emp_effectVO2.setEmp_id(1);
+//		emp_effectVO2.setEffect_id(3);
+//		
+//		
 //		dao.update(emp_effectVO2);
 		
 		// 刪除
 //		dao.delete(9);
 		
 		// 查詢
-		Emp_effectVO emp_effectVO3 = dao.findBypk(1);
-		System.out.print(emp_effectVO3.getEmp_id() + ",");
-		System.out.print(emp_effectVO3.getEffect_id() + ",");
+		List<Emp_effectVO>list2  =  dao.findBypk(1);
+		for(Emp_effectVO fa2 : list2) {
+			System.out.print(fa2.getEmp_id()+ ",");
+			System.out.print(fa2.getEffect_id() + ",");
+			System.out.println();
+		}
 		System.out.println("===========================");
 		
 		// 查詢

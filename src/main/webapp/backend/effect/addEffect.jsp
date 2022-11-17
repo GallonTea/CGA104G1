@@ -5,7 +5,7 @@
 <%
   EffectVO effectVO = (EffectVO) request.getAttribute("effectVO");
 %>
-
+<%@include file="/backend/backNavbar.jsp"%>
 <html>
 <head>
 
@@ -65,7 +65,7 @@
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="effect.do" name="form1">
+<FORM METHOD="post" ACTION="EffectServlet" name="form1">
 <table>
 	<tr>
 		<td>權限編號:</td>

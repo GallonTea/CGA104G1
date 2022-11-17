@@ -2,11 +2,12 @@ package com.news.model;
 
 import java.util.List;
 
-public interface NewsDAO_interface {
+import core.dao.CoreDao;
+
+public interface NewsDAO_interface extends CoreDao{
 	public void insert(NewsVO newsVO);
     public void update(NewsVO newsVO);
-    public void delete(Integer news_id);
-    public NewsVO findByPrimaryKey(Integer news_id);
+    public void delete(Integer newsId);
+    public List<NewsVO> findByPrimaryKey(String newsTitle);
     public List<NewsVO> getAll();
-
 }

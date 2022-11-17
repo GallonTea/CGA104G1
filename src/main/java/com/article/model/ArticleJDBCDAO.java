@@ -23,7 +23,9 @@ public class ArticleJDBCDAO implements ArticleDAO_interface{
 	private static final String DELETE = 
 			"DELETE FROM article where article_id = ?";
 	private static final String UPDATE =
-			"update article set sort_id = ?, article_title = ?, article_content = ?, article_status = ?, article_like = ?, article_dislike = ? where article_id = ?";
+			"update article set sort_id = ?, article_title = ?, article_content = ? where article_id = ?";
+	private static final String HIDE =
+			"update article set article_content = ?, article_status = ? where article_id = ?";
 	
 
 	@Override
@@ -80,10 +82,52 @@ public class ArticleJDBCDAO implements ArticleDAO_interface{
 			ps.setInt(1, articleVO.getSort_id());
 			ps.setString(2, articleVO.getArticle_title());
 			ps.setString(3, articleVO.getArticle_content());
-			ps.setInt(4, articleVO.getArticle_status());
-			ps.setInt(5, articleVO.getArticle_like());
-			ps.setInt(6, articleVO.getArticle_dislike());
-			ps.setInt(7, articleVO.getArticle_id());
+			ps.setInt(4, articleVO.getArticle_id());
+
+			ps.executeUpdate();
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+		
+	}
+	
+	public void hideArticle(ArticleVO articleVO) {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			ps = con.prepareStatement(HIDE);
+			
+
+			ps.setString(1, articleVO.getArticle_content());
+			ps.setInt(2, articleVO.getArticle_status());
+			ps.setInt(3, articleVO.getArticle_id());
 
 			ps.executeUpdate();
 
@@ -310,15 +354,12 @@ public class ArticleJDBCDAO implements ArticleDAO_interface{
 				articleVO2.setSort_id(1);
 				articleVO2.setArticle_title("我家的狗會後空翻(附圖)");
 				articleVO2.setArticle_content("如題，更新圖檔 不喜歡就滾");
-				articleVO2.setArticle_status(1);
-				articleVO2.setArticle_like(1);
-				articleVO2.setArticle_dislike(31);
-				articleVO2.setArticle_id(1);
+				articleVO2.setArticle_id(8);
 				
 				dao.update(articleVO2);
 				
 				// 刪除
-				dao.delete(4);
+//				dao.delete(4);
 
 
 				// 查詢

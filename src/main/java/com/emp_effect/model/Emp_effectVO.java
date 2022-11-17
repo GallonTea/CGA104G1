@@ -11,6 +11,19 @@ public class Emp_effectVO implements Serializable{
 	private Integer emp_id;
 	private Integer effect_id;
 	
+	
+	public com.emp.model.EmpVO getEmpVO() {
+	    com.emp.model.EmpService empSvc = new com.emp.model.EmpService();
+	    com.emp.model.EmpVO empVO = empSvc.getOneEmp(emp_id);
+	    return empVO;
+    }
+	public com.effect.model.EffectVO getEffectVO() {
+		com.effect.model.EffectService effectSvc = new com.effect.model.EffectService();
+		com.effect.model.EffectVO effectVO = effectSvc.getOnEffect(effect_id);
+	    return effectVO;
+    }
+	
+	
 	public Integer getEmp_id() {
 		return emp_id;
 	}

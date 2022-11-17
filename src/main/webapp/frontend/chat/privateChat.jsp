@@ -1,11 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.emp.model.*"%>
+<%@page import="com.mem.model.MemVO"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
+<%
+MemVO memVO = (MemVO) request.getAttribute("memVO");
+EmpService empSvc = new EmpService();
+List<EmpVO> list = empSvc.login((String)session.getAttribute("account"),(String)session.getAttribute("password"));
+session.setAttribute("list", list);
+%> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>客服中心</title>
+
 </head>
 <body onload="connect();" onunload="disconnect();">
 	<h3 id="statusOutput" class="statusOutput"></h3>
@@ -21,6 +31,7 @@
 
 <script>
 	var MyPoint = "/FriendWS/gallon";
+// 	待更正
 	var host = window.location.host;
 	var path = window.location.pathname;
 	var webCtx = path.substring(0, path.indexOf('/', 1));

@@ -15,8 +15,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-@WebServlet(name = "addCouponServlet", value = "/backend/coupon/addCoupon.do")
-public class addCouponServlet extends HttpServlet {
+@WebServlet(name = "AddCouponServlet", value = "/backend/coupon/addCoupon.do")
+public class AddCouponServlet extends HttpServlet {
 
     private CouponService service;
 
@@ -122,7 +122,7 @@ public class addCouponServlet extends HttpServlet {
             }
 
             //*************************** 2.開始新增資料 ***************************************/
-            CouponServiceImpl couponService = new CouponServiceImpl();
+            CouponService couponService = new CouponServiceImpl();
             couponService.addCoupon(coupon);
 
             //*************************** 3.新增完成,準備轉交(Send the Success view) ***********/

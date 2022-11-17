@@ -20,8 +20,8 @@ import java.util.List;
 
 import static java.lang.System.out;
 
-@WebServlet(name = "listAllCouponServlet", value = "/listAllCouponServlet")
-public class listAllCouponServlet extends HttpServlet {
+@WebServlet(name = "ListAllCouponServlet", value = "/ListAllCouponServlet")
+public class ListAllCouponServlet extends HttpServlet {
 
     private CouponService service;
 

@@ -1,9 +1,7 @@
-package com.memberCoupon.controller;
+package com.orderBuy.controller;
 
-import com.coupon.model.service.CouponService;
-import com.coupon.model.service.impl.CouponServiceImpl;
-import com.memberCoupon.model.service.impl.MemberCouponServiceImpl;
-import com.memberCoupon.model.service.MemberCouponService;
+import com.orderBuy.model.service.OrderBuyService;
+import com.orderBuy.model.service.impl.OrderBuyServiceImpl;
 import org.json.JSONArray;
 
 import javax.servlet.ServletException;
@@ -14,16 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "MemberCouponServlet", value = "/MemberCouponServlet")
-public class MemberCouponServlet extends HttpServlet {
-
-    private MemberCouponService service;
+@WebServlet(name = "ListAllOrderBackServlet", value = "/ListAllOrderBackServlet")
+public class ListAllOrderBackServlet extends HttpServlet {
+    private OrderBuyService service;
 
     @Override
     public void init() throws ServletException {
-        service = new MemberCouponServiceImpl();
+        service = new OrderBuyServiceImpl();
     }
-
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -44,13 +40,16 @@ public class MemberCouponServlet extends HttpServlet {
         /* 是否攜帶 cookie */
         res.setHeader("Access-Control-Allow-Credentials", "true");
 
-        final Integer memId = Integer.valueOf(req.getParameter("memberId"));
-
         PrintWriter pw = res.getWriter();
+        OrderBuyService orderBuyService = new OrderBuyServiceImpl();
 
-        MemberCouponService memberCouponService = new MemberCouponServiceImpl();
-        JSONArray items = memberCouponService.getOwnCoupon(memId);
-
-        pw.println(items);
+        try {
+            JSONArray details = orderBuyService.getAll();
+            pw.println(details);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
+
+

@@ -11,8 +11,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-@WebServlet(name = "removeCouponServlet", value = "/backend/coupon/removeCoupon.do")
-public class removeCouponServlet extends HttpServlet {
+@WebServlet(name = "RemoveCouponServlet", value = "/backend/coupon/removeCoupon.do")
+public class RemoveCouponServlet extends HttpServlet {
 
     private CouponService service;
 

@@ -18,7 +18,7 @@ public interface MemberCouponDAO extends CoreDao {
 
     MemberCoupon getByCouponId(Integer couponId);
 
-    MemberCoupon getByMemIdCouponId(Integer memId, Integer couponId);
+    List<MemberCoupon> getByMemIdCouponId(Integer memId, Integer couponId);
 
     JSONArray listById(Integer memId);
 

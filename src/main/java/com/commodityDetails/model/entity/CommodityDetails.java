@@ -1,18 +1,34 @@
 package com.commodityDetails.model.entity;
 
-import javax.persistence.*;
+import com.item.model.ItemVO;
+import com.orderBuy.model.entity.OrderBuy;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.List;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name = "commodity_details", schema = "ba_rei", catalog = "")
+@Table(name = "commodity_details", schema = "ba_rei")
 @IdClass(CommodityDetailsPK.class)
-public class CommodityDetails {
+public class CommodityDetails implements Serializable {
+
+    @EmbeddedId
+    private CommodityDetailsPK commodityDetailsPK;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ORDER_ID")
+    @Column(name = "ORDER_ID", insertable = false, updatable = false)
     private Integer orderId;
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ITEM_ID")
+    @Column(name = "ITEM_ID", insertable = false, updatable = false)
     private Integer itemId;
     @Basic
     @Column(name = "ITEM_NAME")
@@ -24,44 +40,12 @@ public class CommodityDetails {
     @Column(name = "ITEM_PRICE")
     private Double itemPrice;
 
-    public Integer getOrderId() {
-        return orderId;
-    }
+    @ManyToOne
+    @JoinColumn(name = "ITEM_ID", insertable = false, updatable = false)
+    private ItemVO item;
 
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
-    }
-
-    public Integer getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(Integer itemId) {
-        this.itemId = itemId;
-    }
-
-    public String getItemName() {
-        return itemName;
-    }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
-
-    public Integer getCdAmount() {
-        return cdAmount;
-    }
-
-    public void setCdAmount(Integer cdAmount) {
-        this.cdAmount = cdAmount;
-    }
-
-    public Double getItemPrice() {
-        return itemPrice;
-    }
-
-    public void setItemPrice(Double itemPrice) {
-        this.itemPrice = itemPrice;
-    }
+    @ManyToOne
+    @JoinColumn(name = "ORDER_ID", insertable = false, updatable = false)
+    private OrderBuy orderBuy;
 
 }

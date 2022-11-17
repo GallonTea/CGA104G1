@@ -13,7 +13,7 @@ import com.orderBuy.model.entity.OrderBuy;
 import com.orderBuy.model.service.impl.OrderBuyServiceImpl;
 import com.orderBuy.model.service.OrderBuyService;
 import com.item.model.ItemService;
-import ecpay.payment.integration.AllInOne;
+import core.util.MailServiceForOrder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -21,13 +21,14 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static java.lang.System.out;
 
-@WebServlet(name = "NewOrderServlet", value = "/NewOrderServlet")
+@WebServlet(name = "NewOrderServlet", urlPatterns = {"/NewOrderServlet", "/orderBuy/newOrder.do"})
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class NewOrderServlet extends HttpServlet {
 
 
@@ -149,103 +150,88 @@ public class NewOrderServlet extends HttpServlet {
 
         Timestamp timestamp = new Timestamp(datetime);
 
-        try {
-            // 寫入資料庫
+        // 寫入資料庫
 
-            OrderBuy orderBuy = new OrderBuy();
-            orderBuy.setMemId(memberId);
-            orderBuy.setOriginalPrice(originalPrice);
-            orderBuy.setDiscountPrice(discountPrice);
-            orderBuy.setFinalPrice(finalPrice);
-            orderBuy.setOrderDate(timestamp);
-            orderBuy.setOrderPaying(orderPaying);
-            orderBuy.setOrderSend(orderSend);
-            orderBuy.setOrderStatus((byte) 0);
-            orderBuy.setOrderOther(orderOther);
-            orderBuy.setReceiverName(receiverName);
-            orderBuy.setReceiverAddress(receiverAddress);
-            orderBuy.setReceiverPhone(receiverPhone);
+        OrderBuy orderBuy = new OrderBuy();
+        orderBuy.setMemId(memberId);
+        orderBuy.setOriginalPrice(originalPrice);
+        orderBuy.setDiscountPrice(discountPrice);
+        orderBuy.setFinalPrice(finalPrice);
+        orderBuy.setOrderDate(timestamp);
+        orderBuy.setOrderPaying(orderPaying);
+        orderBuy.setOrderSend(orderSend);
+        orderBuy.setOrderStatus((byte) 0);
+        orderBuy.setOrderOther(orderOther);
+        orderBuy.setReceiverName(receiverName);
+        orderBuy.setReceiverAddress(receiverAddress);
+        orderBuy.setReceiverPhone(receiverPhone);
 
-            // 新增商品訂單
-            OrderBuyService orderBuySvc = new OrderBuyServiceImpl();
-            boolean b = orderBuySvc.newOrder(orderBuy);
+        // 新增商品訂單
+        OrderBuyService orderBuySvc = new OrderBuyServiceImpl();
+        boolean b = orderBuySvc.newOrder(orderBuy);
 
-            Integer orderId = orderBuy.getOrderId();
+        Integer orderId = orderBuy.getOrderId();
 
-            if (orderId != 0) {
-                MemberCouponService memberCouponSvc = new MemberCouponServiceImpl();
-                // 將優惠券切換為 1: 已使用
-                memberCouponSvc.updateCouponStatus(memberId, couponId);
-            }
-
-            Integer itemId;
-            String itemName;
-            Integer itemPrice;
-            Integer cdAmount;
-
-            CommodityDetails commodityDetails = new CommodityDetails();
-
-            for (Integer integer : itemNames.keySet()) {
-
-                itemId = items.get(integer);
-                itemName = itemNames.get(integer);
-                itemPrice = itemPrices.get(integer);
-                cdAmount = orderItems.get(integer);
-
-                commodityDetails.setOrderId(orderId);
-                commodityDetails.setItemId(itemId);
-                commodityDetails.setItemName(itemName);
-                commodityDetails.setCdAmount(cdAmount);
-                commodityDetails.setItemPrice(Double.valueOf(itemPrice));
-
-                CommodityDetailsService commodityDetailsSvc = new CommodityDetailsServiceImpl();
-                commodityDetailsSvc.addDetails(commodityDetails);
-            }
-
-            // 資料轉交綠界
-            AllInOne all;
-            SimpleDateFormat sd = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-//
-//            if (b) {
-//                // 寄email訂單成立
-//                MailServiceForOrder mailService = new MailServiceForOrder();
-//                HttpSession session = req.getSession();
-//                String memId = (String) session.getAttribute("MemId");
-//                MemService memService = new MemService();
-//                String memName = memService.getOneMem(Integer.parseInt(memId)).getMem_name();
-//                String memEmail = memService.getOneMem(Integer.parseInt(memId)).getMem_email();
-//                mailService.sendMail(memEmail, "Ba-rei 訂單成立通知", String.valueOf(datetime), memName, memId, String.valueOf(orderId), String.valueOf(finalPrice));
-//
-//                all = new AllInOne("");
-//                AioCheckOutALL obj = new AioCheckOutALL();
-//                obj.setMerchantTradeNo(String.valueOf(orderId) + "cp" + UUIDGenerator.getUUID()); // 訂單id+cp+亂碼16位
-//                obj.setMerchantTradeDate(sd.format(new Date())); // 交易時間
-//                obj.setTotalAmount(String.valueOf(finalPrice)); // 訂單總金額
-//                obj.setTradeDesc("A test order."); // 訂單描述
-//                obj.setItemName(memName + "的 Ba-Rei 商品訂單，訂單編號: " + orderId); // 商品項目
-//                obj.setReturnURL("https://??????????/CGA104G1/EcpayReturn");
-//                obj.setClientBackURL("http://localhost:8081/CGA104G1/frontend/commodityDetails/OrderDetail.html); // 回傳URL
-//                obj.setNeedExtraPaidInfo("N");
-
-//
-//                System.out.println(obj);
-//                String form = all.aioCheckOut(obj, null);
-//                out.print(form);
-//
-//            } else {
-//
-//                out.print("系統繁忙中，請重新確認");
-//                RequestDispatcher failureView = req.getRequestDispatcher(req.getRequestURI());
-//
-//                failureView.forward(req, res);
-//                return; // 程式中斷
-//            }
-
-        } catch (Exception e) {
-
-            out.println("ORDER ERROR: " + e.getMessage());
-            e.printStackTrace();
+        if (couponId != 0) {
+            MemberCouponService memberCouponSvc = new MemberCouponServiceImpl();
+            // 將優惠券切換為 1: 已使用
+            memberCouponSvc.updateCouponStatus(memberId, couponId, (byte) 1);
         }
+
+        Integer itemId;
+        String itemName;
+        Integer itemPrice;
+        Integer cdAmount;
+
+        CommodityDetails commodityDetails = new CommodityDetails();
+
+        for (Integer integer : itemNames.keySet()) {
+
+            itemId = items.get(integer);
+            itemName = itemNames.get(integer);
+            itemPrice = itemPrices.get(integer);
+            cdAmount = orderItems.get(integer);
+
+            commodityDetails.setOrderId(orderId);
+            commodityDetails.setItemId(itemId);
+            commodityDetails.setItemName(itemName);
+            commodityDetails.setCdAmount(cdAmount);
+            commodityDetails.setItemPrice(Double.valueOf(itemPrice));
+
+            CommodityDetailsService commodityDetailsSvc = new CommodityDetailsServiceImpl();
+            commodityDetailsSvc.addDetails(commodityDetails);
+        }
+
+        // 資料轉交綠界
+
+        PrintWriter pw = res.getWriter();
+        StringBuffer sb = new StringBuffer();
+        String url = sb.append(req.getScheme()).append("://")
+                .append(req.getServerName()).append(":")
+                .append(req.getServerPort())
+                .append(req.getContextPath()).toString();
+
+        if (b) {
+
+            JSONArray newOrder = new JSONArray();
+
+            try {
+                String result = orderBuySvc.NewOrder(url, orderId, memberId, finalPrice, receiverName, couponId);
+                if (result == null) {
+                    pw.print("綠界發生錯誤，請重稍後再試");
+                    return;
+                }
+                newOrder.put(result);
+                pw.print(newOrder);
+            } catch (Exception e) {
+                e.printStackTrace();
+                pw.print("綠界系統繁忙中，請重稍後再試");
+            }
+        } else {
+            pw.print("系統繁忙中，請重新確認");
+            return; // 程式中斷
+        }
+
     }
 }
 

@@ -18,8 +18,11 @@ public interface OrderBuyService {
 
     JSONArray getAllDetails(Integer memId);
 
+    JSONArray getAll();
+
     List<OrderBuy> listAllOrder();
 
+    String NewOrder(String url, Integer orderId, Integer memId, Double finalPrice, String receiverName, Integer couponId);
 
     Integer getNewsCount();
 

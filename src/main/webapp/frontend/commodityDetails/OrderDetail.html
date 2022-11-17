@@ -25,8 +25,8 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.11.0/qs.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-
     <link rel="stylesheet" type="text/css" href="../../resources/static/css/orderDetails.css"/>
+
     <style>
         [v-clock] {
             display: none;
@@ -35,6 +35,16 @@
         .area {
             margin-bottom: 50px;
         }
+
+        .rwding {
+            width: 200px;
+            height: 200px;
+            object-fit: cover
+        }
+        a {
+            color: #0a0a0a;
+            text-decoration:none;
+        }
     </style>
 </head>
 <body>
@@ -42,6 +52,7 @@
 <main>
 
     <div id="app" class="container" v-cloak>
+
         <div class="py-5 text-center">
             <h2>{{ memberName }} 的訂單明細</h2>
             <p class="lead"></p>
@@ -55,7 +66,7 @@
                 <h6>訂單編號: {{ orders.ORDER_ID }}</h6>
                 <article class="card">
                     <div class="card-body row">
-                        <div class="col"><strong>預計到貨日期: </strong> <br>--</div>
+                        <div class="col"><strong>下單日期: </strong> <br>{{ orders.ORDER_DATE }}</div>
                         <div class="col"><strong>訂單狀態: </strong> <br>{{ statusFilter(orders.ORDER_STATUS) }}</div>
                         <div class="col"><strong>物流編號: #</strong> <br>{{ orders.TRACKING_NUM }}</div>
                     </div>
@@ -63,44 +74,90 @@
 
                 <div class="track">
                     <div class="step"
-                         :class="(orders.ORDER_STATUS === '0'||orders.ORDER_STATUS === '2'||orders.ORDER_STATUS === '3'||orders.ORDER_STATUS === '4'||orders.ORDER_STATUS === '6') ? 'active' : ''"><span
+                         :class="(orders.ORDER_STATUS === '0'||orders.ORDER_STATUS === '2'||orders.ORDER_STATUS === '3'||orders.ORDER_STATUS === '6') ? 'active' : ''"><span
                             class="icon"> <i
                             class="fa fa-check"></i> </span> <span class="text">訂單已成立</span>
                     </div>
                     <div class="step"
-                         :class="(orders.ORDER_STATUS === '2'||orders.ORDER_STATUS === '3'||orders.ORDER_STATUS === '4'||orders.ORDER_STATUS === '6') ? 'active' : ''"><span
+                         :class="(orders.ORDER_STATUS === '2'||orders.ORDER_STATUS === '3'||orders.ORDER_STATUS === '6'||orders.ORDER_STATUS === '6') ? 'active' : ''"><span
                             class="icon"> <i
                             class="fa fa-user"></i> </span> <span class="text">準備出貨中</span>
                     </div>
                     <div class="step"
-                         :class="(orders.ORDER_STATUS === '2'||orders.ORDER_STATUS === '4'||orders.ORDER_STATUS === '6') ? 'active' : ''"><span
+                         :class="(orders.ORDER_STATUS === '3'||orders.ORDER_STATUS === '6') ? 'active' : ''"><span
                             class="icon"> <i
                             class="fa fa-truck"></i> </span> <span
                             class="text">正在運輸途中</span></div>
-                    <div class="step" :class="(orders.ORDER_STATUS === '2') ? 'active' : ''"><span class="icon"> <i
+                    <div class="step" :class="(orders.ORDER_STATUS === '6') ? 'active' : ''"><span class="icon"> <i
                             class="fa fa-box"></i> </span> <span
                             class="text">已送達</span></div>
                 </div>
+                <hr>
+                <div class="mt-44 align-self-end">
+                    訂單總金額: NT$ {{ orders.FINAL_PRICE }}
+                </div>
 
                 <hr>
-                <ul class="row">
-                    <li class="col-md-4">
-                        <figure class="itemside mb-3">
-                            <div class="aside"><img
-                                    src="https://res.cloudinary.com/dxfq3iotg/image/upload/v1571751108/Ecommerce/laptop-dell-xps-15-computer-monitors-laptops.jpg"
-                                    class="img-sm border"></div>
-                            <figcaption class="info align-self-center">
-                                <p class="title">Dell Laptop with 500GB HDD <br> 8GB RAM</p> <span class="text-muted">$950 </span>
-                            </figcaption>
-                        </figure>
-                    </li>
-                </ul>
-                <hr>
-                <button class="btn btn-light" @click="showMore(orders, index)">查看詳情</button>
+                <div class="row gap-2 mx-auto justify-content-md-end">
+                    <button class="col-md-12 btn btn-light" data-bs-target="#myModal" data-bs-toggle="modal"
+                            @click="showMore(orders, index)">查看詳情
+                    </button>
+                    <button class="col-md-2 float-right btn btn-primary">退 / 換貨申請</button>
+                    <button class="col-md-2 float-right btn btn-danger">取消訂單</button>
+                </div>
 
             </div>
-        </article>
 
+        </article>
+        <div class="py-2">
+            <div class="modal modal-lg fade" id="myModal">
+                <div class="modal-dialog">
+
+                    <div class="modal-content row d-flex justify-content-center">
+                        <div class="modal-header">
+                            <h5 class="modal-title">商品詳情</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <a href="#">
+                            <div class="modal-body" v-for="(details, index) in details"
+                                 :key="details.itemId">
+
+                                <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                    <div class="media-body">
+                                        <h5 class="font-weight-bold mb-2">{{ details.itemName }}</h5>
+                                        <!--                                    <p class="font-italic text-muted mb-0 small">128 GB ROM | 15.49 cm (6.1 inch)-->
+                                        <!--                                        Display 12MP Rear Camera | 7MP Front Camera A12 Bionic Chip Processor</p>-->
+                                        <div class="d-flex align-items-center justify-content-between mt-1">
+                                            <h6 class="font-weight-bold my-2">$TWD {{ details.itemPrice }}</h6>
+                                            <h6 class="font-weight-bold my-2">商品數量 {{ details.cdAmount }}</h6>
+                                            <!--                                        <ul class="list-inline small">-->
+                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
+                                            <!--                                            </li>-->
+                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
+                                            <!--                                            </li>-->
+                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
+                                            <!--                                            </li>-->
+                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
+                                            <!--                                            </li>-->
+                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star-o text-gray"></i></li>-->
+                                            <!--                                        </ul>-->
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <img :src="'data:image/jpeg;base64,' + details.photo" alt="productImg"
+                                             class="rwding rounded">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 </main>
 
@@ -123,7 +180,8 @@
                 isModalVisible: false,
                 memberId: '',
                 memberName: '',
-                orders: []
+                orders: [],
+                details: []
             }
         },
         beforeCreate() {
@@ -158,33 +216,24 @@
                 switch (val) {
                     case '0':
                         return '等待付款中'
-                        break
                     case '1':
-                        return '已取消訂單'
-                        break
+                        return '未完成付款，訂單自動取消'
                     case '2':
-                        return '訂單已完成'
-                        break
+                        return '已完成付款，準備出貨中'
                     case '3':
-                        return '準備出貨中'
-                        break
-                    case '4':
                         return '正在運輸途中'
-                        break
+                    case '4':
+                        return '取消訂單審核中'
                     case '5':
                         return '未取貨，退回平台'
-                        break
                     case '6':
                         return '已完成取貨'
-                        break
                     case '7':
-                        return '退貨處理中'
-                        break
+                        return '退/換貨申請中'
                     case '8':
-                        return '換貨處理中'
-                        break
+                        return '退/換貨處理中'
                     default:
-                        return '訂單已失效'
+                        return '訂單已取消'
                 }
             },
             showMore: function (orders, index) {
@@ -194,13 +243,14 @@
                 }))
                     .then(res => {
                         console.log(res);
+                        this.details = res.data
                     })
                     .catch(err => {
                         console.log(err);
                     })
             }
         },
-        component: {},
+        Component: {}
     })
 
     vm.mount('#app')

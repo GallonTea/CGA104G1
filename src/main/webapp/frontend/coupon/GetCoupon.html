@@ -72,7 +72,7 @@
 
                     <div class="image"><img src="https://i.imgur.com/DC94rZe.png" width="150"></div>
                     <div class="image2"><img src="https://i.imgur.com/DC94rZe.png" width="150"></div>
-                    <h1>${{ coupon.COUPON_VAL }}</h1>
+                    <h1>NT$ {{ coupon.COUPON_VAL }}</h1>
                     <span class="d-block">{{ coupon.COUPON_NAR }}</span>
                     <label class="d-block">使用期間</label>
                     <span class="d-block">{{ coupon.USE_START }} 至 {{ coupon.USE_OVER }}</span>
@@ -117,7 +117,12 @@
         },
         beforeCreate() {
             let member = sessionStorage.getItem('mem-info');
+            if (!member) {
+                alert('請先登入!')
+                window.location.assign('/CGA104G1/frontend/mem/login.jsp')
+            }
             let memberId = JSON.parse(member).memberId
+
             let qs = Qs;
             axios.post('/CGA104G1/ListAllCouponServlet', qs.stringify({
                 memberId: memberId
@@ -131,7 +136,7 @@
                     console.log(memberId)
                 })
         },
-        mounted(){
+        mounted() {
             let member = sessionStorage.getItem('mem-info');
             this.memberName = JSON.parse(member).memberName;
             this.memberId = JSON.parse(member).memberId;

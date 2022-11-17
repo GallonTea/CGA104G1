@@ -25,5 +25,5 @@ public interface MemberCouponService {
 
     Integer getNewsCount();
 
-    MemberCoupon updateCouponStatus(Integer memberId, Integer couponId);
+    MemberCoupon updateCouponStatus(Integer memberId, Integer couponId, byte status);
 }

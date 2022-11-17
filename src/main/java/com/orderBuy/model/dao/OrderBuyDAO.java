@@ -19,6 +19,8 @@ public interface OrderBuyDAO extends CoreDao {
 
     JSONArray listById(Integer memId);
 
+    JSONArray listAll();
+
     List<OrderBuy> selectAll();
 
 }

@@ -21,7 +21,7 @@ import java.util.*;
 public class MailServiceForOrder {
 
     // 設定傳送郵件:至收信人的Email信箱,Email主旨,Email內容
-    public void sendMail(String to, String subject, String orderDate ,String memName, String memId, String orderId, String finalPrice) {
+    public void sendMail(String to, String subject, String PaymentDate ,String memName, String memId, String orderId, String finalPrice) {
 
         try {
             // 設定使用SSL連線至 Gmail smtp Server
@@ -69,13 +69,13 @@ public class MailServiceForOrder {
                             + "    <!--100% body table-->\r\n"
                             + "    <table cellspacing=\"0\" border=\"0\" cellpadding=\"0\" width=\"100%\" bgcolor=\"#f2f3f8\" style=\"@import url(https://fonts.googleapis.com/css?family=Rubik:300,400,500,700|Open+Sans:300,400,600,700); font-family: 'Open Sans', sans-serif;\">\r\n"
                             + "        <tr>\r\n" + "            <td>\r\n"
-                            + "                <table style=\"background-color: #f2f3f8; max-width:670px; margin:0 auto;\" width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\r\n"
+                            + "                <table style=\"background-color: #f2f3f8; max-width:700px; margin:0 auto;\" width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\r\n"
                             + "                    <tr>\r\n"
                             + "                        <td style=\"height:80px;\">&nbsp;</td>\r\n"
                             + "                    </tr>\r\n" + "                    <tr>\r\n"
                             + "                        <td style=\"text-align:center;\">\r\n"
                             + "                            <a href=\"#\" title=\"logo\" target=\"_blank\">");
-            html.append("<img width=\"100px\" title=\"logo\" alt=\"logo\" src='cid:image'/><br>");
+            html.append("<img width=\"200px\" title=\"logo\" alt=\"logo\" src='cid:image'/><br>");
             html.append(" </a>\r\n" + "                        </td>\r\n" + "                    </tr>\r\n"
                     + "                    <tr>\r\n" + "                        <td height=\"20px;\">&nbsp;</td>\r\n"
                     + "                    </tr>\r\n" + "                    <tr>\r\n"
@@ -86,9 +86,9 @@ public class MailServiceForOrder {
                     + "                                        <table width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\r\n"
                     + "                                            <tr>\r\n"
                     + "                                                <td>\r\n"
-                    + "                                                    <h1 style=\"color: #1e1e2d; font-weight: 500; margin: 0;margin-bottom: 10px; font-size: 32px;font-family:'Rubik',sans-serif;\">Hi"+memName+",</h1>\r\n"
+                    + "                                                    <h1 style=\"color: #1e1e2d; font-weight: 500; margin: 0;margin-bottom: 10px; font-size: 32px;font-family:'Rubik',sans-serif;\">Hi" + " " + memName+",</h1>\r\n"
                     + "                                                    <p style=\"font-size:15px; color:#455056; line-height:10px; margin:8px 0 30px;\">您的會員編號:"+ memId +"</p>\r\n"
-                    + "                                                    <p style=\"font-size:15px; color:#455056; line-height:10px; margin:8px 0 30px;\">您的訂購日期:"+orderDate+"</p>\r\n"
+                    + "                                                    <p style=\"font-size:15px; color:#455056; line-height:10px; margin:8px 0 30px;\">付款成功日期:"+ PaymentDate +"</p>\r\n"
                     + "                                                </td>\r\n"
                     + "                                            </tr>\r\n" + "\r\n" + "\r\n"
                     + "                                            <!-- 表格內容 -->\r\n"
@@ -117,8 +117,8 @@ public class MailServiceForOrder {
             html.append("<td></td>");
             html.append("<td></td>");
             html.append("<td></td>");
-            html.append("<td>小計</td>");
-            html.append("<td>" + finalPrice + "</td>");
+            html.append("<td>折扣後金額</td>");
+            html.append("<td> NT$ " + finalPrice + "</td>");
             html.append("</tr>");
 
             html.append("\r\n" + "</td>\r\n" + "</tr>\r\n" + "</table>\r\n"
@@ -128,7 +128,7 @@ public class MailServiceForOrder {
                     + "                        <td style=\"height:25px;\">&nbsp;</td>\r\n"
                     + "                    </tr>\r\n" + "                    <tr>\r\n"
                     + "                        <td style=\"text-align:center;\">\r\n"
-                    + "                            <p style=\"font-size:14px; color:#455056bd; line-height:18px; margin:0 0 0;\">&copy; <strong>www.google.com</strong></p>\r\n"
+                    + "                            <p style=\"font-size:14px; color:#455056bd; line-height:18px; margin:0 0 0;\">&copy; <strong>Ba-rei 巴蕊 since 2022</strong></p>\r\n"
                     + "                        </td>\r\n" + "                    </tr>\r\n"
                     + "                    <tr>\r\n"
                     + "                        <td style=\"height:80px;\">&nbsp;</td>\r\n"
@@ -168,13 +168,17 @@ public class MailServiceForOrder {
 //			RequestDispatcher failureView = req.getRequestDispatcher("/frontend/mem/select_page.jsp");
 //			failureView.forward(req, res);
 
-        String to = "colaninja88@gmail.com";
+
+        String to = "ritchie4cga104g1@gmail.com";
+//        String to = "nbailove3@gmail.com";
 
         String subject = "TEST";
 
         MailServiceForOrder mailService = new MailServiceForOrder();
 
-//		mailService.sendMail(to, subject, "2022-12-11", "許歷程", "1", "5", "1000.0");
+        String memName = "吳永志";
+
+		mailService.sendMail(to, subject, "2022-12-11", memName, "1", "5", "1000.0");
 
    }
 

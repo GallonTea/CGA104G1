@@ -62,14 +62,12 @@
 
 <main>
 
-<div id="app">
-
-    <div class="container">
-        <h4>測試以會員編號3身份登入</h4>
-        <button class="btn btn-danger" @click="storeIntoSession()">測試</button>
+    <div id="app">
+        <div class="container">
+            <h4>測試以會員編號3身份登入</h4>
+            <button class="btn btn-danger" @click="storeIntoSession()">測試</button>
+        </div>
     </div>
-
-</div>
 
 </main>
 
@@ -86,9 +84,7 @@
 <script src="../resources/static/js/navbar.js"></script>
 <!--  Footer  -->
 <script src="../resources/static/js/footer.js"></script>
-
 <script>
-
     let vm = Vue.createApp({
         data() {
             return {
@@ -106,7 +102,6 @@
         }
     })
     vm.mount('#app')
-
 </script>
 
 </body>

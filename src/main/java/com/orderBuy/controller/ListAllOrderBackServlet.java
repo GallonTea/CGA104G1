@@ -4,16 +4,16 @@ import com.orderBuy.model.service.OrderBuyService;
 import com.orderBuy.model.service.impl.OrderBuyServiceImpl;
 import org.json.JSONArray;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet(name = "ListOrderDetailsServlet", value = "/ListOrderDetailsServlet")
-@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
-public class ListOrderDetailsServlet extends HttpServlet {
-
+@WebServlet(name = "ListAllOrderBackServlet", value = "/ListAllOrderBackServlet")
+public class ListAllOrderBackServlet extends HttpServlet {
     private OrderBuyService service;
 
     @Override
@@ -40,16 +40,16 @@ public class ListOrderDetailsServlet extends HttpServlet {
         /* 是否攜帶 cookie */
         res.setHeader("Access-Control-Allow-Credentials", "true");
 
-        final Integer memId = Integer.valueOf(req.getParameter("memberId"));
-
         PrintWriter pw = res.getWriter();
         OrderBuyService orderBuyService = new OrderBuyServiceImpl();
 
         try {
-            JSONArray details = orderBuyService.getAllDetails(memId);
+            JSONArray details = orderBuyService.getAll();
             pw.println(details);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 }
+
+

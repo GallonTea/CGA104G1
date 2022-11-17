@@ -70,7 +70,7 @@
                      style="margin: 10px 20px">
                     <div class="image"><img src="https://i.imgur.com/DC94rZe.png" width="150"></div>
                     <div class="image2"><img src="https://i.imgur.com/DC94rZe.png" width="150"></div>
-                    <h1>${{ coupon.COUPON_VAL }}</h1>
+                    <h1>NT$ {{ coupon.COUPON_VAL }}</h1>
                     <span class="d-block">{{ coupon.COUPON_NAR }}</span>
                     <label class="d-block">使用期間</label>
                     <span class="d-block">{{ coupon.USE_START }} 至 {{ coupon.USE_OVER }}</span>
@@ -121,7 +121,12 @@
         },
         beforeCreate() {
             let member = sessionStorage.getItem('mem-info');
+            if (!member) {
+                alert('plz login !!!')
+                window.location.assign('/CGA104G1/frontend/mem/login.jsp')
+            }
             let memberId = JSON.parse(member).memberId
+
             let qs = Qs; // 序列化工具 有內建
             // axios.post(api地址(servlet 位置啦), 要傳的內容(先序列化)
             axios.post('/CGA104G1/MemberCouponServlet', qs.stringify({

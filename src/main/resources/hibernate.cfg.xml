@@ -9,8 +9,10 @@
         <!--        <property name="connection.username">root</property>-->
         <!--        <property name="connection.password">P@ssw0rd</property>-->
         <!--        <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>-->
-                <property name="connection.datasource">java:comp/env/jdbc/hikariCP-BaRei</property>
+
         <property name="hibernate.current_session_context_class">thread</property>
+
+        <property name="connection.datasource">java:comp/env/jdbc/hikariCP-BaRei</property>
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/ba_rei</property>
         <property name="hibernate.connection.username">root</property>
@@ -22,7 +24,9 @@
         <property name="hibernate.hikari.maximumPoolSize">10</property>
         <property name="hibernate.hikari.idleTimeout">30000</property>
 
+        <!-- 顯示 SQL 語句 -->
         <property name="hibernate.show_sql">true</property>
+        <!-- 提高 SQL 語句可讀性 -->
         <property name="hibernate.format_sql">true</property>
         <mapping class="com.commodityDetails.model.entity.CommodityDetails"/>
         <mapping class="com.coupon.model.entity.Coupon"/>
@@ -32,6 +36,7 @@
         <mapping class="com.item.model.ItemVO"/>
         <mapping class="com.itemType.model.ItemTypeVO"/>
         <mapping class="com.itemPhotos.model.ItemPhotosVO"/>
+
     </session-factory>
 </hibernate-configuration>
 

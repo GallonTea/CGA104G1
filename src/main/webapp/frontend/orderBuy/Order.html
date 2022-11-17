@@ -74,7 +74,7 @@
                                 <span class="text-success">-${{ couponVal }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
-                                <span>Total (TWD)</span>
+                                <span>Total (NT$)</span>
                                 <strong>${{ finalPrice }}</strong>
                             </li>
                         </ul>
@@ -90,9 +90,7 @@
                                     </option>
                                 </select>
                             </div>
-
                         </form>
-
                     </div>
                 </div>
                 <br>
@@ -167,41 +165,11 @@
                     <!--                        <label for="ATM" class="form-check-label"> ATM 轉帳 </label>-->
                     <!--                    </div>-->
 
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-
-                            <label for="cc-name">持卡人姓名</label>
-                            <input type="text" class="form-control" id="cc-name" placeholder="" required>
-                            <small class="text-muted">需和可卡片上全名相同</small>
-                        </div>
-                        <div class="col-md-6 mb-3">
-
-                            <label for="cc-number">Credit card number</label>
-                            <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                        </div>
-                    </div>
-
-
-                    <div class="row">
-                        <div class="col-md-3 mb-3">
-                            <label for="cc-expiration">Expiration</label>
-                            <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-                            <div class="invalid-feedback">
-                                Expiration date required
-                            </div>
-                        </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="cc-cvv">CVV</label>
-                            <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-                            <div class="invalid-feedback">
-                                Security code required
-                            </div>
-                        </div>
-                    </div>
-
-                    <hr class="mb-4">
                     <button class="btn btn-primary bt-lg btn-block " id="nextStep" @click="nextStep()"> 確認無誤
                     </button>
+
+                    <div id="orderForm"></div>
+
                 </div>
             </div>
         </div>
@@ -280,6 +248,7 @@
             let member = sessionStorage.getItem('mem-info');
             if (!member) {
                 alert('plz login !!!')
+                window.location.assign('/CGA104G1/frontend/mem/login.jsp')
             }
             let memberId = JSON.parse(member).memberId
             let qs = Qs;
@@ -315,7 +284,7 @@
         methods: {
             nextStep: function () {
                 var qs = Qs;
-                axios.post('/CGA104G1/NewOrderServlet', qs.stringify({
+                axios.post('/CGA104G1/orderBuy/newOrder.do', qs.stringify({
                     memberId: this.memberId,
                     action: this.action,
                     couponId: this.couponId,
@@ -329,6 +298,7 @@
                 }))
                     .then(res => {
                         console.log(res);
+                       $("#orderForm").html(res.data)
                     })
                     .catch(err => {
                         console.log(err);
@@ -351,7 +321,6 @@
         }
     });
     vm.mount('#app');
-
 </script>
 </body>
 

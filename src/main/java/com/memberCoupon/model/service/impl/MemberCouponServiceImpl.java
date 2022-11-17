@@ -58,11 +58,10 @@ public class MemberCouponServiceImpl implements MemberCouponService {
     }
 
     @Override
-    public MemberCoupon updateCouponStatus(Integer memberId, Integer couponId) {
+    public MemberCoupon updateCouponStatus(Integer memberId, Integer couponId, byte status) {
         MemberCouponDAO memberCouponDAO = new MemberCouponDAOImpl();
         MemberCoupon memberCoupon = new MemberCoupon();
         List<MemberCoupon> list = memberCouponDAO.getByMemIdCouponId(memberId, couponId);
-        System.out.println(list);
         Timestamp date = null;
         for (MemberCoupon coupon : list) {
             date = coupon.getMcpnGettime();
@@ -70,7 +69,7 @@ public class MemberCouponServiceImpl implements MemberCouponService {
         memberCoupon.setCouponId(couponId);
         memberCoupon.setMemId(memberId);
         memberCoupon.setMcpnGettime(date);
-        memberCoupon.setMcpnUse((byte) 1);
+        memberCoupon.setMcpnUse(status);
         memberCouponDAO.updateById(memberCoupon);
         return memberCoupon;
     }

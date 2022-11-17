@@ -128,6 +128,40 @@ public class OrderBuyDAOImpl implements OrderBuyDAO {
     }
 
     @Override
+    public JSONArray listAll() {
+        JSONArray items = null;
+        try (Connection conn = ds.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement("select * from ORDER_BUY order by ORDER_ID")) {
+
+            items = new JSONArray();
+
+            ResultSet rs = pstmt.executeQuery();
+            // 取得列數
+            ResultSetMetaData metaData = rs.getMetaData();
+            int columnCount = metaData.getColumnCount();
+            // 遍瀝 ResultSet
+            while (rs.next()) {
+                JSONObject jsonObj = new JSONObject();
+                for (int i = 1; i <= columnCount; i++) {
+                    String value = null;
+                    String columnName = metaData.getColumnLabel(i);// 列名稱
+                    if (rs.getString(columnName) != null && !rs.getString(columnName).equals("")) {
+                        value = new String(rs.getBytes(columnName), StandardCharsets.UTF_8);
+
+                    } else {
+                        value = "";
+                    }
+                    jsonObj.put(columnName, value);
+                }
+                items.put(jsonObj);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return items;
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<OrderBuy> selectAll() {
         List<OrderBuy> list = null;

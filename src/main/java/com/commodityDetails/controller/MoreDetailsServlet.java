@@ -87,7 +87,7 @@ public class MoreDetailsServlet extends HttpServlet {
                 jsonObj.put("itemName", nameList.get(integer));
                 jsonObj.put("cdAmount", amountList.get(integer));
                 jsonObj.put("itemPrice", priceList.get(integer));
-                jsonObj.put("photo", Base64.getEncoder().encode(photoList.get(integer)));
+                jsonObj.put("photo", Base64.getEncoder().encodeToString(photoList.get(integer)));
                 jsonArr.put(jsonObj);
             }
         } catch (Exception e) {

@@ -2,6 +2,7 @@ package com.login.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,7 @@ import javax.servlet.http.HttpSession;
 import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
 
-@WebServlet("/LoginServlet")
+@WebServlet("/backend/login/LoginServlet")
 
 public class LoginServlet extends HttpServlet {
 
@@ -39,11 +40,11 @@ public class LoginServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		HttpSession session = req.getSession();
-		Map<String, String> sessionid = new HashMap<String, String>();
+//		Map<String, String> sessionid = new HashMap<String, String>();
 		// 登入
 		if ("login".equals(action)) {
 			System.out.println(1);
-			List<String> errorMsgs = new LinkedList<String>();
+			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
@@ -51,13 +52,13 @@ public class LoginServlet extends HttpServlet {
 			String pa = req.getParameter("password");
 			System.out.println(3);
 			if (ac == null || (ac.trim()).length() == 0) {
-				errorMsgs.add("請輸入帳號");
+				errorMsgs.put("account","請輸入帳號");
 			}
 			if (pa == null || (pa.trim()).length() == 0) {
-				errorMsgs.add("請輸入密碼");
+				errorMsgs.put("password","請輸入密碼");
 			}
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher fail = req.getRequestDispatcher("/backend/login/login2.jsp");
+				RequestDispatcher fail = req.getRequestDispatcher("/backend/login/backLogin.jsp");
 				fail.forward(req, res);
 				return;
 			}
@@ -67,23 +68,25 @@ public class LoginServlet extends HttpServlet {
 			/*************************** 2.開始查詢資料 *****************************************/
 			EmpService empSvc = new EmpService();
 			List<EmpVO> empVO = empSvc.login(account, password);
+			
 			Integer effectid = null;
 			for (EmpVO a : empVO) {
 				effectid = a.getEffect_id();
+				
 			}
-
-			System.out.println(2);
+			System.out.println(effectid);
+			
 			String name = null;
 			for (EmpVO a : empVO) {
 				name = a.getEmp_name();
 			}
 
 			if (empVO == null || name == null) {
-				errorMsgs.add("帳號密碼錯誤");
+				errorMsgs.put("account","帳號密碼錯誤");
 			}
 
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher fail = req.getRequestDispatcher("/backend/login/login2.jsp");
+				RequestDispatcher fail = req.getRequestDispatcher("/backend/login/backLogin.jsp");
 				fail.forward(req, res);
 				return;
 			} else {
@@ -93,7 +96,7 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("empVO", empVO);
 				try {
 					String location = (String) session.getAttribute("location");
-					if (location == null) {
+					if (location != null) {
 						session.removeAttribute("location"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
 						res.sendRedirect(location);
 						return;
@@ -101,11 +104,17 @@ public class LoginServlet extends HttpServlet {
 				} catch (IllegalStateException e) {
 					e.printStackTrace();
 				}
-
+				System.out.println(4);
 				String url = "/backend/emp/login_success.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			}
+		}
+		if ("logout".equals(action)) {
+			session.invalidate();
+			String url = "/backend/login/backLogin.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
 		}
 	}
 }

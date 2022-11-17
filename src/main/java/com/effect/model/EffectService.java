@@ -39,7 +39,7 @@ public class EffectService {
 		dao.delete(effect_id);
 	}
 
-	public EffectVO getOnEffectVO(Integer effect_id) {
+	public EffectVO getOnEffect(Integer effect_id) {
 		return dao.findByPK(effect_id);
 	}
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.effect.model.EffectService;
 import com.effect.model.EffectVO;
 
+@WebServlet("/backend/effect/EffectServlet")
 public class EffectServlet  extends HttpServlet{
 
 	
@@ -43,7 +45,7 @@ public class EffectServlet  extends HttpServlet{
 			// 是否為空字串(非空白)
 			if (!errorMsgs.isEmpty()) {
 				// 轉發到
-				RequestDispatcher fail = req.getRequestDispatcher("/effect/select_page.jsp");
+				RequestDispatcher fail = req.getRequestDispatcher("/backend/effect/select_page.jsp");
 				fail.forward(req, res);
 				return;
 			}
@@ -55,26 +57,26 @@ public class EffectServlet  extends HttpServlet{
 				errorMsgs.add("會員編號不正確");
 			}
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher fail = req.getRequestDispatcher("/effect/select_page.jsp");
+				RequestDispatcher fail = req.getRequestDispatcher("/backend/effect/select_page.jsp");
 				fail.forward(req, res);
 				return;
 			}
 
 			// 驗證過,開始查詢資料
 			EffectService effectSvc = new EffectService();
-			EffectVO effectVO = effectSvc.getOnEffectVO(effect_id);
+			EffectVO effectVO = effectSvc.getOnEffect(effect_id);
 			if (effectVO == null) {
 				errorMsgs.add("查無資料");
 			}
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher fail = req.getRequestDispatcher("/effect/select_page.jsp");
+				RequestDispatcher fail = req.getRequestDispatcher("/backend/effect/select_page.jsp");
 				fail.forward(req, res);
 				return;
 			}
 
 			// 回傳資料
 			req.setAttribute("effectVO", effectVO);
-			String url = "/effect/listOneEffect.jsp";
+			String url = "/backend/effect/listOneEffect.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
@@ -87,10 +89,10 @@ public class EffectServlet  extends HttpServlet{
 			Integer effect_id = Integer.valueOf(req.getParameter("effect_id"));
 
 			EffectService effectSvc  = new EffectService();
-			EffectVO effectVO = effectSvc.getOnEffectVO(effect_id);
+			EffectVO effectVO = effectSvc.getOnEffect(effect_id);
 
 			req.setAttribute("effectVO", effectVO);
-			String url = "/effect/update_effect_input.jsp";
+			String url = "/backend//effect/update_effect_input.jsp";
 
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
@@ -117,7 +119,7 @@ public class EffectServlet  extends HttpServlet{
 
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("EffectVO", effectVO);
-				RequestDispatcher fail = req.getRequestDispatcher("/effect/update_effect_input.jsp");
+				RequestDispatcher fail = req.getRequestDispatcher("/backend/effect/update_effect_input.jsp");
 				fail.forward(req, res);
 				return;
 			}
@@ -128,7 +130,7 @@ public class EffectServlet  extends HttpServlet{
 			effectVO = effectSvc.updateEffect(effect_id, effect_name, effect_info);
 
 			req.setAttribute("effectVO", effectVO);
-			String url = "/effect/listOneEffect.jsp";
+			String url = "/backend/effect/listOneEffect.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
@@ -161,7 +163,7 @@ public class EffectServlet  extends HttpServlet{
 
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("effectVO", effectVO);
-				RequestDispatcher fail = req.getRequestDispatcher("/effect/addEffect.jsp");
+				RequestDispatcher fail = req.getRequestDispatcher("/backend/effect/addEffect.jsp");
 				fail.forward(req, res);
 				return;
 			}
@@ -172,7 +174,7 @@ public class EffectServlet  extends HttpServlet{
 //			
 			// 完成,轉交
 			req.setAttribute("effectVO", effectVO);
-			String url = "/effect/listAllEffect.jsp";
+			String url = "/backend/effect/listAllEffect.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
@@ -187,7 +189,7 @@ public class EffectServlet  extends HttpServlet{
 			EffectService effectSvc = new EffectService();
 			effectSvc.deleteEffect(effect_id);
 			//完成,轉交
-			String url = "/effect/listAllEffect.jsp";
+			String url = "/backend/effect/listAllEffect.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}

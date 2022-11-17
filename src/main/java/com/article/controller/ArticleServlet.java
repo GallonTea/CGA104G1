@@ -84,6 +84,7 @@ public class ArticleServlet extends HttpServlet {
 			ArticleVO articleVO = articleSvc.getOneArticle(article_id);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
+			req.setAttribute("articleVO", articleVO);
 			String param = "?article_id=" + articleVO.getArticle_id() + "&article_title=" + articleVO.getArticle_title()
 					+ "&article_content=" + articleVO.getArticle_content() + "&mem_id=" + articleVO.getMem_id()
 					+ "&sort_id=" + articleVO.getSort_id();
@@ -101,14 +102,13 @@ public class ArticleServlet extends HttpServlet {
 
 			String article_content = req.getParameter("article_content").trim();
 
-			Integer article_status = Integer.valueOf(req.getParameter("article_status").trim());
-			Integer article_like = Integer.valueOf(req.getParameter("article_like").trim());
-			Integer article_dislike = Integer.valueOf(req.getParameter("article_dislike").trim());
+			ArticleVO articleVO2 = new ArticleVO();
+			articleVO2.setSort_id(sort_id);
+			req.setAttribute("articleVO", articleVO2);
 
 			/*************************** 2.開始修改資料 *****************************************/
 			ArticleService articleSvc = new ArticleService();
-			ArticleVO articleVO = articleSvc.updateArticle(article_id, sort_id, article_title, article_content,
-					article_status, article_like, article_dislike, mem_id);
+			ArticleVO articleVO = articleSvc.updateArticle(article_id, sort_id, article_title, article_content, mem_id);
 
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("articleVO", articleVO); // 資料庫update成功後,正確的的empVO物件,存入req

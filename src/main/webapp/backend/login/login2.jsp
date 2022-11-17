@@ -17,7 +17,7 @@
 	</ul>
 </c:if>
 
-	<form action="login.do" method="post">
+	<form action="/CGA104G1/LoginServlet" method="post">
 		
 			<table border=1>
 				<tr>

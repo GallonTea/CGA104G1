@@ -26,13 +26,13 @@
 
         <!-- 顯示 SQL 語句 -->
         <property name="hibernate.show_sql">true</property>
-        <!-- 提高 SQL 語句可讀性 -->
         <property name="hibernate.format_sql">true</property>
         <mapping class="com.commodityDetails.model.entity.CommodityDetails"/>
         <mapping class="com.coupon.model.entity.Coupon"/>
         <mapping class="com.memberCoupon.model.entity.MemberCoupon"/>
         <mapping class="com.orderBuy.model.entity.OrderBuy"/>
         <mapping class="com.shopReview.model.entity.ShopReview"/>
+        <mapping class="com.news.model.NewsVO"/>
         <mapping class="com.item.model.ItemVO"/>
         <mapping class="com.itemType.model.ItemTypeVO"/>
         <mapping class="com.itemPhotos.model.ItemPhotosVO"/>

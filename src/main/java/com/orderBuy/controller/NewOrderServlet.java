@@ -232,6 +232,8 @@ public class NewOrderServlet extends HttpServlet {
             return; // 程式中斷
         }
 
+        res.sendRedirect("index.html");
+
     }
 }
 

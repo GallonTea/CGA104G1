@@ -8,5 +8,6 @@ public interface ArticleDAO_interface {
     public void delete(Integer article_id);
     public ArticleVO findByPrimaryKey(Integer article_id);
     public List<ArticleVO> getAll();
+	public void hideArticle(ArticleVO articleVO);
 
 }

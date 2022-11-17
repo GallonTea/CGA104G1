@@ -1,17 +1,27 @@
 package com.article.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ArticleJDBCDAO implements ArticleDAO_interface{
-	String driver = "com.mysql.cj.jdbc.Driver";
-	String url = "jdbc:mysql://localhost:3306/ba_rei?serverTimezone=Asia/Taipei";
-	String userid = "root";
-	String passwd = "password";
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+public class ArticleDAO implements ArticleDAO_interface{
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	private static final String INSERT_STMT =
 			"insert into article(mem_id, sort_id, article_title, article_content)"
@@ -23,9 +33,7 @@ public class ArticleJDBCDAO implements ArticleDAO_interface{
 	private static final String DELETE = 
 			"DELETE FROM article where article_id = ?";
 	private static final String UPDATE =
-			"update article set sort_id = ?, article_title = ?, article_content = ? where article_id = ?";
-	private static final String HIDE =
-			"update article set article_content = ?, article_status = ? where article_id = ?";
+			"update article set sort_id = ?, article_title = ?, article_content = ?, article_status = ?, article_like = ?, article_dislike = ? where article_id = ?";
 	
 
 	@Override
@@ -36,8 +44,7 @@ public class ArticleJDBCDAO implements ArticleDAO_interface{
 		
 		try {
 			
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			ps = con.prepareStatement(INSERT_STMT);
 			ps.setInt(1, articleVO.getMem_id());
 			ps.setInt(2, articleVO.getSort_id());
@@ -45,9 +52,7 @@ public class ArticleJDBCDAO implements ArticleDAO_interface{
 			ps.setString(4, articleVO.getArticle_content());
 			
 			ps.executeUpdate();
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
+
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
 					+ se.getMessage());
@@ -74,67 +79,20 @@ public class ArticleJDBCDAO implements ArticleDAO_interface{
 		PreparedStatement ps = null;
 
 		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			ps = con.prepareStatement(UPDATE);
 			
 
 			ps.setInt(1, articleVO.getSort_id());
 			ps.setString(2, articleVO.getArticle_title());
 			ps.setString(3, articleVO.getArticle_content());
-			ps.setInt(4, articleVO.getArticle_id());
+			ps.setInt(4, articleVO.getArticle_status());
+			ps.setInt(5, articleVO.getArticle_like());
+			ps.setInt(6, articleVO.getArticle_dislike());
+			ps.setInt(7, articleVO.getArticle_id());
 
 			ps.executeUpdate();
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-			// Handle any SQL errors
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-			// Clean up JDBC resources
-		} finally {
-			if (ps != null) {
-				try {
-					ps.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-
-		
-	}
-	
-	public void hideArticle(ArticleVO articleVO) {
-		Connection con = null;
-		PreparedStatement ps = null;
-
-		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			ps = con.prepareStatement(HIDE);
-			
-
-			ps.setString(1, articleVO.getArticle_content());
-			ps.setInt(2, articleVO.getArticle_status());
-			ps.setInt(3, articleVO.getArticle_id());
-
-			ps.executeUpdate();
-
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -167,18 +125,13 @@ public class ArticleJDBCDAO implements ArticleDAO_interface{
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			pstmt = con.prepareStatement(DELETE);
 
 			pstmt.setInt(1, article_id);
 
 			pstmt.executeUpdate();
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -212,8 +165,7 @@ public class ArticleJDBCDAO implements ArticleDAO_interface{
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			ps = con.prepareStatement(GET_ONE_STMT);
 
 			ps.setInt(1, article_id);
@@ -235,10 +187,6 @@ public class ArticleJDBCDAO implements ArticleDAO_interface{
 				articleVO.setArticle_update(rs.getDate("article_update"));
 			}
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -280,8 +228,7 @@ public class ArticleJDBCDAO implements ArticleDAO_interface{
 
 		try {
 
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
+			con = ds.getConnection();
 			ps = con.prepareStatement(GET_ALL_STMT);
 			rs = ps.executeQuery();
 
@@ -301,10 +248,6 @@ public class ArticleJDBCDAO implements ArticleDAO_interface{
 				list.add(articleVO); // Store the row in the list
 			}
 
-			// Handle any driver errors
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
 			// Handle any SQL errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -354,12 +297,15 @@ public class ArticleJDBCDAO implements ArticleDAO_interface{
 				articleVO2.setSort_id(1);
 				articleVO2.setArticle_title("我家的狗會後空翻(附圖)");
 				articleVO2.setArticle_content("如題，更新圖檔 不喜歡就滾");
-				articleVO2.setArticle_id(8);
+				articleVO2.setArticle_status(1);
+				articleVO2.setArticle_like(1);
+				articleVO2.setArticle_dislike(31);
+				articleVO2.setArticle_id(1);
 				
 				dao.update(articleVO2);
 				
 				// 刪除
-//				dao.delete(4);
+				dao.delete(4);
 
 
 				// 查詢

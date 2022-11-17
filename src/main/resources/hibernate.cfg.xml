@@ -18,6 +18,7 @@
         <mapping class="com.memberCoupon.model.entity.MemberCoupon"/>
         <mapping class="com.orderBuy.model.entity.OrderBuy"/>
         <mapping class="com.shopReview.model.entity.ShopReview"/>
+        <mapping class="com.news.model.NewsVO"/>
     </session-factory>
 </hibernate-configuration>
 

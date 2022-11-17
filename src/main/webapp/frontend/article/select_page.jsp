@@ -135,7 +135,7 @@
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				</ul>
 				<form class="d-flex" role="search" method="post" action="/CGA104G1/ArticleServlet">
-					<input class="form-control me-2" type="search" placeholder="請輸入文章編號" name="article_id"> 
+					<input class="form-control me-2" type="search" placeholder="請輸入關鍵字" name="article_id"> 
 					<input type="hidden" name="action" value="getOne_For_Display">
 					<button class="btn btn-outline-info text-nowrap" type="submit" value="送出">查詢</button>
 				</form>

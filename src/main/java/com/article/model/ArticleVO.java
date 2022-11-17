@@ -76,6 +76,7 @@ public class ArticleVO implements java.io.Serializable{
 		this.article_update = article_update;
 	}
 	
+	
 	public com.article_sorttype.model.Article_sorttypeVO getArticle_sorttypeVO() {
 		com.article_sorttype.model.Article_sorttypeService article_sorttypeSvc = new com.article_sorttype.model.Article_sorttypeService();
 		com.article_sorttype.model.Article_sorttypeVO article_sorttypeVO = article_sorttypeSvc.getOneSort(sort_id);

@@ -41,5 +41,9 @@ private Article_reportDAO_interface dao;
 	public List<Article_reportVO> getAll() {
 		return dao.getAll();
 	}
+	
+	public List<Article_reportVO> getAllSolved() {
+		return dao.getAllSolved();
+	}
 
 }

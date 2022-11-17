@@ -47,26 +47,55 @@
 
             <template class="row d-flex justify-content-center align-items-center container">
 
+                <div style="height: 10px"></div>
+
+                <div class="col-1"></div>
+                <button class="col-2 btn btn-success" @click="goBack()" style="opacity: 60%;z-index: 999999999">
+                    回到上一頁
+                </button>
+                <div class="col-5"></div>
+                <button class="col-2 btn btn-success" @click="goOwnCoupon()" style="opacity: 60%;z-index: 999999999">
+                    我的優惠券
+                </button>
+                <div class="col-1"></div>
+
                 <header style="height: 100px">
                     <img src="../../resources/static/image/raphael-maksian-qmpNzGjO_KE-unsplash.jpg" alt="img"
                          class="couponpageimg"/>
                 </header>
 
-                <div id="couponBody" class="cd-flex card text-center col-md-6" v-for="coupon in coupon"
+
+                <div id="couponBody" class="cd-flex card text-center col-md-6"
+                     v-for=" (coupon, index) in coupon"
+                     :key="coupon.COUPON_ID"
                      style="margin: 10px 20px">
+
                     <div class="image"><img src="https://i.imgur.com/DC94rZe.png" width="150"></div>
                     <div class="image2"><img src="https://i.imgur.com/DC94rZe.png" width="150"></div>
                     <h1>${{ coupon.COUPON_VAL }}</h1>
                     <span class="d-block">{{ coupon.COUPON_NAR }}</span>
                     <label class="d-block">使用期間</label>
                     <span class="d-block">{{ coupon.USE_START }} 至 {{ coupon.USE_OVER }}</span>
-                    <label class="d-block">低消限制</label>
-                    <span class="d-block">${{ coupon.MINIMUM }}</span>
-                    <span class="col"><button @click="getCoupon()" class="btn btn-warning">點我領取</button></span>
+                    <small class="d-block">低消限制</small>
+                    <small class="d-block">${{ coupon.MINIMUM }}</small>
+                    <span class="col">
+                        <button @click.once="getCoupon(coupon, index)"
+                                class="btn btn-warning">點我領取</button>
+
+                    </span>
                     <span class="mt-44 align-self-end">
-                        領取期限: <label>{{ coupon.RECEIVE_OVER }}</label>
+                     折價券編號: <small>{{ coupon.COUPON_ID }}</small>
                     </span>
                 </div>
+
+                <!-- 佔位的暫時方案 -->
+                <div style="visibility: hidden">
+                    <div class="cd-flex card text-center col-md-6"
+                         style="margin: 10px 20px">
+                    </div>
+                </div>
+                <!-- 佔位結束 -->
+
 
             </template>
 
@@ -83,15 +112,18 @@
                 memberName: '',
                 memberId: '',
                 coupon: [],
-                action: 'get_Coupon'
+                action: 'get_Coupon',
             }
         },
-        mounted() {
+        beforeCreate() {
             // let member = sessionStorage.getItem('user-info');
             // this.memberName = JSON.parse(member).memName;
             // this.memberId = JSON.parse(member).memId;
-
-            axios.get('/CGA104G1/listAllCouponServlet')
+            let memberId = 1
+            let qs = Qs;
+            axios.post('/CGA104G1/listAllCouponServlet', qs.stringify({
+                memberId: memberId
+            }))
                 .then(res => {
                     this.coupon = res.data;
                     console.log(res);
@@ -100,23 +132,34 @@
                     console.log(err);
                 })
         },
-        method: {
-            getCoupon: function () {
+        methods: {
+            getCoupon: function (coupon, index) {
                 qs = Qs;
-                axios.post('/CGA104G1/getCouponServlet', qs.stringfy({
+                axios.post('/CGA104G1/getCouponServlet', qs.stringify({
                     action: this.action,
-
+                    couponId: this.coupon[index].COUPON_ID
                 }))
                     .then(res => {
                         console.log(res);
+                        this.coupon.splice(index, 1)
+                        if (this.coupon.length === 0) {
+                            alert('已經沒有優惠券囉~')
+                        }
                     })
                     .catch(err => {
                         console.log(err);
                     })
+            },
+            goBack: function () {
+                history.go(-1)
+            },
+            goOwnCoupon: function () {
+                window.location.assign('Coupon.html')
             }
         }
 
     });
+
     vm.mount('#app');
 
 </script>

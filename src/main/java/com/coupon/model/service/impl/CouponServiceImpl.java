@@ -43,6 +43,12 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
+    public JSONArray getById(Integer couponId) {
+        CouponDAO couponDAO = new CouponDAOImpl();
+        return  couponDAO.getById(couponId);
+    }
+
+    @Override
     public List<Coupon> listAllCoupon() {
         return dao.selectAll();
     }

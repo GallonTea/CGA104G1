@@ -17,7 +17,7 @@ public interface MemberCouponService {
 
     JSONArray getOwnCoupon(Integer memId);
 
-    MemberCoupon getOwnCoupon(Integer memId, Integer couponId);
+    List<MemberCoupon> getOwnCoupon(Integer memId, Integer couponId);
 
     List<MemberCoupon> listAllCoupon();
 
@@ -25,5 +25,5 @@ public interface MemberCouponService {
 
     Integer getNewsCount();
 
-    MemberCoupon updateCouponStatus(Integer memberId, Integer couponId);
+    MemberCoupon updateCouponStatus(Integer memberId, Integer couponId, byte status);
 }

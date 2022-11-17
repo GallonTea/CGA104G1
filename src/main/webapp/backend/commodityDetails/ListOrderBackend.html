@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>追蹤訂單詳情</title>
+
+    <!-- import bootstrap 5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+    <!-- import font-style -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
+
+    <!-- import jquery-3.6.0 -->
+    <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- import icon -->
+    <script src="https://kit.fontawesome.com/b5ef6b60f3.js" crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.11.0/qs.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../../resources/static/css/orderDetails.css"/>
+
+    <style>
+        [v-clock] {
+            display: none;
+        }
+
+        body {
+            color: #566787;
+            background: #f5f5f5;
+            font-family: 'Varela Round', sans-serif;
+            font-size: 13px;
+        }
+
+        .table-responsive {
+            margin: 30px 0;
+        }
+
+        .table-wrapper {
+            min-width: 1000px;
+            background: #fff;
+            padding: 20px 25px;
+            border-radius: 3px;
+            box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+        }
+
+        .table-wrapper .btn {
+            float: right;
+            color: #333;
+            background-color: #fff;
+            border-radius: 3px;
+            border: none;
+            outline: none !important;
+            margin-left: 10px;
+        }
+
+        .table-wrapper .btn:hover {
+            color: #333;
+            background: #f2f2f2;
+        }
+
+        .table-wrapper .btn.btn-primary {
+            color: #fff;
+            background: #03A9F4;
+        }
+
+        .table-wrapper .btn.btn-primary:hover {
+            background: #03a3e7;
+        }
+
+        .table-title .btn {
+            font-size: 13px;
+            border: none;
+        }
+
+        .table-title .btn i {
+            float: left;
+            font-size: 21px;
+            margin-right: 5px;
+        }
+
+        .table-title .btn span {
+            float: left;
+            margin-top: 2px;
+        }
+
+        .table-title {
+            color: #fff;
+            background: #4b5366;
+            padding: 16px 25px;
+            margin: -20px -25px 10px;
+            border-radius: 3px 3px 0 0;
+        }
+
+        .table-title h2 {
+            margin: 5px 0 0;
+            font-size: 24px;
+        }
+
+        .show-entries select.form-control {
+            width: 60px;
+            margin: 0 5px;
+        }
+
+        .table-filter .filter-group {
+            float: right;
+            margin-left: 15px;
+        }
+
+        .table-filter input, .table-filter select {
+            height: 34px;
+            border-radius: 3px;
+            border-color: #ddd;
+            box-shadow: none;
+        }
+
+        .table-filter {
+            padding: 5px 0 15px;
+            border-bottom: 1px solid #e9e9e9;
+            margin-bottom: 5px;
+        }
+
+        .table-filter .btn {
+            height: 34px;
+        }
+
+        .table-filter label {
+            font-weight: normal;
+            margin-left: 10px;
+        }
+
+        .table-filter select, .table-filter input {
+            display: inline-block;
+            margin-left: 5px;
+        }
+
+        .table-filter input {
+            width: 200px;
+            display: inline-block;
+        }
+
+        .filter-group select.form-control {
+            width: 110px;
+        }
+
+        .filter-icon {
+            float: right;
+            margin-top: 7px;
+        }
+
+        .filter-icon i {
+            font-size: 18px;
+            opacity: 0.7;
+        }
+
+        table.table tr th, table.table tr td {
+            border-color: #e9e9e9;
+            padding: 12px 15px;
+            vertical-align: middle;
+        }
+
+        table.table tr th:first-child {
+            width: 60px;
+        }
+
+        table.table tr th:last-child {
+            width: 80px;
+        }
+
+        table.table-striped tbody tr:nth-of-type(odd) {
+            background-color: #fcfcfc;
+        }
+
+        table.table-striped.table-hover tbody tr:hover {
+            background: #f5f5f5;
+        }
+
+        table.table th i {
+            font-size: 13px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        table.table td a {
+            font-weight: bold;
+            color: #566787;
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        table.table td a:hover {
+            color: #2196F3;
+        }
+
+        table.table td a.view {
+            width: 30px;
+            height: 30px;
+            color: #2196F3;
+            border: 2px solid;
+            border-radius: 30px;
+            text-align: center;
+        }
+
+        table.table td a.view i {
+            font-size: 22px;
+            margin: 2px 0 0 1px;
+        }
+
+        table.table .avatar {
+            border-radius: 50%;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        .status {
+            font-size: 30px;
+            margin: 2px 2px 0 0;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 10px;
+        }
+
+        .text-success {
+            color: #10c469;
+        }
+
+        .text-info {
+            color: #62c9e8;
+        }
+
+        .text-warning {
+            color: #FFC107;
+        }
+
+        .text-danger {
+            color: #ff5b5b;
+        }
+
+        .pagination {
+            float: right;
+            margin: 0 0 5px;
+        }
+
+        .pagination li a {
+            border: none;
+            font-size: 13px;
+            min-width: 30px;
+            min-height: 30px;
+            color: #999;
+            margin: 0 2px;
+            line-height: 30px;
+            border-radius: 2px !important;
+            text-align: center;
+            padding: 0 6px;
+        }
+
+        .pagination li a:hover {
+            color: #666;
+        }
+
+        .pagination li.active a {
+            background: #03A9F4;
+        }
+
+        .pagination li.active a:hover {
+            background: #0397d6;
+        }
+
+        .pagination li.disabled i {
+            color: #ccc;
+        }
+
+        .pagination li i {
+            font-size: 16px;
+            padding-top: 6px
+        }
+
+        .hint-text {
+            float: left;
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        .rwding {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+
+        }
+
+        a {
+            color: #0a0a0a;
+            text-decoration: none;
+        }
+
+        body {
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<main>
+
+    <div id="app" class="container" v-cloak>
+
+        <div class="container-xl">
+            <div class="table-responsive">
+                <div class="table-wrapper">
+                    <div class="table-title">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <h2>後台 <b>訂單詳情</b></h2>
+                            </div>
+                            <div class="col-sm-8">
+                                <button @click="refresh()" class="btn btn-primary"><i class="fa-solid fa-arrows-rotate"></i> <span>Refresh List</span></button>
+                                <button class="btn btn-secondary"><i class="fa-regular fa-file-excel"></i> <span>Export to Excel</span></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-filter">
+                        <div class="row">
+                            <div class="col-sm-3">
+<!--                                <div class="show-entries">-->
+<!--                                    <span>Show</span>-->
+<!--                                    <select class="form-control">-->
+<!--                                        <option>5</option>-->
+<!--                                        <option>10</option>-->
+<!--                                        <option>15</option>-->
+<!--                                        <option>20</option>-->
+<!--                                    </select>-->
+<!--                                    <span>entries</span>-->
+<!--                                </div>-->
+                            </div>
+                            <div class="col-sm-9">
+                                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                                <div class="filter-group">
+                                    <label>姓名</label>
+                                    <input type="text" class="form-control">
+                                </div>
+
+                                <div class="filter-group">
+                                    <label>訂單狀態</label>
+                                    <select class="select-group" @change="filterStatus()" v-model="filterSta">
+                                        <option value="0">待付款</option>
+                                        <option value="6">已完成</option>
+                                        <option value="3">運輸中</option>
+                                        <option value="2">準備出貨中</option>
+                                        <option value="4">取消審核中</option>
+                                        <option value="5">未取貨退回</option>
+                                        <option value="1">未付款取消</option>
+                                        <option value="9">訂單已取消</option>
+                                        <option value="7">退換貨申請中</option>
+                                        <option value="8">退換貨處理中</option>
+                                    </select>
+                                </div>
+                                <span class="filter-icon"><i class="fa fa-filter"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>收件人姓名</th>
+                            <th>訂單成立時間</th>
+                            <th>訂單狀態</th>
+                            <th>訂單金額</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody v-for="(details, index) in filterStatus" :key="details.ITEM_ID"
+                        >
+                        <tr>
+                            <td>{{ details.MEM_ID }}</td>
+                            <td><a href="#">{{ details.RECEIVER_NAME }}</a></td>
+                            <!--                            <td>London</td>-->
+                            <td>{{ details.ORDER_DATE }}</td>
+                            <td>{{ statusFilter(details.ORDER_STATUS) }}</td>
+                            <td>NT$ {{ details.FINAL_PRICE }}</td>
+                            <td>
+                                <button @click="viewDetail(details, index)" class="view" title="View Details"
+                                        data-bs-target="#myModal" data-bs-toggle="modal"
+                                        data-toggle="tooltip"><i
+                                        class="fa-solid fa-right-long"></i></button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+<!--                    <div class="clearfix">-->
+<!--                        <div class="hint-text">Showing <b>5</b> out of <b>?</b> entries</div>-->
+<!--                        <ul class="pagination">-->
+
+<!--                            <li class="page-item">-->
+<!--                                <button class="page-link">上一頁</button>-->
+<!--                            </li>-->
+<!--                            <li class="page-item active">-->
+<!--                                <button class="page-link">page1</button>-->
+<!--                            </li>-->
+
+<!--                            <li class="page-item">-->
+<!--                                <button class="page-link">下一頁</button>-->
+<!--                            </li>-->
+<!--                        </ul>-->
+<!--                    </div>-->
+                </div>
+            </div>
+        </div>
+
+        <div class="py-2">
+            <div class="modal modal-lg fade" id="myModal">
+                <div class="modal-dialog">
+
+                    <div class="modal-content row d-flex justify-content-center">
+                        <div class="modal-header">
+                            <h5 class="modal-title">商品詳情</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+
+                        <a href="#">
+                            <div class="modal-body" v-for="(detail, index) in detail"
+                                 :key="detail.itemId">
+
+                                <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                    <div class="media-body">
+                                        <h5 class="font-weight-bold mb-2">{{ detail.itemName }}</h5>
+                                        <!--                                    <p class="font-italic text-muted mb-0 small">128 GB ROM | 15.49 cm (6.1 inch)-->
+                                        <!--                                        Display 12MP Rear Camera | 7MP Front Camera A12 Bionic Chip Processor</p>-->
+                                        <div class="d-flex align-items-center justify-content-between mt-1">
+                                            <h6 class="font-weight-bold my-2">$TWD {{ detail.itemPrice }}</h6>
+                                            <h6 class="font-weight-bold my-2">商品數量 {{ detail.cdAmount }}</h6>
+                                            <!--                                        <ul class="list-inline small">-->
+                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
+                                            <!--                                            </li>-->
+                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
+                                            <!--                                            </li>-->
+                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
+                                            <!--                                            </li>-->
+                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
+                                            <!--                                            </li>-->
+                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star-o text-gray"></i></li>-->
+                                            <!--                                        </ul>-->
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <img :src="'data:image/jpeg;base64,' + detail.photo" alt="productImg"
+                                             class="rwding rounded">
+                                    </div>
+
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- import bootstrap 5.2.1 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+        crossorigin="anonymous"></script>
+
+
+<!-- import vue.js  -->
+<script src="https://unpkg.com/vue@3"></script>
+<script src="https://unpkg.com/vue-router@4"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script>
+
+    let vm = Vue.createApp({
+        data() {
+            return {
+                filterSta: '',
+                statusSelect: '',
+                details: [],
+                detail: []
+            }
+        },
+        beforeCreate() {
+            var qs = Qs
+            axios.post('/CGA104G1/ListAllOrderBackServlet')
+                .then(res => {
+                    console.log(res);
+                    this.details = res.data;
+                })
+                .catch(err => {
+                    console.log(err);
+                })
+        },
+        methods: {
+            statusFilter: function (val) {
+                switch (val) {
+                    case '0':
+                        return '🟠 等待付款中'
+                    case '1':
+                        return '⚫ 未完成付款，訂單自動取消'
+                    case '2':
+                        return '🔵 完成付款，準備出貨中'
+                    case '3':
+                        return '⚪ 正在運輸途中'
+                    case '4':
+                        return '🟥 取消訂單審核中'
+                    case '5':
+                        return '🟡 未取貨，退回平台'
+                    case '6':
+                        return '🟢 已完成取貨'
+                    case '7':
+                        return '🟦 退/換貨申請中'
+                    case '8':
+                        return '🔵 退/換貨處理中'
+                    default:
+                        return '⚫ 訂單已取消'
+
+                }
+            },
+            viewDetail: function (details, index) {
+                var qs = Qs
+                axios.post('/CGA104G1/MoreDetailsServlet', qs.stringify({
+                    orderId: this.details[index].ORDER_ID
+                }))
+                    .then(res => {
+                        console.log(res);
+                        this.detail = res.data
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+            },
+
+        },
+        computed: {
+             filterStatus () {
+                return this.details.filter(result => result.ORDER_STATUS.match(this.filterSta))
+            }
+        }
+    });
+
+    vm.mount('#app')
+
+</script>
+</body>
+
+</html>

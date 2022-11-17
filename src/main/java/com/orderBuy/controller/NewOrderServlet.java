@@ -13,6 +13,7 @@ import com.orderBuy.model.entity.OrderBuy;
 import com.orderBuy.model.service.impl.OrderBuyServiceImpl;
 import com.orderBuy.model.service.OrderBuyService;
 import com.item.model.ItemService;
+import core.util.MailServiceForOrder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -20,14 +21,15 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static java.lang.System.out;
 
-@WebServlet(name = "newOrderServlet", value = "/newOrderServlet")
-public class newOrderServlet extends HttpServlet {
+@WebServlet(name = "NewOrderServlet", urlPatterns = {"/NewOrderServlet", "/orderBuy/newOrder.do"})
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
+public class NewOrderServlet extends HttpServlet {
 
 
     private OrderBuyService service;
@@ -45,6 +47,20 @@ public class newOrderServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
+        req.setCharacterEncoding("UTF-8");
+
+        res.setCharacterEncoding("UTF-8");
+
+        /* 允許跨域主機地址 */
+        res.setHeader("Access-Control-Allow-Origin", "*");
+        /* 允許跨域 GET, POST, HEAD 等 */
+        res.setHeader("Access-Control-Allow-Methods", "*");
+        /* 重新預檢驗跨域的緩存時間 (s) */
+        res.setHeader("Access-Control-Max-Age", "3600");
+        /* 允許跨域的請求頭 */
+        res.setHeader("Access-Control-Allow-Headers", "*");
+        /* 是否攜帶 cookie */
+        res.setHeader("Access-Control-Allow-Credentials", "true");
 
         Integer memberId = null;
         memberId = Integer.valueOf(req.getParameter("memberId"));
@@ -52,24 +68,23 @@ public class newOrderServlet extends HttpServlet {
         Integer couponId = null;
         couponId = Integer.valueOf(req.getParameter("couponId"));
 
-
         Byte orderPaying = null;
         orderPaying = Byte.valueOf(req.getParameter("orderPaying"));
 
         Byte orderSend = null;
         orderSend = Byte.valueOf(req.getParameter("orderSend"));
 
-        String orderOther = req.getParameter("orderOther");
+        final String orderOther = req.getParameter("orderOther");
 
-        String receiverName = req.getParameter("receiverName");
+        final String receiverName = req.getParameter("receiverName");
 
-        String receiverAddress = req.getParameter("receiverAddress");
+        final String receiverAddress = req.getParameter("receiverAddress");
 
-        String receiverPhone = req.getParameter("receiverPhone");
+        final String receiverPhone = req.getParameter("receiverPhone");
 
 
         JSONArray jsonArr;
-        String dataArr = req.getParameter("dataArr");
+        final String dataArr = req.getParameter("dataArr");
 
         Map<Integer, Integer> items = new HashMap<Integer, Integer>();
         Map<Integer, Integer> orderItems = new HashMap<Integer, Integer>();
@@ -82,15 +97,21 @@ public class newOrderServlet extends HttpServlet {
         Double discountPrice;
         Double finalPrice = 0.0;
 
-        CouponService couponSvc = new CouponServiceImpl();
-        Coupon coupon = couponSvc.getCouponById(couponId);
-        discountPrice = coupon.getCouponVal();
+
+        if (couponId != 0) {
+            CouponService couponSvc = new CouponServiceImpl();
+            Coupon coupon = couponSvc.getCouponById(couponId);
+            discountPrice = coupon.getCouponVal();
+        } else {
+            discountPrice = 0.0;
+        }
+
 
         try {
             jsonArr = new JSONArray(dataArr);
-            for (int i = 0; i < jsonArr.length(); i++) {
+            for (int index = 0; index < jsonArr.length(); index++) {
 
-                JSONObject tmp = (JSONObject) jsonArr.get(i);
+                JSONObject tmp = (JSONObject) jsonArr.get(index);
 
                 Integer itemId = tmp.getInt("itemId");
 
@@ -129,7 +150,6 @@ public class newOrderServlet extends HttpServlet {
 
         Timestamp timestamp = new Timestamp(datetime);
 
-
         // 寫入資料庫
 
         OrderBuy orderBuy = new OrderBuy();
@@ -148,12 +168,15 @@ public class newOrderServlet extends HttpServlet {
 
         // 新增商品訂單
         OrderBuyService orderBuySvc = new OrderBuyServiceImpl();
-        orderBuySvc.newOrder(orderBuy);
+        boolean b = orderBuySvc.newOrder(orderBuy);
+
         Integer orderId = orderBuy.getOrderId();
 
-        MemberCouponService memberCouponSvc = new MemberCouponServiceImpl();
-        // 將優惠券切換為 1: 已使用
-        memberCouponSvc.updateCouponStatus(1, memberId);
+        if (couponId != 0) {
+            MemberCouponService memberCouponSvc = new MemberCouponServiceImpl();
+            // 將優惠券切換為 1: 已使用
+            memberCouponSvc.updateCouponStatus(memberId, couponId, (byte) 1);
+        }
 
         Integer itemId;
         String itemName;
@@ -162,12 +185,12 @@ public class newOrderServlet extends HttpServlet {
 
         CommodityDetails commodityDetails = new CommodityDetails();
 
-        for (Integer i : itemNames.keySet()) {
+        for (Integer integer : itemNames.keySet()) {
 
-            itemId = items.get(i);
-            itemName = itemNames.get(i);
-            itemPrice = itemPrices.get(i);
-            cdAmount = orderItems.get(i);
+            itemId = items.get(integer);
+            itemName = itemNames.get(integer);
+            itemPrice = itemPrices.get(integer);
+            cdAmount = orderItems.get(integer);
 
             commodityDetails.setOrderId(orderId);
             commodityDetails.setItemId(itemId);
@@ -177,7 +200,36 @@ public class newOrderServlet extends HttpServlet {
 
             CommodityDetailsService commodityDetailsSvc = new CommodityDetailsServiceImpl();
             commodityDetailsSvc.addDetails(commodityDetails);
+        }
 
+        // 資料轉交綠界
+
+        PrintWriter pw = res.getWriter();
+        StringBuffer sb = new StringBuffer();
+        String url = sb.append(req.getScheme()).append("://")
+                .append(req.getServerName()).append(":")
+                .append(req.getServerPort())
+                .append(req.getContextPath()).toString();
+
+        if (b) {
+
+            JSONArray newOrder = new JSONArray();
+
+            try {
+                String result = orderBuySvc.NewOrder(url, orderId, memberId, finalPrice, receiverName, couponId);
+                if (result == null) {
+                    pw.print("綠界發生錯誤，請重稍後再試");
+                    return;
+                }
+                newOrder.put(result);
+                pw.print(newOrder);
+            } catch (Exception e) {
+                e.printStackTrace();
+                pw.print("綠界系統繁忙中，請重稍後再試");
+            }
+        } else {
+            pw.print("系統繁忙中，請重新確認");
+            return; // 程式中斷
         }
 
         res.sendRedirect("shop.html");

@@ -62,13 +62,13 @@
 				<tr>
 					<td colspan="2"></td>
 				</tr>
-							
-				<tr>	
+
+				<tr>
 				<div>${msg}</div>
 				</tr>
 <!-- </form> -->
-		
-		
+
+
 	</center>
 </body>
 </html>

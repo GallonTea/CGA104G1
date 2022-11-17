@@ -18,15 +18,15 @@ public class NotificationJDBCDAO implements NotificationDAO_interface{
 	String userid = "root";
 	String passwd = "password";
 
-	private static final String INSERT_STMT = 
+	private static final String INSERT_STMT =
 		"INSERT INTO notification (mem_id,ntf_context,ntf_read) VALUES (?, ?, ?)";
-	private static final String GET_ALL_STMT = 
+	private static final String GET_ALL_STMT =
 		"SELECT ntf_id,mem_id,ntf_context,ntf_time,ntf_read FROM notification order by ntf_id";
-	private static final String GET_ONE_STMT = 
+	private static final String GET_ONE_STMT =
 		"SELECT ntf_id,mem_id,ntf_context,ntf_time,ntf_read FROM notification where ntf_id = ?";
-	private static final String DELETE = 
+	private static final String DELETE =
 		"DELETE FROM notification where ntf_id = ?";
-	private static final String UPDATE = 
+	private static final String UPDATE =
 		"UPDATE notification set mem_id=?, ntf_context=?, ntf_read=?  where ntf_id = ?";
 
 	@Override
@@ -120,7 +120,7 @@ public class NotificationJDBCDAO implements NotificationDAO_interface{
 				}
 			}
 		}
-		
+
 	}
 
 	@Override
@@ -163,12 +163,12 @@ public class NotificationJDBCDAO implements NotificationDAO_interface{
 				}
 			}
 		}
-		
+
 	}
 
 	@Override
 	public NotificationVO findByPrimaryKey(Integer ntf_id) {
-		
+
 		NotificationVO notificationVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -254,7 +254,7 @@ public class NotificationJDBCDAO implements NotificationDAO_interface{
 
 				list.add(notificationVO); // Store the row in the list
 			}
-			
+
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. "
@@ -289,11 +289,11 @@ public class NotificationJDBCDAO implements NotificationDAO_interface{
 		}
 		return list;
 	}
-	
+
 	public static void main(String[] args) {
 		NotificationJDBCDAO dao = new NotificationJDBCDAO();
 
-		
+
 		// 新增
 		NotificationVO notificationVO1 = new NotificationVO();
 		notificationVO1.setMem_id(2);
@@ -334,7 +334,7 @@ public class NotificationJDBCDAO implements NotificationDAO_interface{
 			System.out.println();
 		}
 	}
-	
+
 
 
 }

@@ -52,7 +52,7 @@ public class UpdateOrderDetailServlet extends HttpServlet {
         res.setHeader("Access-Control-Allow-Credentials", "true");
         res.setHeader("content-type", "text/html;charset=utf-8");
 
-        String action = req.getParameter("action");
+        final String action = req.getParameter("action");
 
         if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
@@ -62,7 +62,7 @@ public class UpdateOrderDetailServlet extends HttpServlet {
             req.setAttribute("errorMsgs", errorMsgs);
 
             /*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-            String str = req.getParameter("orderId");
+            final String str = req.getParameter("orderId");
             if (str == null || (str.trim()).length() == 0) {
                 errorMsgs.add("請選擇欲查詢之訂單編號");
             }
@@ -87,7 +87,7 @@ public class UpdateOrderDetailServlet extends HttpServlet {
                 return;// 程式中斷
             }
             /*************************** 2.開始查詢並修改資料 ****************************************/
-            OrderBuyServiceImpl orderBuyService = new OrderBuyServiceImpl();
+            OrderBuyService orderBuyService = new OrderBuyServiceImpl();
             OrderBuy orderBuy = orderBuyService.getOrderById(orderId);
 
             /*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
@@ -118,9 +118,9 @@ public class UpdateOrderDetailServlet extends HttpServlet {
             final String orderOther = req.getParameter("orderOther");
             final String trackingNum = req.getParameter("trackingNum");
 
-            if (trackingNum == null || trackingNum.trim().length() == 0) {
-                errorMsgs.add("物流編號: 為必要項目");
-            }
+//            if (trackingNum == null || trackingNum.trim().length() == 0) {
+//                errorMsgs.add("物流編號: 為必要項目");
+//            }
             final String receiverName = req.getParameter("receiverName");
             final String receiverNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
             if (receiverName == null || receiverName.trim().length() == 0) {
@@ -137,7 +137,7 @@ public class UpdateOrderDetailServlet extends HttpServlet {
                 errorMsgs.add("連絡電話: 電話格式錯誤");
             }
             /*************************** 2.開始查詢並修改資料 ****************************************/
-            OrderBuyServiceImpl orderBuyService = new OrderBuyServiceImpl();
+            OrderBuyService orderBuyService = new OrderBuyServiceImpl();
             OrderBuy orderBuy = orderBuyService.getOrderById(orderId);
 
             orderBuy.setMemId(memId);

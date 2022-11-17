@@ -6,6 +6,7 @@ import com.memberCoupon.model.entity.MemberCoupon;
 import com.memberCoupon.model.service.MemberCouponService;
 import org.json.JSONArray;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 public class MemberCouponServiceImpl implements MemberCouponService {
@@ -15,7 +16,8 @@ public class MemberCouponServiceImpl implements MemberCouponService {
 
     @Override
     public boolean getCoupon(MemberCoupon memberCoupon) {
-        return dao.insert(memberCoupon) > 0;
+        MemberCouponDAO memberCouponDAO = new MemberCouponDAOImpl();
+        return memberCouponDAO.insert(memberCoupon) > 0;
     }
 
     @Override
@@ -29,13 +31,13 @@ public class MemberCouponServiceImpl implements MemberCouponService {
     }
 
     @Override
-    public JSONArray getOwnCoupon(Integer memId){
+    public JSONArray getOwnCoupon(Integer memId) {
         MemberCouponDAO memberCouponDAO = new MemberCouponDAOImpl();
         return memberCouponDAO.listById(memId);
     }
 
     @Override
-    public MemberCoupon getOwnCoupon(Integer memId, Integer couponId) {
+    public List<MemberCoupon> getOwnCoupon(Integer memId, Integer couponId) {
         return dao.getByMemIdCouponId(memId, couponId);
     }
 
@@ -56,14 +58,19 @@ public class MemberCouponServiceImpl implements MemberCouponService {
     }
 
     @Override
-    public MemberCoupon updateCouponStatus(Integer memberId, Integer couponId) {
+    public MemberCoupon updateCouponStatus(Integer memberId, Integer couponId, byte status) {
         MemberCouponDAO memberCouponDAO = new MemberCouponDAOImpl();
         MemberCoupon memberCoupon = new MemberCoupon();
-        memberCoupon = memberCouponDAO.getByMemIdCouponId(memberId, couponId);
+        List<MemberCoupon> list = memberCouponDAO.getByMemIdCouponId(memberId, couponId);
+        Timestamp date = null;
+        for (MemberCoupon coupon : list) {
+            date = coupon.getMcpnGettime();
+        }
         memberCoupon.setCouponId(couponId);
         memberCoupon.setMemId(memberId);
-        memberCoupon.setMcpnGettime(memberCoupon.getMcpnGettime());
-        memberCoupon.setMcpnUse((byte) 1);
+        memberCoupon.setMcpnGettime(date);
+        memberCoupon.setMcpnUse(status);
+        memberCouponDAO.updateById(memberCoupon);
         return memberCoupon;
     }
 }

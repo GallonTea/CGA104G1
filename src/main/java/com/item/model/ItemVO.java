@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.commodityDetails.model.entity.CommodityDetails;
 import com.itemPhotos.model.ItemPhotosVO;
 import com.itemType.model.ItemTypeVO;
 
@@ -45,12 +46,14 @@ public class ItemVO implements java.io.Serializable {
 	@OneToMany(mappedBy = "itemVO")
 //	@JoinColumn(name="ITEM_ID",referencedColumnName = "ITEM_ID")
 	private List<ItemPhotosVO> photos;
-	
+
 	@OneToOne
 	@JoinColumn(name = "ITEM_ID",insertable = false,updatable = false)
 	private ItemTypeVO itemTypeVO;
-	
-	
+
+	@OneToMany(mappedBy = "item")
+	private  List<CommodityDetails> commodityDetail;
+
 //	public static void main(String[] args) {
 //		Session session = HibernateUtil.getSessionFactory().getCurrentSession();// 拿連線
 //		session.beginTransaction();//開始交易
@@ -59,6 +62,6 @@ public class ItemVO implements java.io.Serializable {
 //		session.getTransaction().commit();
 //
 //	}
-	
-	
+
+
 }

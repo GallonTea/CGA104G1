@@ -13,10 +13,10 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.RequestDispatcher;
 
 public class MailService {
-	
+
 	// 設定傳送郵件:至收信人的Email信箱,Email主旨,Email內容
 	public void sendMail(String to, String subject, String messageText) {
-			
+
 	   try {
 		   // 設定使用SSL連線至 Gmail smtp Server
 		   Properties props = new Properties();
@@ -27,13 +27,13 @@ public class MailService {
 		   props.put("mail.smtp.port", "465");
 
        // ●設定 gmail 的帳號 & 密碼 (將藉由你的Gmail來傳送Email)
-       // ●1) 登入你的Gmail的: 
+       // ●1) 登入你的Gmail的:
        // ●2) 點選【管理你的 Google 帳戶】
        // ●3) 點選左側的【安全性】
-       
+
        // ●4) 完成【兩步驟驗證】的所有要求如下:
        //     ●4-1) (請自行依照步驟要求操作之.....)
-       
+
        // ●5) 完成【應用程式密碼】的所有要求如下:
        //     ●5-1) 下拉式選單【選取應用程式】--> 選取【郵件】
        //     ●5-2) 下拉式選單【選取裝置】--> 選取【Windows 電腦】
@@ -49,10 +49,10 @@ public class MailService {
 		   Message message = new MimeMessage(session);
 		   message.setFrom(new InternetAddress(myGmail));
 		   message.setRecipients(Message.RecipientType.TO,InternetAddress.parse(to));
-		  
-		   //設定信中的主旨  
+
+		   //設定信中的主旨
 		   message.setSubject(subject);
-		   //設定信中的內容 
+		   //設定信中的內容
 		   message.setText(messageText);
 
 		   Transport.send(message);
@@ -62,22 +62,22 @@ public class MailService {
 	     e.printStackTrace();
      }
    }
-	
+
 	 public static void main (String args[]){
-		 
+
 //			RequestDispatcher failureView = req.getRequestDispatcher("/frontend/mem/select_page.jsp");
 //			failureView.forward(req, res);
 
       String to = "dragondazs17@gmail.com";
-      
+
       String subject = "註冊驗證碼";
-      
+
       String ch_name = "Ambrose";
       String passRandom = "111";
-      String messageText = "Hello! " + ch_name + " 您註冊帳號的驗證碼為: " + passRandom + "\n" +" (已經啟用)"; 
-       
+      String messageText = "Hello! " + ch_name + " 您註冊帳號的驗證碼為: " + passRandom + "\n" +" (已經啟用)";
+
       MailService mailService = new MailService();
-      mailService.sendMail(to, subject, messageText);
+//      mailService.sendMail(to, subject, messageText);
 
    }
 

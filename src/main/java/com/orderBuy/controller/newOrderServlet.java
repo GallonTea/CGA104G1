@@ -180,7 +180,7 @@ public class newOrderServlet extends HttpServlet {
 
         }
 
-        res.sendRedirect("index.html");
+        res.sendRedirect("shop.html");
 
     }
 }

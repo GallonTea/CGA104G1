@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Document</title>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <!--     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
  -->
 
@@ -45,6 +46,9 @@
 
 	<!-- 按鈕 -->
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+
+<!--	sweetalert-->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
 .btn {
@@ -190,7 +194,7 @@ img:hover {
 		<nav class="navbar navbar-expand-lg">
 			<div class="container-fluid">
 				<a class="navbar-brand" href="#"> <!-- 網站 logo --> <img
-						src="../../resources/image/Ba-Rei-logo3.png" alt="Logo" width="200px"
+						src="../../resources/static/image/Ba-Rei-logo3.png" alt="Logo" width="200px"
 						height="10%" class="d-inline-block align-text-top">
 				</a>
 
@@ -239,13 +243,29 @@ img:hover {
 								</li>
 								<li><a class="dropdown-item" href="#">客服專區首頁</a></li>
 							</ul></li>
+
+<!--						/種類篩選/-->
+						<li class="nav-item dropdown"><a
+								class="nav-link dropdown-toggle" href="#" role="button"
+								data-bs-toggle="dropdown" aria-expanded="false"> <i
+								class="fa-regular fa-paper-plane"></i> 商品類別
+						</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#">關於我們</a></li>
+								<li><a class="dropdown-item" href="#">常見問題 Q&A</a></li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+								<li><a class="dropdown-item" href="#">客服專區首頁</a></li>
+							</ul></li>
 					</ul>
-					<form class="d-flex" role="search">
-						<input class="form-control me-2" type="search"
-							placeholder="今天你想來點..." aria-label="Search" id="search_bar">
-						<button class="btn btn-outline-success" type="submit"
-							id="search_btn">Search</button>
-					</form>
+					<div class="d-flex" role="search" >
+<!--						onchange="search(this.value)-->
+						<input class="form-control me-2" type="text" id="keyWords"
+							placeholder="今天你想來點..." aria-label="Search" id="search_bar" >
+						<button class="btn btn-outline-success" type="submit" onclick="search()"
+							id="search_btn" >Search</button>
+					</div>
 				</div>
 
 			</div>
@@ -278,7 +298,7 @@ img:hover {
 		<div class="container">
 			<div class="row">
 				<div class="col-md-4 text-start">
-					<a href="#"> <img src="./image/Ba-Rei-logo3.png"
+					<a href="#"> <img src="../../resources/static/image/Ba-Rei-logo3.png"
 						alt="ba-rei_logo">
 						<h3>關於我們</h3>
 					</a>
@@ -304,21 +324,40 @@ img:hover {
 
 
 	<script>
+
+
+
     getAllItem();
     async function getAllItem(pageNumber=1) {
+		let pjName=getProjectName();
 		//res:回應物件
-        let res = await fetch(`/BA_REI/item/items?action=GetAll_For_Display_JS&pageNumber=${pageNumber}`, { method: 'get' });
+        let res = await fetch(`${pjName}/item/items?action=GetAll_For_Display_JS&pageNumber=${pageNumber}`, { method: 'get' });
 		let items = await res.json();  //將回應本體中json格式的字串轉成javascript陣列
+
+
 		$("#test").html('');
-		
+
+
+
 		items.forEach(item=>{
-		
-		 
+			// const image = item.itemPhoto
+			//
+			// function base64(image){
+			// 	let binary ="";
+			// 	const bytes = new Uint8Array(image)
+			// 	const len =bytes.byteLength;
+			// 	for(let i =0; i<len;i++){
+			// 		binary += String.fromCharCode(bytes[i])
+			// 	}
+			// 	return window.btoa(binary)
+			// }
+			// let photo = base64(image)
+			// photo="data:image/png;base64,"+photo
 		 $("#test").append(`
 				
 				 <div class="col-md-3">
 		                <div class="outer">
-		                    <div class="upper"> <img src=data:image/jpeg;base64,${item.itemPhoto}  onclick="showItem(${item.itemId})" class="card-img-top">
+		                    <div class="upper"> <img src="data:image/png;base64,${item.itemPhoto}"  onclick="showItem(${item.itemId})" class="card-img-top">
 		                        <div class="innertext">
 		            <a href="#">
 		                            <h4>${item.itemName}</h4>
@@ -336,7 +375,8 @@ img:hover {
 		
 			
 		})
-	
+
+		getCount();
 		
     }
     
@@ -344,15 +384,17 @@ img:hover {
     	sessionStorage.setItem('itemId', itemId);  
     	location.assign("item_detail.html");
     	/* location = "item_detail.html"; */
-		getCount();
+
 	}
 
 
 	async function getCount(){
-		let res = await fetch("../item/items?action=GetCount");
-		let item = await res.json();//將回應本體中json格式的字串轉成javascript物件
+		let pjName=getProjectName();
+		$("#button").html('');
+		let res = await fetch(pjName+"/item/items?action=GetCount");
+		// let res = await fetch("/BA_REI/item/items?action=GetCount");
+		let item = await res.json();//將回應本體中json格式的字串轉成javsascript物件
 		let count =item.count;
-
 		let page=count%8===0? count/8:count/8+1;
 		for(let i =1;i<=page;i++){
 			$("#button").append(
@@ -361,6 +403,51 @@ img:hover {
 		}
 	}
 
+	document.getElementById("keyWords").addEventListener('keypress',e=>{
+		if(e.keyCode===13){
+			search();
+		}
+	})
+	async function search(){
+		let keyWords=document.getElementById("keyWords").value;
+		let pjName=getProjectName();
+		$("#test").html('');
+		let res = await fetch(pjName+"/item/items?action=search&keyWords="+keyWords);
+		let items = await res.json();
+		console.log(items)
+		items.forEach(item=>{
+
+
+			$("#test").append(`
+
+				 <div class="col-md-3">
+		                <div class="outer">
+		                    <div class="upper"> <img src=data:image/jpeg;base64,${item.itemPhoto}  onclick="showItem(${item.itemId})" class="card-img-top">
+		                        <div class="innertext">
+		            <a href="#">
+		                            <h4>${item.itemName}</h4>
+		                        </div>
+		                    </div>
+		                    <div class="lower">
+                            <span>NT${item.itemPrice}</span>
+		            </a>
+
+		                    </div>
+		                </div>
+		        </div>
+		 `)
+
+
+
+		})
+
+	}
+
+	function getProjectName(){
+		let path = window.location.pathname;
+		let webCtx = path.substring(0, path.indexOf('/', 1));
+		return webCtx;
+	}
 
     
 </script>

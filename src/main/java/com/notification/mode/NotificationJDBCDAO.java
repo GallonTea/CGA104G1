@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-import com.notification.*;
+//import com.notification.*;
 
 public class NotificationJDBCDAO implements NotificationDAO_interface{
 	String driver = "com.mysql.cj.jdbc.Driver";

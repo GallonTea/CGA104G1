@@ -23,7 +23,7 @@ const navbar = `
                         <a class="nav-link active" aria-current="page" href="index.html">首頁</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="./orderBuy/Order.html">毛孩の商城</a>
+                        <a class="nav-link" href="/CGA104G1/frontend/item/shop.html">毛孩の商城</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">團購底加啦</a>

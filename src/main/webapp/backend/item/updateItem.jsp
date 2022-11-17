@@ -169,7 +169,9 @@ String photo =(String) request.getAttribute("itemPhoto");
 
 		showImage()
 		async function showImage(){
-			let res=await fetch("items?action=GetAllPhotos&item_id="+${itemVO.itemId},{method:'get'});
+			let pjName=getProjectName();
+
+			let res=await fetch(pjName+"/item/items?action=GetAllPhotos&item_id="+${itemVO.itemId},{method:'get'});
 			let data=await res.json();
 			data.forEach(e => {
 				$("#image").append(`
@@ -188,7 +190,8 @@ String photo =(String) request.getAttribute("itemPhoto");
 			   const result=confirm("確定刪除此張照片嗎");
 			   if(result){
 			      // 對 GetItemPhoto?action=DeletePhoto&ip_id=\${ipId} 發出請求
-			      fetch(`GetItemPhoto?action=DeletePhoto&ip_id=\${ipId}`)
+				   let pjName=getProjectName();
+			      fetch(`${pjName}GetItemPhoto?action=DeletePhoto&ip_id=\${ipId}`)
 
 			         // 接收回應，並將回應之Body做JSON格式解析
 			         // resp是Response型態的物件，代表回應
@@ -205,6 +208,13 @@ String photo =(String) request.getAttribute("itemPhoto");
 			      )
 			   }
 			}
+
+		function getProjectName(){
+			let path = window.location.pathname;
+			let webCtx = path.substring(0, path.indexOf('/', 1));
+			return webCtx;
+		}
+
 	</script>
 </body>
 </html>

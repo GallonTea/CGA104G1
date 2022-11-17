@@ -1,18 +1,23 @@
 package com.filter;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
-import javax.servlet.*;
-
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-//@WebFilter("/Filter/*")
-public class FilterFilter  implements Filter {
+@WebFilter(urlPatterns =  { "/backend/emp/*" , "/backend/effect/*"} )
+
+public class EmpLoginFilter implements Filter {
    
 	private FilterConfig config;
 
@@ -38,11 +43,13 @@ public class FilterFilter  implements Filter {
 		// 【從 session 判斷此user是否登入過】
 
 		 Object account = session.getAttribute("account");
+		 System.out.println(account);
 		 if(account == null){
+			 System.out.println(req.getRequestURI());
 		 	session.setAttribute("location", req.getRequestURI());
-		 	res.sendRedirect(req.getContextPath()+"/backend/login/login2.jsp");
-		   return; }
-		 else {
+		 	res.sendRedirect(req.getContextPath()+"/backend/login/backLogin.jsp");		 	
+		 	return; 
+		   }else {
 				chain.doFilter(request, response);
 			}
 		System.out.println("123");

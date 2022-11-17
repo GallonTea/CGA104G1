@@ -91,9 +91,9 @@
                                     <li class="nav-item dropdown"><a class="nav-link" href="#" role="button"
                                             aria-expanded="false"> 員工管理 </a>
                                         <ul class="dropdown-menu bg-dark">
-                                            <li><a class="dropdown-item bg-dark text-white-50" href="#">員工資料查詢</a></li>
-                                            <li><a class="dropdown-item bg-dark text-white-50" href="#">員工資料管理</a></li>
-                                            <li><a class="dropdown-item bg-dark text-white-50" href="#">權限查詢與管理</a></li>
+                                            <li><a class="dropdown-item bg-dark text-white-50" href="../emp/select_pagenoeffect.jsp">員工資料查詢</a></li>
+                                            <li><a class="dropdown-item bg-dark text-white-50" href="../emp/select_page.jsp">員工資料管理</a></li>
+                                            <li><a class="dropdown-item bg-dark text-white-50" href="../effect/select_page.jsp">權限查詢與管理</a></li>
                                         </ul>
                                     </li>
                                 </ul>

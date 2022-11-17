@@ -25,6 +25,14 @@ public class Group_Buy_OrderVO implements java.io.Serializable{
 	private String receiver_phone;
 	private Timestamp pickup_time;
 	
+	
+	public com.group_buy_order.model.DiscountVO getEmpVO() {
+	    com.emp.model.EmpService empSvc = new com.emp.model.EmpService();
+	    com.emp.model.EmpVO empVO = empSvc.getOneEmp(emp_id);
+	    return empVO;
+    }
+	
+	
 	public Integer getGborder_id() {
 		return gborder_id;
 	}

@@ -37,7 +37,7 @@ public class Emp_effectService {
 		dao.delete(emp_id);
 	}
 
-	public Emp_effectVO getOneEmp(Integer emp_id) {
+	public List <Emp_effectVO> getOneEmp(Integer emp_id) {
 		return dao.findBypk(emp_id);
 	}
 

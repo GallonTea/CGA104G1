@@ -76,7 +76,7 @@ th, td {
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="emp.do" name="form1">
+	<FORM METHOD="post" ACTION="EmpServlet" name="form1">
 		<table>
 		
 			<tr>

@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
+<%@include file="/backend/backNavbar.jsp"%>
 <html>
 <head>
 
@@ -47,7 +48,7 @@
   
   
   <li>
-    <FORM METHOD="post" ACTION="effect.do" >
+    <FORM METHOD="post" ACTION="EffectServlet" >
         <input type="text" name="effect_id">
         <input type="hidden" name="action" value="getOne_For_Display">
         <input type="submit" value="送出">
@@ -57,7 +58,7 @@
   <jsp:useBean id="effectSvc" scope="page" class="com.effect.model.EffectService" />
    
   <li>
-     <FORM METHOD="post" ACTION="effect.do" >
+     <FORM METHOD="post" ACTION="EffectServlet" >
        <b>選擇權限編號:</b>
        <select size="1" name="effect_id">
          <c:forEach var="effectVO" items="${effectSvc.all}" > 
@@ -70,7 +71,7 @@
   </li>
   
   <li>
-     <FORM METHOD="post" ACTION="efect.do" >
+     <FORM METHOD="post" ACTION="EffectServlet" >
        <b>選擇權限名稱:</b>
        <select size="1" name="effect_id">
         <c:forEach var="effectVO" items="${effectSvc.all}" > 

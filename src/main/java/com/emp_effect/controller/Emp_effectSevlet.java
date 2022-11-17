@@ -1,18 +1,22 @@
 package com.emp_effect.controller;
 
 import java.io.IOException;
-import java.util.LinkedList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
-
+import com.emp_effect.model.Emp_effectService;
+import com.emp_effect.model.Emp_effectVO;
+@WebServlet("/backend/emp_effect/Emp_effectServlet")
 public class Emp_effectSevlet extends HttpServlet {
 
 	@Override
@@ -28,17 +32,17 @@ public class Emp_effectSevlet extends HttpServlet {
 		
 		if ("getOne_For_Display".equals(action)) { 
 
-			List<String> errorMsgs = new LinkedList<String>();
+			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 			String str = req.getParameter("emp_id");
 				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs.add("請輸入員工編號");
+					errorMsgs.put("emp_id","請輸入員工編號");
 				}
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher fail= req
-							.getRequestDispatcher("/emp/select_page.jsp");
+							.getRequestDispatcher("/backend/emp_effect/select_page.jsp");
 					fail.forward(req, res);
 					return;
 				}
@@ -47,37 +51,37 @@ public class Emp_effectSevlet extends HttpServlet {
 				try {
 					emp_id = Integer.valueOf(str);
 				} catch (Exception e) {
-					errorMsgs.add("員工編號格式不正確");
+					errorMsgs.put("emp_id","員工編號格式不正確");
 				}
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher fail = req
-							.getRequestDispatcher("/emp/select_page.jsp");
+							.getRequestDispatcher("/backend/emp_effect/select_page.jsp");
 					fail.forward(req, res);
 					return;//程式中斷
 				}
 				
 				/***************************2.開始查詢資料*****************************************/
-				EmpService empSvc = new EmpService();
-				EmpVO empVO = empSvc.getOneEmp(emp_id);
+				Emp_effectService emp_effectSvc = new Emp_effectService();
+				List<Emp_effectVO> emp_effectVO = emp_effectSvc. getOneEmp(emp_id);
 				if (emp_id == null) {
-					errorMsgs.add("查無資料");
+					errorMsgs.put("emp_id","查無資料");
 				}
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher fail = req
-							.getRequestDispatcher("/emp/select_page.jsp");
+							.getRequestDispatcher("/backend/emp_effect/select_page.jsp");
 					fail.forward(req, res);
 					return;
 				}
-				
+				req.setAttribute("emp_id", emp_id); 
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("empVO", empVO); 
-				String url = "/emp/listOneEmp.jsp";
+				req.setAttribute("emp_effectVO", emp_effectVO); 
+				String url = "/backend/emp_effect/listOneEmp_Effect.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 				successView.forward(req, res);
 		}
 		if ("getOne_For_Update".equals(action)) { 
 
-			List<String> errorMsgs = new LinkedList<String>();
+			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 		
 			req.setAttribute("errorMsgs", errorMsgs);
 			
@@ -85,88 +89,58 @@ public class Emp_effectSevlet extends HttpServlet {
 			Integer emp_id = Integer.valueOf(req.getParameter("emp_id"));
 				
 				/***************************2.開始查詢資料****************************************/
-				EmpService empSvc = new EmpService();
-				EmpVO empVO = empSvc.getOneEmp(emp_id);
+				Emp_effectService emp_effectSvc = new Emp_effectService();
+				List<Emp_effectVO> emp_effectVO = emp_effectSvc.getOneEmp(emp_id);
 								
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
-				req.setAttribute("empVO", empVO);       
-				String url = "/emp/update_emp_input.jsp";
+				req.setAttribute("emp_effectVO", emp_effectVO);       
+				String url = "/backend/emp_effect/update_Emp_Effect_input.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 		}
 		if ("update".equals(action)) { 
 			
-			List<String> errorMsgs = new LinkedList<String>();
+			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 		
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 			
 				
-			String emp_name = req.getParameter("emp_name");
-				String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
-				if (emp_name == null || emp_name.trim().length() == 0) {
-					errorMsgs.add("員工姓名: 請勿空白");
-				} else if(!emp_name.trim().matches(enameReg)) { 
-					errorMsgs.add("員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
-	            }
-				
-				String account = req.getParameter("account").trim();
-				String accountReg = "^[(a-zA-Z0-9_)]{6,10}$";
-				if (emp_name == null || emp_name.trim().length() == 0) {
-					errorMsgs.add("員工帳號: 請勿空白");
-				} else if(!account.trim().matches(accountReg)) { 
-					errorMsgs.add("員工帳號: 英文字母、數字和_ , 且長度必需在6到10之間");
-	            }
-				
-				String password = req.getParameter("password").trim();
-				String passwordReg = "^[(a-zA-Z0-9_)]{6,10}$";
-				if (password == null || password.trim().length() == 0) {
-					errorMsgs.add("員工帳號: 請勿空白");
-				} else if(!password.trim().matches(passwordReg)) { 
-					errorMsgs.add("員工帳號: 英文字母、數字和_ , 且長度必需在6到10之間");
-	            }
-				
-				java.sql.Date onjob_date = null;
-				try {
-					onjob_date = java.sql.Date.valueOf(req.getParameter("onjob_date").trim());
-				} catch (IllegalArgumentException e) {
-					onjob_date=new java.sql.Date(System.currentTimeMillis());
-					errorMsgs.add("請輸入日期!");
-				}
 
-				Integer emp_status = Integer.valueOf(req.getParameter("emp_status").trim());
-				if (emp_status == null ) {
-					errorMsgs.add("員工狀態: 請勿空白");
-				} else if(emp_status != 0 || emp_status != 1 ) { 
-					errorMsgs.add("員工狀態: 只能是0或1");
-	            }
 				Integer emp_id = Integer.valueOf(req.getParameter("emp_id").trim());
+				if (emp_id == null ) {
+					errorMsgs.put("emp_id","員工編號: 請勿空白");
+				} 
+//				else if(emp_status != 0 || emp_status != 1 ) { 
+//					errorMsgs.put("emp_id","員工狀態: 只能是0或1");
+//	            }
+				Integer effect_id = Integer.valueOf(req.getParameter("effect_id").trim());
+				if (effect_id == null ) {
+					errorMsgs.put("effect_id","權限編號: 請勿空白");
+				} 
 
-				EmpVO empVO = new EmpVO();
+				Emp_effectVO emp_effectVO = new Emp_effectVO();
 			
-				empVO.setEmp_name(emp_name);
-				empVO.setAccount(account);
-				empVO.setPassword(password);
-				empVO.setOnjob_date(onjob_date);
-				empVO.setEmp_status(emp_status);
-				empVO.setEmp_id(emp_id);
+	
+				emp_effectVO.setEmp_id(emp_id);
+				emp_effectVO.setEffect_id(effect_id);
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					req.setAttribute("emp_effectVO", emp_effectVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher fail = req
-							.getRequestDispatcher("/emp/update_emp_input.jsp");
+							.getRequestDispatcher("/backend/emp_effect/update_Emp_Effect_input.jsp");
 					fail.forward(req, res);
 					return; //程式中斷
 				}
 				
 				/***************************2.開始修改資料*****************************************/
-				EmpService empSvc = new EmpService();
-				empVO = empSvc.updateEmp(emp_id,emp_name, account, password, onjob_date, emp_status);
+				Emp_effectService emp_effectSvc = new Emp_effectService();
+				emp_effectVO = emp_effectSvc.updateEmp_effect(emp_id,effect_id);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				String url = "/emp/listOneEmp.jsp";
+				req.setAttribute("emp_effectVO", emp_effectVO); // 資料庫update成功後,正確的的empVO物件,存入req
+				String url = "/backend/emp_effect/listOneEmp_Effect.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 		}

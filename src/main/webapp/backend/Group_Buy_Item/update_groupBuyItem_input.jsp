@@ -62,8 +62,10 @@ th, td {
 			<td>
 				<h3>團購商品資料修改 - update_groupBuyItem_input.jsp</h3>
 				<h4>
-					<a
-						href="<%=request.getContextPath()%>/backend/Group_Buy_Item/select_page.jsp">回首頁</a>
+					<a href="<%=request.getContextPath()%>/backend/Group_Buy_Item/select_page.jsp">回首頁</a>
+				</h4>
+				<h4>
+					<a href="<%=request.getContextPath()%>/backend/Group_Buy_Item/listAllGroupBuyItem.jsp">所有團購商品</a>
 				</h4>
 			</td>
 		</tr>

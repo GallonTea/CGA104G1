@@ -1,6 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.article.model.*"%>
+<%
+  ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO"); 
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -113,11 +117,8 @@
                     <span id="tcontent">文章內容</span>
                     <textarea name="article_content" class="editor" value="${param.article_content}">${param.article_content}</textarea>
                 </div>
-                <input type="text" name="sort_id" value="${param.sort_id}">
+<%--                 <input type="text" name="sort_id" value="${param.sort_id}"> --%>
                 <input type="hidden" name="article_id" value="${param.article_id}">
-                <input type="hidden" name="article_like" value="2">
-                <input type="hidden" name="article_dislike" value="23">
-                <input type="hidden" name="article_status" value="1">
                 <input type="hidden" name="mem_id" value="1">
                 <input type="hidden" name="action" value="update">
                 <button class="btn btn-warning" value="送出修改">確認修改</button>

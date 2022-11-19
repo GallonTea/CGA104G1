@@ -28,6 +28,8 @@
     <script src="https://unpkg.com/vue-router@4"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.11.0/qs.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
     <style>
         [v-clock] {
@@ -41,7 +43,7 @@
 
 <main>
 
-    <article>
+    <article style="height: 1000px">
 
         <div id="app" class="container" v-cloak>
 
@@ -81,11 +83,13 @@
 
                         <form>
                             <div class="from-group">
-                                <select v-model="couponSelected" class="form-select">
-                                    <option
-                                            @click="couponSelectChange(coupon, index)"
-                                            v-for="(coupon, index) in coupon"
-                                            :key="coupon.COUPON_ID">
+                                <select v-model="couponSelected" v-for="(coupon, index) in coupon"
+                                        @change="couponSelectChange(coupon, index)"
+                                        class="form-select"
+                                        :key="coupon.COUPON_ID">
+                                    <option value="" disabled selected>使用折價券</option>
+                                    <option style="display: none">{{ index }}</option>
+                                    <option>
                                         {{ coupon.COUPON_NAR }}
                                     </option>
                                 </select>
@@ -247,8 +251,13 @@
         beforeCreate() {
             let member = sessionStorage.getItem('mem-info');
             if (!member) {
-                alert('plz login !!!')
-                window.location.assign('/CGA104G1/frontend/mem/login.jsp')
+                Swal.fire({
+                    icon: 'error',
+                    title: '你還沒登入喔!',
+                })
+                setTimeout(function () {
+                    window.location.assign('/CGA104G1/frontend/mem/login.jsp')
+                }, 2000)
             }
             let memberId = JSON.parse(member).memberId
             let qs = Qs;
@@ -283,26 +292,61 @@
         },
         methods: {
             nextStep: function () {
-                var qs = Qs;
-                axios.post('/CGA104G1/orderBuy/newOrder.do', qs.stringify({
-                    memberId: this.memberId,
-                    action: this.action,
-                    couponId: this.couponId,
-                    orderPaying: this.orderPaying,
-                    orderSend: this.orderSend,
-                    receiverName: this.orderName,
-                    orderOther: this.orderOther,
-                    receiverAddress: this.address,
-                    receiverPhone: this.phone,
-                    dataArr: JSON.stringify(this.orderItems)
-                }))
-                    .then(res => {
-                        console.log(res);
-                       $("#orderForm").html(res.data)
-                    })
-                    .catch(err => {
-                        console.log(err);
-                    })
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-warning'
+                    },
+                    buttonsStyling: false
+                })
+
+                swalWithBootstrapButtons.fire({
+                    title: '確認要送出訂單嗎?',
+                    text: "付款完成後將會收到通知郵件",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: '確認送出',
+                    cancelButtonText: '再次確認',
+                    reverseButtons: true
+
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var qs = Qs;
+                        axios.post('/CGA104G1/orderBuy/newOrder.do', qs.stringify({
+                            memberId: this.memberId,
+                            action: this.action,
+                            couponId: this.couponId,
+                            orderPaying: this.orderPaying,
+                            orderSend: this.orderSend,
+                            receiverName: this.orderName,
+                            orderOther: this.orderOther,
+                            receiverAddress: this.address,
+                            receiverPhone: this.phone,
+                            dataArr: JSON.stringify(this.orderItems)
+                        }))
+                            .then(res => {
+                                console.log(res);
+                                Swal.fire({
+                                    title: '交易送出中請稍後~',
+                                    html: 'data uploading',// add html attribute if you want or remove
+                                    allowOutsideClick: false
+                                })
+                                $("#orderForm").html(res.data)
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            })
+                    } else if (
+                        /* Read more about handling dismissals below */
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire(
+                            '我們還未送出您的訂單',
+                            '您的主人在注視著你呢~ :)',
+                            'warning'
+                        )
+                    }
+                })
             },
             couponSelectChange: function (coupon, index) {
                 var qs = Qs;
@@ -322,8 +366,13 @@
     });
     vm.mount('#app');
 </script>
-</body>
 
+
+</body>
+<!--  NavBar  -->
+<script src="../../resources/static/js/navbar.js"></script>
+<!--  Footer  -->
+<script src="../../resources/static/js/footer.js"></script>
 
 </html>
 <script>

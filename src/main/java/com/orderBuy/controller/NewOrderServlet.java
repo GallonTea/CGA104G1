@@ -231,9 +231,6 @@ public class NewOrderServlet extends HttpServlet {
             pw.print("系統繁忙中，請重新確認");
             return; // 程式中斷
         }
-
-        res.sendRedirect("index.html");
-
     }
 }
 

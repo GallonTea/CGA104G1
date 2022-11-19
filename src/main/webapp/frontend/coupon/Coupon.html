@@ -27,6 +27,7 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.11.0/qs.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <link rel="stylesheet" type="text/css" href="../../resources/static/css/coupon.css"/>
 
@@ -36,6 +37,8 @@
             background-image: url("../../resources/static/image/raphael-maksian-qmpNzGjO_KE-unsplash.jpg");
         }
     </style>
+
+
 </head>
 
 <body>
@@ -122,8 +125,13 @@
         beforeCreate() {
             let member = sessionStorage.getItem('mem-info');
             if (!member) {
-                alert('plz login !!!')
-                window.location.assign('/CGA104G1/frontend/mem/login.jsp')
+                Swal.fire({
+                    icon: 'error',
+                    title: '你還沒登入喔!',
+                })
+                setTimeout(function () {
+                    window.location.assign('/CGA104G1/frontend/mem/login.jsp')
+                }, 1500)
             }
             let memberId = JSON.parse(member).memberId
 
@@ -135,6 +143,13 @@
                 .then(res => {   // 接收回傳
                     this.coupon = res.data; // 將回傳資料賦予 coupon
                     console.log(res.data);  // 印出資料 可以不加
+                    if (res.data.length === 0) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '你還沒有折價券喔!',
+                            footer: '<a href="/CGA104G1/frontend/coupon/GetCoupon.html">前往領取</a>'
+                        })
+                    }
                 })
                 .catch((err => {
                     console.log(err);  // 印出錯誤 也可以不加
@@ -159,6 +174,8 @@
 
 
 </script>
+
+
 </body>
 
 

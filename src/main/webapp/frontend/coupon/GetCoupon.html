@@ -25,6 +25,7 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.11.0/qs.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <link rel="stylesheet" type="text/css" href="../../resources/static/css/coupon.css"/>
 
@@ -118,8 +119,13 @@
         beforeCreate() {
             let member = sessionStorage.getItem('mem-info');
             if (!member) {
-                alert('請先登入!')
-                window.location.assign('/CGA104G1/frontend/mem/login.jsp')
+                Swal.fire({
+                    icon: 'error',
+                    title: '你還沒登入喔!',
+                })
+                setTimeout(function () {
+                    window.location.assign('/CGA104G1/frontend/mem/login.jsp')
+                }, 1500)
             }
             let memberId = JSON.parse(member).memberId
 
@@ -130,6 +136,13 @@
                 .then(res => {
                     this.coupon = res.data;
                     console.log(res);
+                    if (res.data.length === 0) {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: '太貪心囉!稍後再回來看看吧~!',
+                            footer: '<a href="/CGA104G1/frontend/index.html">回到首頁</a>'
+                        })
+                    }
                 })
                 .catch(err => {
                     console.log(err);
@@ -153,7 +166,11 @@
                         console.log(res);
                         this.coupon.splice(index, 1)
                         if (this.coupon.length === 0) {
-                            alert('已經沒有優惠券囉~')
+                            Swal.fire({
+                                icon: 'warning',
+                                title: '優惠券被你領光光了!',
+                                footer: '<a href="/CGA104G1/frontend/coupon/Coupon.html">前往查看</a>'
+                            })
                         }
                     })
                     .catch(err => {

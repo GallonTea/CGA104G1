@@ -24,10 +24,23 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.11.0/qs.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <link rel="stylesheet" type="text/css" href="../../resources/static/css/orderDetails.css"/>
 
+       <link rel="stylesheet" type="text/css" href="../resources/static/css/main.css"/>
+
     <style>
+        body {
+            background: rgba(0, 0, 0, .6) url('../../resources/static/image/andrew-s-ouo1hbizWwo-unsplash.jpg') no-repeat fixed center center;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+            -o-background-size: cover;
+            z-index: -999999;
+            /*opacity: 30%;*/
+        }
+
         [v-clock] {
             display: none;
         }
@@ -41,9 +54,10 @@
             height: 200px;
             object-fit: cover
         }
+
         a {
             color: #0a0a0a;
-            text-decoration:none;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -119,39 +133,38 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
-                        <a href="#">
-                            <div class="modal-body" v-for="(details, index) in details"
-                                 :key="details.itemId">
+                        <div class="modal-body" v-for="(details, index) in details"
+                             :key="details.itemId">
 
-                                <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-                                    <div class="media-body">
+                            <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                <div class="media-body">
+                                    <a href="#">
                                         <h5 class="font-weight-bold mb-2">{{ details.itemName }}</h5>
-                                        <!--                                    <p class="font-italic text-muted mb-0 small">128 GB ROM | 15.49 cm (6.1 inch)-->
-                                        <!--                                        Display 12MP Rear Camera | 7MP Front Camera A12 Bionic Chip Processor</p>-->
-                                        <div class="d-flex align-items-center justify-content-between mt-1">
-                                            <h6 class="font-weight-bold my-2">$TWD {{ details.itemPrice }}</h6>
-                                            <h6 class="font-weight-bold my-2">商品數量 {{ details.cdAmount }}</h6>
-                                            <!--                                        <ul class="list-inline small">-->
-                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
-                                            <!--                                            </li>-->
-                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
-                                            <!--                                            </li>-->
-                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
-                                            <!--                                            </li>-->
-                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
-                                            <!--                                            </li>-->
-                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star-o text-gray"></i></li>-->
-                                            <!--                                        </ul>-->
-                                        </div>
+                                    </a>
+                                    <div class="d-flex align-items-center justify-content-between mt-1">
+                                        <h6 class="font-weight-bold my-2">$TWD {{ details.itemPrice }}</h6>
+                                        <h6 class="font-weight-bold my-2">商品數量 {{ details.cdAmount }}</h6>
+                                        <!--                                        <ul class="list-inline small">-->
+                                        <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
+                                        <!--                                            </li>-->
+                                        <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
+                                        <!--                                            </li>-->
+                                        <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
+                                        <!--                                            </li>-->
+                                        <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
+                                        <!--                                            </li>-->
+                                        <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star-o text-gray"></i></li>-->
+                                        <!--                                        </ul>-->
                                     </div>
-                                    <div>
-                                        <img :src="'data:image/jpeg;base64,' + details.photo" alt="productImg"
-                                             class="rwding rounded">
-                                    </div>
-
                                 </div>
+                                <div>
+                                    <img :src="'data:image/jpeg;base64,' + details.photo" alt="productImg"
+                                         class="rwding rounded">
+                                </div>
+
                             </div>
-                        </a>
+
+                        </div>
 
                     </div>
 
@@ -187,8 +200,13 @@
         beforeCreate() {
             let member = sessionStorage.getItem('mem-info');
             if (!member) {
-                alert('請先登入!')
-                window.location.assign('/CGA104G1/frontend/mem/login.jsp')
+                Swal.fire({
+                    icon: 'error',
+                    title: '你還沒登入喔!',
+                })
+                setTimeout(function () {
+                    window.location.assign('/CGA104G1/frontend/mem/login.jsp')
+                }, 2000)
             }
             let memberId = JSON.parse(member).memberId;
             this.memberId = JSON.parse(member).memberId;
@@ -262,6 +280,6 @@
 <!--  Footer  -->
 <script src="../../resources/static/js/footer.js"></script>
 
-<link rel="stylesheet" type="text/css" href="../../resources/static/css/home.css"/>
+<link rel="stylesheet" type="text/css" href="../../resources/static/css/main.css"/>
 
 </html>

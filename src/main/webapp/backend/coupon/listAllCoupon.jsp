@@ -10,6 +10,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<%@include file="/backend/backNavbar.jsp"%>
 <%
     CouponServiceImpl couponService = new CouponServiceImpl();
     List<Coupon> list = couponService.listAllCoupon();
@@ -74,8 +75,6 @@
                 <th scope="col">最低消費金額</th>
             </tr>
             </thead>
-            <%--   <%@ include file="page1.file" %>--%>
-            <%--<c:forEach var="coupon" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">--%>
             <tbody>
             <c:forEach var="coupon" items="${list}">
 
@@ -111,7 +110,6 @@
                 <i class="fa-solid fa-plus fa-2xl"></i>
             </a>
         </div>
-        <%-- <%@ include file="page2.file" %>--%>
     </div>
 </div>
 

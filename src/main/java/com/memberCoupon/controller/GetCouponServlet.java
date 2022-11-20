@@ -45,29 +45,21 @@ public class GetCouponServlet extends HttpServlet {
         /* 是否攜帶 cookie */
         res.setHeader("Access-Control-Allow-Credentials", "true");
 
-        final String action = req.getParameter("action");
-
-        Integer couponId = null;
-        Integer memId = null;
-        try {
-            memId = Integer.valueOf(req.getParameter("memberId"));
-            couponId = Integer.valueOf(req.getParameter("couponId"));
-        } catch (Exception e) {
-            System.out.println("ERROR: " + e.getMessage());
-            e.printStackTrace();
-        }
+        final Integer memId = Integer.valueOf(req.getParameter("memberId"));
+        final Integer couponId = Integer.valueOf(req.getParameter("couponId"));
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         try {
+
             MemberCoupon memberCoupon = new MemberCoupon();
             memberCoupon.setCouponId(couponId);
             memberCoupon.setMemId(memId);
             memberCoupon.setMcpnGettime(timestamp);
             memberCoupon.setMcpnUse((byte) 0);
 
-
             service.getCoupon(memberCoupon);
+
         } catch (Exception e) {
             System.out.println("ERROR: " + e.getMessage());
             e.printStackTrace();

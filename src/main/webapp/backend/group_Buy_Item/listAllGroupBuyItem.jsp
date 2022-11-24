@@ -60,7 +60,7 @@ th, td {
 			</td>
 			<td>
 				<h4>
-					<a href="<%=request.getContextPath()%>/backend/Group_Buy_Item/select_page.jsp">回首頁</a>
+					<a href="<%=request.getContextPath()%>/backend/group_Buy_Item/select_page.jsp">回首頁</a>
 				</h4>
 			</td>
 		</tr>
@@ -74,6 +74,7 @@ th, td {
 			<th>團購商品狀態</th>
 			<th>團購商品上檔日期</th>
 			<th>團購商品下檔日期</th>
+			<th>團購商品類別</th>
 		</tr>
 		<%@ include file="page1.file" %> 
 		<c:forEach var="Group_Buy_ItemVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -89,6 +90,7 @@ th, td {
 				<c:if test="${Group_Buy_ItemVO.gbitem_status == '3'}"><td><c:out value="有庫存"></td></c:out></c:if>
 				<td>${Group_Buy_ItemVO.gbitem_startdate}</td>
 				<td>${Group_Buy_ItemVO.gbitem_enddate}</td>
+				<td>${Group_Buy_ItemVO.gbitem_type}</td>
 				
 				
 				<td>
@@ -109,9 +111,9 @@ th, td {
 		<%@ include file="page2.file" %>
 </body>
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-<script type="text/javascript">
-	var gbitemStatus = ["超出團購期限下架", "上架中", "無庫存", "有庫存"];
-	var txt = "";
+<!-- <script type="text/javascript"> -->
+// 	var gbitemStatus = ["超出團購期限下架", "上架中", "無庫存", "有庫存"];
+// 	var txt = "";
 	
 	
 	
@@ -127,6 +129,6 @@ th, td {
 // 		  	);
 	
 
-</script>
+<!-- </script> -->
 
 </html>

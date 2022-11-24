@@ -8,7 +8,7 @@ public class Group_BuyService {
 	private Group_BuyDAO_interface dao;
 	
 	public Group_BuyService() {
-		dao = new Group_BuyDAO();
+		dao = new Group_BuyJDBCDAO();
 	}
 	
 	public Group_BuyVO addGroup_Buy(Integer mem_id, Integer gbitem_id, Integer gb_min,
@@ -44,15 +44,22 @@ public class Group_BuyService {
 		return gbVO;
 	}
 	
-	public void deleteEmp(Integer gb_id) {
+	public void deleteGroup_Buy(Integer gb_id) {
 		dao.delete(gb_id);
 	}
 
-	public Group_BuyVO getOneEmp(Integer gb_id) {
+	public Group_BuyVO getOneGroup_Buy(Integer gb_id) {
 		return dao.findByPrimaryKey(gb_id);
 	}
 
 	public List<Group_BuyVO> getAll() {
 		return dao.getAll();
 	}
+	
+	// 用 mem_id 取得所有資料
+	public List<Group_BuyVO> getAllGroupBuyApplyListByMemID(Integer mem_id) {
+		return dao.findByMemID(mem_id);
+	}
+	
+	
 }

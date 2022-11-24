@@ -57,7 +57,7 @@ th, td {
 			</td>
 			<td>
 				<h4>
-					<a href="<%=request.getContextPath()%>/backend/Group_Buy_Item/select_page.jsp">回首頁</a>
+					<a href="<%=request.getContextPath()%>/backend/group_Buy_Item/select_page.jsp">回首頁</a>
 				</h4>
 			</td>
 		</tr>
@@ -81,17 +81,17 @@ th, td {
 			<tr>
 				<td>團購商品名稱:<font color=red><b>*</b></font></td>
 				<td><input type="TEXT" name="gbitem_name" size="45" placeholder = "請輸入文字"
-					value="<%=(group_Buy_ItemVO == null) ? "請輸入文字" : group_Buy_ItemVO.getGbitem_name()%>" /></td>
+					value="<%=(group_Buy_ItemVO == null) ? "" : group_Buy_ItemVO.getGbitem_name()%>" /></td>
 			</tr>
 			<tr>
 				<td>團購商品內容:<font color=red><b>*</b></font></td>
 				<td><input type="TEXT" name="gbitem_content" size="45" placeholder = "請輸入文字"
-					value="<%=(group_Buy_ItemVO == null) ? "請輸入文字" : group_Buy_ItemVO.getGbitem_content()%>" /></td>
+					value="<%=(group_Buy_ItemVO == null) ? "" : group_Buy_ItemVO.getGbitem_content()%>" /></td>
 			</tr>
 			<tr>
 				<td>團購商品價格:<font color=red><b>*</b></font></td>
-				<td><input type="TEXT" name="gbitem_price" size="45" placeholder = "0"
-					value="<%=(group_Buy_ItemVO == null) ? "0" : group_Buy_ItemVO.getGbitem_price()%>" /></td>
+				<td><input type="TEXT" name="gbitem_price" size="45" placeholder = "type 1 2 3"
+					value="<%=(group_Buy_ItemVO == null) ? "" : group_Buy_ItemVO.getGbitem_price()%>" /></td>
 			</tr>
 
 

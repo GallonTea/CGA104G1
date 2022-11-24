@@ -56,7 +56,7 @@ th, td {
 			<td>
 				<h3>單一團購商品資料 - listOneGroupBuyItem.jsp</h3>
 				<h4>
-					<a href="<%=request.getContextPath()%>/backend/Group_Buy_Item/select_page.jsp">回首頁</a>
+					<a href="<%=request.getContextPath()%>/backend/group_Buy_Item/select_page.jsp">回首頁</a>
 				</h4>
 			</td>
 		</tr>

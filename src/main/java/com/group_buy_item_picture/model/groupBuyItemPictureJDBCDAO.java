@@ -37,6 +37,7 @@ public class groupBuyItemPictureJDBCDAO implements groupBuyItemPictureDAO_interf
 
 	private static final String GET_ONE_STMT_GBITEM_ID = "SELECT GBIP_ID, GBITEM_ID, GBIP_CONTENT FROM GROUP_BUY_ITEM_PICTURE where GBITEM_ID = ? limit 1";
 
+	private static final String GET_Second_STMT_GBITEM_ID = "SELECT GBIP_ID, GBITEM_ID, GBIP_CONTENT FROM GROUP_BUY_ITEM_PICTURE where GBITEM_ID = ? limit 2";
 	@Override
 	public void insert(groupBuyItemPictureVO groupBuyItemPictureVO) {
 		Connection con = null;
@@ -350,6 +351,51 @@ public class groupBuyItemPictureJDBCDAO implements groupBuyItemPictureDAO_interf
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return groupBuyItemPictureVO;
+	}
+	public groupBuyItemPictureVO findSecondtPICByGbitemID(Integer gbitem_id) {
+		groupBuyItemPictureVO groupBuyItemPictureVO = null;
+		
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_Second_STMT_GBITEM_ID);
+			pstmt.setInt(1, gbitem_id);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				groupBuyItemPictureVO = new groupBuyItemPictureVO();
+				groupBuyItemPictureVO.setGbip_id(rs.getInt("gbip_id"));
+				groupBuyItemPictureVO.setGbitem_id(rs.getInt("gbitem_id"));
+				groupBuyItemPictureVO.setGbip_content(rs.getBytes("gbip_content"));
+			}
+			
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			
 			if (pstmt != null) {
 				try {
 					pstmt.close();

@@ -56,12 +56,12 @@ h4 {
 				</c:if>
 
 				<ul>
-					<li><a href='listAllGroupBuyItem.jsp'>List</a> all Discount. <br>
+					<li><a href='<%=request.getContextPath()%>/backend/group_Buy_Item/listAllGroupBuyItem.jsp'>List</a> all Discount. <br>
 					<br></li>
 
 
 					<li>
-						<FORM METHOD="post" ACTION="groupBuyItem.do">
+						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Group_Buy_Item/groupBuyItem.do">
 							<b>輸入團購商品編號:</b> <input type="text" name="gbitem_id"> <input
 								type="hidden" name="action" value="getOne_For_Display">
 							<input type="submit" value="送出">
@@ -72,7 +72,7 @@ h4 {
 						class="com.group_buy_item.model.Group_Buy_ItemService" />
 
 					<li>
-						<FORM METHOD="post" ACTION="groupBuyItem.do">
+						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Group_Buy_Item/groupBuyItem.do">
 							<b>選擇團購商品編號:</b> <select size="1" name="gbitem_id">
 								<c:forEach var="Group_Buy_ItemVO" items="${list}">
 									<option value="${Group_Buy_ItemVO.gbitem_id}">${Group_Buy_ItemVO.gbitem_id}
@@ -83,22 +83,24 @@ h4 {
 					</li>
 
 					<li>
-						<FORM METHOD="post" ACTION="groupBuyItem.do">
-							<b>選擇折扣說明:</b> <select size="1" name=""gbitem_id"">
+						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Group_Buy_Item/groupBuyItem.do">
+							<b>團購商品選擇:</b> <select size="1" name="gbitem_id">
 								<c:forEach var="Group_Buy_ItemVO" items="${list}">
 									<option value="${Group_Buy_ItemVO.gbitem_id}">${Group_Buy_ItemVO.gbitem_name}
 								</c:forEach>
-							</select> <input type="hidden" name="action" value="getOne_For_Display">
+							</select> 
+							<input type="hidden" name="action" value="getOne_For_Display">
 							<input type="submit" value="送出">
 						</FORM>
 					</li>
+					
 				</ul>
 
 
 				<h3>團購商品管理</h3>
 
 				<ul>
-					<li><a href='addGroupBuyItem.jsp'>Add</a> a new groupBuyItem.</li>
+					<li><a href='<%=request.getContextPath()%>/backend/group_Buy_Item/addGroupBuyItem.jsp'>Add</a> a new groupBuyItem.</li>
 				</ul>
 
 			</div>

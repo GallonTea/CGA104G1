@@ -14,7 +14,7 @@ pageContext.setAttribute("list", list);
 
 <html>
 <head>
-<title>權限資料</title>
+<title>權限單查</title>
 
 <style>
   table#table-1 {
@@ -53,22 +53,46 @@ pageContext.setAttribute("list", list);
 <body bgcolor='white'>
 
 <table id="table-1">
-	<tr><td>
-		 <h3>權限資料</h3>
-		 <h4><a href="select_page.jsp">回首頁</a></h4>
+	<tr>
+	<td>
+		 <h3>權限資料</h3> 
+	</td>
+	<td>
 	</td></tr>
 </table>
+<div>
+
+<FORM METHOD="post" ACTION="../../backend/emp/EmpServlet" style="margin-bottom: 0px;">
+			     <input type="submit" value="回員工查詢">
+<%-- 			     <input type="hidden" name="effect_id"  value="${effect_id}"> --%>
+			     <input type="hidden" name="action" value="listemp_and_effect"></FORM>
+			   
+</div>
+ 
 
 <table>
 	<tr>
 		<th>員工姓名</th>
-		<th>權限編號</th>
+		<th>權限</th>
+		<th colspan="2">資料變更</th>
 		
 	</tr>
 	<c:forEach var="emp_effectVO" items="${list}" >
 	<tr>
 		<td>${emp_effectVO.empVO.emp_name}</td>
 		<td>${emp_effectVO.effectVO.effect_name}</td>
+		<td>
+		  <FORM METHOD="post" ACTION="Emp_effectServlet" style="margin-bottom: 0px;">
+			     <input type="submit" value="新增">
+			     <input type="hidden" name="emp_id"  value="${emp_effectVO.emp_id}">
+			     <input type="hidden" name="action"	value="go_Insert"></FORM>
+			</td>
+			<td>
+			  <FORM METHOD="post" ACTION="Emp_effectServlet" style="margin-bottom: 0px;">
+			     <input type="submit" value="刪除">
+			     <input type="hidden" name="effect_id"  value="${emp_effectVO.effect_id}">
+			     <input type="hidden" name="action" value="delete"></FORM>
+			</td>
 	</tr>
 	</c:forEach>
 </table>

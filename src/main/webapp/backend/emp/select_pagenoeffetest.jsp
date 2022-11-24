@@ -190,36 +190,18 @@ table#table-1 {
 </c:if>
 
 
-<%-- 萬用複合查詢-以下欄位-可隨意增減 --%>
+
 <ul>  
   <li>   
     <FORM METHOD="post" ACTION="EmpServlet" name="form1">
     
-<!--     <div class="input-block"> -->
-<!--   <input type="text" name="emp_id" id="input-text" required spellcheck="false"> -->
-<!--   <span class="placeholder"> -->
-<!--     輸入員工編號 -->
-<!--   </span> -->
-<!-- </div> -->
-<!--       <div class="input-block"> -->
-<!--   <input type="text" name="emp_name" id="input-text" required spellcheck="false"> -->
-<!--   <span class="placeholder"> -->
-<!--     輸入員工姓名 -->
-<!--   </span> -->
-<!-- </div>  -->
+
         <b><font color=blue>萬用複合查詢:</font></b> <br>
         <span class="label-desc">輸入員工編號:</span>
         <input type="text" name="emp_id" value=""><br>
            <span class="label-desc">輸入員工姓名:</span>
        <input type="text" name="emp_name" value=""><br>
-       
-<!--        <b>輸入員工狀態:</b> -->
-<!--        <select  size="1" name="emp_status" > -->
-<!--         <option value=" "></option>  -->
-<!--         <option value="0">離職</option>  -->
-<!-- 		<option value="1" selected>在職</option>   -->
-<!--        </select> -->
-<!--        <br> -->
+
          <div class="select-box">
     <label for="select-box1" class="label select-box1">
    <span class="label-desc">員工狀態</span> </label>

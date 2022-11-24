@@ -49,7 +49,7 @@ DiscountVO discountVO = (DiscountVO) request.getAttribute("DiscountVO");
 <table id="table-1">
 	<tr><td>
 		 <h3>團購折扣資料修改 - update_GroupBuy_input.jsp</h3>
-		 <h4><a href="<%=request.getContextPath()%>/backend/Discount/select_page.jsp">回首頁</a></h4>
+		 <h4><a href="select_page.jsp">回首頁</a></h4>
 	</td></tr>
 </table>
 
@@ -65,7 +65,7 @@ DiscountVO discountVO = (DiscountVO) request.getAttribute("DiscountVO");
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="Discount.do" name="form1">
+<FORM METHOD="post" ACTION="DiscountServlet" name="form1">
 <table>
 	<tr>
 		<td>折扣編號:<font color=red><b>*</b></font></td>

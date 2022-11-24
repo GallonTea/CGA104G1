@@ -12,7 +12,7 @@ public class Group_JoinService {
 	}
 	
 	public Group_JoinVO addGroup_Join(Integer gb_id, Integer mem_id, 
-			Integer gbpay_status, Integer pickup_status, Integer deliver_status) {
+			Integer gbpay_status, Integer pickup_status, Integer deliver_status ,Integer gbbuy_amount) {
 		
 		Group_JoinVO gjVO = new Group_JoinVO();
 		gjVO.setGb_id(gb_id);
@@ -20,13 +20,14 @@ public class Group_JoinService {
 		gjVO.setGbpay_status(gbpay_status);
 		gjVO.setPickup_status(pickup_status);
 		gjVO.setDeliver_status(deliver_status);
+		gjVO.setDeliver_status(gbbuy_amount);
 		dao.insert(gjVO);
 		
 		return gjVO;
 	}
 	
 	public Group_JoinVO updateGroup_Join(Integer gb_id, Integer mem_id, 
-			Integer gbpay_status, Integer pickup_status, Integer deliver_status) {
+			Integer gbpay_status, Integer pickup_status, Integer deliver_status , Integer gbbuy_amount) {
 		
 		Group_JoinVO gjVO = new Group_JoinVO();
 		gjVO.setGb_id(gb_id);
@@ -34,6 +35,7 @@ public class Group_JoinService {
 		gjVO.setGbpay_status(gbpay_status);
 		gjVO.setPickup_status(pickup_status);
 		gjVO.setDeliver_status(deliver_status);
+		gjVO.setDeliver_status(gbbuy_amount);
 		dao.update(gjVO);
 		
 		return gjVO;

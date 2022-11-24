@@ -1,4 +1,4 @@
-package com.emp.controller;
+package com.group_join.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -14,16 +14,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.emp.model.*;
-import com.emp_effect.model.*;
-import com.group_buy_order.model.Group_Buy_OrderVO;
+import com.emp.model.EmpService;
+import com.emp.model.EmpVO;
+import com.emp_effect.model.Emp_effectVO;
 
 
-@WebServlet("/backend/emp/EmpServlet")
-public class EmpServlet extends HttpServlet {
-
-	private static final long serialVersionUID = 432439384262214523L;
-
+@WebServlet("/group_joinServlet")
+public class group_JoinServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+  
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);

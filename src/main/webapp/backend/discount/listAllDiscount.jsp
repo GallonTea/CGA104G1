@@ -53,7 +53,7 @@ th, td {
 </style>
 </head>
 <body>
-<a href="<%=request.getContextPath()%>/backend/Discount/select_page.jsp">回首頁</a>
+<a href="select_page.jsp">回首頁</a>
 	<table>
 		<tr>
 			<th>折扣編號</th>
@@ -73,13 +73,13 @@ th, td {
 				<td>${DiscountVO.discount_nar}</td>
 				
 				<td>
-				  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Discount/Discount.do" style="margin-bottom: 0px;">
+				  <FORM METHOD="post" ACTION="DiscountServlet" style="margin-bottom: 0px;">
 				     <input type="submit" value="修改">
 				     <input type="hidden" name="discount_id"  value="${DiscountVO.discount_id}">
 				     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 				</td>
 				<td>
-				  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Discount/Discount.do" style="margin-bottom: 0px;">
+				  <FORM METHOD="post" ACTION="DiscountServlet" style="margin-bottom: 0px;">
 				     <input type="submit" value="刪除">
 				     <input type="hidden" name="discount_id"  value="${DiscountVO.discount_id}">
 				     <input type="hidden" name="action" value="delete"></FORM>

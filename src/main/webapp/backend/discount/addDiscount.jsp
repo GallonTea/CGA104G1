@@ -57,7 +57,7 @@ th, td {
 			</td>
 			<td>
 				<h4>
-					<a href="<%=request.getContextPath()%>/backend/Discount/select_page.jsp">回首頁</a>
+					<a href="select_page.jsp">回首頁</a>
 				</h4>
 			</td>
 		</tr>
@@ -75,7 +75,7 @@ th, td {
 		</ul>
 	</c:if>
 
-	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Discount/Discount.do" name="form1">
+	<FORM METHOD="post" ACTION="DiscountServlet" name="form1">
 		<table>
 <!-- 			<tr> -->
 <!-- 				<td>折扣編號:<font color=red><b>*</b></font></td> -->

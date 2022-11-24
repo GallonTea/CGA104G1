@@ -2,13 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<%@include file="/backend/backNavbar.jsp"%>
+
 
 <html>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <head>
 
-<title>團購查詢</title>
+<title>團購</title>
 <style>
 table#table-1 {
 	width: 450px;
@@ -37,16 +37,12 @@ h4 {
 
 	<table id="table-1">
 		<tr>
-			<td><h3>團購訂單查詢</h3></td>
+			<td><h3>參團</h3></td>
 		</tr>
 	</table>
 
 	<ul>
-		<li><a href='#'>員工首頁</a> <br> <br></li>
-
-
-
-
+		<li><a href='#'>回團購團首頁</a> <br> <br></li>
 		<li>
 			<FORM METHOD="post" ACTION="/CGA104G1/Group_Buy_OrderServlet"
 				name="form1">
@@ -92,38 +88,6 @@ h4 {
 			</FORM>
 		</li>
 	</ul>
-
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
-<script src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-<script type="text/javascript">
-$.datetimepicker.setLocale('zh');
-$('#f_date1').datetimepicker({
-    theme: '',              //theme: 'dark',
-   timepicker:false,       //timepicker:true,
-   step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-   format:'Y-m-d',         //format:'Y-m-d H:i:s',
-   value: '',              // value:   new Date(),
-   //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-   //startDate:	            '2017/07/10',  // 起始日
-   //minDate:               '-1970-01-01', // 去除今日(不含)之前
-   //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-});
-$.datetimepicker.setLocale('zh');
-$('#f_date2').datetimepicker({
-    theme: '',              //theme: 'dark',
-   timepicker:false,       //timepicker:true,
-   step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-   format:'Y-m-d',         //format:'Y-m-d H:i:s',
-   value: '',              // value:   new Date(),
-   //disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-   //startDate:	            '2017/07/10',  // 起始日
-   //minDate:               '-1970-01-01', // 去除今日(不含)之前
-   //maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-});
-</script>
-
-
-
 
 </body>
 </html>

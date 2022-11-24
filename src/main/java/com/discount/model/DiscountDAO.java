@@ -16,14 +16,14 @@ import javax.sql.DataSource;
 public class DiscountDAO implements DiscountDAO_interface{
 
 	private static DataSource ds = null;
-	static {
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
-		} catch (NamingException e) {
-			e.printStackTrace();
-		}
-	}
+//	static {
+//		try {
+//			Context ctx = new InitialContext();
+//			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
+//		} catch (NamingException e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	private static final String INSERT_STMT = 
 		"INSERT INTO `ba_rei`.`DISCOUNT` (`GBITEM_ID`, `DISCOUNT_MINAMOUNT`, `DISCOUNT_MAXAMOUNT`, `DISCOUNT_PRICE`, `DISCOUNT_NAR`) VALUES (?, ?, ?, ?, ?)";
@@ -35,11 +35,12 @@ public class DiscountDAO implements DiscountDAO_interface{
 		"DELETE FROM `ba_rei`.`DISCOUNT` where `DISCOUNT_ID` = ?";
 	private static final String UPDATE = 
 		"UPDATE `ba_rei`.`DISCOUNT` set `GBITEM_ID`=?, `DISCOUNT_MINAMOUNT`=?, `DISCOUNT_MAXAMOUNT`=?, `DISCOUNT_PRICE`=?, `DISCOUNT_NAR`=? where `DISCOUNT_ID` = ?";
-	
+	private static final String GET_ONE2_STMT = 
+			"SELECT `DISCOUNT_ID`,`GBITEM_ID`, `DISCOUNT_MINAMOUNT`, `DISCOUNT_MAXAMOUNT`, `DISCOUNT_PRICE`, `DISCOUNT_NAR` FROM `ba_rei`.`DISCOUNT` where `GBITEM_ID` = ?";
 	
 	
 	@Override
-	public void insert(DiscountVO DiscountVO) {
+	public void insert(DiscountVO discountVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -48,11 +49,11 @@ public class DiscountDAO implements DiscountDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setInt(1, DiscountVO.getGbitem_id());
-			pstmt.setInt(2, DiscountVO.getDiscount_minamount());
-			pstmt.setInt(3, DiscountVO.getDiscount_maxamount());
-			pstmt.setInt(4, DiscountVO.getDiscount_price());
-			pstmt.setString(5, DiscountVO.getDiscount_nar());
+			pstmt.setInt(1, discountVO.getGbitem_id());
+			pstmt.setInt(2, discountVO.getDiscount_minamount());
+			pstmt.setInt(3, discountVO.getDiscount_maxamount());
+			pstmt.setInt(4, discountVO.getDiscount_price());
+			pstmt.setString(5, discountVO.getDiscount_nar());
 
 			pstmt.executeUpdate();
 
@@ -80,7 +81,7 @@ public class DiscountDAO implements DiscountDAO_interface{
 	}
 
 	@Override
-	public void update(DiscountVO DiscountVO) {
+	public void update(DiscountVO discountVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -89,11 +90,11 @@ public class DiscountDAO implements DiscountDAO_interface{
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setInt(1, DiscountVO.getGbitem_id());
-			pstmt.setInt(2, DiscountVO.getDiscount_minamount());
-			pstmt.setInt(3, DiscountVO.getDiscount_maxamount());
-			pstmt.setInt(4, DiscountVO.getDiscount_price());
-			pstmt.setString(5, DiscountVO.getDiscount_nar());
+			pstmt.setInt(1, discountVO.getGbitem_id());
+			pstmt.setInt(2, discountVO.getDiscount_minamount());
+			pstmt.setInt(3, discountVO.getDiscount_maxamount());
+			pstmt.setInt(4, discountVO.getDiscount_price());
+			pstmt.setString(5, discountVO.getDiscount_nar());
 
 			pstmt.executeUpdate();
 
@@ -159,7 +160,7 @@ public class DiscountDAO implements DiscountDAO_interface{
 
 	@Override
 	public DiscountVO findByPrimaryKey(Integer discount_id) {
-		DiscountVO DiscountVO = null;
+		DiscountVO discountVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -174,13 +175,13 @@ public class DiscountDAO implements DiscountDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				DiscountVO = new DiscountVO();
-				DiscountVO.setDiscount_id(rs.getInt("discount_id"));
-				DiscountVO.setGbitem_id(rs.getInt("gbitem_id"));
-				DiscountVO.setDiscount_minamount(rs.getInt("discount_minamount"));
-				DiscountVO.setDiscount_maxamount(rs.getInt("discount_maxamount"));
-				DiscountVO.setDiscount_price(rs.getInt("discount_price"));
-				DiscountVO.setDiscount_nar(rs.getString("discount_nar"));
+				discountVO = new DiscountVO();
+				discountVO.setDiscount_id(rs.getInt("discount_id"));
+				discountVO.setGbitem_id(rs.getInt("gbitem_id"));
+				discountVO.setDiscount_minamount(rs.getInt("discount_minamount"));
+				discountVO.setDiscount_maxamount(rs.getInt("discount_maxamount"));
+				discountVO.setDiscount_price(rs.getInt("discount_price"));
+				discountVO.setDiscount_nar(rs.getString("discount_nar"));
 			}
 
 		} catch (SQLException se) {
@@ -209,14 +210,14 @@ public class DiscountDAO implements DiscountDAO_interface{
 				}
 			}
 		}
-		return DiscountVO;
+		return discountVO;
 	}
 	
 
 	@Override
 	public List<DiscountVO> getAll() {
 		List<DiscountVO> list = new ArrayList<DiscountVO>();
-		DiscountVO DiscountVO = null;
+		DiscountVO discountVO = null;
 
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -229,14 +230,14 @@ public class DiscountDAO implements DiscountDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				DiscountVO = new DiscountVO();
-				DiscountVO.setDiscount_id(rs.getInt("discount_id"));
-				DiscountVO.setGbitem_id(rs.getInt("gbitem_id"));
-				DiscountVO.setDiscount_minamount(rs.getInt("discount_minamount"));
-				DiscountVO.setDiscount_maxamount(rs.getInt("discount_maxamount"));
-				DiscountVO.setDiscount_price(rs.getInt("discount_price"));
-				DiscountVO.setDiscount_nar(rs.getString("discount_nar"));
-				list.add(DiscountVO); 
+				discountVO = new DiscountVO();
+				discountVO.setDiscount_id(rs.getInt("discount_id"));
+				discountVO.setGbitem_id(rs.getInt("gbitem_id"));
+				discountVO.setDiscount_minamount(rs.getInt("discount_minamount"));
+				discountVO.setDiscount_maxamount(rs.getInt("discount_maxamount"));
+				discountVO.setDiscount_price(rs.getInt("discount_price"));
+				discountVO.setDiscount_nar(rs.getString("discount_nar"));
+				list.add(discountVO); 
 			}
 
 		} catch (SQLException se) {

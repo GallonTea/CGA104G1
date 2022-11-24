@@ -49,11 +49,11 @@ pageContext.setAttribute("list", list);
 </c:if>
 
 <ul>
-  <li><a href='<%=request.getContextPath()%>/backend/Discount/listAllDiscount.jsp'>List</a> all Discount.  <br><br></li>
+  <li><a href='listAllDiscount.jsp'>List</a> all Discount.  <br><br></li>
   
   
   <li>
-    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Discount/Discount.do" >
+    <FORM METHOD="post" ACTION="DiscountServlet" >
         <b>輸入折扣編號:</b>
         <input type="text" name="discount_id">
         <input type="hidden" name="action" value="getOne_For_Display">
@@ -64,7 +64,7 @@ pageContext.setAttribute("list", list);
   <jsp:useBean id="disSvc" scope="page" class="com.discount.model.DiscountService" /> 
    
   <li>
-     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Discount/Discount.do" >
+     <FORM METHOD="post" ACTION="DiscountServlet" >
        <b>選擇折扣編號:</b>
        <select size="1" name="discount_id">
          <c:forEach var="DiscountVO" items="${list}" > 
@@ -77,7 +77,7 @@ pageContext.setAttribute("list", list);
   </li>
   
   <li>
-     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Discount/Discount.do" >
+     <FORM METHOD="post" ACTION="DiscountServlet" >
        <b>選擇折扣說明:</b>
        <select size="1" name="discount_id">
          <c:forEach var="DiscountVO" items="${list}" > 

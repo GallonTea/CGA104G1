@@ -61,7 +61,7 @@ pageContext.setAttribute("list2", list2);
 <table id="table-1">
 	<tr><td>
 		 <h3>權限資料</h3>
-		 <h4><a href="select_page.jsp">回首頁</a></h4>
+		 <h4><a href="./emp/listAllEmp.jsp">回員工查詢</a></h4>
 	</td></tr>
 </table>
 <%-- <jsp:useBean id="effectSvc" scope="page" class="com.effect.model.EffectService"/> --%>

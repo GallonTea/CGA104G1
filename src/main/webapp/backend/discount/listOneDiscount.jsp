@@ -55,7 +55,7 @@ th, td {
 			<td>
 				<h3>團購折扣資料 - listOneDiscount.jsp</h3>
 				<h4>
-					<a href="<%=request.getContextPath()%>/backend/Discount/select_page.jsp">回首頁</a>
+					<a href="./select_page.jsp">回首頁</a>
 				</h4>
 			</td>
 		</tr>

@@ -123,6 +123,10 @@
         	font-weight: 700;
         	text-align: center;
         }
+        
+        #home-tab, #profile-tab {
+        	border: none;
+        }
     </style>
 </head>
 

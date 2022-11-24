@@ -20,6 +20,7 @@
 
     <!-- import jquery-3.6.0 -->
     <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://demeter.5fpro.com/tw/zipcode-selector.js"></script>
 
     <!-- import icon -->
     <script src="https://kit.fontawesome.com/b5ef6b60f3.js" crossorigin="anonymous"></script>
@@ -30,8 +31,19 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <link rel="stylesheet" type="text/css" href="../../resources/static/css/main.css"/>
 
     <style>
+        /*body {*/
+        /*    background: rgba(0, 0, 0, .6) url('../../resources/static/image/andrew-s-ouo1hbizWwo-unsplash.jpg') no-repeat fixed center center;*/
+        /*    -webkit-background-size: cover;*/
+        /*    -moz-background-size: cover;*/
+        /*    background-size: cover;*/
+        /*    -o-background-size: cover;*/
+        /*    z-index: -999999;*/
+        /*    !*opacity: 30%;*!*/
+        /*}*/
+
         [v-clock] {
             display: none;
         }
@@ -56,7 +68,7 @@
                 <div class="col-md-4 order-md-2 mb-4">
                     <h4 class="d-flex justify-content-between align-items-center mb-3">
                         <span class="text-muted">您的商品</span>
-                        <span class="badge badge-secondary badge-pill">3</span>
+                        <span class="badge badge-secondary badge-pill"></span>
                     </h4>
 
                     <div class="sticky-top">
@@ -117,7 +129,10 @@
                         <!--                        <h4 class="mb-4"> 確認信息 </h4>-->
                         <div class="col-md-6 form-group">
                             <br>
-                            <label for="name"> 收件人姓名 </label><strong style="color: red"> {{ result.receiverNameErr }}</strong>
+                            <label for="name"> 收件人姓名 </label><strong style="color: red"> {{
+                                result.receiverNameErr
+                            }}</strong>
+                            <br>
                             <input type="text" class="form-control" id="name" v-model="orderName"
                                    placeholder="請輸入本名" required>
                             <div class="invalid-feedback">
@@ -127,7 +142,9 @@
 
                         <div class="col-md-6 form-group">
                             <br>
-                            <label for="phone"> 行動電話 </label><strong style="color: red"> {{ result.receiverPhoneErr }}</strong>
+                            <label for="phone"> 行動電話 </label><strong style="color: red">
+                            {{ result.receiverPhoneErr }}</strong>
+                            <br>
                             <input type="text" class="form-control" v-model="phone" id="phone"
                                    placeholder="ex. 0900-000-000"
                                    required>
@@ -140,20 +157,48 @@
 
                     <div>收件地址</div>
 
+                    <div class="row mt-4">
+                        <strong style="color: red">
+                            {{ result.cityErr }}</strong>
+                        <div class="form-group">
 
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="inputAddress" v-model="address" name="address"
-                               placeholder="請輸入地址" required>
+                            <input class="js-demeter-tw-zipcode-selector form-control" data-city="#city"
+                                   data-dist="#dist"
+                                   placeholder="請輸入郵遞區號"
+                                   hidden>
+                        </div>
+                        <strong style="color: red">
+                            {{ result.distErr }}</strong>
+                        <div class="form-group col-md-6">
+
+                            <select class="form-select" id="city" placeholder="請選擇縣市" v-model="city">
+                                <option value="0" disabled selected>請選擇縣市</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+
+                            <select class="form-select" id="dist" placeholder="請選擇鄉鎮區" v-model="dist">
+                                <option value="0" disabled selected>請先選擇縣市</option>
+                            </select>
+                        </div>
                     </div>
                     <br>
-                    <div class="invalid-feedback">
-                        寄件地址為必要項目
-                    </div>
 
-                    <label>其他備註</label>
-                    <div class="input-group">
-                        <textarea class="form-control" id="other" v-model="orderOther" name="orderOther"></textarea>
+                    <div class="form-group">
+                        <strong style="color: red">
+                            {{ result.addressErr }}</strong>
+                        <input type="text" class="form-control" id="inputAddress" v-model="address" name="address"
+                               placeholder="請輸入地址" required>
+                        <div class="invalid-feedback">
+                            寄件地址為必要項目
+                        </div>
                     </div>
+                    <br>
+
+                    <!--                    <label>其他備註</label>-->
+                    <!--                    <div class="input-group">-->
+                    <!--                        <textarea class="form-control" id="other" v-model="orderOther" name="orderOther"></textarea>-->
+                    <!--                    </div>-->
 
 
                     <hr>
@@ -182,15 +227,6 @@
 
 </main>
 
-<footer>
-
-    <div class="container">
-
-    </div>
-
-</footer>
-
-
 <!-- import bootstrap 5.2.1 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
@@ -202,15 +238,20 @@
 <script src="https://unpkg.com/vue-router@4"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+<!--  NavBar  -->
+<script src="../../resources/static/js/navbar.js"></script>
+<!--  Footer  -->
+<script src="../../resources/static/js/footer.js"></script>
 <script>
-
     let vm = Vue.createApp({
         data() {
             return {
+                zipcode: '',
+                city: '',
+                dist: '',
                 couponSelected: '',
                 couponVal: '0',
                 couponId: '0',
-                action: 'new_Order',
                 memberId: '',
                 coupon: [],
                 orderItems: [
@@ -316,12 +357,13 @@
                         var qs = Qs;
                         axios.post('/CGA104G1/orderBuy/newOrder.do', qs.stringify({
                             memberId: this.memberId,
-                            action: this.action,
                             couponId: this.couponId,
                             orderPaying: this.orderPaying,
                             orderSend: this.orderSend,
                             receiverName: this.orderName,
-                            orderOther: this.orderOther,
+                            // orderOther: this.orderOther,
+                            dist: this.dist,
+                            city: this.city,
                             receiverAddress: this.address,
                             receiverPhone: this.phone,
                             dataArr: JSON.stringify(this.orderItems)
@@ -371,14 +413,6 @@
     vm.mount('#app');
 </script>
 
-
 </body>
-<!--  NavBar  -->
-<script src="../../resources/static/js/navbar.js"></script>
-<!--  Footer  -->
-<script src="../../resources/static/js/footer.js"></script>
 
 </html>
-<script>
-
-</script>

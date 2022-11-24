@@ -78,19 +78,32 @@ public class NewOrderServlet extends HttpServlet {
         final String receiverName = req.getParameter("receiverName");
         final String nameReg = "^[\\u4e00-\\u9fa5]+$|^[a-zA-Z\\s]+$";
         if (receiverName == null || receiverName.trim().length() == 0) {
-            jsonMsg.put("receiverNameErr", "收件人姓名不可空白");
+            jsonMsg.put("receiverNameErr", "* 收件人姓名不可空白");
         } else if (!receiverName.trim().matches(nameReg)) {
-            jsonMsg.put("receiverNameErr", "收件人姓名包含不合法字元");
+            jsonMsg.put("receiverNameErr", "* 收件人姓名包含不合法字元");
         }
 
-        final String receiverAddress = req.getParameter("receiverAddress");
+        final String city = req.getParameter("city");
+        if (city == null || city.trim().length() == 0) {
+            jsonMsg.put("cityErr", "* 縣市為必填項目");
+        }
+        final String dist = req.getParameter("dist");
+        if (dist == null || dist.trim().length() == 0) {
+            jsonMsg.put("distErr", "* 鄉鎮市區為必填項目");
+        }
+        final String address = req.getParameter("receiverAddress");
+        if (address == null || address.trim().length() == 0) {
+            jsonMsg.put("addressErr", "* 地址為必填項目");
+        }
+
+        String receiverAddress = city + ", " + dist + ", " + address;
 
         final String receiverPhone = req.getParameter("receiverPhone");
         String phoneReg = "^[0][9]\\d{8}$";
         if (receiverPhone == null || receiverPhone.trim().length() == 0) {
-            jsonMsg.put("receiverPhoneErr", "手機號碼不可空白");
+            jsonMsg.put("receiverPhoneErr", "* 手機號碼不可空白");
         } else if (!receiverPhone.trim().matches(phoneReg)) {
-            jsonMsg.put("receiverPhoneErr", "手機號碼格式異常");
+            jsonMsg.put("receiverPhoneErr", "* 手機號碼格式異常");
         }
 
         if (!jsonMsg.isEmpty()) {

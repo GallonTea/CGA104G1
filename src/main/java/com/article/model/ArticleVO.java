@@ -89,6 +89,12 @@ public class ArticleVO implements java.io.Serializable{
 	    return article_identityVO;
 	}
 	
+	public com.mem.model.MemVO getMemVO() {
+		com.mem.model.MemService memSvc = new com.mem.model.MemService();
+		com.mem.model.MemVO memVO = memSvc.getOneMem(mem_id);
+	    return memVO;
+    }
+	
 	public Integer getArtLike() {
 		com.artLikeHate.model.ArtLikeHateService artLikeHateSvc = new com.artLikeHate.model.ArtLikeHateService();
 		Integer like = artLikeHateSvc.getLike(article_id);

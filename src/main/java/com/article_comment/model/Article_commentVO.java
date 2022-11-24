@@ -44,5 +44,11 @@ public class Article_commentVO implements java.io.Serializable{
 		com.article_identity.model.Article_identityVO article_identityVO = article_identitySvc.getOneArticle_picture(mem_id);
 	    return article_identityVO;
 	}
+	
+	public com.mem.model.MemVO getMemVO() {
+		com.mem.model.MemService memSvc = new com.mem.model.MemService();
+		com.mem.model.MemVO memVO = memSvc.getOneMem(mem_id);
+	    return memVO;
+    }
 
 }

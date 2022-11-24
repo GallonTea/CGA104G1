@@ -1,28 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.emp.model.*"%>
-<%@page import="com.mem.model.MemVO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="java.util.*"%>
-<%
-MemVO memVO = (MemVO) request.getAttribute("memVO");
-EmpService empSvc = new EmpService();
-List<EmpVO> list = empSvc.login((String)session.getAttribute("account"),(String)session.getAttribute("password"));
-session.setAttribute("list", list);
-%> 
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.6.1.js"
         integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 <title>客服中心</title>
 <style>
-
+		/*整體設定 */
 		.container {
+		display: flex;
 			width: 75%;
+		}
+		
+		#row {
+			width: 25%;
 		}
 		
         #statusOutput {
@@ -32,8 +29,17 @@ session.setAttribute("list", list);
         .none {
         width: 50%
         }
+        
+		/* 客戶列表設定 */
+		.column {
+			font-size: 18px;
+			padding: 5px;
+		}
 
         /* 聊天室設定 */
+        .chat{
+        	width: 70%;
+        }
         .panel {
             width: 70%;
             float: right;
@@ -49,7 +55,6 @@ session.setAttribute("list", list);
         
         #messagesArea {
         	height: 350px;
-        	
         }
         
         #area {
@@ -107,32 +112,17 @@ session.setAttribute("list", list);
 		}
     </style>
 </head>
-
 <body onload="connect();" onunload="disconnect();">
+<h3 id="statusOutput" class="statusOutput"></h3>
 <div class="container">
-	<h3 id="statusOutput" class="statusOutput">admin</h3>
-	<div class="serviceName">
-		<span class="blockName">客服中心</span>
+	<div id="row"></div>
+	<div class="chat">
+	<div id="messagesArea" class="panel message-area" ></div>
+	<div class="panel input-area">
+		<input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
+		<input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();" /> 
 	</div>
-
-<!--     <div id="row"> -->
-<!--     	<span>客服列表</span> -->
-<!--     	<div id="0" class="column" name="friendName" value="admin"> -->
-<!--             <span class="name">admin</span><br> -->
-<!--         </div> -->
-<!--     </div> -->
-    <div class="chatroom">
-    	
-        <div id="messagesArea" class="panel message-area">
-        </div>
-        <div class="panel input-area">
-            <input id="message" class="text-field" type="text" placeholder="Message"
-                onkeydown="if (event.keyCode == 13) sendMessage();">&ensp;
-            <input type="submit" id="sendMessage" class="button btn btn-primary" value="Send" onclick="sendMessage();">
-            <!-- 		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" />  -->
-            <!-- 		<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" /> -->
-        </div>
-    </div>
+	</div>
 </div>
 </body>
 
@@ -159,17 +149,18 @@ session.setAttribute("list", list);
 		webSocket.onmessage = function(event) {
 			var jsonObj = JSON.parse(event.data);
 			if ("open" === jsonObj.type) {
-// 				refreshFriendList(jsonObj);
 			} else if ("history" === jsonObj.type) {
 				messagesArea.innerHTML = '';
 				var ul = document.createElement('ul');
 				ul.id = "area";
 				messagesArea.appendChild(ul);
+				// 這行的jsonObj.message是從redis撈出跟好友的歷史訊息，再parse成JSON格式處理
 				var messages = JSON.parse(jsonObj.message);
 				for (var i = 0; i < messages.length; i++) {
 					var historyData = JSON.parse(messages[i]);
 					var showMsg = historyData.message;
 					var li = document.createElement('li');
+					// 根據發送者是自己還是對方來給予不同的class名, 以達到訊息左右區分
 					historyData.sender === self ? li.className += 'me' : li.className += 'friend';
 					li.innerHTML = showMsg;
 					ul.appendChild(li);
@@ -183,7 +174,6 @@ session.setAttribute("list", list);
 				document.getElementById("area").appendChild(li);
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			} else if ("close" === jsonObj.type) {
-// 				refreshFriendList(jsonObj);
 			}
 			
 		};
@@ -207,18 +197,50 @@ session.setAttribute("list", list);
 			var jsonObj = {
 				"type" : "chat",
 				"sender" : self,
-				"receiver" : "admin",
+				"receiver" : friend,
 				"message" : message
 			};
 			webSocket.send(JSON.stringify(jsonObj));
-			showMessage();
 			inputMessage.value = "";
 			inputMessage.focus();
 		}
 	}
+
+	//取得客服清單
+	function loadGuest() {
+		var row = document.getElementById("row");
+		row.innerHTML = `
+			<c:forEach items="${requestScope.keys}" var="keys">
+			<div class="columnBlock"><span class = column id="${keys}">${keys}</span></div><hr>
+			</c:forEach>
+		`;		
+		addListener();
+	}
 	
-	$(document).ready(showMessage()); 
+	$(document).ready(loadGuest());
 	
+	$("#sendMessage").click(function(){
+	      var scrollHeight = $('#area').prop("scrollHeight");
+	      $('#area').scrollTop(scrollHeight,5000);
+	    });
+
+	// 註冊列表點擊事件並抓取好友名字以取得歷史訊息
+	function addListener() {
+		var container = document.getElementById("row");
+		container.addEventListener("click", function(e) {
+			var friend = e.srcElement.textContent;
+			updateFriendName(friend);
+			var jsonObj = {
+					"type" : "history",
+					"sender" : self,
+					"receiver" : friend,
+					"message" : ""
+				};
+			webSocket.send(JSON.stringify(jsonObj));
+		});
+	}
+	
+	//離線時顯示傳送訊息
 	function showMessage() {
 		var friend = "admin";
 		updateFriendName(friend);
@@ -232,7 +254,6 @@ session.setAttribute("list", list);
 			webSocket.send(JSON.stringify(jsonObj));
 		}, 50)
 	}
-
 	
 	function disconnect() {
 		webSocket.close();

@@ -87,11 +87,12 @@
             background-color: #efeeee;
         }
 
-        table thead{
+        table thead {
             display: block;
             width: auto;
         }
-        table tbody{
+
+        table tbody {
             display: block;
             height: 700px;
             overflow-y: auto;
@@ -99,12 +100,13 @@
 
         }
 
-        table thead tr,table tbody tr,table tfoot tr{
+        table thead tr, table tbody tr, table tfoot tr {
             box-sizing: border-box;
             table-layout: fixed;
             display: table;
             width: auto;
         }
+
         .up,
         .down {
             position: relative;
@@ -144,7 +146,8 @@
             height: 2.2em;
             font-size: 1.5em;
         }
-        .addItem{
+
+        .addItem {
             margin-top: 24px;
             margin-left: 1042px;
         }
@@ -154,16 +157,16 @@
 <div class="container" id="app">
     <button class="addItem" @click="addItem()">+新增商品</button>
     <h1></h1>
-<!--    <form action="" style="margin-bottom: 1em;">-->
-<!--           -->
-<!--        <span class="searchBtn"> <button type="submit" class="bi bi-search"></button></span>-->
-<!--        &lt;!&ndash; <i class="bi bi-search"></i> &ndash;&gt;-->
-<!--    </form>-->
+    <!--    <form action="" style="margin-bottom: 1em;">-->
+    <!--           -->
+    <!--        <span class="searchBtn"> <button type="submit" class="bi bi-search"></button></span>-->
+    <!--        &lt;!&ndash; <i class="bi bi-search"></i> &ndash;&gt;-->
+    <!--    </form>-->
 
-            <span class="filter-table">
-                <input type="text" v-model="search" @keyup.enter="searchItem()" placeholder="Search table" />
+    <span class="filter-table">
+                <input type="text" v-model="search" @keyup.enter="searchItem()" placeholder="Search table"/>
             </span>
-            <span class="searchBtn"> <button type="submit" class="bi bi-search" @click="searchItem()"></button></span>
+    <span class="searchBtn"> <button type="submit" class="bi bi-search" @click="searchItem()"></button></span>
     <table>
         <thead>
         <tr style="width: 100%">
@@ -193,19 +196,19 @@
             <td>{{item.itemStatus}}</td>
             <td>{{item.itemDate}}</td>
             <td>{{item.itemEndDate}}</td>
-            <td><img style="width:186px" :src="`data:image/png;base64,${item.itemPhoto}`" /></td>
+            <td><img style="width:186px" :src="`data:image/png;base64,${item.itemPhoto}`"/></td>
             <td>
-                <FORM METHOD="post" ACTION="update.html">
-                    <button @click="saveId(item.itemId)">修改</button>
-                </FORM>
+                <!--                <FORM METHOD="post" ACTION="update.html">-->
+                <button @click="updateItem(item.itemId)">修改</button>
+                <!--                </FORM>-->
 
 
                 <button class="delete" @click="deleteItem(item.itemId)">刪除</button>
-<!--                <FORM METHOD="post" ACTION="">-->
-<!--                    <input type="submit" value="刪除">-->
-<!--                    <input type="hidden" name="oneactid" value="${item.itemId}">-->
-<!--                    <input type="hidden" name="action" value="oneupdate">-->
-<!--                </FORM>-->
+                <!--                <FORM METHOD="post" ACTION="">-->
+                <!--                    <input type="submit" value="刪除">-->
+                <!--                    <input type="hidden" name="oneactid" value="${item.itemId}">-->
+                <!--                    <input type="hidden" name="action" value="oneupdate">-->
+                <!--                </FORM>-->
             </td>
 
 
@@ -214,69 +217,69 @@
     </table>
 </div>
 
-    <script>
+<script>
 
 
-        Vue.createApp({
-            data() {
-                return {
-                    items:[],
-                    search:'',
-                    searchAll:[],
-                    newItems:[]
-                }
-            }, methods: {
-                saveId(id){
-                    sessionStorage.setItem("itemId",id);
-
-                    // location.assign("updateItem.html");
-                },
-                deleteItem(id){
-                    let pjName=getProjectName();
-                    axios.post(pjName+'/item/items?action=delete',{deleteId:id})
-                            location.reload();
-                            alert("刪除成功");
-                },
-                addItem(){
-                   location='addItem.html';
-                },
-                searchItem(){
-                    this.newItems=this.items;
-                   if(this.search.trim()===""){
-                       this.items=this.newItems;
-
-                       location.reload();
-                   }else{
-                       let pjName=getProjectName();
-                       axios.get(pjName+"/item/items?action=search&keyWords="+this.search)
-                           .then((resp)=>{
-                               this.searchAll=resp.data;
-                               this.newItems=this.items;
-                               this.items=this.searchAll;
-
-                               console.log(resp.data)
-
-                           })
-                   }
-                }
-
-            },
-            mounted() {
-               let pjName=getProjectName();
-                axios.get(pjName+'/item/items?action=getAllList')
-                    .then((resp)=>{
-                        this.items=resp.data;
-                        console.log(resp.data)
-                    })
+    Vue.createApp({
+        data() {
+            return {
+                items: [],
+                search: '',
+                searchAll: [],
+                newItems: []
             }
-        }).mount("#app");
+        }, methods: {
+            updateItem(id) {
+                sessionStorage.setItem("itemId", id);
+                location = "update.html";
+            },
 
-        function getProjectName(){
-            let path = window.location.pathname;
-            let webCtx = path.substring(0, path.indexOf('/', 1));
+            deleteItem(id) {
+                let pjName = getProjectName();
+                axios.post(pjName + '/item/items?action=delete', {deleteId: id})
+                location.reload();
+                alert("刪除成功");
+            },
+            addItem() {
+                location = 'addItem.html';
+            },
+            searchItem() {
+                this.newItems = this.items;
+                if (this.search.trim() === "") {
+                    this.items = this.newItems;
 
-            return webCtx;
+                    location.reload();
+                } else {
+                    let pjName = getProjectName();
+                    axios.get(pjName + "/item/items?action=search&keyWords=" + this.search)
+                        .then((resp) => {
+                            this.searchAll = resp.data;
+                            this.newItems = this.items;
+                            this.items = this.searchAll;
+
+                            console.log(resp.data)
+
+                        })
+                }
+            }
+
+        },
+        mounted() {
+            let pjName = getProjectName();
+            axios.get(pjName + '/item/items?action=getAllList')
+                .then((resp) => {
+                    this.items = resp.data;
+                    console.log(resp.data)
+                })
         }
-    </script>
+    }).mount("#app");
+
+    function getProjectName() {
+        let path = window.location.pathname;
+        let webCtx = path.substring(0, path.indexOf('/', 1));
+
+        return webCtx;
+    }
+</script>
 </body>
 </html>

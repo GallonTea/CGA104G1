@@ -99,7 +99,12 @@ public class ItemJDBCDAO implements ItemDAO_interface {
 	}
 
 	@Override
-	public JSONArray search(String keyWords) {
+	public void insertFavList(String item, String memId) {
+
+	}
+
+	@Override
+	public String getFavList(String memId) {
 		return null;
 	}
 
@@ -236,6 +241,12 @@ public class ItemJDBCDAO implements ItemDAO_interface {
 	@Override
 	public JSONArray getAllJS(int pageNumber) {
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public JSONArray search(String keyWords, Integer type) {
 		return null;
 	}
 

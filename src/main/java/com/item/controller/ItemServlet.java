@@ -16,9 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
+import com.itemType.model.ItemTypeService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -46,7 +45,7 @@ public class ItemServlet extends HttpServlet {
 			Writer out=res.getWriter();
 			out.write(jsonObject.toString());
 		} else if ("GetAll_For_Display_JS".equals(action)) {
-			System.out.println("!!!!!!!!!!!!");
+
 			Integer pageNumber=Integer.valueOf(req.getParameter("pageNumber"));
 			ItemService itemService = new ItemService();
 			JSONArray jsonArray=itemService.getAllJs(pageNumber);
@@ -82,7 +81,7 @@ public class ItemServlet extends HttpServlet {
 
 
 		}else if("getAllList".equals(action)){
-			System.out.println("!!!!!!!");
+
 			ItemService itemService = new ItemService();
 			Writer out = res.getWriter();
 			JSONArray jsonArray=itemService.getAllList();
@@ -98,12 +97,32 @@ public class ItemServlet extends HttpServlet {
 		}else if("search".equals(action)){
 
 			String keyWords=req.getParameter("keyWords");
+			Integer typeId=Integer.valueOf(req.getParameter("type"));
+
 			ItemService itemService=new ItemService();
-			JSONArray jsonArray=itemService.search(keyWords);
+			JSONArray jsonArray=itemService.search(keyWords,typeId);
 
 			Writer out=res.getWriter();
 			out.write(jsonArray.toString());
 
+		}else if("getFavList".equals(action)){
+			String memId=req.getParameter("memId");
+			ItemService itemService=new ItemService();
+			String data=itemService.getFavList(memId);
+
+			Writer out=res.getWriter();
+			out.write(data);
+		}else if("moveFavList".equals(action)){
+			System.out.println("有執行！！！！！！！！！");
+			String itemId = req.getParameter("id");
+			// TODO ?????
+			// String memId = (String) req.getSession().getAttribute("memId");
+			String memId = "3";
+			ItemService itemService=new ItemService();
+			String result=itemService.removeTraceList(memId,itemId);
+
+			Writer out=res.getWriter();
+			out.write(result);
 		}
 	}
 
@@ -433,7 +452,7 @@ public class ItemServlet extends HttpServlet {
 		Gson gson = new Gson();
 		gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 		ItemVO vo = gson.fromJson(req.getReader(), ItemVO.class);
-		 System.out.println(vo.getItemStatus());
+
 		ItemService itemService=new ItemService();
 		Integer result=itemService.addItemJS(vo);
 
@@ -441,7 +460,16 @@ public class ItemServlet extends HttpServlet {
 		resultObject.put("successful",result>0? "true":"false");
 		Writer out=res.getWriter();
 		out.write(resultObject.toString());
-	}
+	}else if("trace".equals(action)){
+		 Gson gson=new Gson();
+		 JsonObject json = gson.fromJson(req.getReader(), JsonObject.class);
+
+		 ItemService itemService =new ItemService();
+		 itemService.insertFavList(json);
+
+
+
+	 }
 
 
 	}

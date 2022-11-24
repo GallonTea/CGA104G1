@@ -19,9 +19,17 @@ public interface ItemDAO_interface extends ItemCommon{
      public List<ItemVO> getAll();
      public JSONArray getAllJS(int pageCount);
 
+
+
+     JSONArray search(String keyWords, Integer type);
+
      //listAllItems.html
      public JSONArray getAllList();
      public JSONObject getCount();
 
-     public JSONArray search(String keyWords);
+
+    public void insertFavList(String item, String memId);
+
+     public String getFavList(String memId);
+
 }

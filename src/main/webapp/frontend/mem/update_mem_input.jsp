@@ -6,6 +6,7 @@
 <%
 MemVO memVO = (MemVO) request.getAttribute("memVO");
 %>
+
 <%= memVO==null %>
 <html>
 <head>
@@ -27,6 +28,8 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
     color: blue;
     display: inline;
   }
+  .password{
+  }
 </style>
 
 <style>
@@ -43,7 +46,6 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
     padding: 1px;
   }
 </style>
-
 </head>
 <body bgcolor='white'>
 
@@ -69,13 +71,13 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 <FORM METHOD="post" ACTION="/CGA104G1/MemServlet" name="form1">
 <table>
 
-<!-- 	<tr> -->
-<!-- 		<td>會員帳號:</td> -->
-<%-- 		<td><input type="TEXT" name="mem_account" size="45" value="<%=memVO.getMem_account()%>" /></td> --%>
-<!-- 	</tr> -->
+	<tr>
+		<td>會員帳號:</td>
+		<td><input type="TEXT" name="mem_account" size="45" readonly value="<%=memVO.getMem_account()%>" /></td>
+	</tr>
 	<tr>
 		<td>會員密碼:</td>
-		<td><input type="TEXT" name="mem_password" size="45"	value="<%=memVO.getMem_password()%>" /></td>
+		<td><input type="password" name="mem_password" size="45" readonly value="<%=memVO.getMem_password()%>"/></td>
 	</tr>
 	<tr>
 		<td>會員姓名:</td>
@@ -97,10 +99,16 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 		<td>會員Email:</td>
 		<td><input type="TEXT" name="mem_email" size="45" value="<%=memVO.getMem_email()%>" /></td>
 	</tr>
+
 		<tr>
 		<td>會員性別:</td>
-		<td><input type="TEXT" name="mem_sex" size="45" value="<%=memVO.getMem_sex()%>" /></td>
-	</tr>
+		<td>
+		<input type="radio" name="mem_sex" size="45" value="男" ${(memVO.mem_sex=="男")? 'checked':'' } ><b>男</b>
+		<input type="radio" name="mem_sex" size="45" value="女" ${(memVO.mem_sex=="女")? 'checked':'' }><b>女</b>
+		<input type="hidden" name="mem_sex" value="${memVO.mem_sex}">
+		</td>
+		</tr>
+
 		<tr>
 		<td>會員生日:</td>
 		<td><input type="TEXT" name="mem_dob" size="45" id="dob_date1" /></td>
@@ -121,13 +129,14 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 		</select></td>
 	</tr>
 	
-	
+
 	
 </table>
 <br>
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="mem_id" value="<%=memVO.getMem_id()%>">
 <input type="submit" value="送出修改"></FORM>
+
 </body>
 
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
@@ -185,18 +194,18 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
         //      }});
 
         
-        //      2.以下為某一天之後的日期無法選擇
-        //      var somedate2 = new Date('2017-06-15');
-        //      $('#f_date1').datetimepicker({
-        //          beforeShowDay: function(date) {
-        //        	  if (  date.getYear() >  somedate2.getYear() || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
-        //		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
-        //              ) {
-        //                   return [false, ""]
-        //              }
-        //              return [true, ""];
-        //      }});
+//              2.以下為某一天之後的日期無法選擇
+//              var somedate2 = new Date('2019-01-01');
+//              $('#dob_date1').datetimepicker({
+//                  beforeShowDay: function(date) {
+//                	  if (  date.getYear() >  somedate2.getYear() || 
+//         		           (date.getYear() == somedate2.getYear() && date.getMonth() >  somedate2.getMonth()) || 
+//         		           (date.getYear() == somedate2.getYear() && date.getMonth() == somedate2.getMonth() && date.getDate() > somedate2.getDate())
+//                      ) {
+//                           return [false, ""]
+//                      }
+//                      return [true, ""];
+//              }});
 
 
         //      3.以下為兩個日期之外的日期無法選擇 (也可按需要換成其他日期)
@@ -217,7 +226,8 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
         //              return [true, ""];
         //      }});
         
+        //-------------------------------------------------------------------------------------------------------------------
+ 
 </script>
-
 
 </html>

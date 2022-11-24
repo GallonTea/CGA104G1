@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.mem.model.MailService;
 import com.mem.model.MemService;
 import com.mem.model.MemVO;
+import com.verify_code.model.Verify_codeService;
 
 @WebServlet("/MemServlet")
 public class MemServlet extends HttpServlet {
@@ -99,7 +99,7 @@ public class MemServlet extends HttpServlet {
 			MemVO memVO = memSvc.getOneMem(mem_id);
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
-			req.setAttribute("memVO", memVO); // 資料庫取出的empVO物件,存入req
+			req.setAttribute("memVO", memVO); // 資料庫取出的memVO物件,存入req
 			String url = "/frontend/mem/update_mem_input.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
 			successView.forward(req, res);
@@ -113,10 +113,10 @@ public class MemServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-//			String mem_account = req.getParameter("mem_account").trim();
-//			if (mem_account == null || mem_account.trim().length() == 0) {
-//				errorMsgs.add("帳號請勿空白");
-//			}
+			String mem_account = req.getParameter("mem_account").trim();
+			if (mem_account == null || mem_account.trim().length() == 0) {
+				errorMsgs.add("帳號請勿空白");
+			}
 
 			String mem_password = req.getParameter("mem_password").trim();
 			if (mem_password == null || mem_password.trim().length() == 0) {
@@ -173,7 +173,7 @@ public class MemServlet extends HttpServlet {
 			Integer mem_id = Integer.valueOf(req.getParameter("mem_id").trim());
 
 			MemVO memVO = new MemVO();
-//			memVO.setMem_account(mem_account);
+			memVO.setMem_account(mem_account);
 			memVO.setMem_password(mem_password);
 			memVO.setMem_name(mem_name);
 			memVO.setMem_address(mem_address);
@@ -187,7 +187,7 @@ public class MemServlet extends HttpServlet {
 
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
+				req.setAttribute("memVO", memVO); // 含有輸入格式錯誤的memVO物件,也存入req
 				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/mem/update_mem_input.jsp");
 				failureView.forward(req, res);
 				return; // 程式中斷
@@ -195,7 +195,7 @@ public class MemServlet extends HttpServlet {
 
 			/*************************** 2.開始新增資料 ***************************************/
 			MemService memSvc = new MemService();
-			memSvc.updateMem(mem_id, mem_password, mem_name, mem_address, mem_phone, mem_uid, mem_email,
+			memSvc.update(mem_id, mem_account, mem_password, mem_name, mem_address, mem_phone, mem_uid, mem_email,
 					mem_sex, mem_dob, mem_status);
 
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
@@ -285,13 +285,13 @@ public class MemServlet extends HttpServlet {
 			} catch (IllegalArgumentException e) {
 				errorMsgs.add("生日請勿空白");
 			}
-			Integer mem_status = Integer.valueOf(req.getParameter("mem_status").trim());
-			try {
-				mem_status = Integer.valueOf(req.getParameter("mem_status").trim());
-			} catch (IllegalArgumentException e) {
-				errorMsgs.add("狀態請勿空白");
-			}
-			
+//			Integer mem_status = Integer.valueOf(req.getParameter("mem_status").trim());
+//			try {
+//				mem_status = Integer.valueOf(req.getParameter("mem_status").trim());
+//			} catch (IllegalArgumentException e) {
+//				errorMsgs.add("狀態請勿空白");
+//			}
+//			
 			Integer mem_id = Integer.valueOf(req.getParameter("mem_id").trim());
 
 			MemVO memVO = new MemVO();
@@ -304,12 +304,12 @@ public class MemServlet extends HttpServlet {
 			memVO.setMem_email(mem_email);
 			memVO.setMem_sex(mem_sex);
 			memVO.setMem_dob(mem_dob);
-			memVO.setMem_status(mem_status);
+//			memVO.setMem_status(mem_status);
 			memVO.setMem_id(mem_id);
 
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
+				session.setAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
 				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/mem/updateMem.jsp");
 				failureView.forward(req, res);
 				return; // 程式中斷
@@ -318,7 +318,7 @@ public class MemServlet extends HttpServlet {
 			/*************************** 2.開始新增資料 ***************************************/
 			MemService memSvc = new MemService();
 			memSvc.updateMem(mem_id, mem_password, mem_name, mem_address, mem_phone, mem_uid, mem_email,
-					mem_sex, mem_dob, mem_status);
+					mem_sex, mem_dob);
 
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 			String url = "/frontend/mem/listAllMem.jsp";
@@ -427,7 +427,11 @@ public class MemServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.接收請求參數 ***************************************/
+			
 			Integer mem_id = Integer.valueOf(req.getParameter("mem_id"));
+			Verify_codeService vSvc = new Verify_codeService();
+			vSvc.deleteVerify_codeVO(mem_id);
+
 
 			/*************************** 2.開始刪除資料 ***************************************/
 			MemService memSvc = new MemService();
@@ -487,7 +491,7 @@ public class MemServlet extends HttpServlet {
 
 			String mem_sex = req.getParameter("mem_sex").trim();
 			if (mem_sex == null || mem_sex.trim().length() == 0) {
-				errorMsgs.put("mem_sex", "性別請勿空白");
+				errorMsgs.put("mem_sex", "請選擇性別");
 			}
 
 			java.sql.Date mem_dob = null;
@@ -497,83 +501,156 @@ public class MemServlet extends HttpServlet {
 				errorMsgs.put("mem_dob", "請輸入日期");
 			}
 
-			MemVO regmemVO = new MemVO();
-			regmemVO.setMem_account(mem_account);
-			regmemVO.setMem_password(mem_password);
-			regmemVO.setMem_name(mem_name);
-			regmemVO.setMem_address(mem_address);
-			regmemVO.setMem_phone(mem_phone);
-			regmemVO.setMem_uid(mem_uid);
-			regmemVO.setMem_email(mem_email);
-			regmemVO.setMem_sex(mem_sex);
-			regmemVO.setMem_dob(mem_dob);
-
+			MemVO memVO = new MemVO();
+			memVO.setMem_account(mem_account);
+			memVO.setMem_password(mem_password);
+			memVO.setMem_name(mem_name);
+			memVO.setMem_address(mem_address);
+			memVO.setMem_phone(mem_phone);
+			memVO.setMem_uid(mem_uid);
+			memVO.setMem_email(mem_email);
+			memVO.setMem_sex(mem_sex);
+			memVO.setMem_dob(mem_dob);
+			
 			
 			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("regmemVO", regmemVO); // 含有輸入格式錯誤的empVO物件,也存入req
+				req.setAttribute("memVO", memVO); // 含有輸入格式錯誤的memVO物件,也存入req
 				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/mem/register.jsp");
 				failureView.forward(req, res);
 				return;
 			}
 
 			/*************************** 2. 發送驗證碼 ***************************************/
-			MemService memSvc = new MemService();
-
-//			RandomString ranString = new RandomString();
-
-			
+			MemService memSvc = new MemService();		
 			
 			String to = req.getParameter("mem_email");
 		      
+		      String subject = "Ba-rei寵物線上購物及交流平台 會員註冊信";
+		      
+		      String reg_name = req.getParameter("mem_name");
+		      String regpass = memSvc.getAuthCode();
+		      String messageText = "Hello ! " + reg_name +  "  先生/小姐\n" +"歡迎您加入 Ba-rei寵物線上購物及交流平台"+ "\n" +"您註冊帳號的驗證碼為: " + regpass + "\n" +"請在5分鐘內完成驗證並重新登入"; 
+		       
+		      memSvc.sendMail(to, subject, messageText);
+
+			/*************************** 4.開始新增資料 ***************************************/
+				memSvc.register(mem_account, mem_password, mem_name, mem_address, mem_phone, mem_uid, mem_email, mem_sex,
+						mem_dob);
+			/*************************** 5.利用註冊的帳號密碼方法獲取資料的的memID存到session ***************************************/	
+				
+				Integer mem_id = memSvc.login(mem_account, mem_password).getMem_id();
+				      
+			      session.setAttribute("mem_id", mem_id);
+			      session.setAttribute("mem_email", mem_email);
+			      
+//			      呼叫方法存放驗證碼
+			      Verify_codeService vSvc = new Verify_codeService();
+			      vSvc.addVc_code(mem_id, regpass);
+		      
+			/*************************** 5.準備轉交驗證資料(Send the Success view) ***********/
+			
+		    String url = "/frontend/mem/register_success.jsp";
+			RequestDispatcher successViewchk = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+			successViewchk.forward(req, res);
+			
+		}
+		
+		if ("檢查帳號是否可用".equals(action)) {
+
+				Map<String, String> msg = new LinkedHashMap<String, String>();
+				req.setAttribute("msg", msg);
+
+				
+			String errorMsgs = req.getParameter("errorMsgs");
+			System.out.println(errorMsgs);
+			String mem_account = req.getParameter("mem_account");
+			
+			MemService memSvc = new MemService();
+			MemVO memVO = memSvc.checkAccount(mem_account);
+
+//			req.setAttribute("mem_account", mem_account);
+
+			  if(memVO==null) {				
+				req.setAttribute("msg", "此帳號可使用");
+					session.setAttribute("memVO", memVO); // 含有輸入格式錯誤的memVO物件,也存入req
+					RequestDispatcher failureView = req.getRequestDispatcher("/frontend/mem/register.jsp");
+					failureView.forward(req, res);
+					
+			  }else {                                      
+		    	
+		    	req.setAttribute("msg", "此帳號已被使用");
+				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/mem/register.jsp");
+				failureView.forward(req, res);
+				req.getRequestDispatcher("/frontend/mem/register.jsp").forward(req, res);
+			}
+		}
+		
+		
+//		輸入驗證碼進入比對
+		if ("resend".equals(action)) {	
+			MemService memSvc = new MemService();
+			Verify_codeService vSvc = new Verify_codeService();
+			
+			  String to = req.getParameter("mem_email");
 		      String subject = "Ba-rei購物商城 會員註冊信";
 		      
 		      String reg_name = req.getParameter("mem_name");
 		      String regpass = memSvc.getAuthCode();
 		      String messageText = "Hello ! " + reg_name +  "  先生/小姐\n" +"歡迎您加入 Ba-rei 購物商城"+ "\n" +"您註冊帳號的驗證碼為: " + regpass + "\n" +"請在5分鐘內完成驗證並重新登入"; 
 		       
-		      System.out.println(regpass);
-		      MailService mailService = new MailService();
-		      mailService.sendMail(to, subject, messageText);
-		      
+		      memSvc.sendMail(to, subject, messageText);
 
+				req.setAttribute("msg", "已重新發送驗證碼,請至信箱確認");
+				req.getRequestDispatcher("/frontend/mem/register_success.jsp").forward(req, res);
 
-			/*************************** 5.準備轉交驗證資料(Send the Success view) ***********/
-			
-		    
-		    String urlchk = "/frontend/mem/register_success.jsp";
-			RequestDispatcher successViewchk = req.getRequestDispatcher(urlchk); // 新增成功後轉交listAllEmp.jsp
-			successViewchk.forward(req, res);
-			
-//			if ("confirmreg".equals(action)) {
-////				req.getRequestDispatcher("/frontend/mem/select_page.jsp").forward(req, res);
-				String regpasschk = req.getParameter("regpasschk");
+			/*************************** 5.利用註冊的帳號密碼方法獲取資料的的memID存到session ***************************************/	
+
+				Integer mem_id=Integer.valueOf(req.getParameter("mem_id"));
+				session.setAttribute("mem_id", mem_id);
 				
-				  if(regpasschk!=regpass) {
-						req.setAttribute("msg", "驗證碼錯誤!請重新輸入");
-						req.getRequestDispatcher("/frontend/mem/register_success.jsp").forward(req, res);
+//			      呼叫方法存放驗證碼
+			      vSvc.addVc_code(mem_id, regpass);
+	}
+		if ("regconfirm".equals(action)) {
 
-				    }else {         
-						/*************************** 4.開始新增資料 ***************************************/
-						memSvc.register(mem_account, mem_password, mem_name, mem_address, mem_phone, mem_uid, mem_email, mem_sex,
-								mem_dob);
-
-				    	String url = "/frontend/mem/login.jsp";
-						RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-						successView.forward(req, res);
-					}
+				Map<String, String> msg = new LinkedHashMap<String, String>();
+				req.setAttribute("msg", msg);
 				
-			}
+			String regpasschk = req.getParameter("regpasschk");
+			Integer mem_id=Integer.valueOf(req.getParameter("mem_id"));
+			
+			Verify_codeService vSvc = new Verify_codeService();
+			MemService memSvc = new MemService();
+			
 
-//		}
+				 if(!(regpasschk.equals(vSvc.checkVerify_code(mem_id).getVc_code()))) {
+					req.setAttribute("msg", "驗證碼錯誤!請重新輸入");
+					req.getRequestDispatcher("/frontend/mem/register_success.jsp").forward(req, res);
+
+			    }else {        
+
+
+					memSvc.updateStatus(mem_id);
+					session.invalidate();
+					req.setAttribute("msg", "註冊成功 ! 請重新登入");
+			    	String url = "/frontend/mem/login.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+					successView.forward(req, res);
+			    	}
+				}
+
 		
 		if ("login".equals(action)) { // 來自addEmp.jsp的請求
+			
+			MemService memSvc = new MemService();
+
 			
 		    String username = req.getParameter("username");
 		    String password = req.getParameter("password");
 
-			MemService memSvc = new MemService();
-			MemVO memVO = memSvc.getMemUser(username,password);
-			session.setAttribute("memVO", memVO); // 資料庫取出的物件,存入req
+			MemVO memVO = memSvc.login(username,password);	    
+
+			session.setAttribute("memVO", memVO); // 資料庫取出的物件,存入session
 
 
 			  if(memVO==null) {
@@ -581,25 +658,64 @@ public class MemServlet extends HttpServlet {
 				req.getRequestDispatcher("/frontend/mem/login.jsp").forward(req, res);
 
 		    }else {                                      
-//		      HttpSession session = req.getSession();
-//		      session.setAttribute("username", username);  
-//		      
-//		       try {                                                        
-//		         String location = (String) session.getAttribute("location");
-//		         if (location != null) {
-//		           session.removeAttribute("location");  
-//		           res.sendRedirect(location);            
-//		           return;
-//		         }
-//		       }catch (Exception ignored) { }
-//				session.getRequestDispatcher("/frontend/mem/select_page.jsp").forward(req, res);
+		    	
 		    	String url = "/frontend/mem/select_page.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交select_page.jsp
 				successView.forward(req, res);
 			}
 		}
+		
+		if ("forgotac".equals(action)) {
+
+			Map<String, String> msg = new LinkedHashMap<String, String>();
+			req.setAttribute("msg", msg);
+
+		String mem_account = req.getParameter("mem_account");
+		String mem_email = req.getParameter("mem_email");
+		String mem_uid = req.getParameter("mem_uid");
+		
+		MemService memSvc = new MemService();
+		String account = memSvc.findAccount(mem_email, mem_uid).getMem_account();
 
 
+			req.setAttribute("msg", "  您的帳號為  "  +account+  ", 請妥善保管 ");
+				RequestDispatcher failureViewac = req.getRequestDispatcher("/frontend/mem/forgot.jsp");
+				failureViewac.forward(req, res);
+				
 
+				String password = memSvc.findPassword(mem_account,mem_email).getMem_password();
+
+
+					req.setAttribute("msg", "您的帳號為"+password+",請妥善保管");
+						RequestDispatcher failureViewpw = req.getRequestDispatcher("/frontend/mem/forgot.jsp");
+						failureViewpw.forward(req, res);
+				
+		  }
+		
+		if ("forgotpw".equals(action)) {
+
+			Map<String, String> msg = new LinkedHashMap<String, String>();
+			req.setAttribute("msg", msg);
+
+				String mem_account = req.getParameter("mem_account");
+				String mem_email = req.getParameter("mem_email");
+
+		
+				MemService memSvc = new MemService();
+				String password = memSvc.findPassword(mem_account,mem_email).getMem_password();
+
+			      String subject = "Ba-rei購物商城 會員密碼函";
+			      
+			      String mem_name = req.getParameter("mem_account");
+			      String messageText = "親愛的Ba-rei會員" + mem_name + "你好 !\n" + "您的會員登入密碼為: " + password + "\n" +"請妥善保管並重新登入"; 
+			       
+			      memSvc.sendMail(mem_email, subject, messageText);
+
+					req.setAttribute("msg", "已發送至信箱,請至信箱確認");
+						RequestDispatcher failureViewpw = req.getRequestDispatcher("/frontend/mem/login.jsp");
+						failureViewpw.forward(req, res);
+				
+		  }
+		}
 	}
-}
+

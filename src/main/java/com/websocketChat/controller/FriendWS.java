@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import javax.servlet.http.HttpSession;
 import javax.websocket.CloseReason;
 import javax.websocket.OnClose;
 import javax.websocket.OnError;
@@ -21,6 +22,8 @@ import com.websocketChat.jedis.JedisHandleMessage;
 import com.websocketChat.model.ChatMessage;
 import com.websocketChat.model.State;
 
+import redis.clients.jedis.Jedis;
+
 @ServerEndpoint("/FriendWS/{userName}")
 public class FriendWS {
 	private static Map<String, Session> sessionsMap = new ConcurrentHashMap<>();
@@ -32,6 +35,7 @@ public class FriendWS {
 		sessionsMap.put(userName, userSession);
 		/* Sends all the connected users to the new user */
 		Set<String> userNames = sessionsMap.keySet();
+		System.out.println(userNames);
 		State stateMessage = new State("open", userName, userNames);
 		String stateMessageJson = gson.toJson(stateMessage);
 		Collection<Session> sessions = sessionsMap.values();
@@ -44,6 +48,15 @@ public class FriendWS {
 		String text = String.format("Session ID = %s, connected; userName = %s%nusers: %s", userSession.getId(),
 				userName, userNames);
 		System.out.println(text);
+		
+//		if(userName.equals("admin")) {
+//			Jedis jedis = new Jedis("localhost", 6379);
+//			Set<String> key = jedis.keys("admin:*");
+//			for(String k : key) {
+//				System.out.println(key);
+//			}
+//			return;
+//		}
 	}
 
 	@OnMessage
@@ -62,15 +75,13 @@ public class FriendWS {
 				return;
 			}
 		}
-		
-		
-		Session receiverSession = sessionsMap.get(receiver);
-		if (receiverSession != null && receiverSession.isOpen()) {
-			receiverSession.getAsyncRemote().sendText(message);
-			userSession.getAsyncRemote().sendText(message);
+			Session receiverSession = sessionsMap.get(receiver);
+			if (receiverSession != null && receiverSession.isOpen()) {
+				receiverSession.getAsyncRemote().sendText(message);
+				userSession.getAsyncRemote().sendText(message);
+			} else {}
 			JedisHandleMessage.saveChatMessage(sender, receiver, message);
-		}
-		System.out.println("Message received: " + message);
+			System.out.println("Message received: " + message);
 	}
 
 	@OnError

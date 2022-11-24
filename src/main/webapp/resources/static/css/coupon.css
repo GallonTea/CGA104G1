@@ -6,7 +6,7 @@ body {
     opacity: 95%;
     position: fixed;
     left: 10%;
-    background-size: cover;
+    background-size: contain;
     background-repeat: repeat-y;
     max-width: 100%;
     background-attachment: scroll;

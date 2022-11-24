@@ -29,49 +29,71 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="../../resources/static/css/coupon.css"/>
+
+
+    <style>
+        .couponpageimg {
+            background-image: url("../../resources/static/image/raphael-maksian-qmpNzGjO_KE-unsplash.jpg");
+        }
+    </style>
 </head>
 
 <body>
-<header>
 
 
-</header>
+<article>
+    <div class="container" style="height: 1000px">
 
-<main>
+        <div id="app">
 
-    <article>
-        <div class="container" style="height: 1000px">
+            <template class="row d-flex justify-content-center align-items-center container">
 
-            <div id="app">
+                <div style="height: 10px"></div>
 
-                <input type="text" v-model="memberId">
-                <button type="submit" id="test" @click="getOwnCoupon()">送出</button>
+                <div class="col-1"></div>
+                <button class="col-2 btn btn-success" @click="goHome()" style="opacity: 60%;z-index: 999999999">
+                    回到首頁
+                </button>
+                <div class="col-5"></div>
+                <button class="col-2 btn btn-success" @click="goCoupon()" style="opacity: 60%;z-index: 999999999">
+                    領取優惠券
+                </button>
+                <div class="col-1"></div>
 
-                <template class="d-flex justify-content-center align-items-center container">
+                <header style="height: 100px">
+                    <img src="../../resources/static/image/raphael-maksian-qmpNzGjO_KE-unsplash.jpg" alt="img"
+                         class="couponpageimg"/>
+                </header>
 
-                    <div id="couponBody" class="cd-flex card text-center col-md-6" v-for="coupon in coupon"  style="margin: 10px 5px 60px">
-                        <div class="image"><img src="https://i.imgur.com/DC94rZe.png" width="150"></div>
-                        <div class="image2"><img src="https://i.imgur.com/DC94rZe.png" width="150"></div>
-                        <h1>${{ coupon.COUPON_VAL }}</h1>
-                        <span class="d-block">{{ coupon.COUPON_NAR }}</span>
-                        <label class="d-block">使用期間</label>
-                        <span class="d-block">{{ coupon.USE_START }} 至 {{ coupon.USE_OVER }}</span>
-                        <label class="d-block">低消限制</label>
-                        <span class="d-block">${{ coupon.MINIMUM }}</span>
-                        <span class="mt-44 align-self-end"
-                              style="margin: 0 10px 5px 0;"><small>{{ coupon.MCPN_GETTIME }}</small></span>
+
+                <div id="couponBody" class="cd-flex card text-center col-md-6" v-for="coupon in coupon"
+                     style="margin: 10px 20px">
+                    <div class="image"><img src="https://i.imgur.com/DC94rZe.png" width="150"></div>
+                    <div class="image2"><img src="https://i.imgur.com/DC94rZe.png" width="150"></div>
+                    <h1>NT$ {{ coupon.COUPON_VAL }}</h1>
+                    <span class="d-block">{{ coupon.COUPON_NAR }}</span>
+                    <label class="d-block">使用期間</label>
+                    <span class="d-block">{{ coupon.USE_START }} 至 {{ coupon.USE_OVER }}</span>
+                    <label class="d-block">低消限制</label>
+                    <span class="d-block">${{ coupon.MINIMUM }}</span>
+                    <span class="mt-44 align-self-end"
+                          style="margin: 0 10px 5px 0;"><small>{{ coupon.MCPN_GETTIME }}</small></span>
+                </div>
+
+                <!-- 佔位的暫時方案 -->
+                <div style="visibility: hidden">
+                    <div class="cd-flex card text-center col-md-6"
+                         style="margin: 10px 20px">
                     </div>
+                </div>
+                <!-- 佔位結束 -->
 
-                </template>
-
-            </div>
+            </template>
 
         </div>
-    </article>
 
-</main>
-
-
+    </div>
+</article>
 
 
 <!-- import main.js -->
@@ -97,28 +119,41 @@
                 coupon: []
             }
         },
+        beforeCreate() {
+            let member = sessionStorage.getItem('mem-info');
+            if (!member) {
+                alert('plz login !!!')
+                window.location.assign('/CGA104G1/frontend/mem/login.jsp')
+            }
+            let memberId = JSON.parse(member).memberId
+
+            let qs = Qs; // 序列化工具 有內建
+            // axios.post(api地址(servlet 位置啦), 要傳的內容(先序列化)
+            axios.post('/CGA104G1/MemberCouponServlet', qs.stringify({
+                memberId: memberId,
+            }))
+                .then(res => {   // 接收回傳
+                    this.coupon = res.data; // 將回傳資料賦予 coupon
+                    console.log(res.data);  // 印出資料 可以不加
+                })
+                .catch((err => {
+                    console.log(err);  // 印出錯誤 也可以不加
+                }))
+        },
         mounted() {
-            //     let member = sessionStorage.getItem('user-info');
-            //     this.memberName = JSON.parse(member).memName;
-            //     this.memberId = JSON.parse(member).memId;
+            let member = sessionStorage.getItem('mem-info');
+            this.memberName = JSON.parse(member).memberName;
+            this.memberId = JSON.parse(member).memberId;
         },
         methods: {
-            getOwnCoupon: function () {
-                var qs = Qs; // 序列化工具 有內建
-                // axios.post(api地址(servlet 位置啦), 要傳的內容(先序列化)
-                axios.post('/CGA104G1/MemberCouponServlet', qs.stringify({
-                    memberId: this.memberId,
-                    action: this.action
-                }))
-                    .then(res => {   // 接收回傳
-                        this.coupon = res.data; // 將回傳資料賦予 coupon
-                        console.log(res.data);  // 印出資料 可以不加
-                    })
-                    .catch((err => {
-                        console.log(err);  // 印出錯誤 也可以不加
-                    }))
+            goHome: function () {
+                window.location.assign('../index.html')
+            },
+            goCoupon: function () {
+                window.location.assign('GetCoupon.html')
             }
         }
+
     });
     vm.mount('#app');
 

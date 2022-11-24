@@ -54,19 +54,19 @@
         }
 
         .ptime {
-            width: 80px;
+            width: 100px;
             font-size: 10px;
             color: rgb(105, 105, 105);
             text-align: center;
         }
 
         .author {
-            width: 40px;
+            width: 140px;
             text-align: center;
         }
 
         .atitle {
-            width: 620px;
+            width: 500px;
             text-align: center;
 /*             font-weight: 700; */
         }
@@ -135,7 +135,7 @@
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 				</ul>
 				<form class="d-flex" role="search" method="post" action="/CGA104G1/ArticleServlet">
-					<input class="form-control me-2" type="search" placeholder="請輸入文章編號" name="article_id"> 
+					<input class="form-control me-2" type="search" placeholder="請輸入關鍵字" name="article_id"> 
 					<input type="hidden" name="action" value="getOne_For_Display">
 					<button class="btn btn-outline-info text-nowrap" type="submit" value="送出">查詢</button>
 				</form>
@@ -164,7 +164,7 @@
     <jsp:useBean id="article_sorttypeSvc" scope="page" class="com.article_sorttype.model.Article_sorttypeService" />
 	<c:forEach var="articleVO" items="${list}">
 		<div class="evenarticle">
-            <div class="push">${articleVO.article_like}</div>
+            <div class="push">${articleVO.getArtLike()}</div>
             <div class="sort">【${articleVO.article_sorttypeVO.sort_content}】</div>
             <div class="atitle">
             <form method="post" action="/CGA104G1/ArticleServlet"> 
@@ -174,7 +174,7 @@
 			</form>
             
             </div>
-            <div class="author">${articleVO.mem_id}</div>
+            <div class="author">${articleVO.memVO.mem_account}</div>
             <div class="ptime">${articleVO.article_publish}</div>
         </div>
 	</c:forEach>

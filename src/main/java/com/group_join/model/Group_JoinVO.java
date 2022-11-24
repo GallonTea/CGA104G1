@@ -2,12 +2,20 @@ package com.group_join.model;
 
 public class Group_JoinVO implements java.io.Serializable{
 	
+	private static final long serialVersionUID = 1180089583423735176L;
 	private Integer gb_id;
 	private Integer mem_id;
 	private Integer gbpay_status;
 	private Integer pickup_status;
 	private Integer deliver_status;
+	private Integer gbbuy_amount;
 	
+	public Integer getGbbuy_amount() {
+		return gbbuy_amount;
+	}
+	public void setGbbuy_amount(Integer gbbuy_amount) {
+		this.gbbuy_amount = gbbuy_amount;
+	}
 	public Integer getGb_id() {
 		return gb_id;
 	}

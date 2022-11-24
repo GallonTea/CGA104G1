@@ -19,7 +19,10 @@ session.setAttribute("list", list);
 </head>
 <body>
 
-<button  type= "button" onclick="window.location.href='login2.jsp'">登出</button>
+<FORM ACTION="LoginServlet" method="post">
+<input type="hidden" name="action" value="logout">
+							<input type=submit value="登出">
+  </FORM>
        
 	<br>
 	
@@ -48,13 +51,13 @@ session.setAttribute("list", list);
 		
 	<c:forEach var="empVO" items="${list}" >
 	<c:if test="${empVO.getEffect_id()==1}">
-		<input type="button"  value="員工管理" onclick="window.location.href='../emp/select_page.jsp'"/>
+		<input type="button"  value="員工管理" onclick="window.location.href='/CGA104G1/backend/emp/select_page.jsp'"/>
 			</c:if>
 			<c:if test="${empVO.getEffect_id()==2}">
-		<input type="button"  value="xx管理" onclick="window.location.href='../effect/select_page.jsp'"/>
+		<input type="button"  value="xx管理" onclick="window.location.href='/CGA104G1/backend/effect/select_page.jsp'"/>
 			</c:if>
 			<c:if test="${empVO.getEffect_id()==3||empVO.getEffect_id()==1}">
-		<input type="button"  value="x3管理" onclick="window.location.href='../emp/select_page.jsp'"/>
+		<input type="button"  value="x3管理" onclick="window.location.href='/CGA104G1/backend/emp/select_page.jsp'"/>
 			</c:if>		
 	</c:forEach>	
 

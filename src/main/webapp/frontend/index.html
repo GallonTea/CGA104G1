@@ -29,11 +29,9 @@
     <script src="https://unpkg.com/vue-router@4"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+    <link rel="stylesheet" type="text/css" href="../resources/static/css/home.css"/>
+    <!---->
     <style>
-        html {
-            font-size: 22px;
-        }
-
         .home_main {
             z-index: -999999;
             position: relative;
@@ -49,84 +47,27 @@
             margin-bottom: 10%;
         }
 
-        body {
-            background: #eee;
+        @media screen and (max-width: 985px) {
+            .home_main {
+                transform: scale(2);
+            }
         }
-
-        footer {
-            background: #fbaa70;
-            padding: 50px 10px;
-            font-size: 18px;
-        }
-
-        .badge {
-            padding-left: 9px;
-            padding-right: 9px;
-            -webkit-border-radius: 9px;
-            -moz-border-radius: 9px;
-            border-radius: 9px;
-        }
-
-        .label-warning[href],
-        .badge-warning[href] {
-            background-color: #c67605;
-        }
-
-        #lblCartCount {
-            font-size: 12px;
-            background: #ff0000;
-            color: #fff;
-            padding: 0 5px;
-            vertical-align: top;
-            margin-left: -10px;
-        }
-
-        /* footer 樣式 */
-        footer {
-            border-top: solid 1px #c9c9c9;
-            padding: 80px 0px;
-        }
-
-        footer a {
-            color: black;
-            text-decoration: none;
-        }
-
-        footer a:hover {
-            color: #929292;
-            opacity: 60%;
-        }
-
-        footer {
-            border-top: solid 1px #c9c9c9;
-            padding: 80px 0;
-            background-color: white;
-        }
-
-        footer img {
-            width: 110px;
-            margin-bottom: 0;
-        }
-
     </style>
 
 </head>
 
 <body>
 
-
 <div class="home_main"></div>
 
-
-<header>
-
-    <article class="container">
-
-    </article>
-
-</header>
-
 <main>
+
+    <div id="app">
+        <div class="container">
+            <h4>測試以會員編號3身份登入</h4>
+            <button class="btn btn-danger" @click="storeIntoSession()">測試</button>
+        </div>
+    </div>
 
 </main>
 
@@ -143,9 +84,24 @@
 <script src="../resources/static/js/navbar.js"></script>
 <!--  Footer  -->
 <script src="../resources/static/js/footer.js"></script>
-
 <script>
-
+    let vm = Vue.createApp({
+        data() {
+            return {
+                memInfo: {
+                    memberId: 3,
+                    memberName: 'Wade'
+                }
+            }
+        },
+        methods: {
+            storeIntoSession: function () {
+                sessionStorage.setItem('mem-info', JSON.stringify(this.memInfo));
+                alert(' #測試用\r\n 登入資訊 \r\n 會員編號: 3 會員名稱: Wade')
+            }
+        }
+    })
+    vm.mount('#app')
 </script>
 
 </body>

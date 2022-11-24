@@ -3,16 +3,9 @@ package com.item.model;
 import java.sql.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import com.commodityDetails.model.entity.CommodityDetails;
 import com.itemPhotos.model.ItemPhotosVO;
 import com.itemType.model.ItemTypeVO;
 
@@ -43,22 +36,24 @@ public class ItemVO implements java.io.Serializable {
 	private Integer itemPrice;
 	@Column(name = "ITEM_AMOUNT")
 	private Integer itemAmount;
-	@Column(name = "ITEM_STATUS",insertable = false)
+	@Column(name = "ITEM_STATUS")
 	private Integer itemStatus;
 	@Column(name = "ITEM_DATE")
 	private Date itemDate;
 	@Column(name = "ITEM_ENDDATE")
 	private Date itemEnddate;
 
-	@OneToMany
-	@JoinColumn(name="ITEM_ID",referencedColumnName = "ITEM_ID")
+	@OneToMany(mappedBy = "itemVO")
+//	@JoinColumn(name="ITEM_ID",referencedColumnName = "ITEM_ID")
 	private List<ItemPhotosVO> photos;
-	
+
 	@OneToOne
 	@JoinColumn(name = "ITEM_ID",insertable = false,updatable = false)
 	private ItemTypeVO itemTypeVO;
-	
-	
+
+	@OneToMany(mappedBy = "item")
+	private  List<CommodityDetails> commodityDetail;
+
 //	public static void main(String[] args) {
 //		Session session = HibernateUtil.getSessionFactory().getCurrentSession();// 拿連線
 //		session.beginTransaction();//開始交易
@@ -67,6 +62,6 @@ public class ItemVO implements java.io.Serializable {
 //		session.getTransaction().commit();
 //
 //	}
-	
-	
+
+
 }

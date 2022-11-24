@@ -1,6 +1,7 @@
 package com.emp.model;
 
 import java.util.List;
+import java.util.Map;
 
 public class EmpService {
 
@@ -16,7 +17,7 @@ public class EmpService {
 	}
 
 	public EmpVO addEmp(String emp_name, String account,String password, java.sql.Date onjob_date,
-			 Integer emp_status) {
+			 Integer emp_status, Integer effect_id) {
 
 		EmpVO empVO = new EmpVO();
 
@@ -25,6 +26,7 @@ public class EmpService {
 		empVO.setPassword(password);
 		empVO.setOnjob_date(onjob_date);
 		empVO.setEmp_status(emp_status);
+		empVO.setEffect_id(effect_id);
 		dao.insert(empVO);
 
 		return empVO;
@@ -57,6 +59,9 @@ public class EmpService {
 
 	public List<EmpVO> getAll() {
 		return dao.getAll();
+	}
+	public List<EmpVO> getAll(Map<String, String[]> map) {
+		return dao.getAll(map);
 	}
 	
 	

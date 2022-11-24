@@ -1,45 +1,56 @@
 package com.news.model;
 
-import java.sql.Date;
 import java.sql.Timestamp;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "news", schema = "ba_rei")
 public class NewsVO implements java.io.Serializable{
-	private Integer news_id;
-	private Integer emp_id;
-	private String news_title;
-	private String news_content;
-	private Timestamp create_time;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@Column(name = "news_id", insertable = false)
+	private Integer newsId;
+	@Column(name = "emp_id")
+	private Integer empId;
+	@Column(name = "news_title")
+	private String newsTitle;
+	@Column(name = "news_content")
+	private String newsContent;
+	@Column(name = "create_time", insertable = false)
+	private Timestamp createTime;
 	
-	public Integer getNews_id() {
-		return news_id;
+	public Integer getNewsId() {
+		return newsId;
 	}
-	public void setNews_id(Integer news_id) {
-		this.news_id = news_id;
+	public void setNewsId(Integer newsId) {
+		this.newsId = newsId;
 	}
-	public Integer getEmp_id() {
-		return emp_id;
+	public Integer getEmpId() {
+		return empId;
 	}
-	public void setEmp_id(Integer emp_id) {
-		this.emp_id = emp_id;
+	public void setEmpId(Integer empId) {
+		this.empId = empId;
 	}
-	public String getNews_title() {
-		return news_title;
+	public String getNewsTitle() {
+		return newsTitle;
 	}
-	public void setNews_title(String news_title) {
-		this.news_title = news_title;
+	public void setNewsTitle(String newsTitle) {
+		this.newsTitle = newsTitle;
 	}
-	public String getNews_content() {
-		return news_content;
+	public String getNewsContent() {
+		return newsContent;
 	}
-	public void setNews_content(String news_content) {
-		this.news_content = news_content;
+	public void setNewsContent(String newsContent) {
+		this.newsContent = newsContent;
 	}
-	public Timestamp getCreate_time() {
-		return create_time;
+	public Timestamp getCreateTime() {
+		return createTime;
 	}
-	public void setCreate_time(Timestamp create_time) {
-		this.create_time = create_time;
+	public void setCreateTime(Timestamp createTime) {
+		this.createTime = createTime;
 	}
+	
+	
 
 
 }

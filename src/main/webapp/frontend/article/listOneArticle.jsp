@@ -53,6 +53,11 @@ pageContext.setAttribute("list", list);
             left: 50%;
             transform: translate(-50%);
         }
+        
+        #autBlock {
+        	color: gray;
+        	font-weight: 500;
+        }
 
         .row {
             margin: 0;
@@ -105,7 +110,7 @@ pageContext.setAttribute("list", list);
             transform: translate(-50%);
             background-color: rgb(230, 230, 230);
             align-items: center;
-            padding: 30px;
+            padding: 15px;
         }
 
         .insert {
@@ -143,6 +148,10 @@ pageContext.setAttribute("list", list);
             grid-template-columns: 60px 80px auto;
             padding: 10px;
         }
+        
+        .comments:hover {
+        	background-color: rgb(215, 215, 215);
+        }
 
         div.comments>div {
             text-align: left;
@@ -177,8 +186,13 @@ pageContext.setAttribute("list", list);
         }
 
         .cname {
+        	width:100px;
             color: #1E90FF;
             font-weight: 700;
+        }
+        
+        .ccontent {
+        	padding-left: 20px;
         }
 
         .ctime {
@@ -209,11 +223,24 @@ pageContext.setAttribute("list", list);
             width: 50px;
             display: inline;
         }
+        
+        .report {
+        	margin-bottom: 15px;
+        }
+        
+        #reportSubmit {
+        	white-space:nowrap;
+        }
+        
+        .chr {
+        	margin: 0;
+        	width: 100%;
+        	color: rgb(165, 165, 165);
+        }
     </style>
 </head>
 
 <body>
-
     <nav class="navbar navbar-expand-lg bg-light fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="<%=request.getContextPath() %>/frontend/article/select_page.jsp"><img
@@ -239,7 +266,7 @@ pageContext.setAttribute("list", list);
         </div>
         <div class="author_block row">
             <div class="author col-9">
-                ${articleVO.article_identityVO.article_pic}&ensp;<span class="author">作者${articleVO.mem_id}</span>
+                ${articleVO.article_identityVO.article_pic}&ensp;<span id="autBlock">作者</span>&ensp;<span class="author">${articleVO.memVO.mem_account}</span>
             </div>
             <div class="popular col-3">
             
@@ -277,8 +304,8 @@ pageContext.setAttribute("list", list);
                     <input type="hidden" name="action" value="insert">
                 </form>
             </div>
-            <div class="col-6"></div>
-            <div class="edit col-3">
+            <div class="col-3"></div>
+            <div class="edit col-6">
 
                 <form method="post" action="/CGA104G1/ArticleServlet" id="delete">
                     <button type="submit" class="btn btn-outline-danger" value="刪除">刪除文章</button>
@@ -290,8 +317,20 @@ pageContext.setAttribute("list", list);
                     <input type="hidden" name="article_id" value="${articleVO.article_id}"> 
                     <input type="hidden" name="action" value="getOne_For_Update">
                 </form>
-
+                <button type="button" class="btn btn-outline-dark" id="reportBTN" value="檢舉">檢舉文章</button>
+                                
             </div>
+            <div class="report">
+                	<form method='post' action='/CGA104G1/Article_reportServlet'>
+                        <input type='hidden' name='article_id' value='${param.article_id}'>
+                        <input type='hidden' name='mem_id' value=2>
+                        <input type='hidden' name='action' value='insert'>
+                        <input type='hidden' name='afrep_status' value=0>
+                        <input type='hidden' class='form-control insert' id="reportReason" name='afrep_content' value='${param.com_content}'
+                            placeholder='請輸入檢舉原因'>&ensp;&ensp;&ensp;
+                        <button type='submit' class='btn btn-danger' id="reportSubmit" style="visibility: hidden">送出檢舉</button>
+                    </form>
+                </div>
         </div>
 
         <div class="comment">
@@ -300,11 +339,12 @@ pageContext.setAttribute("list", list);
 
                 <div class="comments">
                     <div class="cimg">${article_commentVO.article_identityVO.article_pic}</div>
-                    <div class="cname">&ensp;${article_commentVO.mem_id}</div>
+                    <div class="cname">&ensp;${article_commentVO.memVO.mem_account}</div>
                     <div class="ccontent">${article_commentVO.com_content}</div>
                     <div class="ctime">&ensp;${article_commentVO.com_publish}</div>
                     <div class="c"></div>
                 </div>
+                <hr class="chr">
             </c:forEach>
 
             <div class="addComment">
@@ -313,8 +353,8 @@ pageContext.setAttribute("list", list);
                     <input type="hidden" name="mem_id" value=4>
                     <input type="hidden" name="action" value="insert">
                     <input type="text" class="form-control insert" name="com_content" value="${param.com_content}"
-                        placeholder="跟樓主說點話吧!">&ensp;
-                    <button type="submit" class="btn btn-info">送出</button>
+                        placeholder="跟樓主說點話吧!">&ensp;&ensp;
+                    <button type="submit" class="btn btn-info">發表留言</button>
                 </form>
 
             </div>
@@ -382,6 +422,22 @@ pageContext.setAttribute("list", list);
                     }
                 });
             });
+            
+            $('#reportBTN').click(function(){
+            	console.log(1)
+            	$('#reportReason').attr('type', 'text');
+            	$('#reportSubmit').attr('style', '');
+            });
+            
+            document.querySelectorAll('oembed[url]').forEach( element => {
+            	const videoLabel = document.createElement('video');
+            	
+            	videoLabel.setAttribute('src', element.getAttribute('url'));
+            	videoLabel.setAttribute('controls', 'controls');
+            	videoLabel.setAttribute('style', 'width: 100%; height: 100%');
+            	
+            	element.appendChild(videoLabel);
+            })
         </script>
 </body>
 

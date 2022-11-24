@@ -76,6 +76,7 @@ public class ArticleVO implements java.io.Serializable{
 		this.article_update = article_update;
 	}
 	
+	
 	public com.article_sorttype.model.Article_sorttypeVO getArticle_sorttypeVO() {
 		com.article_sorttype.model.Article_sorttypeService article_sorttypeSvc = new com.article_sorttype.model.Article_sorttypeService();
 		com.article_sorttype.model.Article_sorttypeVO article_sorttypeVO = article_sorttypeSvc.getOneSort(sort_id);
@@ -87,6 +88,12 @@ public class ArticleVO implements java.io.Serializable{
 		com.article_identity.model.Article_identityVO article_identityVO = article_identitySvc.getOneArticle_picture(mem_id);
 	    return article_identityVO;
 	}
+	
+	public com.mem.model.MemVO getMemVO() {
+		com.mem.model.MemService memSvc = new com.mem.model.MemService();
+		com.mem.model.MemVO memVO = memSvc.getOneMem(mem_id);
+	    return memVO;
+    }
 	
 	public Integer getArtLike() {
 		com.artLikeHate.model.ArtLikeHateService artLikeHateSvc = new com.artLikeHate.model.ArtLikeHateService();

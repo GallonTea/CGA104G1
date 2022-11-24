@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Writer;
 
 @WebServlet("/item/GetItemPhoto")
 public class GetItemPhotoServlet extends HttpServlet {
@@ -33,17 +34,19 @@ public class GetItemPhotoServlet extends HttpServlet {
 		} else if("getAllPhoto".equals(action)) {
 			Integer item_id = Integer.valueOf(request.getParameter("item_id"));
 			ItemPhotosService service = new ItemPhotosService();
-			JSONArray photos=service.getAllPhoto(item_id);
+			JSONArray photo=service.getAllPhoto(item_id);
 //
 			PrintWriter out=response.getWriter();
-			out.write(photos.toString());
+			out.write(photo.toString());
 		} else if("DeletePhoto".equals(action)) {
+
 			ItemPhotosService itemPhotosService =new ItemPhotosService();
 			Integer ip_id = Integer.valueOf(request.getParameter("ip_id"));
 			boolean  result= itemPhotosService.deletePhoto(ip_id);
 			JSONObject resultObject=new JSONObject();
 			resultObject.put("successful",result);
-			PrintWriter out=response.getWriter();
+			System.out.println(resultObject);
+			Writer out=response.getWriter();
 			out.write(resultObject.toString());
 		}
 	}

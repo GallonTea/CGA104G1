@@ -4,39 +4,68 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Base64.Encoder;
 
+import org.hibernate.Session;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.google.gson.JsonObject;
 
-import netscape.javascript.JSObject;
 import redis.clients.jedis.params.SetParams;
 
 public class ItemDAO implements ItemDAO_interface {
 
     @Override
     public Integer insert(ItemVO itemVO) {
-        getSesion().persist(itemVO);
+        getSession().persist(itemVO);
         return itemVO.getItemId();
     }
 
+    //可刪
     @Override
-    public void update(ItemVO itemVO) {
-        getSesion().merge(itemVO);
+    public void update(ItemVO itemVO)
+    {
+        ItemVO vo=getSession().load(ItemVO.class, itemVO.getItemId());
+        vo.setItemName(itemVO.getItemName());
+        vo.setItemContent(itemVO.getItemContent());
+        vo.setItemPrice(itemVO.getItemPrice());
+        vo.setItemDate(itemVO.getItemDate());
+        vo.setItemEnddate(itemVO.getItemEnddate());
+        vo.setItemAmount(itemVO.getItemAmount());
+        vo.setItemStatus(itemVO.getItemStatus());
+        vo.setItemtId(itemVO.getItemtId());
+
+    }
+
+    @Override
+    public void updateJS(ItemVO itemVO) {
+        ItemVO vo=getSession().load(ItemVO.class, itemVO.getItemId());
+        vo.setItemName(itemVO.getItemName());
+        vo.setItemContent(itemVO.getItemContent());
+        vo.setItemPrice(itemVO.getItemPrice());
+        vo.setItemDate(itemVO.getItemDate());
+        vo.setItemEnddate(itemVO.getItemEnddate());
+        vo.setItemAmount(itemVO.getItemAmount());
+        vo.setItemStatus(itemVO.getItemStatus());
+        vo.setItemtId(itemVO.getItemtId());
+
     }
 
     @Override
     public void delete(Integer itemId) {
-        ItemVO itemVO = new ItemVO();
-        itemVO.setItemId(itemId);
-        getSesion().remove(itemVO);
+//        ItemVO itemVO = new ItemVO();
+//        itemVO.setItemId(itemId);
+//        getSesion().remove(itemVO);
+
+        Session session=getSession();
+        ItemVO itemVO=session.get(ItemVO.class,itemId);
+        session.remove(itemVO);
     }
 
     @Override
     public ItemVO findByPrimaryKey(Integer itemId) {
         //SQL
         final String sql = "select * from ITEM where ITEM_ID = :item";                            //只回傳一筆
-        ItemVO itemVO = getSesion().createNativeQuery(sql, ItemVO.class).setParameter("item", itemId).uniqueResult();
+        ItemVO itemVO = getSession().createNativeQuery(sql, ItemVO.class).setParameter("item", itemId).uniqueResult();
         return itemVO;
 
     }
@@ -44,17 +73,51 @@ public class ItemDAO implements ItemDAO_interface {
     @Override
     public List<ItemVO> getAll() {
         //HQL
-        return getSesion().createQuery("FROM ItemVO order by itemId", ItemVO.class).list();
+        return getSession().createQuery("FROM ItemVO", ItemVO.class).list();
     }
 
     @Override
     public JSONObject getCount(){
         String sql="select count(*) from item;";
-        int count = ((Number)(getSesion().createNativeQuery(sql).uniqueResult())).intValue();
+        int count = ((Number)(getSession().createNativeQuery(sql).uniqueResult())).intValue();
         JSONObject jsonObject=new JSONObject();
         jsonObject.put("count",count);
 
         return jsonObject;
+    }
+
+    @Override
+    public JSONArray search(String keyWords) {
+        final StringBuilder sql = new StringBuilder().append("SELECT * FROM ITEM where ");
+        if (keyWords.trim().length() != 0 && !(keyWords == null)) {
+            sql.append(" " + "ITEM_NAME" + " " + "like" + " " + '"' + "%" + keyWords + "%" + '"');
+        }
+
+
+        JSONArray jsonArray = new JSONArray();
+        List<ItemVO> list = getSession().createNativeQuery(sql.toString(), ItemVO.class).list();
+        for(ItemVO itemVO:list){
+            JSONObject jsonObject=new JSONObject();
+            jsonObject.put("itemId", itemVO.getItemId());
+            jsonObject.put("itemtId", itemVO.getItemtId());
+            jsonObject.put("itemName", itemVO.getItemName());
+            jsonObject.put("itemContent", itemVO.getItemContent());
+            jsonObject.put("itemPrice", itemVO.getItemPrice());
+            jsonObject.put("itemAmount", itemVO.getItemAmount());
+            jsonObject.put("itemStatus", itemVO.getItemStatus());
+            jsonObject.put("itemDate", itemVO.getItemDate());
+            jsonObject.put("itemEndDate", itemVO.getItemEnddate());
+
+            Encoder encoder = Base64.getEncoder();
+
+            if (itemVO.getPhotos().size() != 0) {
+                String photo64 = encoder.encodeToString(itemVO.getPhotos().get(0).getIpPhoto());
+                jsonObject.put("itemPhoto", photo64);
+            }
+
+            jsonArray.put(jsonObject);
+        }
+        return jsonArray;
     }
 
 
@@ -62,7 +125,7 @@ public class ItemDAO implements ItemDAO_interface {
     @Override
     public JSONArray getAllList(){
         JSONArray jsonArray = new JSONArray();
-        List<ItemVO> list = getSesion().createQuery("FROM ItemVO order by itemId", ItemVO.class).list();
+        List<ItemVO> list = getSession().createQuery("FROM ItemVO order by itemId", ItemVO.class).list();
         for (ItemVO itemVO : list) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("itemId", itemVO.getItemId());
@@ -87,11 +150,11 @@ public class ItemDAO implements ItemDAO_interface {
         return jsonArray;
     }
 
-    //	index.html
+    //	shop.html
     @Override
     public JSONArray getAllJS(int pageNumber) {
         JSONArray jsonArray = new JSONArray();
-        List<ItemVO> list = getSesion().createQuery("FROM ItemVO order by itemId", ItemVO.class)
+        List<ItemVO> list = getSession().createQuery("FROM ItemVO order by itemId", ItemVO.class)
                 .setFirstResult((pageNumber-1)*8)
                 .setMaxResults(8)
                 .list();
@@ -106,6 +169,10 @@ public class ItemDAO implements ItemDAO_interface {
             jsonObject.put("itemStatus", itemVO.getItemStatus());
             jsonObject.put("itemDate", itemVO.getItemDate());
             jsonObject.put("itemEndDate", itemVO.getItemEnddate());
+//            if (itemVO.getPhotos().size() != 0) {
+//                jsonObject.put("itemPhoto",itemVO.getPhotos().get(0).getIpPhoto());
+//
+//            }
             Encoder encoder = Base64.getEncoder();
 
             if (itemVO.getPhotos().size() != 0) {

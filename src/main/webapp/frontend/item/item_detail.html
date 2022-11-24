@@ -38,21 +38,20 @@
 
 <!-- import icon -->
 <script src="https://kit.fontawesome.com/b5ef6b60f3.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" type="text/css" href="../../resources/css/item_detail.css">
+
+<!--item_detail.css	-->
+<link rel="stylesheet" type="text/css" href="../../resources/static/css/item_detail.css">
 
 <!-- slider -->
 <link href="https://cdn.bootcss.com/flexslider/2.6.3/flexslider.min.css" rel="stylesheet">
 <script src="https://cdn.bootcss.com/flexslider/2.6.3/jquery.flexslider-min.js"></script>
 
 
-
+	<!--	sweetalert-->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 
-
-<style>
-/* @import url(../resources/css/item_detail.css) */
-</style>
 
 <body>
 
@@ -63,7 +62,7 @@
 		<nav class="navbar navbar-expand-lg">
 			<div class="container-fluid">
 				<a class="navbar-brand" href="#"> <!-- 網站 logo --> <img
-						src="../../resources/image/Ba-Rei-logo3.png" alt="Logo" width="200px"
+						src="../../resources/static/image/Ba-Rei-logo3.png" alt="Logo" width="200px"
 						height="10%" class="d-inline-block align-text-top">
 				</a>
 
@@ -166,7 +165,7 @@
 							<div id="product-amount"></div>
 							<a href="#" class="btn btn-rounded btn-dark" id="addToCart"
 								onclick="addToCart()"><span>Add to cart</span> </a> <a href="#"
-								class="btn btn-rounded btn-dark" id="Trace"><span>trace</span></a>
+								class="btn btn-rounded btn-dark" onclick="addToTrace()" id="Trace"><span>trace</span></a>
 
 						</form>
 						<div class="product_meta">
@@ -355,7 +354,8 @@
 
    			const itemId = sessionStorage.getItem('itemId'); /* 在sessionstorage裡抓到key='itemId'的value */
 				console.log(itemId);
-   			fetch(`items?action=getOne_For_DisplayJS&itemId=${itemId}`,{ method: 'get' })  /* servlet執行完後將傳回的字串轉成promise */
+			let pjName=getProjectName();
+   			fetch(`${pjName}/item/items?action=getOne_For_DisplayJS&itemId=${itemId}`,{ method: 'get' })  /* servlet執行完後將傳回的字串轉成promise */
    				.then(resp => resp.json())	/* 將拿到的promise物件轉成js物件 */
    				.then(item => { /* 物件本人 */
 
@@ -373,7 +373,7 @@
 
 					object.price=item.itemPrice;
 					object.name=item.itemName;
-
+					object.content=item.itemContent;
 				})
 
 
@@ -411,7 +411,8 @@
    		getPhoto();
    		async function getPhoto(){
 				let item_id=sessionStorage.getItem('itemId');
-				let res=await fetch(`GetItemPhoto?action=getAllPhoto&item_id=`+item_id,{method:'get'});
+				let pjName=getProjectName();
+				let res=await fetch(`${pjName}/item/GetItemPhoto?action=getAllPhoto&item_id=`+item_id,{method:'get'});
 				data = await res.json();
 				let count=0;
 
@@ -419,6 +420,7 @@
 
 					if(count===0){
 						object.photo=e.photo;
+
 					}
 						 $(".slides").append(`
 							<li><img src="data:image/jpeg;base64,${e.photo}" /></li>
@@ -436,8 +438,24 @@
 		object.quantity = +$("#quantity").val();
 		part.push(object);
 		sessionStorage.setItem("part"+'',JSON.stringify(part));
+
+		Swal.fire({
+			icon: 'success',
+			title: '加入成功',
+			showConfirmButton: false,
+			timer: 1500
+		})
 		// sessionStorage.setItem(object.itemId+'',JSON.stringify(object));
 
+	}
+	function addToTrace(){
+
+	}
+
+	function getProjectName(){
+		let path = window.location.pathname;
+		let webCtx = path.substring(0, path.indexOf('/', 1));
+		return webCtx;
 	}
    </script>
 

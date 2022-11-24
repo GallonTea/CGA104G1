@@ -26,15 +26,15 @@ public class Group_JoinDAO implements Group_JoinDAO_interface{
 	}
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO GROUP_JOIN (GB_ID, MEM_ID, GBPAY_STATUS, PICKUP_STATUS, DELIVER_STATUS) VALUES (?, ?, ?, ?, ?)";
+			"INSERT INTO GROUP_JOIN (GB_ID, MEM_ID, GBPAY_STATUS, PICKUP_STATUS, DELIVER_STATUS, GBBUY_AMOUNT) VALUES (?, ?, ?, ?, ? ,?)";
 	private static final String GET_ALL_STMT = 
-			"SELECT GB_ID, MEM_ID, GBPAY_STATUS, PICKUP_STATUS, DELIVER_STATUS FROM GROUP_JOIN order by GB_ID";
+			"SELECT GB_ID, MEM_ID, GBPAY_STATUS, PICKUP_STATUS, DELIVER_STATUS  GBBUY_AMOUNT FROM GROUP_JOIN order by GB_ID";
 	private static final String GET_ONE_STMT = 
-			"SELECT GB_ID, MEM_ID, GBPAY_STATUS, PICKUP_STATUS, DELIVER_STATUS FROM GROUP_JOIN where GB_ID = ?";
+			"SELECT GB_ID, MEM_ID, GBPAY_STATUS, PICKUP_STATUS, DELIVER_STATUS  GBBUY_AMOUNT FROM GROUP_JOIN where GB_ID = ?";
 	private static final String DELETE = 
 			"DELETE FROM GROUP_JOIN where GB_ID = ?";
 	private static final String UPDATE = 
-			"UPDATE GROUP_JOIN set  GBPAY_STATUS=?, PICKUP_STATUS=?, DELIVER_STATUS=? where (GB_ID = ?) and (MEM_ID = ?)";
+			"UPDATE GROUP_JOIN set  GBPAY_STATUS=?, PICKUP_STATUS=?, DELIVER_STATUS=? GBBUY_AMOUNT=? where (GB_ID = ?) and (MEM_ID = ?)";
 
 
 	
@@ -54,6 +54,7 @@ public class Group_JoinDAO implements Group_JoinDAO_interface{
 			pstmt.setInt(3, Group_JoinVO.getGbpay_status());
 			pstmt.setInt(4, Group_JoinVO.getPickup_status());
 			pstmt.setInt(5, Group_JoinVO.getDeliver_status());
+			pstmt.setInt(6, Group_JoinVO.getGbbuy_amount());
 
 			pstmt.executeUpdate();
 
@@ -93,8 +94,9 @@ public class Group_JoinDAO implements Group_JoinDAO_interface{
 			pstmt.setInt(1, Group_JoinVO.getGbpay_status());
 			pstmt.setInt(2, Group_JoinVO.getPickup_status());
 			pstmt.setInt(3, Group_JoinVO.getDeliver_status());
-			pstmt.setInt(4, Group_JoinVO.getGb_id());
-			pstmt.setInt(5, Group_JoinVO.getMem_id());
+			pstmt.setInt(4, Group_JoinVO.getGbbuy_amount());
+			pstmt.setInt(5, Group_JoinVO.getGb_id());
+			pstmt.setInt(6, Group_JoinVO.getMem_id());
 
 			pstmt.executeUpdate();
 
@@ -181,6 +183,7 @@ public class Group_JoinDAO implements Group_JoinDAO_interface{
 				Group_JoinVO.setGbpay_status(rs.getInt("gbpay_status"));
 				Group_JoinVO.setPickup_status(rs.getInt("pickup_status"));
 				Group_JoinVO.setDeliver_status(rs.getInt("deliver_status"));
+				Group_JoinVO.setDeliver_status(rs.getInt("getGbbuy_amount"));
 			}
 
 		} catch (SQLException se) {
@@ -234,6 +237,7 @@ public class Group_JoinDAO implements Group_JoinDAO_interface{
 				Group_JoinVO.setGbpay_status(rs.getInt("gbpay_status"));
 				Group_JoinVO.setPickup_status(rs.getInt("pickup_status"));
 				Group_JoinVO.setDeliver_status(rs.getInt("deliver_status"));
+				Group_JoinVO.setDeliver_status(rs.getInt("getGbbuy_amount"));
 				list.add(Group_JoinVO); 
 			}
 

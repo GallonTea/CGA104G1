@@ -35,7 +35,7 @@ form#aa {
 
 <style>
 table {
-	width: 450px;
+	width:820px;
 	background-color: white;
 	margin-top: 1px;
 	margin-bottom: 1px;
@@ -67,36 +67,28 @@ th, td {
 	<h3>資料修改:</h3>
 
 
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
 
-	<FORM METHOD="post" ACTION="emp.do" name="form1">
+	<FORM METHOD="post" ACTION="EmpServlet" name="form1">
 		<table>
 		
 			<tr>
 				<td>員工姓名:</td>
 				<td><input type="TEXT" name="emp_name" size="45"
-					value="<%=empVO.getEmp_name()%>" /></td>
+					value="<%=empVO.getEmp_name()%>" /><font color=red>${errorMsgs.emp_name}</font></td>
 			</tr>
 			<tr>
 				<td>員工帳號:</td>
 				<td><input type="TEXT" name="account" size="45"
-					value="<%=empVO.getAccount()%>" /></td>
+					value="<%=empVO.getAccount()%>" /><font color=red>${errorMsgs.account}</font></td>
 			</tr>
 			<tr>
 				<td>員工密碼:<font color=red><b>*</b></font></td>
 				<td><input type="password" name="password"  size="45"
-					value="<%=empVO.getPassword()%>" /></td>
+					value="<%=empVO.getPassword()%>" /><font color=red>${errorMsgs.password}</font></td>
 			</tr>
 			<tr>
 				<td>雇用日期:</td>
-				<td><input name="onjob_date" id="f_date1" type="text"></td>
+				<td><input name="onjob_date" id="f_date1" type="text"><font color=red>${errorMsgs.f_date1}</font></td>
 			</tr>
 			<tr>
 				<td>員工狀態:</td>

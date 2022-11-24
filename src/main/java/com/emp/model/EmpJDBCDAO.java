@@ -1,14 +1,27 @@
 package com.emp.model;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.emp_effect.model.*;
-import com.effect.model.*;
 
 public class EmpJDBCDAO implements EmpDAO_interface {
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/Ba_Rei?serverTimezone=Asia/Taipei";
+
+
+
+
+
+
 	String userid = "root";
 	String password = "password";
 
@@ -21,27 +34,32 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 	
 	private static final String LOGIN = "SELECT e.emp_id,emp_name,account,password,onjob_date,emp_status,ef.effect_id,f.effect_name  FROM (emp e join emp_effect ef on e.emp_id = ef.emp_id  )  join effect f on  ef.effect_id = f.effect_id where account = ? and password = ?;";
 	
-	private static final String GET_EFFECT = "SELECT ef.effect_id, f.effect_name FROM  (emp e  join  emp_effect ef  on e.emp_id = ?)  join effect f on  ef.effect_id = f.effect_id group by effect_id;"; 
+	private static final String INSERT_EFFECT = "INSERT INTO emp_effect (emp_id, effect_id) VALUES (?, ?)";
+	private static final String MAXID = "SELECT max(emp_id) EMP_ID from EMP";
 	
-	@Override
-	public void insert(EmpVO empVO) {
-
+//	private static final String listall = "SELECT e.emp_id,emp_name,account,password,onjob_date,emp_status,ef.effect_id  FROM emp e join emp_effect ef on e.emp_id = ef.emp_id ;";
+	
+	
+	
+	public Integer findmaxid() {
+		
+//		Emp_effectVO emp_effectVO = null;
+		int Emp_id = 0;
 		Connection con = null;
 		PreparedStatement pstmt = null;
-
+		ResultSet rs = null;
+		
 		try {
-
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, password);
-			pstmt = con.prepareStatement(INSERT_STMT);
-//			5
-			pstmt.setString(1, empVO.getEmp_name());
-			pstmt.setString(2, empVO.getAccount());
-			pstmt.setString(3, empVO.getPassword());
-			pstmt.setDate(4, empVO.getOnjob_date());
-			pstmt.setInt(5, empVO.getEmp_status());
-
-			pstmt.executeUpdate();
+			pstmt = con.prepareStatement(MAXID);
+			rs=pstmt.executeQuery();
+			while(rs.next()) {
+				
+//				 emp_effectVO = new Emp_effectVO();
+				 Emp_id = rs.getInt("emp_id");
+//				emp_effectVO.setEmp_id(rs.getInt("emp_id"));
+			}		
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
@@ -51,11 +69,98 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 				try {
 					pstmt.close();
 					con.close();
+					
 				} catch (SQLException se) {
 					se.printStackTrace(System.err);
 				}
 			}
 		}
+		return Emp_id;
+	}
+	
+	
+	
+		
+	public void insert(Emp_effectVO emp_effectVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, password);
+			pstmt = con.prepareStatement(INSERT_EFFECT);
+
+			pstmt.setInt(1, emp_effectVO.getEmp_id());
+			pstmt.setInt(2, emp_effectVO.getEffect_id());
+			pstmt.executeUpdate();
+			
+		
+			
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null || con != null) {
+				try {
+					pstmt.close();
+					con.close();
+					
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+	
+	@Override
+	public void insert(EmpVO empVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		PreparedStatement pstmt2 = null;
+		
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, password);
+			pstmt = con.prepareStatement(INSERT_STMT);
+
+			pstmt.setString(1, empVO.getEmp_name());
+			pstmt.setString(2, empVO.getAccount());
+			pstmt.setString(3, empVO.getPassword());
+			pstmt.setDate(4, empVO.getOnjob_date());
+			pstmt.setInt(5, empVO.getEmp_status());
+			pstmt.executeUpdate();
+			
+			
+			int empid = findmaxid();
+			int effectid = empVO.getEffect_id();
+		
+			
+			pstmt2 = con.prepareStatement(INSERT_EFFECT);
+			pstmt2.setInt(1, empid);
+			pstmt2.setInt(2, effectid);
+			pstmt2.executeUpdate();
+			
+	
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null || con != null ||pstmt2 !=null) {
+				try {
+					pstmt.close();
+					con.close();
+					pstmt2.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+		
 	}
 
 	@Override
@@ -163,6 +268,7 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 				}
 			}
 		}
+		
 		return empVO;
 	}
 	//登入
@@ -270,14 +376,62 @@ public List<EmpVO> login(String account , String password) {
 				}
 			}
 		}
+		
 		return list;
 	}
-	
-	
-	
-	
-   //權限回傳
-	
+	@Override
+	public List<EmpVO> getAll(Map<String, String[]> map) {
+		List<EmpVO> list = new ArrayList<EmpVO>();
+		EmpVO empVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, password);
+			String MySql = "select * from emp "
+					+EmpNoEffect.getWhereCondition(map)
+					+"order by emp_id";
+			pstmt = con.prepareStatement(MySql);
+			rs = pstmt.executeQuery();
+		
+			System.out.println(MySql);
+			while (rs.next()) {
+				empVO = new EmpVO();
+				empVO.setEmp_id(rs.getInt("emp_id"));
+				empVO.setEmp_name(rs.getString("emp_name"));
+				empVO.setOnjob_date(rs.getDate("onjob_date"));
+				empVO.setEmp_status(rs.getInt("emp_status"));
+				list.add(empVO);
+			}
+//			Integer enpid = null;
+//			for(EmpVO a :list) {
+//				enpid = a.getEmp_id();
+//				if(enpid==null) {
+//					System.out.println("空資料");
+//					
+//				}
+//			}
+
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null || pstmt != null || con != null) {
+				try {
+					rs.close();
+					pstmt.close();
+					con.close();
+					
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 	
 	
 	
@@ -306,22 +460,45 @@ public List<EmpVO> login(String account , String password) {
 	
 
 		//登入
-		List<EmpVO> list = dao.login("c003", "c003");
+		
+		
+		Map<Integer, Integer> a= new HashMap<Integer, Integer>();
+		
+		
+	
+		List<EmpVO> list = dao.login("asdfgh", "asdfgh");
 		for (EmpVO aEmp : list) {
-		System.out.println(aEmp.getAccount());
-		System.out.println(aEmp.getPassword());
-		System.out.println(aEmp.getEffect_id());
-		System.out.println(aEmp.getEffect());
+//		System.out.println(aEmp.getAccount());
+//		System.out.println(aEmp.getPassword());
+//		System.out.println(aEmp.getEffect_id());
+//		System.out.println(aEmp.getEffect());
+			Emp_effectJDBCDAO dao2 = new Emp_effectJDBCDAO();
+			List<Emp_effectVO> list2 = dao2.getAll();
+			for(Emp_effectVO fa : list2) {
+				System.out.print(fa.getEmp_id()+ ",");
+				System.out.print(fa.getEffect_id() + ",");
+				System.out.println();
+			}
+		
+		a.put(aEmp.getEmp_id(),aEmp.getEffect_id());
+		for(Integer key : a.keySet()) {
+			System.out.println(key +"," + a.get(key) );
+		}
+		
+		
+		
+		
+		
 		}
 //		
 //		// 新增
-//		EmpVO empVO1 = new EmpVO();
-//		empVO1.setEmp_name("呂華");
-//		empVO1.setAccount("b0099");
-//		empVO1.setPassword("b0099");
-//		empVO1.setOnjob_date(java.sql.Date.valueOf("2011-10-04"));
-//		empVO1.setEmp_status(1);
-//		dao.insert(empVO1);
+		EmpVO empVO1 = new EmpVO();
+		empVO1.setEmp_name("呂華");
+		empVO1.setAccount("b0099");
+		empVO1.setPassword("b0099");
+		empVO1.setOnjob_date(java.sql.Date.valueOf("2011-10-04"));
+		empVO1.setEmp_status(1);
+		dao.insert(empVO1);
 //
 //		// 修改
 //		EmpVO empVO2 = new EmpVO();

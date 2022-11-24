@@ -2,7 +2,7 @@ const navbar = `
 
 <header>
 
-    <nav class="navbar navbar-expand-lg">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light static-top mb-5 shadow">
         <div class="container-fluid">
             <a class="navbar-brand" href="">
                 <!-- 網站 logo -->
@@ -87,6 +87,8 @@ const navbar = `
             </div>
         </div>
     </nav>
+
+<div class="home_main"></div>
 
 </header>
 

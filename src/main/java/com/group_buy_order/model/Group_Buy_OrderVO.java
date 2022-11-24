@@ -26,8 +26,7 @@ public class Group_Buy_OrderVO implements java.io.Serializable{
 	private String receiver_address;
 	private String receiver_phone;
 	private Timestamp pickup_time;
-	
-	
+
 	public com.discount.model.DiscountVO getDiscountVO() {
 	    com.discount.model.DiscountService discountSvc = new com.discount.model.DiscountService();
 	    com.discount.model.DiscountVO discountVO = discountSvc.getoneDiscount(discount_id);
@@ -39,6 +38,7 @@ public class Group_Buy_OrderVO implements java.io.Serializable{
 	    com.group_buy_item.model.Group_Buy_ItemVO group_buy_itemVO = group_buy_itemSvc.getOneGbi(gbitem_id);
 	    return group_buy_itemVO;
     }
+
 	public Integer getGborder_id() {
 		return gborder_id;
 	}
@@ -141,9 +141,9 @@ public class Group_Buy_OrderVO implements java.io.Serializable{
 	public void setPickup_time(Timestamp pickup_time) {
 		this.pickup_time = pickup_time;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 }

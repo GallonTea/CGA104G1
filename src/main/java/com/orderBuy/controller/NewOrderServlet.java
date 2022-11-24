@@ -13,7 +13,6 @@ import com.orderBuy.model.entity.OrderBuy;
 import com.orderBuy.model.service.impl.OrderBuyServiceImpl;
 import com.orderBuy.model.service.OrderBuyService;
 import com.item.model.ItemService;
-import core.util.MailServiceForOrder;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -62,26 +61,55 @@ public class NewOrderServlet extends HttpServlet {
         /* 是否攜帶 cookie */
         res.setHeader("Access-Control-Allow-Credentials", "true");
 
-        Integer memberId = null;
-        memberId = Integer.valueOf(req.getParameter("memberId"));
 
-        Integer couponId = null;
-        couponId = Integer.valueOf(req.getParameter("couponId"));
+        PrintWriter pw = res.getWriter();
+        JSONObject jsonMsg = new JSONObject();
 
-        Byte orderPaying = null;
-        orderPaying = Byte.valueOf(req.getParameter("orderPaying"));
+        final Integer memberId = Integer.valueOf(req.getParameter("memberId"));
 
-        Byte orderSend = null;
-        orderSend = Byte.valueOf(req.getParameter("orderSend"));
+        final Integer couponId = Integer.valueOf(req.getParameter("couponId"));
+
+        final Byte orderPaying = Byte.valueOf(req.getParameter("orderPaying"));
+
+        final Byte orderSend = Byte.valueOf(req.getParameter("orderSend"));
 
         final String orderOther = req.getParameter("orderOther");
 
         final String receiverName = req.getParameter("receiverName");
+        final String nameReg = "^[\\u4e00-\\u9fa5]+$|^[a-zA-Z\\s]+$";
+        if (receiverName == null || receiverName.trim().length() == 0) {
+            jsonMsg.put("receiverNameErr", "* 收件人姓名不可空白");
+        } else if (!receiverName.trim().matches(nameReg)) {
+            jsonMsg.put("receiverNameErr", "* 收件人姓名包含不合法字元");
+        }
 
-        final String receiverAddress = req.getParameter("receiverAddress");
+        final String city = req.getParameter("city");
+        if (city == null || city.trim().length() == 0) {
+            jsonMsg.put("cityErr", "* 縣市為必填項目");
+        }
+        final String dist = req.getParameter("dist");
+        if (dist == null || dist.trim().length() == 0) {
+            jsonMsg.put("distErr", "* 鄉鎮市區為必填項目");
+        }
+        final String address = req.getParameter("receiverAddress");
+        if (address == null || address.trim().length() == 0) {
+            jsonMsg.put("addressErr", "* 地址為必填項目");
+        }
+
+        String receiverAddress = city + ", " + dist + ", " + address;
 
         final String receiverPhone = req.getParameter("receiverPhone");
+        String phoneReg = "^[0][9]\\d{8}$";
+        if (receiverPhone == null || receiverPhone.trim().length() == 0) {
+            jsonMsg.put("receiverPhoneErr", "* 手機號碼不可空白");
+        } else if (!receiverPhone.trim().matches(phoneReg)) {
+            jsonMsg.put("receiverPhoneErr", "* 手機號碼格式異常");
+        }
 
+        if (!jsonMsg.isEmpty()) {
+            pw.println(jsonMsg.toString());
+            return;
+        }
 
         JSONArray jsonArr;
         final String dataArr = req.getParameter("dataArr");
@@ -141,14 +169,9 @@ public class NewOrderServlet extends HttpServlet {
         } catch (Exception e) {
             out.println("ERROR: " + e.getMessage());
         }
-        try {
-            finalPrice = originalPrice - discountPrice;
-        } catch (Exception e) {
-            out.println("ERROR: " + e.getMessage());
-        }
-        Long datetime = System.currentTimeMillis();
+        finalPrice = originalPrice - discountPrice;
 
-        Timestamp timestamp = new Timestamp(datetime);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
         // 寫入資料庫
 
@@ -204,7 +227,6 @@ public class NewOrderServlet extends HttpServlet {
 
         // 資料轉交綠界
 
-        PrintWriter pw = res.getWriter();
         StringBuffer sb = new StringBuffer();
         String url = sb.append(req.getScheme()).append("://")
                 .append(req.getServerName()).append(":")
@@ -214,26 +236,20 @@ public class NewOrderServlet extends HttpServlet {
         if (b) {
 
             JSONArray newOrder = new JSONArray();
+            orderBuySvc.NewOrder(url, orderId, memberId, finalPrice, receiverName, couponId);
 
-            try {
-                String result = orderBuySvc.NewOrder(url, orderId, memberId, finalPrice, receiverName, couponId);
-                if (result == null) {
-                    pw.print("綠界發生錯誤，請重稍後再試");
-                    return;
-                }
-                newOrder.put(result);
-                pw.print(newOrder);
-            } catch (Exception e) {
-                e.printStackTrace();
-                pw.print("綠界系統繁忙中，請重稍後再試");
-            }
         } else {
+
             pw.print("系統繁忙中，請重新確認");
             return; // 程式中斷
         }
 
         res.sendRedirect("shop.html");
 
+            jsonMsg.put("payErr", "系統繁忙中，請重新確認");
+            pw.print(jsonMsg);
+            return;
+        }
     }
 }
 

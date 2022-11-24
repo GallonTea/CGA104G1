@@ -29,28 +29,17 @@
     <script src="https://unpkg.com/vue-router@4"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="../resources/static/css/home.css"/>
-    <!---->
-    <style>
-        .home_main {
-            z-index: -999999;
-            position: relative;
-            transition: 3s;
-            opacity: 30%;
-            height: 4160px;
-            width: auto;
-            background-image: url('../resources/static/image/andrew-s-ouo1hbizWwo-unsplash.jpg');
-            background-repeat: no-repeat;
-            background-size: 100%;
-            background-color: transparent;
-            transform: scale(1.111);
-            margin-bottom: 10%;
-        }
+    <link rel="stylesheet" type="text/css" href="../resources/static/css/main.css"/>
 
-        @media screen and (max-width: 985px) {
-            .home_main {
-                transform: scale(2);
-            }
+    <style>
+        body {
+            background: rgba(0, 0, 0, .6) url('../resources/static/image/andrew-s-ouo1hbizWwo-unsplash.jpg') no-repeat fixed center center;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+            -o-background-size: cover;
+            z-index: -999999;
+            /*opacity: 30%;*/
         }
     </style>
 
@@ -58,12 +47,11 @@
 
 <body>
 
-<div class="home_main"></div>
 
 <main>
 
-    <div id="app">
-        <div class="container">
+    <div id="app" style="height: 700px">
+        <div class="container" style="background-color: #8e8e8e">
             <h4>測試以會員編號3身份登入</h4>
             <button class="btn btn-danger" @click="storeIntoSession()">測試</button>
         </div>

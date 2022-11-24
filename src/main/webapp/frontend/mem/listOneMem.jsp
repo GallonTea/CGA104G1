@@ -5,6 +5,8 @@
 <%
 MemVO memVO = (MemVO) request.getAttribute("memVO");
 %>
+
+
 <%= memVO==null %>
 <html>
 <head>
@@ -26,7 +28,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 
 <style>
   table {
-	width: 600px;
+	width: 75%;
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -52,9 +54,9 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 
 <table>
 	<tr>
-		<th>會員帳號</th>
-		<th>會員密碼</th>
 		<th>會員編號</th>
+		<th>會員帳號</th>
+<!-- 		<th>會員密碼</th> -->
 		<th>會員姓名</th>
 		<th>會員地址</th>
 		<th>會員電話</th>
@@ -66,9 +68,9 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 		
 	</tr>
 	<tr>
-		<td><%=memVO.getMem_account()%></td>
-		<td><%=memVO.getMem_password()%></td>
 		<td><%=memVO.getMem_id()%></td>
+		<td><%=memVO.getMem_account()%></td>
+<%-- 		<td><%=memVO.getMem_password()%></td> --%>
 		<td><%=memVO.getMem_name()%></td>
 		<td><%=memVO.getMem_address()%></td>
 		<td><%=memVO.getMem_phone()%></td>
@@ -76,7 +78,17 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 		<td><%=memVO.getMem_email()%></td>
 		<td><%=memVO.getMem_sex()%></td>
 		<td><%=memVO.getMem_dob()%></td>
-		<td><%=memVO.getMem_status()%></td>
+<%-- 		<td><%=memVO.getMem_status()%></td> --%>
+
+			<c:if test="${memVO.mem_status==0}" >
+					<td><c:out value="停權" ></c:out></td>
+			</c:if>
+			<c:if test="${memVO.mem_status==1}">
+					<td><c:out value="未驗證"></c:out></td>
+			</c:if>
+			<c:if test="${memVO.mem_status==2}">
+					<td><c:out value="已驗證"></c:out></td>
+			</c:if>
 	</tr>
 </table>
 

@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.emp_effect.model.*"%>
 <%
-Emp_effectVO emp_effectVO = (Emp_effectVO) request.getAttribute("emp_effectVO");
+// Emp_effectVO emp_effectVO = (Emp_effectVO) request.getAttribute("emp_effectVO");
 %>
 <%@include file="/backend/backNavbar.jsp"%>
 <html>
@@ -86,7 +86,7 @@ th, td {
 			
 		</table>
 
-		<br> <input type="hidden" name="action" value="update"> <input
+		<br> <input type="hidden" name="action" value="insert"> <input
 			type="hidden" name="emp_id" value="${emp_effectVO.emp_id}"> 
 			<input type="submit" value="送出修改">
 	</FORM>

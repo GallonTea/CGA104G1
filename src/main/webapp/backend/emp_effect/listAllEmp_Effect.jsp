@@ -2,6 +2,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+<%@page import="com.effect.model.*"%>
 <%@ page import="com.emp.model.*"%>
 <jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
 <jsp:useBean id="effectSvc" scope="page" class="com.effect.model.EffectService" />
@@ -52,7 +53,7 @@ pageContext.setAttribute("list", list);
 <body bgcolor='white'>
 <table id="table-1">
 	<tr><td>
-		 <h3>所有員工資料</h3>
+		 <h3>所有權限資料</h3>
 		 <h4><a href="select_page.jsp">回首頁</a></h4>
 	</td></tr>
 </table>
@@ -77,7 +78,7 @@ pageContext.setAttribute("list", list);
 			  <FORM METHOD="post" ACTION="Emp_effectServlet" style="margin-bottom: 0px;">
 			     <input type="submit" value="新增">
 			     <input type="hidden" name="emp_id"  value="${emp_effectVO.emp_id}">
-			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
+			     <input type="hidden" name="action"	value="go_Insert"></FORM>
 			</td>
 			<td>
 			  <FORM METHOD="post" ACTION="Emp_effectServlet" style="margin-bottom: 0px;">

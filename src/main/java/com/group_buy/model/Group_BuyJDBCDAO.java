@@ -29,7 +29,8 @@ public class Group_BuyJDBCDAO implements Group_BuyDAO_interface{
 			"DELETE FROM GROUP_BUY where GB_ID = ?";
 	private static final String UPDATE = 
 			"UPDATE GROUP_BUY set MEM_ID=?, GBITEM_ID=?, GB_MIN=?, GB_AMOUNT=?, GBSTART_DATE=?, GBEND_DATE=?, GB_STATUS=? where GB_ID = ?";
-	
+	private static final String GET_ALL_STMT_MEMID = 
+			"SELECT GB_ID, MEM_ID, GBITEM_ID, GB_MIN, GB_AMOUNT, GBSTART_DATE, GBEND_DATE,GB_STATUS FROM GROUP_BUY WHERE MEM_ID = ? order by GB_ID";
 	
 	
 	@Override
@@ -289,9 +290,74 @@ public class Group_BuyJDBCDAO implements Group_BuyDAO_interface{
 		}
 		return list;
 	}
-	public static void main(String[] args) {
+	
+	@Override
+	public List<Group_BuyVO> findByMemID(Integer mem_id) {
+		Group_BuyVO Group_BuyVO = null;
+		List<Group_BuyVO> list = new ArrayList<Group_BuyVO>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 
-		Group_BuyJDBCDAO dao = new Group_BuyJDBCDAO();
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ALL_STMT_MEMID);
+
+			pstmt.setInt(1, mem_id);
+
+			rs = pstmt.executeQuery();
+
+			
+			while (rs.next()) {
+				Group_BuyVO = new Group_BuyVO();
+				Group_BuyVO.setGb_id(rs.getInt("gb_id"));
+				Group_BuyVO.setMem_id(rs.getInt("mem_id"));
+				Group_BuyVO.setGbitem_id(rs.getInt("gbitem_id"));
+				Group_BuyVO.setGb_min(rs.getInt("gb_min"));
+				Group_BuyVO.setGb_amount(rs.getInt("gb_amount"));
+				Group_BuyVO.setGbstart_date(rs.getTimestamp("gbstart_date"));
+				Group_BuyVO.setGbend_date(rs.getTimestamp("gbend_date"));
+				Group_BuyVO.setGb_status(rs.getInt("gb_status"));
+				list.add(Group_BuyVO);
+			}
+
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+//	public static void main(String[] args) {
+//
+//		Group_BuyJDBCDAO dao = new Group_BuyJDBCDAO();
 
 		// 新增
 //		Group_BuyVO gbVO1 = new Group_BuyVO();
@@ -305,16 +371,16 @@ public class Group_BuyJDBCDAO implements Group_BuyDAO_interface{
 //		dao.insert(gbVO1);
 
 		// 修改
-		Group_BuyVO gbVO2 = new Group_BuyVO();
-		gbVO2.setMem_id(1);
-		gbVO2.setGbitem_id(4);
-		gbVO2.setGb_min(4);
-		gbVO2.setGb_amount(200180);
-		gbVO2.setGbstart_date(Timestamp.valueOf("2022-10-17 00:00:00.0"));
-		gbVO2.setGbend_date(Timestamp.valueOf("2023-12-29 23:59:59"));
-		gbVO2.setGb_status(1);
-		gbVO2.setGb_id(7);
-		dao.update(gbVO2);
+//		Group_BuyVO gbVO2 = new Group_BuyVO();
+//		gbVO2.setMem_id(1);
+//		gbVO2.setGbitem_id(4);
+//		gbVO2.setGb_min(4);
+//		gbVO2.setGb_amount(200180);
+//		gbVO2.setGbstart_date(Timestamp.valueOf("2022-10-17 00:00:00.0"));
+//		gbVO2.setGbend_date(Timestamp.valueOf("2023-12-29 23:59:59"));
+//		gbVO2.setGb_status(1);
+//		gbVO2.setGb_id(7);
+//		dao.update(gbVO2);
 
 //		// 刪除
 //		dao.delete(6);
@@ -332,18 +398,32 @@ public class Group_BuyJDBCDAO implements Group_BuyDAO_interface{
 //		System.out.println("---------------------");
 
 		// 查詢
-		List<Group_BuyVO> list = dao.getAll();
-		for (Group_BuyVO aGb : list) {
-			System.out.print(aGb.getGb_id() + ",");
-			System.out.print(aGb.getMem_id() + ",");
-			System.out.print(aGb.getGbitem_id() + ",");
-			System.out.print(aGb.getGb_min() + ",");
-			System.out.print(aGb.getGb_amount() + ",");
-			System.out.print(aGb.getGbstart_date() + ",");
-			System.out.print(aGb.getGbend_date() + ",");
-			System.out.print(aGb.getGb_status());
-			System.out.println();
-		}
-	}
+//		List<Group_BuyVO> list = dao.getAll();
+//		for (Group_BuyVO aGb : list) {
+//			System.out.print(aGb.getGb_id() + ",");
+//			System.out.print(aGb.getMem_id() + ",");
+//			System.out.print(aGb.getGbitem_id() + ",");
+//			System.out.print(aGb.getGb_min() + ",");
+//			System.out.print(aGb.getGb_amount() + ",");
+//			System.out.print(aGb.getGbstart_date() + ",");
+//			System.out.print(aGb.getGbend_date() + ",");
+//			System.out.print(aGb.getGb_status());
+//			System.out.println();
+//		}
+		// 以mem_id查詢
+//		List<Group_BuyVO> list2 = dao.findByMemID(1);
+//		for (Group_BuyVO gbVO2 : list2) {
+//			System.out.print(gbVO2.getGb_id() + ",");
+//			System.out.print(gbVO2.getMem_id() + ",");
+//			System.out.print(gbVO2.getGbitem_id() + ",");
+//			System.out.print(gbVO2.getGb_min() + ",");
+//			System.out.print(gbVO2.getGb_amount() + ",");
+//			System.out.print(gbVO2.getGbstart_date() + ",");
+//			System.out.print(gbVO2.getGbend_date() + ",");
+//			System.out.print(gbVO2.getGb_status());
+//			System.out.println();
+//		}
+//		
+//	}
 
 }

@@ -35,7 +35,6 @@
         body {
             color: #566787;
             background: #f5f5f5;
-            font-family: 'Varela Round', sans-serif;
             font-size: 13px;
         }
 
@@ -301,12 +300,36 @@
         }
 
         body {
-            font-size: 20px;
+            font-size: 16px;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+            margin-top: 0;
+        }
+
+        ul.navbar-nav a:hover {
+            color: #FFC107 !important;
+        }
+
+        #none {
+            height: 66px;
+        }
+
+        body {
+            background-image: url('../asset/img/share_icon/bg.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+            background-color: rgba(29, 29, 29, 0.8);
+            background-blend-mode: multiply;
         }
     </style>
 </head>
 <body>
 
+<div style="height: 100px"></div>
 <main>
 
     <div id="app" class="container" v-cloak>
@@ -320,35 +343,39 @@
                                 <h2>後台 <b>訂單詳情</b></h2>
                             </div>
                             <div class="col-sm-8">
-                                <button @click="refresh()" class="btn btn-primary"><i class="fa-solid fa-arrows-rotate"></i> <span>Refresh List</span></button>
-                                <button class="btn btn-secondary"><i class="fa-regular fa-file-excel"></i> <span>Export to Excel</span></button>
+                                <button @click="refresh()" class="btn btn-primary"><i
+                                        class="fa-solid fa-arrows-rotate"></i> <span>Refresh List</span></button>
+                                <button class="btn btn-secondary"><i class="fa-regular fa-file-excel"></i> <span>Export to Excel</span>
+                                </button>
                             </div>
                         </div>
                     </div>
                     <div class="table-filter">
                         <div class="row">
                             <div class="col-sm-3">
-<!--                                <div class="show-entries">-->
-<!--                                    <span>Show</span>-->
-<!--                                    <select class="form-control">-->
-<!--                                        <option>5</option>-->
-<!--                                        <option>10</option>-->
-<!--                                        <option>15</option>-->
-<!--                                        <option>20</option>-->
-<!--                                    </select>-->
-<!--                                    <span>entries</span>-->
-<!--                                </div>-->
+                                <!--                                <div class="show-entries">-->
+                                <!--                                    <span>Show</span>-->
+                                <!--                                    <select class="form-control">-->
+                                <!--                                        <option>5</option>-->
+                                <!--                                        <option>10</option>-->
+                                <!--                                        <option>15</option>-->
+                                <!--                                        <option>20</option>-->
+                                <!--                                    </select>-->
+                                <!--                                    <span>entries</span>-->
+                                <!--                                </div>-->
                             </div>
                             <div class="col-sm-9">
                                 <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
-                                <div class="filter-group">
-                                    <label>姓名</label>
-                                    <input type="text" class="form-control">
-                                </div>
+<!--                                <div class="filter-group">-->
+<!--                                    <label>姓名</label>-->
+<!--                                    <input type="text" class="form-control">-->
+<!--                                </div>-->
 
                                 <div class="filter-group">
                                     <label>訂單狀態</label>
-                                    <select class="select-group" @change="filterStatus()" v-model="filterSta">
+                                    <select class="select-group form-control" @change="filterStatus()"
+                                            v-model="filterSta">
+                                        <option value="" disabled selected>請選擇</option>
                                         <option value="0">待付款</option>
                                         <option value="6">已完成</option>
                                         <option value="3">運輸中</option>
@@ -386,7 +413,7 @@
                             <td>{{ statusFilter(details.ORDER_STATUS) }}</td>
                             <td>NT$ {{ details.FINAL_PRICE }}</td>
                             <td>
-                                <button @click="viewDetail(details, index)" class="view" title="View Details"
+                                <button @click="viewDetail(details, index)" class="btn view" title="View Details"
                                         data-bs-target="#myModal" data-bs-toggle="modal"
                                         data-toggle="tooltip"><i
                                         class="fa-solid fa-right-long"></i></button>
@@ -394,22 +421,22 @@
                         </tr>
                         </tbody>
                     </table>
-<!--                    <div class="clearfix">-->
-<!--                        <div class="hint-text">Showing <b>5</b> out of <b>?</b> entries</div>-->
-<!--                        <ul class="pagination">-->
+                    <!--                    <div class="clearfix">-->
+                    <!--                        <div class="hint-text">Showing <b>5</b> out of <b>?</b> entries</div>-->
+                    <!--                        <ul class="pagination">-->
 
-<!--                            <li class="page-item">-->
-<!--                                <button class="page-link">上一頁</button>-->
-<!--                            </li>-->
-<!--                            <li class="page-item active">-->
-<!--                                <button class="page-link">page1</button>-->
-<!--                            </li>-->
+                    <!--                            <li class="page-item">-->
+                    <!--                                <button class="page-link">上一頁</button>-->
+                    <!--                            </li>-->
+                    <!--                            <li class="page-item active">-->
+                    <!--                                <button class="page-link">page1</button>-->
+                    <!--                            </li>-->
 
-<!--                            <li class="page-item">-->
-<!--                                <button class="page-link">下一頁</button>-->
-<!--                            </li>-->
-<!--                        </ul>-->
-<!--                    </div>-->
+                    <!--                            <li class="page-item">-->
+                    <!--                                <button class="page-link">下一頁</button>-->
+                    <!--                            </li>-->
+                    <!--                        </ul>-->
+                    <!--                    </div>-->
                 </div>
             </div>
         </div>
@@ -424,39 +451,24 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
-                        <a href="#">
-                            <div class="modal-body" v-for="(detail, index) in detail"
-                                 :key="detail.itemId">
-
-                                <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-                                    <div class="media-body">
-                                        <h5 class="font-weight-bold mb-2">{{ detail.itemName }}</h5>
-                                        <!--                                    <p class="font-italic text-muted mb-0 small">128 GB ROM | 15.49 cm (6.1 inch)-->
-                                        <!--                                        Display 12MP Rear Camera | 7MP Front Camera A12 Bionic Chip Processor</p>-->
-                                        <div class="d-flex align-items-center justify-content-between mt-1">
-                                            <h6 class="font-weight-bold my-2">$TWD {{ detail.itemPrice }}</h6>
-                                            <h6 class="font-weight-bold my-2">商品數量 {{ detail.cdAmount }}</h6>
-                                            <!--                                        <ul class="list-inline small">-->
-                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
-                                            <!--                                            </li>-->
-                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
-                                            <!--                                            </li>-->
-                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
-                                            <!--                                            </li>-->
-                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
-                                            <!--                                            </li>-->
-                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star-o text-gray"></i></li>-->
-                                            <!--                                        </ul>-->
-                                        </div>
+                        <div class="modal-body" v-for="(detail, index) in detail"
+                             :key="detail.itemId">
+                            <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                <div class="media-body">
+                                    <div class="d-flex align-items-center justify-content-between mt-1">
+                                        <a href="#">
+                                            <img :src="'data:image/jpeg;base64,' + detail.photo" alt="productImg"
+                                                 class="img-sm border rounded">
+                                        <strong class="font-weight-bold mb-2">{{ detail.itemName }}</strong>
+                                        </a>
+                                        <small class="font-weight-bold my-2">單價 TW$ {{ detail.itemPrice }}</small>
+                                        <small class="font-weight-bold my-2">商品數量 {{ detail.cdAmount }}</small>
                                     </div>
-                                    <div>
-                                        <img :src="'data:image/jpeg;base64,' + detail.photo" alt="productImg"
-                                             class="rwding rounded">
-                                    </div>
-
+                                </div>
+                                <div>
                                 </div>
                             </div>
-                        </a>
+                        </div>
 
                     </div>
 
@@ -478,6 +490,7 @@
 <script src="https://unpkg.com/vue-router@4"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+
 <script>
 
     let vm = Vue.createApp({
@@ -493,7 +506,7 @@
             var qs = Qs
             axios.post('/CGA104G1/ListAllOrderBackServlet')
                 .then(res => {
-                    console.log(res);
+                    console.log(res.data);
                     this.details = res.data;
                 })
                 .catch(err => {
@@ -539,10 +552,12 @@
                         console.log(err);
                     })
             },
-
+            refresh: function () {
+                this.filterSta = ''
+            }
         },
         computed: {
-             filterStatus () {
+            filterStatus() {
                 return this.details.filter(result => result.ORDER_STATUS.match(this.filterSta))
             }
         }
@@ -552,5 +567,8 @@
 
 </script>
 </body>
+
+<!--  NavBar  -->
+<script src="../../resources/static/js/backNarbar.js"></script>
 
 </html>

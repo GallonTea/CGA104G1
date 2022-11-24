@@ -61,5 +61,9 @@ public class groupBuyItemPictureService {
 	public groupBuyItemPictureVO getMainGroupBuyItemPictureByGbitemID(Integer gbitem_id) {
 		return dao.findFirstPICByGbitemID(gbitem_id);
 	}
+	// 使用 GBITEM_ID 取得封面(第二張) GBITEM_ID 的照片
+	public groupBuyItemPictureVO getSecondGroupBuyItemPictureByGbitemID(Integer gbitem_id) {
+		return dao.findFirstPICByGbitemID(gbitem_id);
+	}
 
 }

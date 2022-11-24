@@ -24,10 +24,23 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.11.0/qs.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <link rel="stylesheet" type="text/css" href="../../resources/static/css/orderDetails.css"/>
 
+    <link rel="stylesheet" type="text/css" href="../../resources/static/css/main.css"/>
+
     <style>
+        body {
+            background: rgba(0, 0, 0, .6) url('../../resources/static/image/andrew-s-ouo1hbizWwo-unsplash.jpg') no-repeat fixed center center;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+            -o-background-size: cover;
+            z-index: -999999;
+            /*opacity: 30%;*/
+        }
+
         [v-clock] {
             display: none;
         }
@@ -41,9 +54,10 @@
             height: 200px;
             object-fit: cover
         }
+
         a {
             color: #0a0a0a;
-            text-decoration:none;
+            text-decoration: none;
         }
     </style>
 </head>
@@ -51,12 +65,20 @@
 
 <main>
 
-    <div id="app" class="container" v-cloak>
+    <div id="app" class="container" v-cloak style="background-color: rgba(255,255,255,0.51)">
 
-        <div class="py-5 text-center">
-            <h2>{{ memberName }} 的訂單明細</h2>
-            <p class="lead"></p>
+        <!--        <div class="py-5 text-center" style="position: relative; color: #ffffff; font-size: 2rem; z-index: 10; background: rgba(255,255,255,0.55); text-align: center; padding: 5px; letter-spacing: 10px; }-->
+        <!--             .stroke:before {position: absolute; z-index: -1; -webkit-text-stroke: 2px #fc98c4; content: attr(data-stroke)}">-->
+        <!--            <h1>{{ memberName }} 的訂單明細</h1>-->
+        <!--        </div>-->
+        <div class="row py-5 text-center justify-content-center gap-2">
+            <button id="ing" class="btn btn-success col-md-2 active" @click="ing()">進行中</button>
+            <button id="finish" class="btn btn-success col-md-2" @click="finish()">已完成</button>
+            <button id="canceled" class="btn btn-success col-md-2" @click="canceled()">已取消</button>
+            <!--            <div class="col-md-1" style="visibility: hidden"></div>-->
         </div>
+
+        <br>
 
         <article v-for="(orders, index) in orders"
                  :key="orders.ORDER_ID"
@@ -102,8 +124,27 @@
                     <button class="col-md-12 btn btn-light" data-bs-target="#myModal" data-bs-toggle="modal"
                             @click="showMore(orders, index)">查看詳情
                     </button>
-                    <button class="col-md-2 float-right btn btn-primary">退 / 換貨申請</button>
-                    <button class="col-md-2 float-right btn btn-danger">取消訂單</button>
+                    <div class="row gap-2 mx-auto justify-content-md-end"
+                         v-if="orders.ORDER_STATUS === '0'">
+                        <button class="col-md-2 float-right btn btn-danger"
+                                @click="cancelOrder(orders, index)">取消訂單
+                        </button>
+                    </div>
+                    <div class="row gap-2 mx-auto justify-content-md-end"
+                         v-else-if="orders.ORDER_STATUS === '4'">
+                        <button class="col-md-2 float-right btn btn-primary" disabled>取消審核中</button>
+                    </div>
+
+                    <div class="row gap-2 mx-auto justify-content-md-end"
+                         v-else-if="orders.ORDER_STATUS === '6'">
+                        <button class="col-md-2 float-right btn btn-primary"
+                                @click="returnOrder(orders, index)">退/換貨申請
+                        </button>
+                    </div>
+                    <div class="row gap-2 mx-auto justify-content-md-end"
+                         v-else-if="orders.ORDER_STATUS === '7'">
+                        <button class="col-md-2 float-right btn btn-success" disabled>退/換貨申請審核中</button>
+                    </div>
                 </div>
 
             </div>
@@ -119,39 +160,38 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
-                        <a href="#">
-                            <div class="modal-body" v-for="(details, index) in details"
-                                 :key="details.itemId">
+                        <div class="modal-body" v-for="(details, index) in details"
+                             :key="details.itemId">
 
-                                <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-                                    <div class="media-body">
+                            <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                                <div class="media-body">
+                                    <a href="#">
                                         <h5 class="font-weight-bold mb-2">{{ details.itemName }}</h5>
-                                        <!--                                    <p class="font-italic text-muted mb-0 small">128 GB ROM | 15.49 cm (6.1 inch)-->
-                                        <!--                                        Display 12MP Rear Camera | 7MP Front Camera A12 Bionic Chip Processor</p>-->
-                                        <div class="d-flex align-items-center justify-content-between mt-1">
-                                            <h6 class="font-weight-bold my-2">$TWD {{ details.itemPrice }}</h6>
-                                            <h6 class="font-weight-bold my-2">商品數量 {{ details.cdAmount }}</h6>
-                                            <!--                                        <ul class="list-inline small">-->
-                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
-                                            <!--                                            </li>-->
-                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
-                                            <!--                                            </li>-->
-                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
-                                            <!--                                            </li>-->
-                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
-                                            <!--                                            </li>-->
-                                            <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star-o text-gray"></i></li>-->
-                                            <!--                                        </ul>-->
-                                        </div>
+                                    </a>
+                                    <div class="d-flex align-items-center justify-content-between mt-1">
+                                        <h6 class="font-weight-bold my-2">NT$ {{ details.itemPrice }}</h6>
+                                        <h6 class="font-weight-bold my-2">商品數量 {{ details.cdAmount }}</h6>
+                                        <!--                                        <ul class="list-inline small">-->
+                                        <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
+                                        <!--                                            </li>-->
+                                        <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
+                                        <!--                                            </li>-->
+                                        <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
+                                        <!--                                            </li>-->
+                                        <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
+                                        <!--                                            </li>-->
+                                        <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star-o text-gray"></i></li>-->
+                                        <!--                                        </ul>-->
                                     </div>
-                                    <div>
-                                        <img :src="'data:image/jpeg;base64,' + details.photo" alt="productImg"
-                                             class="rwding rounded">
-                                    </div>
-
                                 </div>
+                                <div>
+                                    <img :src="'data:image/jpeg;base64,' + details.photo" alt="productImg"
+                                         class="rwding rounded">
+                                </div>
+
                             </div>
-                        </a>
+
+                        </div>
 
                     </div>
 
@@ -177,6 +217,8 @@
     let vm = Vue.createApp({
         data() {
             return {
+                filterSta: '',
+                filterStatus: '',
                 isModalVisible: false,
                 memberId: '',
                 memberName: '',
@@ -187,8 +229,13 @@
         beforeCreate() {
             let member = sessionStorage.getItem('mem-info');
             if (!member) {
-                alert('請先登入!')
-                window.location.assign('/CGA104G1/frontend/mem/login.jsp')
+                Swal.fire({
+                    icon: 'error',
+                    title: '你還沒登入喔!',
+                })
+                setTimeout(function () {
+                    window.location.assign('/CGA104G1/frontend/mem/login.jsp')
+                }, 2000)
             }
             let memberId = JSON.parse(member).memberId;
             this.memberId = JSON.parse(member).memberId;
@@ -248,9 +295,94 @@
                     .catch(err => {
                         console.log(err);
                     })
+            },
+            cancelOrder: function (orders, index) {
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-warning'
+                    },
+                    buttonsStyling: false
+                })
+
+                swalWithBootstrapButtons.fire({
+                    title: '確認要取消訂單嗎?',
+                    text: "取消需要經過申請才會生效",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: '確認送出',
+                    cancelButtonText: '再想一下',
+                    reverseButtons: true
+
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var qs = Qs;
+                        axios.post('/CGA104G1/orderBuy/newOrder.do', qs.stringify({}))
+                            .then(res => {
+                                console.log(res);
+                                Swal.fire({
+                                    title: '申請送出中請稍後~',
+                                    timer: 2000,
+                                    html: 'Data uploading...',// add html attribute if you want or remove
+                                    allowOutsideClick: false
+                                })
+                                this.result = res.data
+                                $("#orderForm").html(res.data)
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            })
+                    } else if (
+                        /* Read more about handling dismissals below */
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire(
+                            '我們未送出您的申請',
+                            '感謝您的支持~ : )',
+                            'warning'
+                        )
+                    }
+                })
+            },
+            returnOrder: async function (orders, index) {
+                const {value: formValues} = await Swal.fire({
+                    title: '退/換貨原因說明',
+                    html:
+                        '<div>後續將會有客服人員為您提供後續服務</div>' + '<br>' +
+                        '<textarea id="swal-input1" class="form-control">',
+                    focusConfirm: false,
+                    preConfirm: () => {
+                        return document.getElementById('swal-input1').value
+                    }
+                })
+                if (formValues) {
+                    var qs = Qs
+                    axios.post('/CGA104G1/UpdateOrderServlet', qs.stringify({
+                        orderId: this.orders[index].ORDER_ID, orderOther: formValues
+                    }))
+                        .then(res => {
+                            console.log(res);
+                            this.details = res.data
+                            window.location.reload()
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                    Swal.fire({
+                        icon: 'success',
+                        title: '請耐心等候客服人員回應~',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: '打點內容吧...',
+                    })
+                }
             }
-        },
-        Component: {}
+        }
     })
 
     vm.mount('#app')

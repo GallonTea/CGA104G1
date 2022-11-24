@@ -11,6 +11,8 @@ public interface DiscountDAO_interface {
 	public void delete(Integer discount_id);
 
 	public DiscountVO findByPrimaryKey(Integer discount_id);
+	
+	public List<DiscountVO> findDiscountByPrimaryKey(Integer gbitem_id);
 
 	public List<DiscountVO> getAll();
 

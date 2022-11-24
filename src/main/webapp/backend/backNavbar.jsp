@@ -38,13 +38,17 @@
                 
                 body {
 		            background-image: url(<%=request.getContextPath()%>/backend/asset/img/share_icon/bg.jpg);
-		            background-repeat: no-repeat;
-		            background-attachment: fixed;
-		            background-position: center;
-		            background-size: cover;
-		            background-color: rgba(29, 29, 29, 0.8);
-		            background-blend-mode: multiply;
+		            background-repeat: no-repeat !important;
+		            background-attachment: fixed !important;
+		            background-position: center !important;
+		            background-size: cover !important;
+		            background-color: rgba(29, 29, 29, 0.8) !important;
+		            background-blend-mode: multiply !important;
       			  }
+      			  
+				.log {
+					text-decoration: none;
+				}
             </style>
         </head>
 
@@ -111,8 +115,11 @@
                                             <li><a class="dropdown-item bg-dark text-white-50" href="<%=request.getContextPath()%>/backend/emp/select_page.jsp">員工資料查詢與管理</a></li>
                                             <li><a class="dropdown-item bg-dark text-white-50" href="<%=request.getContextPath()%>/backend/effect/select_page.jsp">權限查詢與管理</a></li>
                                         </ul>
-                                    </li>
+                                    </li>   								  
                                 </ul>
+                                <a class="d-flex log" href="<%=request.getContextPath()%>/backend/emp/backLogin.html">
+									<button class="btn btn-warning">員工登入</button>
+								</a>
                             </div>
                         </div>
                     </nav>

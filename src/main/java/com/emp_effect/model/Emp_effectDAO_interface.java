@@ -9,7 +9,7 @@ public interface Emp_effectDAO_interface {
 	
 	public void insert(Emp_effectVO emp_effectVO);
 	public void update(Emp_effectVO emp_effectVO);
-	public void delete(Integer emp_id);
+	public void delete(Integer emp_id ,Integer effect_id);
 	public List<Emp_effectVO> findBypk(Integer emp_id);
 	public List<Emp_effectVO> getAll();
 	

@@ -1,12 +1,16 @@
-<%@page import="com.emp_effect.model.Emp_effectVO"%>
+<%@page import="org.hibernate.internal.build.AllowSysOut"%>
+<%@page import="com.emp_effect.model.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.emp_effect.model.*"%>
+<%@ page import="java.util.*"%>
+<%@ page import="com.effect.model.*"%>
 <jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
-<jsp:useBean id="effectSvc" scope="page" class="com.effect.model.EffectService" />
+<jsp:useBean id="effectSvc" scope="page" class="com.effect.model.EffectService"/>
 
 <%
+Integer emp_id = (Integer)session.getAttribute("emp_id");
+
 Emp_effectVO emp_effectVO = (Emp_effectVO) request.getAttribute("Emp_effectVO");
 %>
 <!DOCTYPE html>
@@ -73,15 +77,21 @@ Emp_effectVO emp_effectVO = (Emp_effectVO) request.getAttribute("Emp_effectVO");
 <FORM METHOD="post" ACTION="Emp_effectServlet" name="form1">
 <table>
 	<tr>
-		<td>員工編號:</td>
-		<td><input type="TEXT" name="emp_id" size="45" 
-<%-- 		     value="${(empVO.emp_id==null)? 'input': ''}"/></td> --%>
-			 value="<%= (emp_effectVO==null)? "1" : emp_effectVO.getEmp_id()%>" />${emp_effectVO.empVO.emp_name}</td>
+		<td>員工姓名:</td>
+		<td><input type="hidden" name="emp_id" size="45" 
+			 value="${emp_effectVO.emp_id}"/>${emp_effectVO.empVO.emp_name}</td>
 	</tr>
 	<tr>
-		<td>權限編號:</td>
-		<td><input type="TEXT" name="effect_id" size="45"
-			 value="<%= (emp_effectVO==null)? "1" : emp_effectVO.getEffect_id()%>" />${emp_effectVO.empVO.emp_name}</td>
+		<td>權限:</td>
+		
+		<td>
+		<select class="effect" name="effect_id">
+		<c:forEach var="effectVO" items="${effectSvc.all}">
+		<option value="${effectVO.effect_id}">${effectVO.effect_name}</option>
+		</c:forEach>
+		</select>
+		</td>
+		
 	</tr>
 
 

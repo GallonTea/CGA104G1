@@ -3,7 +3,10 @@
 <%@ page import="com.mem.model.*"%>
 <%
 MemVO memVO = (MemVO) request.getAttribute("memVO");
+// Object errorMsgs = session.getAttribute("errorMsgs");
 %>
+
+
 
 
 <html>
@@ -31,7 +34,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 <style>
   table {
 
-	width: 450px;
+	width: 65%;
 	background-color: white;
 	margin-top: 1px;
 	margin-bottom: 1px;
@@ -49,75 +52,85 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 </head>
 <body bgcolor='white'>
 
-<table id="table-1">
+<table id="table-1" ALIGN=center>
 	<tr><td> 
 	<h3>會員註冊 </h3>
-		 <h4><a href="select_page.jsp">回首頁</a></h4>
+		 <h4><a href='<%=request.getContextPath()%>/frontend/mem/login.jsp'>回登入首頁</a></h4>
 	</td></tr>
 </table>
 
-<h3>資料新增:</h3>
 
 <%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
-
-<!-- <FORM METHOD="post" ACTION="mem.do" name="form1"> -->
-<FORM METHOD="post" ACTION="/CGA104G1/MemServlet">
+<%-- <c:if test="${not empty errorMsgs}"> --%>
+<!-- 	<font style="color:red">請修正以下錯誤:</font> -->
+<!-- 	<ul> -->
+<%-- 		<c:forEach var="message" items="${errorMsgs}"> --%>
+<%-- 			<li style="color:red">${message}</li> --%>
+<%-- 		</c:forEach> --%>
+<!-- 	</ul> -->
+<%-- </c:if> --%>
 
 
-<table>
+<FORM  ALIGN=center METHOD="post" ACTION="/CGA104G1/MemServlet">
+
+
+<table ALIGN=center>
 
 	<tr>
-		<td>會員帳號:</td>
+		<td>會員帳號:<font color=red><b>*</b></font></td>
 		<td><input type="TEXT" name="mem_account" size="45" 
-			 value="<%= (memVO==null)? "admin" : memVO.getMem_account()%>" /></td>
+			 value="<%= (memVO==null)? "" : memVO.getMem_account()%>" /></td><td style="color:red">${errorMsgs.mem_account}</td>
+<!-- 			 <form> -->
+<!-- 			<input type="hidden" > -->
+			 <td><input type="submit" name="action" value="檢查帳號是否可用" size="45" ></td>
+<!-- 			 <td><input type="submit" name="action" value="帳號是否可用" size="45" value="檢查是否可用"></td> -->
+<!-- 			 </form> -->
+
+			 <td style="color:gray">${msg}</td>
+		
 	</tr>
 	<tr>
-		<td>會員密碼:</td>
+		<td>會員密碼:<font color=red><b>*</b></font></td>
 		<td><input type="TEXT" name="mem_password" size="45"
-			 value="<%= (memVO==null)? "admin" : memVO.getMem_password()%>" /></td>
+			 value="<%= (memVO==null)? "" : memVO.getMem_password()%>" /></td><td style="color:red">${errorMsgs.mem_password}</td>
 	</tr>
 		<tr>
 	<tr>
-		<td>會員姓名:</td>
+		<td>會員姓名:<font color=red><b>*</b></font></td>
 		<td><input type="TEXT" name="mem_name" size="45" 
-			 value="<%= (memVO==null)? "Howard" : memVO.getMem_name()%>" /></td>
+			 value="<%= (memVO==null)? "" : memVO.getMem_name()%>" /></td><td style="color:red">${errorMsgs.mem_name}</td>
 	</tr>
 		<tr>
-		<td>會員地址:</td>
+		<td>會員地址:<font color=red><b>*</b></font></td>
 		<td><input type="TEXT" name="mem_address" size="45"
-			 value="<%= (memVO==null)? "桃園市蘆竹區" : memVO.getMem_address()%>" /></td>
+			 value="<%= (memVO==null)? "" : memVO.getMem_address()%>" /></td><td style="color:red">${errorMsgs.mem_address}</td>
 	</tr>
 	<tr>
-		<td>會員電話:</td>
+		<td>會員電話:<font color=red><b>*</b></font></td>
 		<td><input type="TEXT" name="mem_phone" size="45"
-			 value="<%= (memVO==null)? "0988754232" : memVO.getMem_phone()%>" /></td>
+			 value="<%= (memVO==null)? "" : memVO.getMem_phone()%>" /></td><td style="color:red">${errorMsgs.mem_phone}</td>
 	</tr>
 	<tr>
-		<td>會員證號:</td>
+		<td>會員證號:<font color=red><b>*</b></font></td>
 		<td><input type="TEXT" name="mem_uid" size="45"
-			 value="<%= (memVO==null)? "A123456789" : memVO.getMem_uid()%>" /></td>
+			 value="<%= (memVO==null)? "" : memVO.getMem_uid()%>" /></td><td style="color:red">${errorMsgs.mem_uid}</td>
 	</tr>
 		<tr>
-		<td>會員Email:</td>
+		<td>會員信箱:<font color=red><b>*</b></font></td>
 		<td><input type="TEXT" name="mem_email" size="45"
-			 value="<%= (memVO==null)? "dragondazs17@gmail.com" : memVO.getMem_email()%>" /></td>
+			 value="<%= (memVO==null)? "" : memVO.getMem_email()%>" /></td><td style="color:red">${errorMsgs.mem_email}</td>
 	</tr>
 		<tr>
-		<td>會員性別:</td>
-		<td><input type="TEXT" name="mem_sex" size="45"
-			 value="<%= (memVO==null)? "男" : memVO.getMem_sex()%>" /></td>
-	</tr>
+		<td>會員性別:<font color=red><b>*</b></td>
+		<td>
+		<input type="radio" name="mem_sex" size="45" value="男" ${(memVO.mem_sex=="男")? 'checked':'' } ><b>男</b>
+		<input type="radio" name="mem_sex" size="45" value="女" ${(memVO.mem_sex=="女")? 'checked':'' }><b>女</b>
+		<input type="hidden" name="mem_sex" value="${memVO.mem_sex}">
+		</td><td style="color:red">${errorMsgs.mem_sex}</td>
+		</tr>
 	<tr>
-		<td>會員生日:</td>
-		<td><input type="TEXT" name="mem_dob" id="dob_date1" size="45" /></td><td>${errorMsgs.mem_dob}</td>
+		<td>會員生日:<font color=red><b>*</b></font></td>
+		<td><input type="TEXT" name="mem_dob" id="dob_date1" size="45" /></td><td style="color:red">${errorMsgs.mem_dob}</td>
 	</tr>
 
 	

@@ -1,6 +1,5 @@
 package com.group_buy_item.model;
 
-import java.util.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,15 +17,15 @@ public class Group_Buy_ItemJDBCDAO implements Group_Buy_ItemDAO_interface{
 	String passwd = "password";
 	
 	
-	private static final String INSERT_STMT = "INSERT INTO GROUP_BUY_ITEM (GBITEM_NAME, GBITEM_CONTENT, GBITEM_PRICE, GBITEM_STATUS, GBITEM_STARTDATE, GBITEM_ENDDATE) VALUES (?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_STMT = "INSERT INTO GROUP_BUY_ITEM (GBITEM_NAME, GBITEM_CONTENT, GBITEM_PRICE, GBITEM_STATUS, GBITEM_STARTDATE, GBITEM_ENDDATE, GBITEM_TYPE) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-	private static final String GET_ALL_STMT = "SELECT GBITEM_ID,GBITEM_NAME, GBITEM_CONTENT, GBITEM_PRICE, GBITEM_STATUS, GBITEM_STARTDATE, GBITEM_ENDDATE FROM GROUP_BUY_ITEM order by GBITEM_ID";
+	private static final String GET_ALL_STMT = "SELECT GBITEM_ID,GBITEM_NAME, GBITEM_CONTENT, GBITEM_PRICE, GBITEM_STATUS, GBITEM_STARTDATE, GBITEM_ENDDATE , GBITEM_TYPE FROM GROUP_BUY_ITEM order by GBITEM_ID";
 
-	private static final String GET_ONE_STMT = "SELECT GBITEM_ID,GBITEM_NAME, GBITEM_CONTENT, GBITEM_PRICE, GBITEM_STATUS, GBITEM_STARTDATE, GBITEM_ENDDATE FROM GROUP_BUY_ITEM where GBITEM_ID = ?";
+	private static final String GET_ONE_STMT = "SELECT GBITEM_ID,GBITEM_NAME, GBITEM_CONTENT, GBITEM_PRICE, GBITEM_STATUS, GBITEM_STARTDATE, GBITEM_ENDDATE, GBITEM_TYPE FROM GROUP_BUY_ITEM where GBITEM_ID = ?";
 
 	private static final String DELETE = "DELETE FROM GROUP_BUY_ITEM where GBITEM_ID = ?";
 
-	private static final String UPDATE = "UPDATE GROUP_BUY_ITEM set GBITEM_NAME=?, GBITEM_CONTENT=?, GBITEM_PRICE=?, GBITEM_STATUS=?, GBITEM_STARTDATE=?, GBITEM_ENDDATE=? where GBITEM_ID = ?";
+	private static final String UPDATE = "UPDATE GROUP_BUY_ITEM set GBITEM_NAME=?, GBITEM_CONTENT=?, GBITEM_PRICE=?, GBITEM_STATUS=?, GBITEM_STARTDATE=?, GBITEM_ENDDATE=?, GBITEM_TYPE=? where GBITEM_ID = ?";
 
 	
 	
@@ -48,6 +47,7 @@ public class Group_Buy_ItemJDBCDAO implements Group_Buy_ItemDAO_interface{
 			pstmt.setInt(4, Group_Buy_ItemVO.getGbitem_status());
 			pstmt.setDate(5, Group_Buy_ItemVO.getGbitem_startdate());
 			pstmt.setDate(6, Group_Buy_ItemVO.getGbitem_enddate());
+			pstmt.setInt(7, Group_Buy_ItemVO.getGbitem_type());
 
 			pstmt.executeUpdate();
 
@@ -92,11 +92,11 @@ public class Group_Buy_ItemJDBCDAO implements Group_Buy_ItemDAO_interface{
 			pstmt.setInt(4, Group_Buy_ItemVO.getGbitem_status());
 			pstmt.setDate(5, Group_Buy_ItemVO.getGbitem_startdate());
 			pstmt.setDate(6, Group_Buy_ItemVO.getGbitem_enddate());
-			pstmt.setInt(7, Group_Buy_ItemVO.getGbitem_id());
+			pstmt.setInt(7, Group_Buy_ItemVO.getGbitem_type());
+			pstmt.setInt(8, Group_Buy_ItemVO.getGbitem_id());
 			
-
 			pstmt.executeUpdate();
-
+			
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. "
@@ -189,6 +189,7 @@ public class Group_Buy_ItemJDBCDAO implements Group_Buy_ItemDAO_interface{
 				Group_Buy_ItemVO.setGbitem_status(rs.getInt("gbitem_status"));
 				Group_Buy_ItemVO.setGbitem_startdate(rs.getDate("gbitem_startdate"));
 				Group_Buy_ItemVO.setGbitem_enddate(rs.getDate("gbitem_enddate"));
+				Group_Buy_ItemVO.setGbitem_type(rs.getInt("gbitem_type"));
 			}
 
 			// Handle any driver errors
@@ -251,6 +252,7 @@ public class Group_Buy_ItemJDBCDAO implements Group_Buy_ItemDAO_interface{
 				Group_Buy_ItemVO.setGbitem_status(rs.getInt("gbitem_status"));
 				Group_Buy_ItemVO.setGbitem_startdate(rs.getDate("gbitem_startdate"));
 				Group_Buy_ItemVO.setGbitem_enddate(rs.getDate("gbitem_enddate"));
+				Group_Buy_ItemVO.setGbitem_type(rs.getInt("gbitem_type"));
 				list.add(Group_Buy_ItemVO); 
 			}
 
@@ -286,9 +288,9 @@ public class Group_Buy_ItemJDBCDAO implements Group_Buy_ItemDAO_interface{
 		return list;
 	}
 	
-//	public static void main(String[] args) {
-//
-//		Group_Buy_ItemJDBCDAO dao = new Group_Buy_ItemJDBCDAO();
+	public static void main(String[] args) {
+
+		Group_Buy_ItemJDBCDAO dao = new Group_Buy_ItemJDBCDAO();
 
 		// 新增
 //		Group_Buy_ItemVO gbiVO1 = new Group_Buy_ItemVO();
@@ -298,46 +300,50 @@ public class Group_Buy_ItemJDBCDAO implements Group_Buy_ItemDAO_interface{
 //		gbiVO1.setGbitem_status(1);
 //		gbiVO1.setGbitem_startdate(java.sql.Date.valueOf("2022-10-16"));
 //		gbiVO1.setGbitem_enddate(java.sql.Date.valueOf("2023-12-30"));
+//		gbiVO1.setGbitem_type(1);
 //		dao.insert(gbiVO1);
 		
 		// 修改
-//		Group_Buy_ItemVO gbiVO2 = new Group_Buy_ItemVO();
-//		
-//		gbiVO2.setGbitem_name("外出摺疊碗-黃");
-//		gbiVO2.setGbitem_content("摺疊碗");
-//		gbiVO2.setGbitem_price(80);
-//		gbiVO2.setGbitem_status(1);
-//		gbiVO2.setGbitem_startdate(java.sql.Date.valueOf("2022-10-16"));
-//		gbiVO2.setGbitem_enddate(java.sql.Date.valueOf("2023-12-30"));
-//		gbiVO2.setGbitem_id(17); //PK
-//		dao.update(gbiVO2);
+		Group_Buy_ItemVO gbiVO2 = new Group_Buy_ItemVO();
+		
+		gbiVO2.setGbitem_name("外出");
+		gbiVO2.setGbitem_content("摺疊碗");
+		gbiVO2.setGbitem_price(999);
+		gbiVO2.setGbitem_status(1);
+		gbiVO2.setGbitem_startdate(java.sql.Date.valueOf("2022-10-16"));
+		gbiVO2.setGbitem_enddate(java.sql.Date.valueOf("2023-12-30"));
+		gbiVO2.setGbitem_id(16); //PK
+		gbiVO2.setGbitem_type(1); 
+		dao.update(gbiVO2);
 
 		// 刪除
 //		dao.delete(20);
 //		dao.delete(21);
 //		dao.delete(22);
-		// 查詢
-//		Group_Buy_ItemVO gbiVO3 = dao.findByPrimaryKey(7001);
+//		 查詢
+//		Group_Buy_ItemVO gbiVO3 = dao.findByPrimaryKey(16);
 //		System.out.print(gbiVO3.getGbitem_id() + ",");
 //		System.out.print(gbiVO3.getGbitem_name() + ",");
 //		System.out.print(gbiVO3.getGbitem_content() + ",");
 //		System.out.print(gbiVO3.getGbitem_price() + ",");
 //		System.out.print(gbiVO3.getGbitem_status() + ",");
 //		System.out.print(gbiVO3.getGbitem_startdate() + ",");
-//		System.out.println(gbiVO3.getGbitem_enddate());
+//		System.out.println(gbiVO3.getGbitem_enddate() + ",");
+//		System.out.println(gbiVO3.getGbitem_type());
 //		System.out.println("---------------------");
 
-//		// 查詢
-//		List<Group_Buy_ItemVO> list = dao.getAll();
-//		for (Group_Buy_ItemVO aGbi : list) {
-//			System.out.print(aGbi.getGbitem_id() + ",");
-//			System.out.print(aGbi.getGbitem_name() + ",");
-//			System.out.print(aGbi.getGbitem_content() + ",");
-//			System.out.print(aGbi.getGbitem_price() + ",");
-//			System.out.print(aGbi.getGbitem_status() + ",");
-//			System.out.print(aGbi.getGbitem_startdate() + ",");
-//			System.out.print(aGbi.getGbitem_enddate());
-//			System.out.println();
-//		}
-//	}
+		// 查詢
+		List<Group_Buy_ItemVO> list = dao.getAll();
+		for (Group_Buy_ItemVO aGbi : list) {
+			System.out.print(aGbi.getGbitem_id() + ",");
+			System.out.print(aGbi.getGbitem_name() + ",");
+			System.out.print(aGbi.getGbitem_content() + ",");
+			System.out.print(aGbi.getGbitem_price() + ",");
+			System.out.print(aGbi.getGbitem_status() + ",");
+			System.out.print(aGbi.getGbitem_startdate() + ",");
+			System.out.print(aGbi.getGbitem_enddate() + ",");
+			System.out.print(aGbi.getGbitem_type());
+			System.out.println();
+		}
+	}
 }

@@ -9,6 +9,7 @@ MemService memSvc = new MemService();
     List<MemVO> list = memSvc.getAll();
     pageContext.setAttribute("list",list);
 %>
+<%@include file="/backend/backNavbar.jsp"%>
 
 
 
@@ -32,7 +33,7 @@ MemService memSvc = new MemService();
 
 <style>
   table {
-	width: 80%;
+	width: 100%;
 	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
@@ -41,7 +42,7 @@ MemService memSvc = new MemService();
     border: 1px solid #CCCCFF;
   }
   th, td {
-    padding: 5px;
+    padding: 4px;
     text-align: center;
   }
 </style>
@@ -58,9 +59,9 @@ MemService memSvc = new MemService();
 
 <table>
 	<tr>
-		<th>會員帳號</th>
-		<th>會員密碼</th>
 		<th>會員編號</th>
+		<th>會員帳號</th>
+<!-- 		<th>會員密碼</th> -->
 		<th>會員姓名</th>
 		<th>會員地址</th>
 		<th>會員電話</th>
@@ -76,9 +77,9 @@ MemService memSvc = new MemService();
 	<c:forEach var="memVO" items="${list}">
 		
 		<tr>
-			<td>${memVO.mem_account}</td>
-			<td>${memVO.mem_password}</td>
 			<td>${memVO.mem_id}</td>
+			<td>${memVO.mem_account}</td>
+<%-- 			<td>${memVO.mem_password}</td> --%>
 			<td>${memVO.mem_name}</td>
 			<td>${memVO.mem_address}</td>
 			<td>${memVO.mem_phone}</td>
@@ -88,33 +89,45 @@ MemService memSvc = new MemService();
 			<td>${memVO.mem_dob}</td>
 <%-- 			<td>${memVO.mem_status}</td> --%>
 	
+
+<!-- 		<td>會員狀態:<font color=red><b>*</b></font></td> -->
+		<td><select  name="mem_status">
+				<option value="0" ${(memVO.mem_status==0)? 'selected':'' } >停權</option>
+				<option value="1" ${(memVO.mem_status==1)? 'selected':'' } >未驗證</option>
+				<option value="2" ${(memVO.mem_status==2)? 'selected':'' } >已驗證</option>
+		</select></td>
+
 	
-			<c:if test="${memVO.mem_status==0}" >
-					<td><c:out value="停權" ></c:out></td>
-			</c:if>
-			<c:if test="${memVO.mem_status==1}">
-					<td><c:out value="未驗證"></c:out></td>
-			</c:if>
-			<c:if test="${memVO.mem_status==2}">
-					<td><c:out value="已驗證"></c:out></td>
-			</c:if>
+	
+<%-- 			<c:if test="${memVO.mem_status==0}" > --%>
+<%-- 					<td><c:out value="停權" ></c:out></td> --%>
+<%-- 			</c:if> --%>
+<%-- 			<c:if test="${memVO.mem_status==1}"> --%>
+<%-- 					<td><c:out value="未驗證"></c:out></td> --%>
+<%-- 			</c:if> --%>
+<%-- 			<c:if test="${memVO.mem_status==2}"> --%>
+<%-- 					<td><c:out value="已驗證"></c:out></td> --%>
+<%-- 			</c:if> --%>
 
 
 			<td>
 			  <FORM METHOD="post" ACTION="/CGA104G1/MemServlet" style="margin-bottom: 0px;">
-			     <input type="submit" value="修改">
+			     <input type="submit" onclick="confirm('確定要修改?')" value="修改">
 			     <input type="hidden" name="mem_id"  value="${memVO.mem_id}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
 			  <FORM METHOD="post" ACTION="/CGA104G1/MemServlet" style="margin-bottom: 0px;">
-			     <input type="submit" value="刪除">
+			     <input type="submit" onclick="alert('刪除成功')" value="刪除">
 			     <input type="hidden" name="mem_id"  value="${memVO.mem_id}">
-			     <input type="hidden" name="action" value="delete"></FORM>
+			     <input type="hidden" name="action" value="delete">
+			   </FORM>
 			</td>
 		</tr>
 	</c:forEach>
 </table>
+<script>
 
+</script>
 </body>
 </html>

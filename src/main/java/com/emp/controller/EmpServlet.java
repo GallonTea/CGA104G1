@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import com.emp.model.*;
 import com.emp_effect.model.*;
+import com.group_buy_order.model.Group_Buy_OrderVO;
 
 
 @WebServlet("/backend/emp/EmpServlet")
@@ -35,79 +36,7 @@ public class EmpServlet extends HttpServlet {
 		String action = req.getParameter("action");
 		HttpSession session = req.getSession();
 
-		// 登入
-//		if ("login".equals(action)) {
-//			System.out.println(1);
-//			List<String> errorMsgs = new LinkedList<String>();
-//			req.setAttribute("errorMsgs", errorMsgs);
-//
-//			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
-//			String ac = req.getParameter("account");
-//			String pa = req.getParameter("password");
-//			System.out.println(3);
-//			if (ac == null || (ac.trim()).length() == 0) {
-//				errorMsgs.add("請輸入帳號");
-//			}
-//			if (pa == null || (pa.trim()).length() == 0) {
-//				errorMsgs.add("請輸入密碼");
-//			}
-//			if (!errorMsgs.isEmpty()) {
-//				RequestDispatcher fail = req.getRequestDispatcher(req.getContextPath()+"/backend/login/login2.jsp");
-//				fail.forward(req, res);
-//				return;
-//			}
-//			System.out.println(req.getRequestURI());
-//			String account = ac;
-//			String password = pa;
-//			/*************************** 2.開始查詢資料 *****************************************/
-//			EmpService empSvc = new EmpService();
-//			List<EmpVO> empVO = empSvc.login(account, password);
-//			Integer effectid = null;
-//			for (EmpVO a : empVO) {
-//				effectid = a.getEffect_id();
-//			}
-//			
-//	
-//			
-//			System.out.println(2);
-//			String name = null;
-//			for (EmpVO a : empVO) {
-//				name = a.getEmp_name();
-//			}
-//
-//			if (empVO == null || name == null) {
-//				errorMsgs.add("帳號密碼錯誤");
-//			}
-//
-//			if (!errorMsgs.isEmpty()) {
-//				RequestDispatcher fail = req.getRequestDispatcher(req.getContextPath()+"/backend/login/login2.jsp");
-//				fail.forward(req, res);
-//				return;
-//			}
-//			System.out.println(2);
-//
-//			
-//		
-//	
-////			String id =(String) session.getAttribute("effect_id");
-////			out.write(id);
-//	
-//			/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
-////			req.setAttribute("account", ac);
-////			req.setAttribute("password", pa);
-////			req.setAttribute("empVO", empVO);
-////	
-//			session.setAttribute("account", ac);
-//			session.setAttribute("password", pa);
-//			session.setAttribute("empVO", empVO);
-//			
-//
-//			
-//			
-//			String url = req.getContextPath()+"/backend/emp/login_success.jsp";
-//			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
-//			successView.forward(req, res);
-//		}
+
 
 		if ("getOne_For_Display".equals(action)) {
 
@@ -351,12 +280,12 @@ public class EmpServlet extends HttpServlet {
 			empSvc.deleteEmp(empno);
 
 			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-			String url = "/backend/emp/listAllEmp.jsp";
+			String url = "/backend/emp/listAllEmpNoEffect.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 			successView.forward(req, res);
 		}
 
-		if ("listemp_no_effect".equals(action)) {
+		if ("listemp_and_effect".equals(action)) {
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			Map<String, String[]> map = (Map<String, String[]>) session.getAttribute("map");
@@ -367,8 +296,11 @@ public class EmpServlet extends HttpServlet {
 			}
 			EmpService empSvc = new EmpService();
 			List<EmpVO> list = empSvc.getAll(map);
+			for(EmpVO a : list ) {
+				System.out.println(a);
+			}
 
-			req.setAttribute("listemp_no_effect", list);
+			req.setAttribute("listemp_and_effect", list);
 			RequestDispatcher successView = req.getRequestDispatcher("/backend/emp/listAllEmpNoEffect.jsp");
 			successView.forward(req, res);
 

@@ -240,6 +240,12 @@ public class NewOrderServlet extends HttpServlet {
 
         } else {
 
+            pw.print("系統繁忙中，請重新確認");
+            return; // 程式中斷
+        }
+
+        res.sendRedirect("shop.html");
+
             jsonMsg.put("payErr", "系統繁忙中，請重新確認");
             pw.print(jsonMsg);
             return;

@@ -47,6 +47,10 @@ public class DiscountService {
 	public DiscountVO getoneDiscount(Integer discount_id) {
 		return dao.findByPrimaryKey(discount_id);
 	}
+	
+	public List<DiscountVO> getoneGbitem_id(Integer gbitem_id) {
+		return dao.findDiscountByPrimaryKey(gbitem_id);
+	}
 	public List<DiscountVO> getAll(){
 		return dao.getAll();
 	}

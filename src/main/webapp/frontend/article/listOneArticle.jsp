@@ -53,6 +53,11 @@ pageContext.setAttribute("list", list);
             left: 50%;
             transform: translate(-50%);
         }
+        
+        #autBlock {
+        	color: gray;
+        	font-weight: 500;
+        }
 
         .row {
             margin: 0;
@@ -143,6 +148,10 @@ pageContext.setAttribute("list", list);
             grid-template-columns: 60px 80px auto;
             padding: 10px;
         }
+        
+        .comments:hover {
+        	background-color: rgb(215, 215, 215);
+        }
 
         div.comments>div {
             text-align: left;
@@ -177,8 +186,13 @@ pageContext.setAttribute("list", list);
         }
 
         .cname {
+        	width:100px;
             color: #1E90FF;
             font-weight: 700;
+        }
+        
+        .ccontent {
+        	padding-left: 20px;
         }
 
         .ctime {
@@ -217,6 +231,12 @@ pageContext.setAttribute("list", list);
         #reportSubmit {
         	white-space:nowrap;
         }
+        
+        .chr {
+        	margin: 0;
+        	width: 100%;
+        	color: rgb(165, 165, 165);
+        }
     </style>
 </head>
 
@@ -246,7 +266,7 @@ pageContext.setAttribute("list", list);
         </div>
         <div class="author_block row">
             <div class="author col-9">
-                ${articleVO.article_identityVO.article_pic}&ensp;<span class="author">作者${articleVO.mem_id}</span>
+                ${articleVO.article_identityVO.article_pic}&ensp;<span id="autBlock">作者</span>&ensp;<span class="author">${articleVO.memVO.mem_account}</span>
             </div>
             <div class="popular col-3">
             
@@ -319,11 +339,12 @@ pageContext.setAttribute("list", list);
 
                 <div class="comments">
                     <div class="cimg">${article_commentVO.article_identityVO.article_pic}</div>
-                    <div class="cname">&ensp;${article_commentVO.mem_id}</div>
+                    <div class="cname">&ensp;${article_commentVO.memVO.mem_account}</div>
                     <div class="ccontent">${article_commentVO.com_content}</div>
                     <div class="ctime">&ensp;${article_commentVO.com_publish}</div>
                     <div class="c"></div>
                 </div>
+                <hr class="chr">
             </c:forEach>
 
             <div class="addComment">

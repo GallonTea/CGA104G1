@@ -1,5 +1,8 @@
 package com.itemPhotos.model;
 
+
+import java.util.Base64;
+import java.util.Base64.Encoder;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -13,12 +16,12 @@ public class ItemPhotosDAO implements ItemPhotosInterface {
 
 	@Override
 	public void insert(ItemPhotosVO itemPhotosVO) {
-		getSesion().persist(itemPhotosVO);
+		getSession().persist(itemPhotosVO);
 	}
 
 	@Override
 	public void update(ItemPhotosVO itemPhotosVO) {
-		getSesion().merge(itemPhotosVO);
+		getSession().merge(itemPhotosVO);
 
 	}
 
@@ -26,24 +29,28 @@ public class ItemPhotosDAO implements ItemPhotosInterface {
 	public void delete(Integer itemId) {
 		ItemPhotosVO itemPhotosVO = new ItemPhotosVO();
 		itemPhotosVO.setItemId(itemId);
-		getSesion().remove(itemPhotosVO);
+		getSession().remove(itemPhotosVO);
 	}
 
 	@Override
 	public ItemPhotosVO findByPrimaryKey(Integer ipId) {
 
-		return getSesion().get(ItemPhotosVO.class, ipId);
+		return getSession().get(ItemPhotosVO.class, ipId);
 	}
 
 	@Override
 	public JSONArray getAllPhoto(Integer itemId) {
 		JSONArray jsonArray = new JSONArray();
-		List<ItemPhotosVO> list = getSesion().createQuery("FROM ItemPhotosVO order by ip_id").list();
+		List<ItemPhotosVO> list = getSession().createQuery("FROM ItemPhotosVO  where itemId= :id", ItemPhotosVO.class).setParameter("id",itemId).list();
+		 Encoder encoder= Base64.getEncoder() ;
 		for (ItemPhotosVO itemPhotosVO : list) {
+			byte[] photo=itemPhotosVO.getIpPhoto();
+			String photo64 = encoder.encodeToString(photo);
+
 			JSONObject jsonObject = new JSONObject();
 			jsonObject.put("ipId", itemPhotosVO.getIpId());
 			jsonObject.put("itemId", itemPhotosVO.getItemId());
-			jsonObject.put("ipPhoto", itemPhotosVO.getIpPhoto());
+			jsonObject.put("photo", photo64);
 			jsonArray.put(jsonObject);
 		}
 		return jsonArray;
@@ -51,27 +58,28 @@ public class ItemPhotosDAO implements ItemPhotosInterface {
 
 	@Override
 	public List<ItemPhotosVO> getPhoto(Integer itemId) {
-		return getSesion().createQuery("From ItemPhotosVO where itemId in (:itemId)", ItemPhotosVO.class).setParameter("itemId", itemId).list();
+		return getSession().createQuery("From ItemPhotosVO where itemId in (:itemId)", ItemPhotosVO.class).setParameter("itemId", itemId).list();
 	}
 
-//	@Override
-//	public String getPhotoJson(Integer itemId) {
-//	
-//	}
 
 	@Override
 	public int deletePhoto(Integer ipId) {
 		try {
 			ItemPhotosVO itemPhotosVO=new ItemPhotosVO();
 			itemPhotosVO.setIpId(ipId);
-			getSesion().remove(itemPhotosVO);
+
+			getSession().remove(itemPhotosVO);
+
 			return 1;
 		} catch (Exception e) {
+			e.printStackTrace();
 			return -1;
 		}
 	
 		
 	}
+
+
 
 	
 //	public static void main(String[] args) {

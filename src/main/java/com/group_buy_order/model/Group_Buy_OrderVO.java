@@ -3,10 +3,12 @@
 
 //import java.sql.Date;
 import java.sql.Timestamp;
-import java.util.Date;
 
 public class Group_Buy_OrderVO implements java.io.Serializable{
 
+	
+	private static final long serialVersionUID = 2560863359303762963L;
+	
 	private Integer gborder_id;
 	private Integer gbitem_id;
 	private Integer gb_id;
@@ -25,9 +27,17 @@ public class Group_Buy_OrderVO implements java.io.Serializable{
 	private String receiver_phone;
 	private Timestamp pickup_time;
 
-
-
-
+	public com.discount.model.DiscountVO getDiscountVO() {
+	    com.discount.model.DiscountService discountSvc = new com.discount.model.DiscountService();
+	    com.discount.model.DiscountVO discountVO = discountSvc.getoneDiscount(discount_id);
+	    return discountVO;
+    }
+	
+	public com.group_buy_item.model.Group_Buy_ItemVO getGroup_buy_itemVO() {
+	    com.group_buy_item.model.Group_Buy_ItemService group_buy_itemSvc = new com.group_buy_item.model.Group_Buy_ItemService();
+	    com.group_buy_item.model.Group_Buy_ItemVO group_buy_itemVO = group_buy_itemSvc.getOneGbi(gbitem_id);
+	    return group_buy_itemVO;
+    }
 
 	public Integer getGborder_id() {
 		return gborder_id;

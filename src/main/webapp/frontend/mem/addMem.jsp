@@ -117,10 +117,10 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 		<td><input type="TEXT" name="mem_dob" id="dob_date1" size="45" /></td><td>${errorMsgs.mem_dob}</td>
 	</tr>
 		
-		<tr>
-		<td>上傳照片:</td>
-		<td><input type="TEXT" name="mem_up"  size="45" /></td><td>${errorMsgs.mem_up}</td>
-	</tr>
+<!-- 		<tr> -->
+<!-- 		<td>上傳照片:</td> -->
+<%-- 		<td><input type="TEXT" name="mem_up"  size="45" /></td><td>${errorMsgs.mem_up}</td> --%>
+<!-- 	</tr> -->
 	
 	
 	

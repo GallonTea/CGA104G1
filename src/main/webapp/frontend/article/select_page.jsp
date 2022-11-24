@@ -54,19 +54,19 @@
         }
 
         .ptime {
-            width: 80px;
+            width: 100px;
             font-size: 10px;
             color: rgb(105, 105, 105);
             text-align: center;
         }
 
         .author {
-            width: 40px;
+            width: 140px;
             text-align: center;
         }
 
         .atitle {
-            width: 620px;
+            width: 500px;
             text-align: center;
 /*             font-weight: 700; */
         }
@@ -164,7 +164,7 @@
     <jsp:useBean id="article_sorttypeSvc" scope="page" class="com.article_sorttype.model.Article_sorttypeService" />
 	<c:forEach var="articleVO" items="${list}">
 		<div class="evenarticle">
-            <div class="push">${articleVO.article_like}</div>
+            <div class="push">${articleVO.getArtLike()}</div>
             <div class="sort">【${articleVO.article_sorttypeVO.sort_content}】</div>
             <div class="atitle">
             <form method="post" action="/CGA104G1/ArticleServlet"> 
@@ -174,7 +174,7 @@
 			</form>
             
             </div>
-            <div class="author">${articleVO.mem_id}</div>
+            <div class="author">${articleVO.memVO.mem_account}</div>
             <div class="ptime">${articleVO.article_publish}</div>
         </div>
 	</c:forEach>

@@ -30,7 +30,6 @@ public class GroupBuyItemPictureGetOneByGBItemIDServlet extends HttpServlet {
 		res.setContentType("image/gif");
 		
 		Integer gbip_id = Integer.valueOf(req.getParameter("gbip_id"));
-		
 		groupBuyItemPictureService gbipSvc = new groupBuyItemPictureService();
 		groupBuyItemPictureVO gbipVO = gbipSvc.getOneGroupBuyItemPicture(gbip_id);
 		

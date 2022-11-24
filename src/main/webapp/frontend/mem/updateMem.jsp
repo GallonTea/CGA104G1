@@ -6,6 +6,7 @@
 <%
 MemVO memVO = (MemVO) session.getAttribute("memVO");
 %>
+
 <%= memVO==null %>
 
 <html>
@@ -82,6 +83,7 @@ MemVO memVO = (MemVO) session.getAttribute("memVO");
 <!-- 		<td>確認密碼:</td> -->
 <%-- 		<td><input type="TEXT" name="mem_password" size="45"	value="<%=memVO.getMem_password()%>" /></td> --%>
 <!-- 	</tr> -->
+
 	<tr>
 		<td>會員姓名:</td>
 		<td><input type="TEXT" name="mem_name" size="45" value="<%=memVO.getMem_name()%>" /></td>
@@ -104,9 +106,13 @@ MemVO memVO = (MemVO) session.getAttribute("memVO");
 	</tr>
 		<tr>
 		<td>會員性別:</td>
-		<td><input type="TEXT" name="mem_sex" size="45" value="<%=memVO.getMem_sex()%>" /></td>
-	</tr>
-		<tr>
+		<td>
+		<input type="radio" name="mem_sex" size="45" value="男" ${(memVO.mem_sex=="男")? 'checked':'' } ><b>男</b>
+		<input type="radio" name="mem_sex" size="45" value="女" ${(memVO.mem_sex=="女")? 'checked':'' }><b>女</b>
+		<input type="hidden" name="mem_sex" value="${memVO.mem_sex}">
+		</td>
+		</tr>
+	<tr>
 		<td>會員生日:</td>
 		<td><input type="TEXT" name="mem_dob" size="45" id="dob_date1" /></td>
 	</tr>
@@ -117,14 +123,14 @@ MemVO memVO = (MemVO) session.getAttribute("memVO");
 	
 	
 
-	<tr >
-		<td>會員狀態:<font color=red><b>*</b></font></td>
-		<td><select size="1" name="mem_status">
-				<option value="0" ${(memVO.mem_status==0)? 'selected':'' } >停權</option>
-				<option value="1" ${(memVO.mem_status==1)? 'selected':'' } >未驗證</option>
-				<option value="2" ${(memVO.mem_status==2)? 'selected':'' } >已驗證</option>
-		</select></td>
-	</tr>
+<!-- 	<tr > -->
+<!-- 		<td>會員狀態:<font color=red><b>*</b></font></td> -->
+<!-- 		<td><select size="1" name="mem_status"> -->
+<%-- 				<option value="0" ${(memVO.mem_status==0)? 'selected':'' } >停權</option> --%>
+<%-- 				<option value="1" ${(memVO.mem_status==1)? 'selected':'' } >未驗證</option> --%>
+<%-- 				<option value="2" ${(memVO.mem_status==2)? 'selected':'' } >已驗證</option> --%>
+<!-- 		</select></td> -->
+<!-- 	</tr> -->
 
 	
 	

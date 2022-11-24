@@ -33,8 +33,8 @@ public class Emp_effectService {
 		return emp_effectVO;
 	}
 
-	public void deleteEmp(Integer emp_id) {
-		dao.delete(emp_id);
+	public void deleteEmp(Integer emp_id,Integer effect_id) {
+		dao.delete(emp_id,effect_id);
 	}
 
 	public List <Emp_effectVO> getOneEmp(Integer emp_id) {

@@ -62,10 +62,10 @@ th, td {
 			<td>
 				<h3>團購商品資料修改 - update_groupBuyItem_input.jsp</h3>
 				<h4>
-					<a href="<%=request.getContextPath()%>/backend/Group_Buy_Item/select_page.jsp">回首頁</a>
+					<a href="<%=request.getContextPath()%>/backend/group_Buy_Item/select_page.jsp">回首頁</a>
 				</h4>
 				<h4>
-					<a href="<%=request.getContextPath()%>/backend/Group_Buy_Item/listAllGroupBuyItem.jsp">所有團購商品</a>
+					<a href="<%=request.getContextPath()%>/backend/group_Buy_Item/listAllGroupBuyItem.jsp">所有團購商品</a>
 				</h4>
 			</td>
 		</tr>
@@ -145,10 +145,9 @@ value="(now)上架中"></option>
 				<td><input name="gbitem_enddate" id="f_date2" type="text"></td>
 			</tr>
 		</table>
-		<br> <input type="hidden" name="action" value="update"> <input
-			type="hidden" name="gbitem_id"
-			value="<%=group_Buy_ItemVO.getGbitem_id()%>"> <input
-			type="submit" value="送出修改">
+		<br> <input type="hidden" name="action" value="update">
+			 <input type="hidden" name="gbitem_id" value="<%=group_Buy_ItemVO.getGbitem_id()%>"> 
+			 <input type="submit" value="送出修改">
 	</FORM>
 
 

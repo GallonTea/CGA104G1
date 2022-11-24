@@ -76,6 +76,11 @@ public class ItemJDBCDAO implements ItemDAO_interface {
 	}
 
 	@Override
+	public void updateJS(ItemVO itemVO) {
+
+	}
+
+	@Override
 	public void delete(Integer itemId) {
 		try (Connection con = DriverManager.getConnection(url, userid, passwd);
 				PreparedStatement pstmt = con.prepareStatement(DELETE)) {
@@ -90,6 +95,11 @@ public class ItemJDBCDAO implements ItemDAO_interface {
 
 	@Override
 	public JSONObject getCount(){
+		return null;
+	}
+
+	@Override
+	public JSONArray search(String keyWords) {
 		return null;
 	}
 

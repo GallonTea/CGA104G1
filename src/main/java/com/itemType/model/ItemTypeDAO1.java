@@ -1,5 +1,7 @@
 package com.itemType.model;
 
+import org.json.JSONArray;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -120,5 +122,10 @@ public class ItemTypeDAO1 implements ItemTypeDAOInterface {
 		}
 		return list;
 
+	}
+
+	@Override
+	public JSONArray getAllJS() {
+		return null;
 	}
 }

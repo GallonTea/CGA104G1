@@ -13,4 +13,6 @@ public interface Group_BuyDAO_interface {
 	public Group_BuyVO findByPrimaryKey(Integer gb_id);
 
 	public List<Group_BuyVO> getAll();
+
+	public List<Group_BuyVO> findByMemID(Integer mem_id);
 }

@@ -3,7 +3,6 @@ package com.mem.model;
 
 	
 	import java.sql.Date;
-import java.sql.Timestamp;
 import java.util.List;
 import java.util.Properties;
 
@@ -16,10 +15,13 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.json.JSONObject;
+
 
 
 	public class MemService {
 	private MemDAO_interface dao;
+
 
 		public MemService() {
 			dao = new MemJDBCDAO();
@@ -47,34 +49,16 @@ import javax.mail.internet.MimeMessage;
 			return memVO;
 		}
 		
-//		//新增會員
-//		public MemVO addVC(Integer Vc_id, Integer Mem_id, String Vc_code,Timestamp Vc_time ) {
-//
-//			MemVO memVO = new MemVO();
-//			
-//			memVO.setMem_account(mem_account);
-//			memVO.setMem_password(mem_password);
-//			memVO.setMem_name(mem_name);
-//
-//			dao.insert(memVO);
-//
-//			return memVO;
-//		}
-		
-
-		//預留給 Struts 2 或 Spring MVC 用
-		public void addMem(MemVO memVO) {
-			dao.insert(memVO);
-		}
-		
 		
 		//修改所有會員資料
-		public MemVO updateMem(Integer mem_id, String mem_password,String mem_name, String mem_address,
+		public MemVO update(Integer mem_id, String mem_account, String mem_password,String mem_name, String mem_address,
 				String mem_phone, String mem_uid, String mem_email, String mem_sex,Date mem_dob,Integer mem_status) {
 
 			MemVO memVO = new MemVO();
+			
 
 			memVO.setMem_id(mem_id);
+			memVO.setMem_account(mem_account);
 			memVO.setMem_password(mem_password);
 			memVO.setMem_name(mem_name);
 			memVO.setMem_address(mem_address);
@@ -89,14 +73,9 @@ import javax.mail.internet.MimeMessage;
 			return dao.findByPrimaryKey(mem_id);
 		}
 		
-		//預留給 Struts 2 用的
-		public void updateMem(MemVO memVO) {
-			dao.update(memVO);
-		}
-		
 		//修改會員基本資料
-		public MemVO update(Integer mem_id, String mem_password,String mem_name, String mem_address,
-				String mem_phone, String mem_uid, String mem_email, String mem_sex,Date mem_dob,Integer mem_status) {
+		public MemVO updateMem(Integer mem_id, String mem_password,String mem_name, String mem_address,
+				String mem_phone, String mem_uid, String mem_email, String mem_sex,Date mem_dob) {
 
 			MemVO memVO = new MemVO();
 
@@ -109,7 +88,7 @@ import javax.mail.internet.MimeMessage;
 			memVO.setMem_email(mem_email);
 			memVO.setMem_sex(mem_sex);
 			memVO.setMem_dob(mem_dob);
-			dao.update(memVO);
+			dao.updateMem(memVO);
 
 			return dao.findByPrimaryKey(mem_id);
 		}
@@ -147,8 +126,9 @@ import javax.mail.internet.MimeMessage;
 		}
 		
 		//查詢帳號密碼
-		public MemVO getMemUser(String mem_account,String mem_password) {
-			return dao.findByMemUser(mem_account,mem_password);
+		public MemVO login(String mem_account,String mem_password) {
+
+			return dao.login(mem_account,mem_password);
 		}
 
 		//查詢所有會員
@@ -170,7 +150,7 @@ import javax.mail.internet.MimeMessage;
 
 
 			     final String myGmail = "nbailove3@gmail.com";
-			     final String myGmail_password = "ymglzydcuwscoijo";
+			     final String myGmail_password = "hnzzqpswwggdgmph";
 				   Session session = Session.getInstance(props, new Authenticator() {
 					   protected PasswordAuthentication getPasswordAuthentication() {
 						   return new PasswordAuthentication(myGmail, myGmail_password);
@@ -211,5 +191,30 @@ import javax.mail.internet.MimeMessage;
 			}
 			return s.toString();
 		}
+		
+		public void updateStatus(Integer mem_id) {
+			
+//			MemVO memVO = new MemVO();
+
+//			memVO.setMem_account(Mem_account);
+			dao.updateStatus(mem_id);
+		}
+		
+        public MemVO findByMemId(Integer mem_id) {
+        	return dao.findByMemId(mem_id);
+        }
+        
+        public MemVO findAccount(String mem_email ,String mem_uid) {
+        	return dao.findAccount(mem_email , mem_uid);
+        	
+        }
+	    public MemVO checkAccount(String mem_account){
+	        return dao.checkAccount(mem_account);
+	    };
+	          
+	    public MemVO findPassword(String mem_account,String mem_email){
+		    return dao.findPassword(mem_account, mem_email);
+	    };
+		
 	}
 

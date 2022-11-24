@@ -5,8 +5,9 @@
 <%
 MemVO memVO = (MemVO) session.getAttribute("memVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
 %>
-<%= memVO==null %>
 
+<%@include file="/backend/backNavbar.jsp"%>
+<%= memVO==null %>
 <html>
 <head>
 <title>會員查詢</title>
@@ -39,7 +40,7 @@ MemVO memVO = (MemVO) session.getAttribute("memVO"); //EmpServlet.java(Concrolle
 </table>
 
 
-<h3>資料查詢:</h3>${memVO.mem_id }
+<h3>資料查詢:</h3>${memVO.mem_dob }
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">

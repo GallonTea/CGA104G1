@@ -14,6 +14,7 @@ public class Group_Buy_ItemVO implements java.io.Serializable {
 	private Integer gbitem_status;
 	private Date gbitem_startdate;
 	private Date gbitem_enddate;
+	private Integer gbitem_type;
 	
 	public Integer getGbitem_id() {
 		return gbitem_id;
@@ -57,9 +58,17 @@ public class Group_Buy_ItemVO implements java.io.Serializable {
 	public void setGbitem_enddate(Date gbitem_enddate) {
 		this.gbitem_enddate = gbitem_enddate;
 	}
+	public Integer getGbitem_type() {
+		return gbitem_type;
+	}
+	public void setGbitem_type(Integer gbitem_type) {
+		this.gbitem_type = gbitem_type;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	
 	
 	
 	

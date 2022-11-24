@@ -1,11 +1,8 @@
 package com.group_buy_item.controller;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -49,7 +46,7 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 			}
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/backend/Group_Buy_Item/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/group_Buy_Item/select_page.jsp");
 				failureView.forward(req, res);
 				return;// 程式中斷
 			}
@@ -62,7 +59,7 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 			}
 
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/backend/Group_Buy_Item/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/group_Buy_Item/select_page.jsp");
 				failureView.forward(req, res);
 				return;
 			}
@@ -75,14 +72,14 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 			}
 
 			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = req.getRequestDispatcher("/backend/Group_Buy_Item/select_page.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/group_Buy_Item/select_page.jsp");
 				failureView.forward(req, res);
 				return;// 程式中斷
 			}
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("Group_Buy_ItemVO", group_Buy_ItemVO);
-			String url = "/backend/Group_Buy_Item/listOneGroupBuyItem.jsp";
+			String url = "/backend/group_Buy_Item/listOneGroupBuyItem.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
@@ -121,13 +118,13 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 //				System.out.println(list2);
 				
 				// 成功轉交 update_groupBuyItem_input.jsp
-				String url = "/backend/Group_Buy_Item/update_groupBuyItem_input.jsp";
+				String url = "/backend/group_Buy_Item/update_groupBuyItem_input.jsp";
 				RequestDispatcher failView = req.getRequestDispatcher(url);
 				failView.forward(req, res);
 				// 其他可能的錯誤處理
 			}  catch (IOException e) {
 //				e.printStackTrace();
-				String url = "/backend/Group_Buy_Item/listAllGroupBuyItem.jsp";
+				String url = "/backend/group_Buy_Item/listAllGroupBuyItem.jsp";
 				errorMsgs1.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req.getRequestDispatcher(url);
 				failureView.forward(req, res);
@@ -223,7 +220,7 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("Group_Buy_ItemVO", group_Buy_ItemVO);
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/backend/Group_Buy_Item/update_groupBuyItem_input.jsp");
+						.getRequestDispatcher("/backend/group_Buy_Item/update_groupBuyItem_input.jsp");
 				failureView.forward(req, res);
 				return;
 			}
@@ -234,7 +231,7 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("Group_Buy_ItemVO", group_Buy_ItemVO);
-			String url = "/backend/Group_Buy_Item/listOneGroupBuyItem.jsp";
+			String url = "/backend/group_Buy_Item/listOneGroupBuyItem.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 
@@ -312,7 +309,7 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("gbiVO", gbiVO);
-				RequestDispatcher failureView = req.getRequestDispatcher("/backend/Group_Buy_Item/addGroupBuyItem.jsp");
+				RequestDispatcher failureView = req.getRequestDispatcher("/backend/group_Buy_Item/addGroupBuyItem.jsp");
 				failureView.forward(req, res);
 				return;
 			}
@@ -322,7 +319,7 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 					gbitem_status, gbitem_startdate, gbitem_enddate);
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("gbiVO", gbiVO);
-			String url = "/backend/Group_Buy_Item/listAllGroupBuyItem.jsp";
+			String url = "/backend/group_Buy_Item/listAllGroupBuyItem.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
@@ -340,7 +337,7 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 				group_Buy_ItemService.deleteGbi(gbitem_id);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-				String url = "/backend/Group_Buy_Item/listAllGroupBuyItem.jsp";
+				String url = "/backend/group_Buy_Item/listAllGroupBuyItem.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 				

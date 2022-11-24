@@ -42,7 +42,8 @@ public class ItemVO implements java.io.Serializable {
 	private Date itemDate;
 	@Column(name = "ITEM_ENDDATE")
 	private Date itemEnddate;
-
+	@Transient
+	private  String photo;
 	@OneToMany(mappedBy = "itemVO")
 //	@JoinColumn(name="ITEM_ID",referencedColumnName = "ITEM_ID")
 	private List<ItemPhotosVO> photos;

@@ -63,6 +63,7 @@ footer img {
 
 @media all and (min-width: 992px) {
     .navbar .nav-item .dropdown-menu {
+        background-color: white;
         display: none;
     }
 

@@ -1,16 +1,17 @@
 package com.item.model;
 
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Base64.Encoder;
 
+import com.util.JedisUtil;
 import org.hibernate.Session;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.google.gson.JsonObject;
-
-import redis.clients.jedis.params.SetParams;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 public class ItemDAO implements ItemDAO_interface {
 
@@ -22,9 +23,8 @@ public class ItemDAO implements ItemDAO_interface {
 
     //可刪
     @Override
-    public void update(ItemVO itemVO)
-    {
-        ItemVO vo=getSession().load(ItemVO.class, itemVO.getItemId());
+    public void update(ItemVO itemVO) {
+        ItemVO vo = getSession().load(ItemVO.class, itemVO.getItemId());
         vo.setItemName(itemVO.getItemName());
         vo.setItemContent(itemVO.getItemContent());
         vo.setItemPrice(itemVO.getItemPrice());
@@ -38,7 +38,7 @@ public class ItemDAO implements ItemDAO_interface {
 
     @Override
     public void updateJS(ItemVO itemVO) {
-        ItemVO vo=getSession().load(ItemVO.class, itemVO.getItemId());
+        ItemVO vo = getSession().load(ItemVO.class, itemVO.getItemId());
         vo.setItemName(itemVO.getItemName());
         vo.setItemContent(itemVO.getItemContent());
         vo.setItemPrice(itemVO.getItemPrice());
@@ -56,8 +56,8 @@ public class ItemDAO implements ItemDAO_interface {
 //        itemVO.setItemId(itemId);
 //        getSesion().remove(itemVO);
 
-        Session session=getSession();
-        ItemVO itemVO=session.get(ItemVO.class,itemId);
+        Session session = getSession();
+        ItemVO itemVO = session.get(ItemVO.class, itemId);
         session.remove(itemVO);
     }
 
@@ -77,27 +77,36 @@ public class ItemDAO implements ItemDAO_interface {
     }
 
     @Override
-    public JSONObject getCount(){
-        String sql="select count(*) from item;";
-        int count = ((Number)(getSession().createNativeQuery(sql).uniqueResult())).intValue();
-        JSONObject jsonObject=new JSONObject();
-        jsonObject.put("count",count);
+    public JSONObject getCount() {
+        String sql = "select count(*) from item;";
+        int count = ((Number) (getSession().createNativeQuery(sql).uniqueResult())).intValue();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("count", count);
 
         return jsonObject;
     }
 
+
     @Override
-    public JSONArray search(String keyWords) {
-        final StringBuilder sql = new StringBuilder().append("SELECT * FROM ITEM where ");
+    public JSONArray search(String keyWords, Integer type) {
+
+        final StringBuilder sql = new StringBuilder().append("From ItemVO  where ");
         if (keyWords.trim().length() != 0 && !(keyWords == null)) {
-            sql.append(" " + "ITEM_NAME" + " " + "like" + " " + '"' + "%" + keyWords + "%" + '"');
+            sql.append(" " + "itemName" + " " + "like" + " " + '"' + "%" + keyWords + "%" + '"' + " ");
+            if (type != 0) {
+                sql.append("and");
+            }
+        }
+        if (!(type == 0)) {
+            ;
+            sql.append(" " + "itemtId" + " " + "=" + " " + type + " " );
         }
 
-
+        // sql.append(" "+"ITEM_STATUS"+" "+"="+" "+"0 or ITEM_STATUS=1");
         JSONArray jsonArray = new JSONArray();
-        List<ItemVO> list = getSession().createNativeQuery(sql.toString(), ItemVO.class).list();
-        for(ItemVO itemVO:list){
-            JSONObject jsonObject=new JSONObject();
+        List<ItemVO> list = getSession().createQuery(sql.toString(), ItemVO.class).list();
+        for (ItemVO itemVO : list) {
+            JSONObject jsonObject = new JSONObject();
             jsonObject.put("itemId", itemVO.getItemId());
             jsonObject.put("itemtId", itemVO.getItemtId());
             jsonObject.put("itemName", itemVO.getItemName());
@@ -107,7 +116,7 @@ public class ItemDAO implements ItemDAO_interface {
             jsonObject.put("itemStatus", itemVO.getItemStatus());
             jsonObject.put("itemDate", itemVO.getItemDate());
             jsonObject.put("itemEndDate", itemVO.getItemEnddate());
-
+            jsonObject.put("itemtName",itemVO.getItemTypeVO().getItemtName());
             Encoder encoder = Base64.getEncoder();
 
             if (itemVO.getPhotos().size() != 0) {
@@ -123,7 +132,7 @@ public class ItemDAO implements ItemDAO_interface {
 
     //listAllItems.html
     @Override
-    public JSONArray getAllList(){
+    public JSONArray getAllList() {
         JSONArray jsonArray = new JSONArray();
         List<ItemVO> list = getSession().createQuery("FROM ItemVO order by itemId", ItemVO.class).list();
         for (ItemVO itemVO : list) {
@@ -137,6 +146,7 @@ public class ItemDAO implements ItemDAO_interface {
             jsonObject.put("itemStatus", itemVO.getItemStatus());
             jsonObject.put("itemDate", itemVO.getItemDate());
             jsonObject.put("itemEndDate", itemVO.getItemEnddate());
+            jsonObject.put("itemtName",itemVO.getItemTypeVO().getItemtName());
             Encoder encoder = Base64.getEncoder();
 
             if (itemVO.getPhotos().size() != 0) {
@@ -150,12 +160,12 @@ public class ItemDAO implements ItemDAO_interface {
         return jsonArray;
     }
 
-    //	shop.html
+    //	shop.html 前台商城
     @Override
     public JSONArray getAllJS(int pageNumber) {
         JSONArray jsonArray = new JSONArray();
-        List<ItemVO> list = getSession().createQuery("FROM ItemVO order by itemId", ItemVO.class)
-                .setFirstResult((pageNumber-1)*8)
+        List<ItemVO> list = getSession().createQuery("FROM ItemVO where itemStatus=1 ", ItemVO.class)
+                .setFirstResult((pageNumber - 1) * 8)
                 .setMaxResults(8)
                 .list();
         for (ItemVO itemVO : list) {
@@ -185,5 +195,28 @@ public class ItemDAO implements ItemDAO_interface {
         }
         return jsonArray;
     }
+
+    @Override
+    public void insertFavList(String item, String memId) {
+        JedisPool jedisPool = JedisUtil.getJedisPool();
+        Jedis jedis = jedisPool.getResource();
+
+        HashMap<String, String> data = new HashMap<>();
+        data.put("item", item);
+
+        jedis.hmset(memId, data);
+
+        jedis.close();
+    }
+
+    @Override
+    public String  getFavList(String memId) {
+       JedisPool jedisPool=JedisUtil.getJedisPool();
+       Jedis jedis=jedisPool.getResource();
+       String data=jedis.hget(memId,"item");
+       jedis.close();
+       return data;
+    }
+
 
 }

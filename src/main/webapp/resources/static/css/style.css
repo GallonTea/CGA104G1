@@ -544,11 +544,11 @@ th {
     text-transform: uppercase
 }
 
-.table>:not(:first-child) {
+.table > :not(:first-child) {
     border-top: 0
 }
 
-.table>:not(:last-child)>:last-child>* {
+.table > :not(:last-child) > :last-child > * {
     border-bottom-color: #ddd
 }
 
@@ -800,7 +800,7 @@ textarea:-ms-input-placeholder {
     padding-left: 30px
 }
 
-.grid--no-gutters>.grid__item {
+.grid--no-gutters > .grid__item {
     padding-left: 0
 }
 
@@ -1078,7 +1078,7 @@ textarea:-ms-input-placeholder {
     list-style: none
 }
 
-.topheader .list-inline>li {
+.topheader .list-inline > li {
     display: inline-block;
     padding-right: 5px;
     padding-left: 5px;
@@ -1174,7 +1174,7 @@ textarea:-ms-input-placeholder {
     text-transform: uppercase
 }
 
-.iconset>a {
+.iconset > a {
     display: block;
     color: #000
 }
@@ -1376,7 +1376,7 @@ textarea:-ms-input-placeholder {
     right: 0
 }
 
-#cart-drawer>h4 {
+#cart-drawer > h4 {
     color: #050000;
     font-size: 18px;
     text-transform: uppercase;
@@ -1540,12 +1540,12 @@ textarea:-ms-input-placeholder {
     padding: 0
 }
 
-.minicart-bottom .subtotal.list>span {
+.minicart-bottom .subtotal.list > span {
     font-size: 14px;
     font-weight: 400
 }
 
-.minicart-bottom .subtotal>span {
+.minicart-bottom .subtotal > span {
     float: left;
     text-transform: uppercase;
     font-size: 16px;
@@ -1787,15 +1787,15 @@ textarea:-ms-input-placeholder {
     margin: 10px 0
 }
 
-.vertical-menu-content ul>li {
+.vertical-menu-content ul > li {
     padding: 0 10px
 }
 
-.vertical-menu-content ul>li .moreSlideOpen {
+.vertical-menu-content ul > li .moreSlideOpen {
     margin: 0
 }
 
-.vertical-menu-content ul>li .moreSlideOpen li {
+.vertical-menu-content ul > li .moreSlideOpen li {
     padding: 0
 }
 
@@ -1872,7 +1872,7 @@ textarea:-ms-input-placeholder {
     -ms-transform: translate3d(0, 0, 0)
 }
 
-.vertical-menu-content .megamenu>li {
+.vertical-menu-content .megamenu > li {
     padding: 20px;
     flex: 1;
     -ms-flex: 1;
@@ -1880,14 +1880,14 @@ textarea:-ms-input-placeholder {
     margin: 0
 }
 
-.vertical-menu-content .megamenu>li:last-child {
+.vertical-menu-content .megamenu > li:last-child {
     flex: none;
     -webkit-flex: none;
     -ms-flex: none
 }
 
-.vertical-menu-content .has-submenu>a:after,
-.vertical-menu-content .sub-menu>a:after {
+.vertical-menu-content .has-submenu > a:after,
+.vertical-menu-content .sub-menu > a:after {
     content: "\f105";
     font-family: "annimex-bold";
     font-weight: 400;
@@ -1926,7 +1926,7 @@ textarea:-ms-input-placeholder {
     position: relative
 }
 
-.vertical-menu-content .sub-menu>a:after {
+.vertical-menu-content .sub-menu > a:after {
     color: #000;
     right: 0
 }
@@ -1947,8 +1947,8 @@ textarea:-ms-input-placeholder {
     padding: 4px 0
 }
 
-.vertical-menu-content .sub-menu:hover>a:after,
-.vertical-menu-content li .dropdown li:hover>a,
+.vertical-menu-content .sub-menu:hover > a:after,
+.vertical-menu-content li .dropdown li:hover > a,
 .vertical-menu-content li .dropdown li a:hover {
     color: #2e6ed5
 }
@@ -1957,12 +1957,12 @@ textarea:-ms-input-placeholder {
     position: relative
 }
 
-.vertical-menu-content li .dropdown .sub-menu>.sub-level2 {
+.vertical-menu-content li .dropdown .sub-menu > .sub-level2 {
     display: none;
     top: -22px
 }
 
-.vertical-menu-content li .dropdown .sub-menu:hover>.sub-level2 {
+.vertical-menu-content li .dropdown .sub-menu:hover > .sub-level2 {
     display: block
 }
 
@@ -1970,7 +1970,7 @@ textarea:-ms-input-placeholder {
     margin: 10px 0
 }
 
-@media(min-width:990px) {
+@media (min-width: 990px) {
     .header .container {
         position: relative
     }
@@ -1990,28 +1990,28 @@ textarea:-ms-input-placeholder {
         position: relative
     }
 
-    #siteNav>li {
+    #siteNav > li {
         display: inline-block;
         text-align: left;
         position: relative
     }
 
-    #siteNav>li>a {
+    #siteNav > li > a {
         color: #fff;
         padding: 0 15px;
         text-transform: uppercase;
         line-height: 40px
     }
 
-    #siteNav.medium>li a {
+    #siteNav.medium > li a {
         font-weight: 400
     }
 
-    #siteNav.hidearrow>li>a .an {
+    #siteNav.hidearrow > li > a .an {
         display: none
     }
 
-    #siteNav>li>a .an {
+    #siteNav > li > a .an {
         vertical-align: middle;
         margin-top: -3px;
         font-size: 11px
@@ -2025,43 +2025,43 @@ textarea:-ms-input-placeholder {
         text-align: center
     }
 
-    #siteNav>li:hover>a,
-    #siteNav>li>a:hover:hover,
-    #siteNav>li>a:hover {
+    #siteNav > li:hover > a,
+    #siteNav > li > a:hover:hover,
+    #siteNav > li > a:hover {
         color: #fff
     }
 
-    .header-4 #siteNav>li:hover>a,
-    .header-4 #siteNav>li>a:hover:hover,
-    .header-4 #siteNav>li>a:hover {
+    .header-4 #siteNav > li:hover > a,
+    .header-4 #siteNav > li > a:hover:hover,
+    .header-4 #siteNav > li > a:hover {
         color: #000
     }
 
-    .header-6 #siteNav>li:hover>a,
-    .header-6 #siteNav>li>a:hover:hover,
-    .header-6 #siteNav>li>a:hover {
+    .header-6 #siteNav > li:hover > a,
+    .header-6 #siteNav > li > a:hover:hover,
+    .header-6 #siteNav > li > a:hover {
         color: #000;
         background-color: #fed700
     }
 
-    .header-7 #siteNav>li:hover>a,
-    .header-7 #siteNav>li>a:hover:hover,
-    .header-7 #siteNav>li>a:hover {
+    .header-7 #siteNav > li:hover > a,
+    .header-7 #siteNav > li > a:hover:hover,
+    .header-7 #siteNav > li > a:hover {
         color: #fff;
         background-color: #ed0f0f
     }
 
-    .index-demo8 #siteNav>li .megamenu li.lvl-1 li .site-nav:hover,
-    .index-demo8 #siteNav>li .megamenu .subLinks .site-nav:hover {
+    .index-demo8 #siteNav > li .megamenu li.lvl-1 li .site-nav:hover,
+    .index-demo8 #siteNav > li .megamenu .subLinks .site-nav:hover {
         color: #199b8c
     }
 
-    .index-demo9 #siteNav>li>a,
+    .index-demo9 #siteNav > li > a,
     .index-demo9 .store-l-link {
         color: #191919
     }
 
-    #siteNav>li .megamenu {
+    #siteNav > li .megamenu {
         min-width: 750px;
         opacity: 0;
         visibility: hidden;
@@ -2083,28 +2083,28 @@ textarea:-ms-input-placeholder {
         -webkit-box-shadow: 0 0 15px rgba(0, 0, 0, 0.1)
     }
 
-    #siteNav>li .megamenu ul {
+    #siteNav > li .megamenu ul {
         padding: 0;
         list-style: none
     }
 
-    #siteNav>li:hover>.megamenu {
+    #siteNav > li:hover > .megamenu {
         top: 40px;
         opacity: 1;
         visibility: visible;
         pointer-events: visible
     }
 
-    #siteNav>li .megamenu li.lvl-1 {
+    #siteNav > li .megamenu li.lvl-1 {
         margin-bottom: 30px
     }
 
-    #siteNav>li .megamenu.style1 li.lvl-1 {
+    #siteNav > li .megamenu.style1 li.lvl-1 {
         margin-bottom: 0
     }
 
-    #siteNav>li .megamenu li.lvl-1 a.lvl-1,
-    #siteNav>li .megamenu .menu-title {
+    #siteNav > li .megamenu li.lvl-1 a.lvl-1,
+    #siteNav > li .megamenu .menu-title {
         color: #000;
         font-size: 14px;
         text-transform: uppercase;
@@ -2112,20 +2112,20 @@ textarea:-ms-input-placeholder {
         font-weight: 400
     }
 
-    #siteNav>li .megamenu li.lvl-1 li .site-nav,
-    #siteNav>li .megamenu .subLinks .site-nav {
+    #siteNav > li .megamenu li.lvl-1 li .site-nav,
+    #siteNav > li .megamenu .subLinks .site-nav {
         color: #000;
         padding: 3px 0;
         font-weight: 400
     }
 
-    #siteNav>li .megamenu li.lvl-1 li .site-nav:hover,
-    #siteNav>li .megamenu .subLinks .site-nav:hover {
+    #siteNav > li .megamenu li.lvl-1 li .site-nav:hover,
+    #siteNav > li .megamenu .subLinks .site-nav:hover {
         color: #2358ad
     }
 
-    #siteNav>li .megamenu li.lvl-1 li .site-nav:before,
-    #siteNav>li .megamenu .subLinks .site-nav:before {
+    #siteNav > li .megamenu li.lvl-1 li .site-nav:before,
+    #siteNav > li .megamenu .subLinks .site-nav:before {
         content: "";
         display: inline-block;
         width: 0;
@@ -2137,53 +2137,53 @@ textarea:-ms-input-placeholder {
         transition: all .3s ease-in-out
     }
 
-    #siteNav>li .megamenu li.lvl-1 li .site-nav:hover:before,
-    #siteNav>li .megamenu .subLinks .site-nav:hover:before {
+    #siteNav > li .megamenu li.lvl-1 li .site-nav:hover:before,
+    #siteNav > li .megamenu .subLinks .site-nav:hover:before {
         width: 5px;
         margin-right: 3px
     }
 
-    #siteNav>li .megamenu.style1 {
+    #siteNav > li .megamenu.style1 {
         width: 330px;
         overflow: hidden;
         min-width: inherit
     }
 
-    #siteNav>li .megamenu.style2 li.lvl-1,
-    #siteNav>li .megamenu.style4 li.lvl-1 {
+    #siteNav > li .megamenu.style2 li.lvl-1,
+    #siteNav > li .megamenu.style4 li.lvl-1 {
         margin-bottom: 10px
     }
 
-    #siteNav>li .megamenu .menu-title {
+    #siteNav > li .megamenu .menu-title {
         font-weight: 600 !important
     }
 
-    #siteNav>li.mdropdown {
+    #siteNav > li.mdropdown {
         position: relative
     }
 
-    #siteNav>li .megamenu .imageCol {
+    #siteNav > li .megamenu .imageCol {
         padding-bottom: 25px
     }
 
-    #siteNav>li.Cfull {
+    #siteNav > li.Cfull {
         position: static
     }
 
-    #siteNav>li.Cfull .megamenu {
+    #siteNav > li.Cfull .megamenu {
         left: 15px;
         right: 15px
     }
 
-    #siteNav>li.Cfull .megamenu ul {
+    #siteNav > li.Cfull .megamenu ul {
         width: 100%
     }
 
-    #siteNav>li.Cfull:hover>.megamenu {
+    #siteNav > li.Cfull:hover > .megamenu {
         top: 45px
     }
 
-    #siteNav>li ul.dropdown li a .an {
+    #siteNav > li ul.dropdown li a .an {
         position: absolute;
         right: 3px;
         top: 13px
@@ -2233,12 +2233,12 @@ textarea:-ms-input-placeholder {
         border-right-color: #f00
     }
 
-    #siteNav>li.dropdown {
+    #siteNav > li.dropdown {
         position: relative
     }
 
-    #siteNav>li .dropdown,
-    #siteNav>li .dropdown ul {
+    #siteNav > li .dropdown,
+    #siteNav > li .dropdown ul {
         background-color: #fff;
         list-style: none;
         opacity: 0;
@@ -2256,42 +2256,42 @@ textarea:-ms-input-placeholder {
         padding: 10px
     }
 
-    #siteNav>li:hover>.dropdown,
-    #siteNav>li .dropdown li:hover>ul {
+    #siteNav > li:hover > .dropdown,
+    #siteNav > li .dropdown li:hover > ul {
         top: 40px;
         opacity: 1;
         visibility: visible
     }
 
-    #siteNav>li ul.dropdown li {
+    #siteNav > li ul.dropdown li {
         border-top: 1px solid #eee;
         position: relative
     }
 
-    #siteNav>li ul.dropdown li:first-child {
+    #siteNav > li ul.dropdown li:first-child {
         border: 0
     }
 
-    #siteNav>li ul.dropdown li a {
+    #siteNav > li ul.dropdown li a {
         color: #000;
         font-weight: 400;
         padding: 8px 12px;
         background-color: #fff
     }
 
-    #siteNav>li ul.dropdown li:hover>a,
-    #siteNav>li ul.dropdown li a:hover {
+    #siteNav > li ul.dropdown li:hover > a,
+    #siteNav > li ul.dropdown li a:hover {
         color: #000;
         background-color: #eee;
         padding-left: 17px
     }
 
-    #siteNav>li ul.dropdown li ul {
+    #siteNav > li ul.dropdown li ul {
         top: 20px;
         left: 100%
     }
 
-    #siteNav>li ul.dropdown li:hover>ul {
+    #siteNav > li ul.dropdown li:hover > ul {
         top: 0
     }
 
@@ -2321,20 +2321,20 @@ textarea:-ms-input-placeholder {
         clear: both
     }
 
-    .header-6 #siteNav>li,
-    .header-7 #siteNav>li {
+    .header-6 #siteNav > li,
+    .header-7 #siteNav > li {
         position: static
     }
 
-    .header-6 #siteNav>li.dropdown,
-    .header-6 #siteNav>li.megamenu.mdropdown,
-    .header-7 #siteNav>li.dropdown,
-    .header-7 #siteNav>li.megamenu.mdropdown {
+    .header-6 #siteNav > li.dropdown,
+    .header-6 #siteNav > li.megamenu.mdropdown,
+    .header-7 #siteNav > li.dropdown,
+    .header-7 #siteNav > li.megamenu.mdropdown {
         position: relative
     }
 
-    .header-6 #siteNav.medium>li>a,
-    .header-7 #siteNav.medium>li>a {
+    .header-6 #siteNav.medium > li > a,
+    .header-7 #siteNav.medium > li > a {
         font-weight: 600
     }
 
@@ -2342,7 +2342,7 @@ textarea:-ms-input-placeholder {
         position: relative
     }
 
-    .header-7 #siteNav>li .megamenu {
+    .header-7 #siteNav > li .megamenu {
         max-width: 1280px;
         margin: 0 auto;
         right: 0
@@ -2441,19 +2441,19 @@ textarea:-ms-input-placeholder {
 }
 
 .store-l-link:hover,
-.header-2 #siteNav>li:hover>a,
-.header-2 #siteNav>li>a:hover:hover,
-.header-2 #siteNav>li>a:hover,
-.header-2 #siteNav>li .megamenu li.lvl-1 li .site-nav:hover,
+.header-2 #siteNav > li:hover > a,
+.header-2 #siteNav > li > a:hover:hover,
+.header-2 #siteNav > li > a:hover,
+.header-2 #siteNav > li .megamenu li.lvl-1 li .site-nav:hover,
 .topheader a:hover,
 .header-2 .vertical-menu-content .megamenu li ul li a:hover,
-.header-2 .vertical-menu-content .sub-menu:hover>a::after,
-.header-2 .vertical-menu-content li .dropdown li:hover>a,
+.header-2 .vertical-menu-content .sub-menu:hover > a::after,
+.header-2 .vertical-menu-content li .dropdown li:hover > a,
 .header-2 .vertical-menu-content li .dropdown li a:hover {
     color: #ff802b
 }
 
-.header-2 #siteNav>li .megamenu li.lvl-1 li .site-nav:before {
+.header-2 #siteNav > li .megamenu li.lvl-1 li .site-nav:before {
     background-color: #ff802b
 }
 
@@ -2529,7 +2529,7 @@ textarea:-ms-input-placeholder {
 .header-5 .vertical-menu-content .megamenu .sub-menu-title,
 .header-5 .vertical-menu-content .megamenu li ul li a,
 .header-5 .vertical-menu-content li .dropdown li a,
-.header-5 .vertical-menu-content .sub-menu>a:after {
+.header-5 .vertical-menu-content .sub-menu > a:after {
     color: #fff
 }
 
@@ -2543,20 +2543,20 @@ textarea:-ms-input-placeholder {
     border-bottom-color: #9f0040
 }
 
-.header-5 #siteNav>li .megamenu li.lvl-1 li .site-nav:hover,
-.header-5 #siteNav>li .megamenu .subLinks .site-nav:hover,
-.header-5 #siteNav>li>a:hover {
+.header-5 #siteNav > li .megamenu li.lvl-1 li .site-nav:hover,
+.header-5 #siteNav > li .megamenu .subLinks .site-nav:hover,
+.header-5 #siteNav > li > a:hover {
     color: #000;
     opacity: .85
 }
 
-.header-5 #siteNav>li:hover>a,
-.header-5 #siteNav>li>a:hover {
+.header-5 #siteNav > li:hover > a,
+.header-5 #siteNav > li > a:hover {
     color: #fff
 }
 
-.header-5 #siteNav>li .megamenu li.lvl-1 li .site-nav:before,
-.header-5 #siteNav>li .megamenu .subLinks .site-nav:before {
+.header-5 #siteNav > li .megamenu li.lvl-1 li .site-nav:before,
+.header-5 #siteNav > li .megamenu .subLinks .site-nav:before {
     background-color: #000
 }
 
@@ -2582,7 +2582,7 @@ textarea:-ms-input-placeholder {
     background-color: #f9f9f9
 }
 
-.header-6 #siteNav>li>a {
+.header-6 #siteNav > li > a {
     color: #222
 }
 
@@ -2605,7 +2605,7 @@ textarea:-ms-input-placeholder {
     color: #000
 }
 
-.header-6 #siteNav>li .megamenu {
+.header-6 #siteNav > li .megamenu {
     width: 100%
 }
 
@@ -2630,7 +2630,7 @@ textarea:-ms-input-placeholder {
 }
 
 .header-7 .iconset,
-.header-7 .iconset>a {
+.header-7 .iconset > a {
     color: #fff
 }
 
@@ -2665,17 +2665,17 @@ textarea:-ms-input-placeholder {
     padding: 0
 }
 
-.header-transparent #siteNav>li>a {
+.header-transparent #siteNav > li > a {
     color: #222
 }
 
-.header-transparent #siteNav>li.megamenu:not(.mdropdown) {
+.header-transparent #siteNav > li.megamenu:not(.mdropdown) {
     position: static
 }
 
-.header-transparent #siteNav>li .megamenu:not(.style1),
-.header-transparent #siteNav>li .megamenu ul,
-.header-transparent #siteNav>li .megamenu ul>.grid__item.one-whole {
+.header-transparent #siteNav > li .megamenu:not(.style1),
+.header-transparent #siteNav > li .megamenu ul,
+.header-transparent #siteNav > li .megamenu ul > .grid__item.one-whole {
     width: 100%
 }
 
@@ -2910,12 +2910,12 @@ textarea:-ms-input-placeholder {
     border-bottom: 1px solid #1e3646
 }
 
-.index-demo3 .vertical-menu-content ul>li {
+.index-demo3 .vertical-menu-content ul > li {
     position: relative
 }
 
-.index-demo3 .vertical-menu-content .sub-menu:hover>a::after,
-.index-demo3 .vertical-menu-content li .dropdown li:hover>a,
+.index-demo3 .vertical-menu-content .sub-menu:hover > a::after,
+.index-demo3 .vertical-menu-content li .dropdown li:hover > a,
 .index-demo3 .vertical-menu-content li .dropdown li a:hover,
 .index-demo3 .vertical-menu-content .megamenu li ul li a:hover {
     color: #ffc64e
@@ -2940,17 +2940,17 @@ textarea:-ms-input-placeholder {
 }
 
 .index-demo3 a:hover,
-.index-demo3 #siteNav>li .megamenu li.lvl-1 li .site-nav:hover {
+.index-demo3 #siteNav > li .megamenu li.lvl-1 li .site-nav:hover {
     color: #ffc64e
 }
 
-.index-demo3 #siteNav>li .megamenu li.lvl-1 li .site-nav:before {
+.index-demo3 #siteNav > li .megamenu li.lvl-1 li .site-nav:before {
     background-color: #ffc64e
 }
 
-.index-demo3 #siteNav>li:hover>a,
-.index-demo3 #siteNav>li>a:hover:hover,
-.index-demo3 #siteNav>li>a:hover {
+.index-demo3 #siteNav > li:hover > a,
+.index-demo3 #siteNav > li > a:hover:hover,
+.index-demo3 #siteNav > li > a:hover {
     color: #ffc64e
 }
 
@@ -3030,7 +3030,7 @@ textarea:-ms-input-placeholder {
     margin-top: -5px
 }
 
-.index-demo4 #siteNav>li>a {
+.index-demo4 #siteNav > li > a {
     padding: 0 10px;
     font-weight: 600
 }
@@ -3123,7 +3123,7 @@ textarea:-ms-input-placeholder {
 
 .index-demo5 #productTabs li a:hover,
 .index-demo5 #productTabs li a:focus,
-.index-demo5 #productTabs>li a.active {
+.index-demo5 #productTabs > li a.active {
     background-color: #ee307c
 }
 
@@ -3363,8 +3363,8 @@ textarea:-ms-input-placeholder {
     color: #fff
 }
 
-.index-demo8 .vertical-menu-content .sub-menu:hover>a:after,
-.index-demo8 .vertical-menu-content li .dropdown li:hover>a,
+.index-demo8 .vertical-menu-content .sub-menu:hover > a:after,
+.index-demo8 .vertical-menu-content li .dropdown li:hover > a,
 .index-demo8 .vertical-menu-content li .dropdown li a:hover,
 .index-demo8 .vertical-menu-content .megamenu li ul li a:hover {
     color: #148e80
@@ -3470,7 +3470,7 @@ textarea:-ms-input-placeholder {
     border: 1px dashed #b7b6b6
 }
 
-.index-demo8 .hero .saleTime .time-count+span,
+.index-demo8 .hero .saleTime .time-count + span,
 .index-demo8 .hero .saleTime .time-count {
     color: #000
 }
@@ -3514,14 +3514,14 @@ textarea:-ms-input-placeholder {
 }
 
 .index-demo9 .store-l-link:hover,
-.index-demo9 .header-2 #siteNav>li:hover>a,
-.index-demo9 .header-2 #siteNav>li>a:hover:hover,
-.index-demo9 .header-2 #siteNav>li>a:hover,
-.index-demo9 .header-2 #siteNav>li .megamenu li.lvl-1 li .site-nav:hover,
+.index-demo9 .header-2 #siteNav > li:hover > a,
+.index-demo9 .header-2 #siteNav > li > a:hover:hover,
+.index-demo9 .header-2 #siteNav > li > a:hover,
+.index-demo9 .header-2 #siteNav > li .megamenu li.lvl-1 li .site-nav:hover,
 .index-demo9 .topheader a:hover,
 .index-demo9 .header-2 .vertical-menu-content .megamenu li ul li a:hover,
-.index-demo9 .header-2 .vertical-menu-content .sub-menu:hover>a:after,
-.index-demo9 .header-2 .vertical-menu-content li .dropdown li:hover>a,
+.index-demo9 .header-2 .vertical-menu-content .sub-menu:hover > a:after,
+.index-demo9 .header-2 .vertical-menu-content li .dropdown li:hover > a,
 .index-demo9 .header-2 .vertical-menu-content li .dropdown li a:hover {
     color: #a20401
 }
@@ -3592,7 +3592,7 @@ textarea:-ms-input-placeholder {
     margin: 0 -10px
 }
 
-.index-demo9 .header-2 #siteNav>li .megamenu li.lvl-1 li .site-nav:before {
+.index-demo9 .header-2 #siteNav > li .megamenu li.lvl-1 li .site-nav:before {
     background-color: #a20401
 }
 
@@ -3681,7 +3681,7 @@ textarea:-ms-input-placeholder {
     box-shadow: none
 }
 
-@media only screen and (min-width:767px) {
+@media only screen and (min-width: 767px) {
     .large-pd {
         padding: 55px 0
     }
@@ -3771,21 +3771,21 @@ textarea:-ms-input-placeholder {
     padding: 0
 }
 
-.tab-slider-product .tabs>li {
+.tab-slider-product .tabs > li {
     float: none;
     display: inline-block;
     margin: 0 2px;
     cursor: pointer
 }
 
-.tab-slider-product .tabs>li {
+.tab-slider-product .tabs > li {
     background: 0;
     border: 0;
     text-transform: uppercase;
     letter-spacing: 0
 }
 
-.tab-slider-product .tabs>li a {
+.tab-slider-product .tabs > li a {
     color: #000;
     font-weight: 600;
     font-size: 14px;
@@ -3793,7 +3793,7 @@ textarea:-ms-input-placeholder {
     display: inline-block
 }
 
-.tab-slider-product .tabs>li a.active {
+.tab-slider-product .tabs > li a.active {
     color: #fff;
     background: #2e6ed5
 }
@@ -3805,19 +3805,19 @@ textarea:-ms-input-placeholder {
     background: #2358ad
 }
 
-#productTabs.tabs-style2>li {
+#productTabs.tabs-style2 > li {
     position: relative;
     padding: 0;
     margin: 0 15px
 }
 
-#productTabs.tabs-style2>li a {
+#productTabs.tabs-style2 > li a {
     padding: 0;
     font-weight: 700;
     font-size: 16px
 }
 
-#productTabs.tabs-style2>li a:after {
+#productTabs.tabs-style2 > li a:after {
     width: 0;
     content: "";
     display: block;
@@ -3832,17 +3832,17 @@ textarea:-ms-input-placeholder {
     -ms-transition: all .3s ease-in-out
 }
 
-#productTabs.tabs-style2>li a.active:after {
+#productTabs.tabs-style2 > li a.active:after {
     width: 100%
 }
 
-#productTabs.tabs-style2>li a:hover:after {
+#productTabs.tabs-style2 > li a:hover:after {
     width: 100%;
     opacity: 1
 }
 
-#productTabs.tabs-style2>li a.active,
-#productTabs.tabs-style2>li a:hover {
+#productTabs.tabs-style2 > li a.active,
+#productTabs.tabs-style2 > li a:hover {
     color: #000;
     background-color: transparent
 }
@@ -3866,7 +3866,7 @@ textarea:-ms-input-placeholder {
     padding: 0
 }
 
-.tab-slider-product-style1 .tabs>li {
+.tab-slider-product-style1 .tabs > li {
     color: #000;
     font-size: 16px;
     letter-spacing: .02em;
@@ -3875,7 +3875,7 @@ textarea:-ms-input-placeholder {
     padding: 0
 }
 
-.tab-slider-product-style1 .tabs>li:after {
+.tab-slider-product-style1 .tabs > li:after {
     width: 0;
     content: "";
     display: block;
@@ -3890,22 +3890,22 @@ textarea:-ms-input-placeholder {
     -ms-transition: all .3s ease-in-out
 }
 
-.tab-slider-product-style1 .tabs>li.active:after {
+.tab-slider-product-style1 .tabs > li.active:after {
     width: 100%
 }
 
-.tab-slider-product-style1 .tabs>li:hover:after {
+.tab-slider-product-style1 .tabs > li:hover:after {
     width: 100%;
     opacity: 1
 }
 
-.tab-slider-product-style1 .tabs>li.active,
-.tab-slider-product-style1 .tabs>li:hover {
+.tab-slider-product-style1 .tabs > li.active,
+.tab-slider-product-style1 .tabs > li:hover {
     color: #000;
     background-color: transparent
 }
 
-.tab-slider-product-style2 .tabs>li {
+.tab-slider-product-style2 .tabs > li {
     color: #848484;
     font-size: 14px;
     font-weight: bold;
@@ -3913,12 +3913,12 @@ textarea:-ms-input-placeholder {
     padding: 5px 10px
 }
 
-.tab-slider-product-style2 .tabs>li.active {
+.tab-slider-product-style2 .tabs > li.active {
     color: #000;
     background: transparent
 }
 
-.tab-slider-product-style2 .tabs>li:hover {
+.tab-slider-product-style2 .tabs > li:hover {
     color: #000;
     background-color: transparent
 }
@@ -4028,14 +4028,14 @@ textarea:-ms-input-placeholder {
     padding: 0
 }
 
-.hero .saleTime .time-count+span {
+.hero .saleTime .time-count + span {
     color: #fff;
     font-size: 14px;
     font-weight: 600;
     margin: 0
 }
 
-@media only screen and (min-width:990px) {
+@media only screen and (min-width: 990px) {
     .hero__inner .wrap-text {
         max-width: 500px
     }
@@ -4099,7 +4099,7 @@ textarea:-ms-input-placeholder {
     font-size: 18px
 }
 
-@media(min-width:767px) {
+@media (min-width: 767px) {
     .hero .hero__inner .wrap-text {
         max-width: 460px;
         padding: 30px;
@@ -4548,7 +4548,7 @@ textarea:-ms-input-placeholder {
     color: #fff
 }
 
-@media(min-width:992px) {
+@media (min-width: 992px) {
     .instagram-section .item {
         max-width: 20%;
         flex: 0 0 20%;
@@ -5804,7 +5804,7 @@ textarea:-ms-input-placeholder {
     width: 14.28571%
 }
 
-@media(min-width:576px) and (max-width:767px) {
+@media (min-width: 576px) and (max-width: 767px) {
 
     .grid-sizer,
     .banner-item,
@@ -6407,7 +6407,7 @@ textarea:-ms-input-placeholder {
     margin-bottom: 22px
 }
 
-.imgBanners .img-banner-item.last .imgBanner-grid-item+.imgBanner-grid-item {
+.imgBanners .img-banner-item.last .imgBanner-grid-item + .imgBanner-grid-item {
     margin-bottom: 0
 }
 
@@ -6583,11 +6583,11 @@ textarea:-ms-input-placeholder {
     padding: 10px 20px
 }
 
-.imgBanners.style5 .row+.row {
+.imgBanners.style5 .row + .row {
     margin-top: 20px
 }
 
-.imgBanners.style5 .row+.row .col-12 {
+.imgBanners.style5 .row + .row .col-12 {
     margin-bottom: 20px
 }
 
@@ -6966,7 +6966,7 @@ textarea:-ms-input-placeholder {
     text-align: right
 }
 
-@media only screen and (min-width:992px) {
+@media only screen and (min-width: 992px) {
     #page-content {
         min-height: 500px
     }
@@ -6976,7 +6976,7 @@ textarea:-ms-input-placeholder {
     text-decoration: none !important
 }
 
-@media only screen and (min-width:992px) {
+@media only screen and (min-width: 992px) {
     .shop-grid-5 .grid-products .item.col-lg-2 {
         -ms-flex: 0 0 20%;
         -webkit-flex: 0 0 20%;
@@ -6985,7 +6985,7 @@ textarea:-ms-input-placeholder {
     }
 }
 
-@media only screen and (min-width:1540px) {
+@media only screen and (min-width: 1540px) {
     .shop-grid-7 .grid-products .item.col-lg-2 {
         -ms-flex: 0 0 14.2222%;
         -webkit-flex: 0 0 14.2222%;
@@ -7032,7 +7032,7 @@ textarea:-ms-input-placeholder {
     margin: 0 auto 15px
 }
 
-.grid-products .item .product-image>a {
+.grid-products .item .product-image > a {
     display: block;
     white-space: nowrap;
     opacity: 1
@@ -7224,7 +7224,7 @@ textarea:-ms-input-placeholder {
     padding-right: 10px
 }
 
-.grid-view_image .product-image>a:after {
+.grid-view_image .product-image > a:after {
     content: "";
     display: inline-block;
     width: 0;
@@ -7359,7 +7359,7 @@ textarea:-ms-input-placeholder {
     top: 5px
 }
 
-.product-labels+.product-labels {
+.product-labels + .product-labels {
     top: 30px
 }
 
@@ -7838,7 +7838,7 @@ a.wishlist:hover,
     text-decoration: line-through
 }
 
-.product-price .old-price+.price {
+.product-price .old-price + .price {
     padding-left: 5px;
     color: #e95144 !important
 }
@@ -8125,7 +8125,7 @@ a.wishlist:hover,
     font-size: 14px
 }
 
-.saleTime span>span {
+.saleTime span > span {
     color: #141414;
     font-weight: 700;
     min-width: 30px;
@@ -8137,7 +8137,7 @@ a.wishlist:hover,
     background: rgba(255, 255, 255, 0.7)
 }
 
-.saleTime span>span span {
+.saleTime span > span span {
     display: block;
     background: 0;
     font-size: 10px;
@@ -8176,7 +8176,7 @@ a.wishlist:hover,
     font-weight: 500
 }
 
-.countdown-deals .cdown>p {
+.countdown-deals .cdown > p {
     font-size: 12px;
     text-transform: uppercase;
     line-height: 0;
@@ -8267,17 +8267,17 @@ a.wishlist:hover,
     margin: 0
 }
 
-.model-thumbnail-img .carousel-indicators>li {
+.model-thumbnail-img .carousel-indicators > li {
     width: 100px;
     height: auto;
     text-indent: initial
 }
 
-.model-thumbnail-img .carousel-indicators>li img {
+.model-thumbnail-img .carousel-indicators > li img {
     width: 100px
 }
 
-.model-thumbnail-img .carousel-indicators>li.active img {
+.model-thumbnail-img .carousel-indicators > li.active img {
     opacity: 1
 }
 
@@ -8519,11 +8519,11 @@ a.wishlist:hover,
     margin-top: 0
 }
 
-.list-view-items .button-box>div {
+.list-view-items .button-box > div {
     display: inline-block
 }
 
-.list-view-items .button-box>div .btn-icon {
+.list-view-items .button-box > div .btn-icon {
     color: #fff;
     font-size: 18px;
     background-color: #2e6ed5;
@@ -8536,7 +8536,7 @@ a.wishlist:hover,
     margin: 0
 }
 
-.list-view-items .button-box>div .btn-icon.wishlist {
+.list-view-items .button-box > div .btn-icon.wishlist {
     margin: 0 7px
 }
 
@@ -8585,17 +8585,17 @@ a.wishlist:hover,
     cursor: pointer
 }
 
-.product-form .swatch .swatchInput+.swatchLbl.color.medium {
+.product-form .swatch .swatchInput + .swatchLbl.color.medium {
     width: 50px;
     height: 50px
 }
 
-.product-form .swatch .swatchInput:checked+.swatchLbl {
+.product-form .swatch .swatchInput:checked + .swatchLbl {
     border: 2px solid #111;
     box-shadow: none
 }
 
-.product-form .swatch .swatchInput+.swatchLbl.color {
+.product-form .swatch .swatchInput + .swatchLbl.color {
     width: 30px;
     padding: 0;
     height: 30px;
@@ -8605,16 +8605,16 @@ a.wishlist:hover,
     cursor: pointer
 }
 
-.product-form .swatch .swatchInput+.swatchLbl.large {
+.product-form .swatch .swatchInput + .swatchLbl.large {
     width: 40px;
     height: 40px
 }
 
-.product-form .swatch .swatchInput+.swatchLbl.large:not(.color) {
+.product-form .swatch .swatchInput + .swatchLbl.large:not(.color) {
     line-height: 36px
 }
 
-.product-form .swatch .swatchInput+.swatchLbl {
+.product-form .swatch .swatchInput + .swatchLbl {
     color: #333;
     font-size: 12px;
     font-weight: 400;
@@ -8833,7 +8833,7 @@ a.wishlist:hover,
     z-index: 2
 }
 
-.product-buttons>a {
+.product-buttons > a {
     position: relative
 }
 
@@ -8855,11 +8855,11 @@ a.wishlist:hover,
     z-index: 1000
 }
 
-.product-form .swatch .swatchInput+.swatchLbl.rounded {
+.product-form .swatch .swatchInput + .swatchLbl.rounded {
     border-radius: 50% !important
 }
 
-.product-form .swatch .swatchInput+.swatchLbl.rectangle {
+.product-form .swatch .swatchInput + .swatchLbl.rectangle {
     border-radius: 7px !important
 }
 
@@ -8942,7 +8942,7 @@ h1.product-single__title,
     margin-bottom: 10px
 }
 
-.product-detail-container .prInfoRow>div {
+.product-detail-container .prInfoRow > div {
     display: inline-block;
     margin-right: 5%
 }
@@ -9160,18 +9160,18 @@ h1.product-single__title,
     cursor: pointer
 }
 
-.product-form .swatch .swatchInput+.swatchLbl.color.medium {
+.product-form .swatch .swatchInput + .swatchLbl.color.medium {
     width: 40px;
     height: 40px
 }
 
-.product-form .swatch .swatchInput:checked+.swatchLbl,
-.product-form .swatch .swatchInput:hover+.swatchLbl {
+.product-form .swatch .swatchInput:checked + .swatchLbl,
+.product-form .swatch .swatchInput:hover + .swatchLbl {
     border: 2px solid #111;
     box-shadow: none
 }
 
-.product-form .swatch .swatchInput+.swatchLbl.color {
+.product-form .swatch .swatchInput + .swatchLbl.color {
     width: 30px;
     padding: 0;
     height: 30px;
@@ -9181,16 +9181,16 @@ h1.product-single__title,
     cursor: pointer
 }
 
-.product-form .swatch .swatchInput+.swatchLbl.large {
+.product-form .swatch .swatchInput + .swatchLbl.large {
     width: 40px;
     height: 40px
 }
 
-.product-form .swatch .swatchInput+.swatchLbl.large:not(.color) {
+.product-form .swatch .swatchInput + .swatchLbl.large:not(.color) {
     line-height: 36px
 }
 
-.product-form .swatch .swatchInput+.swatchLbl {
+.product-form .swatch .swatchInput + .swatchLbl {
     color: #000;
     font-size: 12px;
     font-weight: 400;
@@ -9242,7 +9242,7 @@ h1.product-single__title,
     left: 18px;
     top: -1px;
     width: 2px;
-    height: calc(90%+2px);
+    height: calc(90% + 2px);
     background: #F00
 }
 
@@ -9452,8 +9452,8 @@ table {
     line-height: 21px
 }
 
-.product-action .qtyField>a,
-.product-action .qtyField>span,
+.product-action .qtyField > a,
+.product-action .qtyField > span,
 .qtyField input {
     display: table-cell;
     line-height: normal;
@@ -10016,7 +10016,7 @@ table {
     width: 100%
 }
 
-.saleTime.product-countdown>* {
+.saleTime.product-countdown > * {
     width: 100%;
     margin: 3px
 }
@@ -10036,11 +10036,11 @@ table {
     font-weight: bold
 }
 
-.saleTime.product-countdown span>span {
+.saleTime.product-countdown span > span {
     margin-top: 0
 }
 
-.saleTime.product-countdown span>span span {
+.saleTime.product-countdown span > span span {
     color: #000;
     font-size: 13px;
     line-height: 16px;
@@ -10521,7 +10521,7 @@ table {
     margin-bottom: 10px
 }
 
-.product-single-style4 .product-details-img>.row {
+.product-single-style4 .product-details-img > .row {
     margin-left: -5px;
     margin-right: -5px
 }
@@ -10894,7 +10894,7 @@ ol#compare-items li .btn-remove1 {
     opacity: 0
 }
 
-.filterBox ul:not(.filter-color) input[type="checkbox"]+label {
+.filterBox ul:not(.filter-color) input[type="checkbox"] + label {
     display: inline-block;
     margin-left: -20px;
     line-height: 1.5em;
@@ -10907,7 +10907,7 @@ ol#compare-items li .btn-remove1 {
     font-size: 12px
 }
 
-.filterBox ul:not(.filter-color) input[type="checkbox"]+label>span {
+.filterBox ul:not(.filter-color) input[type="checkbox"] + label > span {
     display: inline-block;
     width: 15px;
     height: 15px;
@@ -10916,7 +10916,7 @@ ol#compare-items li .btn-remove1 {
     vertical-align: middle
 }
 
-.filterBox ul:not(.filter-color) input[type="checkbox"]:checked+label>span:before {
+.filterBox ul:not(.filter-color) input[type="checkbox"]:checked + label > span:before {
     content: "\f00c";
     font-family: annimex-bold;
     font-weight: 900;
@@ -11120,7 +11120,7 @@ ol#compare-items li .btn-remove1 {
     position: relative
 }
 
-.sidebar .sidebar_widget.categories .sub-level>a:after {
+.sidebar .sidebar_widget.categories .sub-level > a:after {
     content: "\f067";
     font-family: "annimex-bold";
     display: inline-block;
@@ -11129,7 +11129,7 @@ ol#compare-items li .btn-remove1 {
     top: 3px
 }
 
-.sidebar .sidebar_widget.categories .sub-level>a.active:after {
+.sidebar .sidebar_widget.categories .sub-level > a.active:after {
     content: "\f068";
     font-family: "annimex-bold";
     display: inline-block
@@ -11238,7 +11238,7 @@ ol#compare-items li .btn-remove1 {
     border: 0
 }
 
-#slider-range.ui-slider-horizontal .ui-slider-range~.ui-slider-range {
+#slider-range.ui-slider-horizontal .ui-slider-range ~ .ui-slider-range {
     background: #000
 }
 
@@ -11280,19 +11280,19 @@ ol#compare-items li .btn-remove1 {
     display: none
 }
 
-.grid-products .item .swatches.color-style li input[type="checkbox"]+label.color {
+.grid-products .item .swatches.color-style li input[type="checkbox"] + label.color {
     margin: 0;
     cursor: pointer;
     border: 1px solid #ccc
 }
 
-.grid-products .item .swatches.color-style li input[type="checkbox"]+label.color span {
+.grid-products .item .swatches.color-style li input[type="checkbox"] + label.color span {
     display: block;
     height: 25px;
     width: 25px
 }
 
-.grid-products .item .swatches.color-style li input[type="checkbox"]:checked+label.color {
+.grid-products .item .swatches.color-style li input[type="checkbox"]:checked + label.color {
     border: 1px solid #000;
     box-shadow: 0 0 1px #000
 }
@@ -11319,20 +11319,20 @@ ol#compare-items li .btn-remove1 {
     border-radius: 50% !important
 }
 
-.grid-products .item .swatches.color-style li.rounded input[type="checkbox"]+label.color,
-.grid-products .item .swatches.color-style li.rounded input[type="checkbox"]+label.color span,
-.grid-products .item .swatches.color-style li.rounded input[type="checkbox"]:checked+label.color {
+.grid-products .item .swatches.color-style li.rounded input[type="checkbox"] + label.color,
+.grid-products .item .swatches.color-style li.rounded input[type="checkbox"] + label.color span,
+.grid-products .item .swatches.color-style li.rounded input[type="checkbox"]:checked + label.color {
     border-radius: 50% !important
 }
 
-.grid-products .item .swatches.color-style li.radius input[type="checkbox"]+label.color,
-.grid-products .item .swatches.color-style li.radius input[type="checkbox"]+label.color span,
-.grid-products .item .swatches.color-style li.radius input[type="checkbox"]:checked+label.color {
+.grid-products .item .swatches.color-style li.radius input[type="checkbox"] + label.color,
+.grid-products .item .swatches.color-style li.radius input[type="checkbox"] + label.color span,
+.grid-products .item .swatches.color-style li.radius input[type="checkbox"]:checked + label.color {
     border-radius: 5px !important
 }
 
 .grid-products .item .swatches.color-style li.small,
-.grid-products .item .swatches.color-style li.small input[type="checkbox"]+label.color span {
+.grid-products .item .swatches.color-style li.small input[type="checkbox"] + label.color span {
     width: 15px;
     height: 15px
 }
@@ -11528,7 +11528,7 @@ ol#compare-items li .btn-remove1 {
     font-size: 14px
 }
 
-.saleTime span>span {
+.saleTime span > span {
     font-weight: 700;
     min-width: 30px;
     padding: 6px 4px 4px;
@@ -11540,7 +11540,7 @@ ol#compare-items li .btn-remove1 {
     color: #141414
 }
 
-.saleTime span>span span {
+.saleTime span > span span {
     display: block;
     background: 0;
     font-size: 10px;
@@ -11579,7 +11579,7 @@ ol#compare-items li .btn-remove1 {
     font-weight: 500
 }
 
-.countdown-deals .cdown>p {
+.countdown-deals .cdown > p {
     font-size: 12px;
     text-transform: uppercase;
     line-height: 0;
@@ -12208,7 +12208,7 @@ ol#compare-items li .btn-remove1 {
     padding: 0
 }
 
-.coming-soon-page .saleTime .time-count+span {
+.coming-soon-page .saleTime .time-count + span {
     color: #fff;
     font-size: 14px;
     font-weight: 600;
@@ -12429,14 +12429,14 @@ ol#compare-items li .btn-remove1 {
     align-items: center
 }
 
-.publish-detail>li:after {
+.publish-detail > li:after {
     content: '|';
     display: inline-block;
     padding: 0 10px;
     vertical-align: middle
 }
 
-.publish-detail>li:last-of-type:after {
+.publish-detail > li:last-of-type:after {
     content: ""
 }
 
@@ -12610,13 +12610,13 @@ ol#compare-items li .btn-remove1 {
     padding-top: 28px
 }
 
-.blog-single-page .comments-list__item+.comments-list__item {
+.blog-single-page .comments-list__item + .comments-list__item {
     border-top: 1px solid #ebebeb;
     margin-top: 24px;
     padding-top: 28px
 }
 
-.blog-single-page .comments-list--level--1>.comments-list__item {
+.blog-single-page .comments-list--level--1 > .comments-list__item {
     margin-left: 46px
 }
 
@@ -12842,8 +12842,8 @@ input.checkbox {
     line-height: 21px
 }
 
-.qtyField>a,
-.qtyField>span,
+.qtyField > a,
+.qtyField > span,
 .qtyField input {
     display: table-cell;
     line-height: normal;
@@ -13022,8 +13022,8 @@ input.checkbox {
     border-radius: 0
 }
 
-.checkout-page-style2 input[type="checkbox"]+label,
-.checkout-page-style2 input[type="radio"]+label {
+.checkout-page-style2 input[type="checkbox"] + label,
+.checkout-page-style2 input[type="radio"] + label {
     font-size: 13px;
     font-weight: normal;
     line-height: 24px;
@@ -13451,7 +13451,7 @@ input.checkbox {
     margin-bottom: 15px
 }
 
-@media(min-width:992px) {
+@media (min-width: 992px) {
     .footer.footer-1 .col-lg-3 {
         max-width: 20%;
         flex: 0 0 20%;

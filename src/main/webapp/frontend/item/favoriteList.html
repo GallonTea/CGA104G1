@@ -25,7 +25,7 @@
             rel="stylesheet">
 
     <!-- import css stylesheet -->
-    <link rel="stylesheet" href="./css/style.css">
+<!--    <link rel="stylesheet" href="./css/style.css">-->
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css">
@@ -37,8 +37,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"></script>
 
     <!-- import icon -->
-    <script src="https://kit.fontawesome.com/b5ef6b60f3.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="../../resources/css/item_detail.css">
+<!--    <script src="https://kit.fontawesome.com/b5ef6b60f3.js" crossorigin="anonymous"></script>-->
+<!--    <link rel="stylesheet" type="text/css" href="../../resources/css/item_detail.css">-->
 
     <!-- slider -->
     <link href="https://cdn.bootcss.com/flexslider/2.6.3/flexslider.min.css" rel="stylesheet">
@@ -161,7 +161,7 @@
     }
 
     .product {
-        /*border: 1px solid #eee;*/
+        border: 1px solid #eee;
         margin: 20px 0;
         width: 100%;
         height: 195px;
@@ -177,11 +177,6 @@
     .product img {
         width: 100%;
         height: 100%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        border: none;
-        transform: translate(-50%, -50%);
     }
 
     .product header,
@@ -249,10 +244,11 @@
         margin: 17px 0 20px 0;
     }
 
-    .product h1:hover{
-        color: #53b5aa;
+    .product h1:hover {
+        color: #da8763;
         cursor: pointer;
     }
+
     .product footer.content {
         height: 50px;
         margin: 6px 0 0 0;
@@ -271,7 +267,7 @@
     }
 
     .product footer .full-price {
-        background: #53b5aa;
+        background: #da8763;
         color: #fff;
         float: right;
         font-size: 22px;
@@ -434,6 +430,9 @@
     .added {
         margin: 0 -50px 0 0 !important;
     }
+    .cart{
+        cursor: pointer;
+    }
 </style>
 <body>
 
@@ -461,7 +460,7 @@
 <!--                <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
 <!--                    <li class="nav-item"><a class="nav-link active"-->
 <!--                                            aria-current="page" href="/index.html">首頁</a></li>-->
-<!--                    <li class="nav-item"><a class="nav-link" href="/shop.html">毛孩の商城</a>-->
+<!--                    <li class="nav-item"><a class="nav-link" href="/shop1.html">毛孩の商城</a>-->
 <!--                    </li>-->
 <!--                    <li class="nav-item"><a class="nav-link" href="#">團購底加啦</a></li>-->
 <!--                    <li class="nav-item"><a class="nav-link" href="#">家長討論區</a></li>-->
@@ -529,37 +528,41 @@
             <section id="cart">
 
 
-                <article class="product" v-for="(item,index) in cart" :key="item.itemId">
+                <article class="product" v-for="(item,index) in favList" :key="item.itemId">
                     <header>
-<!--                        <button class="remove" @click="remove(index)">-->
-                            <img :src="'data:image/jpeg;base64,'+item.photo" alt="" @click="remove(index)">
+                        <button class="remove" @click="remove(item.itemId)">
+                            <img :src="'data:image/jpeg;base64,'+item.photo" alt="">
 
                             <h3>Remove product</h3>
-<!--                        </button>-->
+                        </button>
                     </header>
 
                     <div class="content">
 
-                        <h1 @click="showDetail(item.itemId)">{{item.name}}</h1>
+                        <h1 @click="showDetail(item.itemId)">{{item.itemName}}</h1>
 
-                      {{item.content}}
+                        {{item.itemContent}}
 
 
                     </div>
 
                     <footer class="content">
 
-                        <button class="qt-minus" @click="minus(item)">-</button>
-                        <span class="qt">{{item.quantity}}</span>
-                        <button class="qt-plus" @click="plus(item)">+</button>
+                        <h2 class="full-price cart" @click="addToCart(item)">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                 class="bi bi-bag-heart-fill" viewBox="0 0 16 16">
+                                <path d="M11.5 4v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5ZM8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1Zm0 6.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132Z"/>
+                            </svg>
+                        </h2>
+
 
                         <h2 class="full-price">
-                            ${{item.price * item.quantity}}
+                            ${{item.itemPrice}}
                         </h2>
 
-                        <h2 class="price">
-                            ${{item.price}}
-                        </h2>
+
+
+
                     </footer>
                 </article>
 
@@ -572,22 +575,11 @@
     <footer id="site-footer">
         <div class="container clearfix">
 
-            <div class="left">
-                <h2 class="subtotal">Subtotal: <span>163.96</span>€</h2>
-                <h3 class="tax">Taxes (5%): <span>8.2</span>€</h3>
-                <h3 class="shipping">Shipping: <span>5.00</span>€</h3>
-            </div>
-
-            <div class="right">
-                <h1 class="total">Total: $TWD<span>{{total}}</span></h1>
-                <a class="btn">Checkout</a>
-            </div>
 
         </div>
     </footer>
 </div>
-<!-- import main.js -->
-<script src="./js/main.js"></script>
+
 
 <!-- import bootstrap 5.2.1 -->
 <script
@@ -605,59 +597,65 @@
 <script src="../../resources/static/js/navbar.js"></script>
 <!--footer-->
 <script src="../../resources/static/js/footer.js"></script>
+
 <script>
+
+
+
     let vm = Vue.createApp({
         data() {
             return {
-                cart: []
+                favList: []
             }
 
 
         },
         mounted() {
-            let part = sessionStorage.getItem("part");
-            this.cart = JSON.parse(part);
-        },
-        computed: {
-            total() {
-                let totalPrice = 0;
-                let price = 0;
-                for (let i in this.cart) {
-                    let p = this.cart[i];
-                    price += parseInt(p.price * p.quantity);
+            let pjName=getProjectName();
+            let mem=JSON.parse(sessionStorage.getItem("mem-info"));
+            let memId=mem.memberId;
+            axios.get(pjName+"/item/items?action=getFavList&memId="+memId)
+                .then((resp)=>{
+                    this.favList=resp.data;
+                    console.log(resp.data)
 
-                }
-                return price;
-            }
+                })
+
+
         },
+
         methods: {
-            minus(item) {
-                item.quantity > 0 ? item.quantity-- : 0;
-                let partStr=sessionStorage.getItem("part");
-                let partArr=partStr ? JSON.parse(partStr):[];
-                const object=partArr.find(part=>part.itemId === item.itemId);
-                object.quantity--;
-                sessionStorage.setItem('part',JSON.stringify(partArr));
 
-            },
-            showDetail(itemId){
-                sessionStorage.setItem("itemId",itemId);
+            showDetail(itemId) {
+                sessionStorage.setItem("itemId", itemId);
                 location.assign("item_detail.html");
             },
-            plus(item) {
-                item.quantity++;
-                let partStr = sessionStorage.getItem("part");
-                let partArr = partStr ? JSON.parse(partStr) : [];
-                const object = partArr.find(part => part.itemId === item.itemId);
-                object.quantity++;
-                sessionStorage.setItem('part', JSON.stringify(partArr));
-            },
+
             remove(index) {
-                this.cart.splice(index, 1);
-                let partStr=sessionStorage.getItem("part");
-                let partArr=partStr?JSON.parse(partStr):[];
-                partArr.splice(index, 1);
-                sessionStorage.setItem('part',JSON.stringify(partArr));
+                //
+                // let partStr = sessionStorage.getItem("part");
+                // let partArr = partStr ? JSON.parse(partStr) : [];
+                // partArr.splice(index, 1);
+                // sessionStorage.setItem('part', JSON.stringify(partArr));
+
+                let pjName=getProjectName();
+                axios.get(pjName+"/item/items?action=moveFavList&id="+index)
+                    .then((resp)=>{
+                        this.favList=resp.data;
+                    })
+
+
+            }
+            ,addToCart(items){
+
+                let partstr=sessionStorage.getItem("part");
+                let part=partstr?JSON.parse(partstr):[];
+                console.log(part)
+                if(!part.some(item=>item.itemId===items.itemId)){
+                    items.quantity=1;
+                    part.push(items);
+                }
+                sessionStorage.setItem("part"+'',JSON.stringify(part));
             }
 
 
@@ -665,7 +663,15 @@
 
     })
     vm.mount("#app")
+
+    function getProjectName(){
+        let path = window.location.pathname;
+        let webCtx = path.substring(0, path.indexOf('/', 1));
+        return webCtx;
+    }
 </script>
+
+
 
 
 </body>

@@ -78,7 +78,7 @@ public class ItemDAO implements ItemDAO_interface {
 
     @Override
     public JSONObject getCount() {
-        String sql = "select count(*) from item;";
+        String sql = "select count(*) from item where ITEM_STATUS=1;";
         int count = ((Number) (getSession().createNativeQuery(sql).uniqueResult())).intValue();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("count", count);

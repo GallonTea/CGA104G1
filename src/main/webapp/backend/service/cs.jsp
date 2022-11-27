@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ include file="/backend/backNavbar.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,25 +13,51 @@
         integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 <title>客服中心</title>
 <style>
+		/* 設定版型與背景 */
+		html, body {
+ 			height: 100%; 
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+            background-color: #FFDEE9;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
 		/*整體設定 */
 		.container {
-		display: flex;
+			display: flex;
 			width: 75%;
+			margin-top:20px;
 		}
 		
 		#row {
 			width: 25%;
+			overflow-x:hidden;
+			overflow-y:auto;
 		}
 		
         #statusOutput {
-            border: 1px solid black;
+        	float:right;
+            width: 75%;
+            text-align: center;
+            font-size:18px;
+            font-weight: 700;
+            color: #00435b;
         }
         
         .none {
-        width: 50%
+        	width: 50%
         }
         
 		/* 客戶列表設定 */
+		.text{
+			display: inline-block;
+			width: 100%;
+			text-align: center;
+			font-size: 18px;
+			font-weight: 700;
+			color: #00435b;
+			margin-bottom: 15px;
+		}
 		.column {
 			font-size: 18px;
 			padding: 5px;
@@ -43,7 +70,6 @@
         .panel {
             width: 70%;
             float: right;
-            border: 1px solid green;
             display: flex;
             align-item: center;
         }
@@ -55,17 +81,38 @@
         
         #messagesArea {
         	height: 350px;
+        	border-radius: 5px;
+	        padding: 5px 0;
+	        background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            background-color: rgba(100, 100, 100, 0.7);
+            background-blend-mode: multiply;
+            opacity: 60%;
+        }
+        
+        .input-area{
+        	height: 50px;
+        	padding: 5px 0;
         }
         
         #area {
         	width: 100%;
+        	padding: 5px 0;
         	overflow-x:hidden;
 			overflow-y:auto;
         }
         
         #message {
-        	height: 38px;
-        	width: 82%;
+        	height: 36px;
+        	width: 85%;
+        	border: none;
+        	border-radius: 5px;
+        }
+        
+        #sendMessage{
+        	float: right;
+        	height: 36px;
         }
 		
 		ul{
@@ -113,14 +160,17 @@
     </style>
 </head>
 <body onload="connect();" onunload="disconnect();">
-<h3 id="statusOutput" class="statusOutput"></h3>
+
 <div class="container">
-	<div id="row"></div>
+	<div id="row">
+	<span class="text">客服清單</span>
+	</div>
 	<div class="chat">
+	<h3 id="statusOutput" class="statusOutput"></h3>
 	<div id="messagesArea" class="panel message-area" ></div>
 	<div class="panel input-area">
-		<input id="message" class="text-field" type="text" placeholder="Message" onkeydown="if (event.keyCode == 13) sendMessage();" /> 
-		<input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();" /> 
+		<input id="message" class="text-field" type="text" placeholder="請輸入訊息" onkeydown="if (event.keyCode == 13) sendMessage();" />&ensp; 
+		<input type="submit" id="sendMessage" class="button btn btn-info" value="送出" onclick="sendMessage();" /> 
 	</div>
 	</div>
 </div>
@@ -189,10 +239,10 @@
 		var message = inputMessage.value.trim();
 
 		if (message === "") {
-			alert("Input a message");
+			alert("請在對話框中輸入文字");
 			inputMessage.focus();
 		} else if (friend === "") {
-			alert("Choose a friend");
+			alert("請先選擇客服對象");
 		} else {
 			var jsonObj = {
 				"type" : "chat",
@@ -204,12 +254,14 @@
 			inputMessage.value = "";
 			inputMessage.focus();
 		}
+		var scrollHeight = $('#area').prop("scrollHeight");
+	      $('#area').scrollTop(scrollHeight,5000);
 	}
 
 	//取得客服清單
 	function loadGuest() {
 		var row = document.getElementById("row");
-		row.innerHTML = `
+		row.innerHTML += `
 			<c:forEach items="${requestScope.keys}" var="keys">
 			<div class="columnBlock"><span class = column id="${keys}">${keys}</span></div><hr>
 			</c:forEach>
@@ -218,11 +270,6 @@
 	}
 	
 	$(document).ready(loadGuest());
-	
-	$("#sendMessage").click(function(){
-	      var scrollHeight = $('#area').prop("scrollHeight");
-	      $('#area').scrollTop(scrollHeight,5000);
-	    });
 
 	// 註冊列表點擊事件並抓取好友名字以取得歷史訊息
 	function addListener() {

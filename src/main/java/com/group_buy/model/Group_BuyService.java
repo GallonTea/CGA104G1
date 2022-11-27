@@ -12,7 +12,7 @@ public class Group_BuyService {
 	}
 	
 	public Group_BuyVO addGroup_Buy(Integer mem_id, Integer gbitem_id, Integer gb_min,
-			Integer gb_amount, Timestamp gbstart_date, Timestamp gbend_date, Integer gb_status) {
+			Integer gb_amount, Timestamp gbstart_date, Timestamp gbend_date, Integer gb_status,Integer gb_price,String gb_name) {
 		
 		Group_BuyVO gbVO = new Group_BuyVO();
 		gbVO.setMem_id(mem_id);
@@ -22,13 +22,15 @@ public class Group_BuyService {
 		gbVO.setGbstart_date(gbstart_date);
 		gbVO.setGbend_date(gbend_date);
 		gbVO.setGb_status(gb_status);
+		gbVO.setGb_price(gb_price);
+		gbVO.setGb_name(gb_name);
 		dao.insert(gbVO);
 		
 		return gbVO;
 	}
 	
 	public Group_BuyVO updateGroup_Buy(Integer gb_id, Integer mem_id, Integer gbitem_id, Integer gb_min,
-			Integer gb_amount, Timestamp gbstart_date, Timestamp gbend_date, Integer gb_status) {
+			Integer gb_amount, Timestamp gbstart_date, Timestamp gbend_date, Integer gb_status,Integer gb_price,String gb_name ) {
 		
 		Group_BuyVO gbVO = new Group_BuyVO();
 		gbVO.setGb_id(gb_id);
@@ -39,6 +41,8 @@ public class Group_BuyService {
 		gbVO.setGbstart_date(gbstart_date);
 		gbVO.setGbend_date(gbend_date);
 		gbVO.setGb_status(gb_status);
+		gbVO.setGb_price(gb_price);
+		gbVO.setGb_name(gb_name);
 		dao.update(gbVO);
 		
 		return gbVO;
@@ -61,5 +65,35 @@ public class Group_BuyService {
 		return dao.findByMemID(mem_id);
 	}
 	
+	public Group_BuyVO updateGroup_Buy_GBPrice(Integer gb_id,Integer gb_price ) {
+		Group_BuyVO gbVO = new Group_BuyVO();
+		gbVO.setGb_id(gb_id);
+		gbVO.setGb_price(gb_price);
+		dao.updateGbprice(gbVO);
+		
+		return gbVO;
+	}
+	
+	public Group_BuyVO updateGroup_Buy_GBAmount(Integer gb_id,Integer gb_amount ) {
+		Group_BuyVO gbVO = new Group_BuyVO();
+		gbVO.setGb_id(gb_id);
+		gbVO.setGb_amount(gb_amount);
+		dao.updateGbprice(gbVO);
+		
+		return gbVO;
+	}
+	
+	public Group_BuyVO updateGroup_Buy_GBStatus(Integer gb_id,Integer gb_status ) {
+		Group_BuyVO gbVO = new Group_BuyVO();
+		gbVO.setGb_id(gb_id);
+		gbVO.setGb_status(gb_status);
+		dao.updateGbprice(gbVO);
+		
+		return gbVO;
+	}
+	
+	public Group_BuyVO getLastGroup_Buy() {
+		return dao.findLast();
+	}
 	
 }

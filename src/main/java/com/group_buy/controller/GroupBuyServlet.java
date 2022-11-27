@@ -1,8 +1,10 @@
 package com.group_buy.controller;
 
 import java.io.IOException;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -222,6 +224,25 @@ public class GroupBuyServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 
+			Integer gb_price = null;
+
+			try {
+				gb_price = Integer.valueOf(req.getParameter("gb_price"));
+				if (gb_price == null) {
+					errorMsgs.add("目前參團價格: 請勿空白");
+				}
+			} catch (NumberFormatException e) {
+				errorMsgs.add("目前參團價格請填數字");
+				e.printStackTrace();
+			}
+			
+			String gb_name = req.getParameter("gb_name");
+			
+//			String gbitemNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]$";
+			if (gb_name == null || gb_name.trim().length() == 0) {
+				errorMsgs.add("團購名稱: 請勿空白");
+			} 
+			
 			Group_BuyVO group_BuyVO = new Group_BuyVO();
 			group_BuyVO.setGb_id(gb_id);
 			group_BuyVO.setMem_id(mem_id);
@@ -231,6 +252,8 @@ public class GroupBuyServlet extends HttpServlet {
 			group_BuyVO.setGbstart_date(gbstart_date);
 			group_BuyVO.setGbend_date(gbend_date);
 			group_BuyVO.setGb_status(gb_status);
+			group_BuyVO.setGb_price(gb_price);
+			group_BuyVO.setGb_name(gb_name);
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("Group_BuyVO", group_BuyVO);
 				RequestDispatcher failureView = req
@@ -240,7 +263,7 @@ public class GroupBuyServlet extends HttpServlet {
 			}
 			/*************************** 2.開始修改資料 *****************************************/
 			Group_BuyService group_BuyService = new Group_BuyService();
-			group_BuyVO = group_BuyService.updateGroup_Buy(gb_id, mem_id, gbitem_id, gb_min, gb_amount, gbstart_date, gbend_date, gb_status);
+			group_BuyVO = group_BuyService.updateGroup_Buy(gb_id, mem_id, gbitem_id, gb_min, gb_amount, gbstart_date, gbend_date, gb_status, gb_price ,gb_name);
 
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("Group_BuyVO", group_BuyVO);
@@ -339,8 +362,25 @@ public class GroupBuyServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-			
+			Integer gb_price = null;
 
+			try {
+				gb_price = Integer.valueOf(req.getParameter("gb_price"));
+				if (gb_price == null) {
+					errorMsgs.add("目前參團價格: 請勿空白");
+				}
+			} catch (NumberFormatException e) {
+				errorMsgs.add("目前參團價格請填數字");
+				e.printStackTrace();
+			}
+
+			String gb_name = req.getParameter("gb_name");
+			
+//			String gbitemNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]$";
+			if (gb_name == null || gb_name.trim().length() == 0) {
+				errorMsgs.add("團購名稱: 請勿空白");
+			} 
+			
 			Group_BuyVO group_BuyVO = new Group_BuyVO();
 			group_BuyVO.setMem_id(mem_id);
 			group_BuyVO.setGbitem_id(gbitem_id);
@@ -349,6 +389,8 @@ public class GroupBuyServlet extends HttpServlet {
 			group_BuyVO.setGbstart_date(gbstart_date);
 			group_BuyVO.setGbend_date(gbend_date);
 			group_BuyVO.setGb_status(gb_status);
+			group_BuyVO.setGb_price(gb_price);
+			group_BuyVO.setGb_name(gb_name);
 
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("Group_BuyVO", group_BuyVO);
@@ -358,7 +400,7 @@ public class GroupBuyServlet extends HttpServlet {
 			}
 			/*************************** 2.開始修改資料 *****************************************/
 			Group_BuyService group_BuyService = new Group_BuyService();
-			group_BuyVO = group_BuyService.addGroup_Buy(mem_id, gbitem_id, gb_min, gb_amount, gbstart_date, gbend_date, gb_status);
+			group_BuyVO = group_BuyService.addGroup_Buy(mem_id, gbitem_id, gb_min, gb_amount, gbstart_date, gbend_date, gb_status, gb_price, gb_name);
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("Group_BuyVO", group_BuyVO);
 			String url = "/backend/group_buy/listAllGroupBuy.jsp";
@@ -368,11 +410,12 @@ public class GroupBuyServlet extends HttpServlet {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 		if ("delete".equals(action)) { // 來自listAllGroupBuy.jsp
 
-			List<String> errorMsgs = new LinkedList<String>();
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 	
 				/***************************1.接收請求參數***************************************/
 				Integer gb_id = Integer.valueOf(req.getParameter("gb_id"));
+				
 				
 				/***************************2.開始刪除資料***************************************/
 				Group_BuyService group_BuyService = new Group_BuyService();
@@ -383,6 +426,30 @@ public class GroupBuyServlet extends HttpServlet {
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 				
+		}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+		if ("deleteByGroupBuyMaster".equals(action)) { // 來自chosegroupbuydiscount.jsp
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			/***************************1.接收請求參數***************************************/
+			Integer gb_id = Integer.valueOf(req.getParameter("gb_id"));
+			// 取得會員編號
+//			MemVO memVO = (MemVO) req.getSession().getAttribute("memVO");
+//			Integer mem_id = memVO.getMem_id();
+
+			Integer mem_id = Integer.valueOf(req.getParameter("mem_id"));
+			/***************************2.開始刪除資料***************************************/
+			Group_BuyService group_BuyService = new Group_BuyService();
+			group_BuyService.deleteGroup_Buy(gb_id);
+			List<Group_BuyVO> list = group_BuyService.getAllGroupBuyApplyListByMemID(mem_id);
+			/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
+			req.setAttribute("list", list);
+			String url = "/frontend/groupBuy/mygroupbuyapplylist.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+			successView.forward(req, res);
+			
 		}
 			
 	}

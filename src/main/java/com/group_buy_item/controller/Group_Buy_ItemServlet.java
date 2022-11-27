@@ -208,6 +208,18 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 				errorMsgs.add("請輸入日期!");
 			}
 
+			Integer gbitem_type = null;
+
+			try {
+				gbitem_type = Integer.valueOf(req.getParameter("gbitem_type"));
+				if (gbitem_type == null) {
+					errorMsgs.add("團購商品類別: 請勿空白");
+				}
+			} catch (NumberFormatException e) {
+				errorMsgs.add("團購商品類別請填數字");
+				e.printStackTrace();
+			}	
+			
 			Group_Buy_ItemVO group_Buy_ItemVO = new Group_Buy_ItemVO();
 			group_Buy_ItemVO.setGbitem_id(gbitem_id);
 			group_Buy_ItemVO.setGbitem_name(gbitem_name);
@@ -216,6 +228,7 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 			group_Buy_ItemVO.setGbitem_status(gbitem_status);
 			group_Buy_ItemVO.setGbitem_startdate(gbitem_startdate);
 			group_Buy_ItemVO.setGbitem_enddate(gbitem_enddate);
+			group_Buy_ItemVO.setGbitem_type(gbitem_type);
 
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("Group_Buy_ItemVO", group_Buy_ItemVO);
@@ -227,7 +240,7 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 			/*************************** 2.開始修改資料 *****************************************/
 			Group_Buy_ItemService group_Buy_ItemService = new Group_Buy_ItemService();
 			group_Buy_ItemVO = group_Buy_ItemService.updateGroup_Buy_ItemVO(gbitem_id, gbitem_name, gbitem_content, gbitem_price,
-					gbitem_status, gbitem_startdate, gbitem_enddate);
+					gbitem_status, gbitem_startdate, gbitem_enddate, gbitem_type);
 
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("Group_Buy_ItemVO", group_Buy_ItemVO);
@@ -297,7 +310,17 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 				errorMsgs.add("請輸入日期!");
 			}
 			
-			
+			Integer gbitem_type = null;
+
+			try {
+				gbitem_type = Integer.valueOf(req.getParameter("gbitem_type"));
+				if (gbitem_type == null) {
+					errorMsgs.add("團購商品類別: 請勿空白");
+				}
+			} catch (NumberFormatException e) {
+				errorMsgs.add("團購商品類別請填數字");
+				e.printStackTrace();
+			}	
 
 			Group_Buy_ItemVO gbiVO = new Group_Buy_ItemVO();
 			gbiVO.setGbitem_name(gbitem_name);
@@ -306,6 +329,7 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 			gbiVO.setGbitem_status(gbitem_status);
 			gbiVO.setGbitem_startdate(gbitem_startdate);
 			gbiVO.setGbitem_enddate(gbitem_enddate);
+			gbiVO.setGbitem_type(gbitem_type);
 
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("gbiVO", gbiVO);
@@ -316,7 +340,7 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 			/*************************** 2.開始修改資料 *****************************************/
 			Group_Buy_ItemService group_Buy_ItemService = new Group_Buy_ItemService();
 			gbiVO = group_Buy_ItemService.addGroup_Buy_ItemVO(gbitem_name, gbitem_content, gbitem_price,
-					gbitem_status, gbitem_startdate, gbitem_enddate);
+					gbitem_status, gbitem_startdate, gbitem_enddate, gbitem_type);
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("gbiVO", gbiVO);
 			String url = "/backend/group_Buy_Item/listAllGroupBuyItem.jsp";

@@ -92,12 +92,12 @@ th, td {
 					value="<%=group_BuyVO.getGbitem_id()%>" /></td>
 			</tr>
 			<tr>
-				<td>團購人數低標</td>
+				<td>團購商品數量低標</td>
 				<td><input type="TEXT" name="gb_min" size="45"
 					value="<%=group_BuyVO.getGb_min()%>"></td>
 			</tr>
 			<tr>
-				<td>目前參團人數</td>
+				<td>目前團購商品下訂總數</td>
 				<td><input type="TEXT" name="gb_amount" size="45"
 					value="<%=group_BuyVO.getGb_amount()%>"></td>
 			</tr>
@@ -132,7 +132,16 @@ th, td {
 						<option value="1">參團人數已達標</option>
 				</select></td>
 			</tr>
-	
+			<tr>
+				<td>團購價格</td>
+				<td><input type="TEXT" name="gb_price" size="45"
+					value="<%=group_BuyVO.getGb_price()%>"></td>
+			</tr>
+				<tr>
+				<td>團購名稱:<font color=red><b>*</b></font></td>
+				<td><input type="TEXT" name="gb_name" size="45"
+					value="<%=group_BuyVO.getGb_name()%>" /></td>
+			</tr>
 		</table>
 		<br> 
 		

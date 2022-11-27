@@ -115,6 +115,12 @@ th, td {
 				<td>團購商品下檔日期:<font color=red><b>*</b></font></td>
 				<td><input name="gbitem_enddate" id="f_date2" type="text"></td>
 			</tr>
+			
+			<tr>
+				<td>團購商品類別:<font color=red><b>*</b></font></td>
+				<td><input type="TEXT" name="gbitem_type" size="45" placeholder = "type 1 2 3"
+					value="<%=(group_Buy_ItemVO == null) ? "" : group_Buy_ItemVO.getGbitem_type()%>" /></td>
+			</tr>
 		</table>
 		<br> <input type="hidden" name="action" value="insert"> <input
 			type="submit" value="送出新增">

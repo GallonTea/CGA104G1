@@ -56,7 +56,8 @@ th, td {
 			<td>
 				<h3>單一團購商品資料 - listOneGroupBuyItem.jsp</h3>
 				<h4>
-					<a href="<%=request.getContextPath()%>/backend/group_Buy_Item/select_page.jsp">回首頁</a>
+					<a
+						href="<%=request.getContextPath()%>/backend/group_Buy_Item/select_page.jsp">回首頁</a>
 				</h4>
 			</td>
 		</tr>
@@ -71,16 +72,20 @@ th, td {
 			<th>團購商品狀態</th>
 			<th>團購商品上檔日期</th>
 			<th>團購商品下檔日期</th>
+			<th>團購商品類別</th>
 		</tr>
 		<tr>
 			<td><%=group_Buy_ItemVO.getGbitem_id()%></td>
 			<td><%=group_Buy_ItemVO.getGbitem_name()%></td>
 			<td><%=group_Buy_ItemVO.getGbitem_content()%></td>
 			<td><%=group_Buy_ItemVO.getGbitem_price()%></td>
-			<td><%=group_Buy_ItemVO.getGbitem_status()%></td>
+			<c:if test="${Group_Buy_ItemVO.gbitem_status == '0'}"><td><c:out value="超出團購期限下架"></td></c:out></c:if>
+				<c:if test="${Group_Buy_ItemVO.gbitem_status == '1'}"><td><c:out value="上架中"></td></c:out></c:if>
+				<c:if test="${Group_Buy_ItemVO.gbitem_status == '2'}"><td><c:out value="無庫存"></td></c:out></c:if>
+				<c:if test="${Group_Buy_ItemVO.gbitem_status == '3'}"><td><c:out value="有庫存"></td></c:out></c:if>
 			<td><%=group_Buy_ItemVO.getGbitem_startdate()%></td>
 			<td><%=group_Buy_ItemVO.getGbitem_enddate()%></td>
-
+			<td>${Group_Buy_ItemVO.gbitem_type}</td>
 		</tr>
 	</table>
 

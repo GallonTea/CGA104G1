@@ -47,64 +47,41 @@ pageContext.setAttribute("Group_Buy_Item", Group_Buy_Item);
 
 			<form
 				action="<%=request.getContextPath()%>/GroupBuyApplyListInsertServlet">
-
 				<div class="form-group">
 					<label for="formGroupExampleInput2">團購主帳號</label> 
+					<div><h6>${Group_BuyVO.mem_id}</h6></div>
+					<input type="hidden" name="mem_id" value="${Group_BuyVO.mem_id}"> 
+<!-- 					<input type="hidden" name="mem_id" value="1">  -->
 				</div>
-
-
-<!-- 				<FORM METHOD="post" -->
-<%-- 					ACTION="<%=request.getContextPath()%>/Group_Buy_Item/groupBuyItem.do"> --%>
-					<b>選擇開團商品:</b> <select size="1" name="gbitem_id">
+					<b>團購名稱:<b>
+					<div><input type="TEXT" name="gb_name" size="45" placeholder = "請輸入文字"
+					value="<%=(group_BuyVO == null) ? "" : group_BuyVO.getGb_name()%>" /></div>
+				<tr>
+				
+					<b>選擇開團商品:</b><br> <select size="1" name="gbitem_id">
 						<c:forEach var="Group_Buy_ItemVO" items="${Group_Buy_Item}">
 							<option value="${Group_Buy_ItemVO.gbitem_id}">${Group_Buy_ItemVO.gbitem_name}
 						</c:forEach>
-					</select> <input type="hidden" name="action" value="getOne_For_Display">
-					<input type="submit" value="送出">
-<!-- 				</FORM> -->
+					</select> 
+				</td>
+				</tr>
 
-
-
+				<tr>
+				<td>
 				<div class="form-group">
 					<label for="formGroupExampleInput2">團購商品結單數量[數量達標系統自動結單]</label> <input
 						name="gb_min" type="text" class="form-control"
 						id="formGroupExampleInput2" placeholder="Another input">
 				</div>
-
-
+				</td>
+				</tr>
 				<div class="form-group">
-					<label for="formGroupExampleInput2">團購商品原始價格</label>
-<%-- 					<div>${Group_Buy_ItemVO.gbitem_price}</div> --%>
+<!-- 					<label for="formGroupExampleInput2">團購商品已累計總數</label> -->
+					<input type="hidden" name="gb_amount" value="0">
 				</div>
+				
 
-
-<!-- 				<FORM METHOD="post" -->
-<%-- 					ACTION="<%=request.getContextPath()%>/Discount/Discount.do"> --%>
-					<b>選擇折扣:</b> <select size="1" name="discount_id">
-						<c:forEach var="DiscountVO" items="${Discount}">
-							<option value="${DiscountVO.discount_id}">${DiscountVO.discount_nar}
-						</c:forEach>
-					</select> <input type="hidden" name="action" value="getOne_For_Display">
-					<input type="submit" value="送出">
-<!-- 				</FORM> -->
-
-
-
-
-
-
-
-				<div class="form-group">
-					<label for="formGroupExampleInput2">團購商品折扣後價格</label> <input
-						name="" type="text" class="form-control"
-						id="formGroupExampleInput2" placeholder="Another input">
-				</div>
-
-
-
-
-
-
+				
 				<tr>
 					<td>團購開始日期:</td>
 					<td><input name="gbstart_date" id="f_date1" type="text"></td>
@@ -114,21 +91,21 @@ pageContext.setAttribute("Group_Buy_Item", Group_Buy_Item);
 					<td><input name="gbend_date" id="f_date2" type="text"></td>
 				</tr>
 
-
-				<div class="form-group col-md-4">
-					<label for="inputState">團購狀態</label> <select id="inputState"
-						name="gb_status" class="form-control">
-						<option value="0" selected>參團人數不足</option>
-						<option value="1">參團人數已達標</option>
-					</select>
-				</div>
-
-
+<!-- 				<div class="form-group col-md-4"> -->
+<!-- 					<label for="inputState">團購狀態</label> <select id="inputState" -->
+<!-- 						name="gb_status" class="form-control"> -->
+<!-- 						<option value="0" selected>參團人數不足</option> -->
+<!-- 						<option value="1">參團人數已達標</option> -->
+<!-- 					</select> -->
+<!-- 				</div> -->
+				<input type="hidden" name="gb_status" value="0">
+				<input type="hidden" name="gb_price" value="0">
 				<input type="hidden" name="action" value="insert">
-				<button class="btn btn-primary" type="submit">開團</button>
+				<button class="btn btn-primary" type="submit">選擇折扣</button>
+				<input type="reset" class="btn btn-primary" value="重設">
 			</form>
 			<br>
-
+			<br>
 			<form
 				action="<%=request.getContextPath()%>/frontend/groupBuy/listallgroupbuuy.jsp">
 				<button class="btn btn-primary" type="submit">返回團購首頁</button>

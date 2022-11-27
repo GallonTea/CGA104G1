@@ -117,7 +117,7 @@ th, td {
 						</c:if>
 						<c:if test="${Group_Buy_ItemVO.gbitem_status == '1'}">
 							<option value="${Group_Buy_ItemVO.gbitem_status}"><c:out
-value="(now)上架中"></option>
+									value="(now)上架中"></option>
 							</c:out>
 						</c:if>
 						<c:if test="${Group_Buy_ItemVO.gbitem_status == '2'}">
@@ -144,6 +144,13 @@ value="(now)上架中"></option>
 				<td>團購商品下檔日期:</td>
 				<td><input name="gbitem_enddate" id="f_date2" type="text"></td>
 			</tr>
+			
+			<tr>
+				<td>團購商品類別</td>
+				<td><input type="TEXT" name="gbitem_type" size="45"
+					value="<%=group_Buy_ItemVO.getGbitem_type()%>"></td>
+			</tr>
+			
 		</table>
 		<br> <input type="hidden" name="action" value="update">
 			 <input type="hidden" name="gbitem_id" value="<%=group_Buy_ItemVO.getGbitem_id()%>"> 
@@ -178,6 +185,7 @@ value="(now)上架中"></option>
 				<input type="hidden" name="gbitem_status"value="${Group_Buy_ItemVO.gbitem_status}">
 				<input type="hidden" name="gbitem_startdate"value="${Group_Buy_ItemVO.gbitem_startdate}">
 				<input type="hidden" name="gbitem_enddate"value="${Group_Buy_ItemVO.gbitem_enddate}">
+				<input type="hidden" name="gbitem_type"value="${Group_Buy_ItemVO.gbitem_type}">
 				<input class="btn btn-primary" type="submit"style="margin-left: 10px;" value="刪除圖片">
 
 			</c:if>
@@ -198,6 +206,7 @@ value="(now)上架中"></option>
 			<input type="hidden" name="gbitem_status"value="${Group_Buy_ItemVO.gbitem_status}"> 
 			<input type="hidden" name="gbitem_startdate"value="${Group_Buy_ItemVO.gbitem_startdate}"> 
 			<input type="hidden" name="gbitem_enddate"value="${Group_Buy_ItemVO.gbitem_enddate}"> 
+			<input type="hidden" name="gbitem_type"value="${Group_Buy_ItemVO.gbitem_type}">
 			<input class="button btn btn-primary" type="submit" value="上傳圖片"style="margin: 0 0 27px 10px">
 		</form>
 		<div id="picPreview" style="position: absolute; top: 80px; display: flex; flex-wrap: wrap; width: 450px"></div>

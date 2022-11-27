@@ -204,7 +204,7 @@ footer img {
 							<input type="hidden" name="action" value="deleteByGroupBuyMaster">
 						</FORM></td>
 						<td><FORM METHOD="post"
-							ACTION=""
+							ACTION="<%=request.getContextPath()%>/GroupBuyServlet"
 							style="margin-bottom: 0px;">
 							<input type="submit" value="團購結束"> 
 							<input type="hidden" name="gb_id" value="${Group_BuyVO.gb_id}"> 

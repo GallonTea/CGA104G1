@@ -36,15 +36,15 @@
                     height: 66px;
                 }
                 
-                body {
-		            background-image: url(<%=request.getContextPath()%>/backend/asset/img/share_icon/bg.jpg);
-		            background-repeat: no-repeat !important;
-		            background-attachment: fixed !important;
-		            background-position: center !important;
-		            background-size: cover !important;
-		            background-color: rgba(29, 29, 29, 0.8) !important;
-		            background-blend-mode: multiply !important;
-      			  }
+/*                 body { */
+<%-- 		            background-image: url(<%=request.getContextPath()%>/backend/asset/img/share_icon/bg.jpg); --%>
+/* 		            background-repeat: no-repeat !important; */
+/* 		            background-attachment: fixed !important; */
+/* 		            background-position: center !important; */
+/* 		            background-size: cover !important; */
+/* 		            background-color: rgba(29, 29, 29, 0.8) !important; */
+/* 		            background-blend-mode: multiply !important; */
+/*       			  } */
       			  
 				.log {
 					text-decoration: none;

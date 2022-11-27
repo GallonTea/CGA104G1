@@ -13,13 +13,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.emp.model.EmpService;
-import com.emp.model.EmpVO;
 import com.emp_effect.model.Emp_effectService;
 import com.emp_effect.model.Emp_effectVO;
 
 @WebServlet("/backend/emp_effect/Emp_effectServlet")
 public class Emp_effectSevlet extends HttpServlet {
+
+	
+	private static final long serialVersionUID = -7396232889022699746L;
 
 	@Override
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {

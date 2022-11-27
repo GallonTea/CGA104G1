@@ -9,6 +9,31 @@ public class Group_JoinVO implements java.io.Serializable{
 	private Integer pickup_status;
 	private Integer deliver_status;
 	private Integer gbbuy_amount;
+	private Integer gbitem_id;
+	private Integer gbbuy_price;
+
+	
+	public Integer getGbbuy_price() {
+		return gbbuy_price;
+	}
+
+	public void setGbbuy_price(Integer gbbuy_price) {
+		this.gbbuy_price = gbbuy_price;
+	}
+
+	public Integer getGbitem_id() {
+		return gbitem_id;
+	}
+
+	public void setGbitem_id(Integer gbitem_id) {
+		this.gbitem_id = gbitem_id;
+	}
+
+	public com.group_buy_item.model.Group_Buy_ItemVO getOneGbi() {
+	    com.group_buy_item.model.Group_Buy_ItemService group_buy_itemSvc = new com.group_buy_item.model.Group_Buy_ItemService();
+	    com.group_buy_item.model.Group_Buy_ItemVO group_buy_itemVO = group_buy_itemSvc.getOneGbi(gbitem_id);
+	    return group_buy_itemVO;
+    }
 	
 	public Integer getGbbuy_amount() {
 		return gbbuy_amount;

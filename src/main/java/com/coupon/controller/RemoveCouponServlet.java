@@ -59,8 +59,16 @@ public class RemoveCouponServlet extends HttpServlet {
 
             /*************************** 2.開始刪除資料 ***************************************/
             CouponServiceImpl couponService = new CouponServiceImpl();
-            couponService.removeCoupon(couponId);
+            boolean b = couponService.removeCoupon(couponId);
+            if (!b) {
+                errorMsgs.add("折價券編號 " + couponId + " 已被擁有，因此無法移除!");
+            }
 
+            if (!errorMsgs.isEmpty()) {
+                RequestDispatcher failureView = req.getRequestDispatcher("/backend/coupon/listAllCoupon.jsp");
+                failureView.forward(req, res);
+                return;
+            }
             /*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
             String url = "/backend/coupon/listAllCoupon.jsp";
             RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁

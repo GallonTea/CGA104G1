@@ -50,9 +50,10 @@
         }
 
         .rwding {
-            width: 200px;
-            height: 200px;
+            width: 100px;
+            height: 100px;
             object-fit: cover
+
         }
 
         a {
@@ -126,24 +127,33 @@
                     </button>
                     <div class="row gap-2 mx-auto justify-content-md-end"
                          v-if="orders.ORDER_STATUS === '0'">
-                        <button class="col-md-2 float-right btn btn-danger"
+                        <button class="col-md-2 float-right btn btn-outline-danger"
                                 @click="cancelOrder(orders, index)">取消訂單
                         </button>
                     </div>
                     <div class="row gap-2 mx-auto justify-content-md-end"
-                         v-else-if="orders.ORDER_STATUS === '4'">
-                        <button class="col-md-2 float-right btn btn-primary" disabled>取消審核中</button>
+                         v-else-if="orders.ORDER_STATUS === '3'">
+                        <button class="col-md-2 float-right btn btn-outline-success"
+                                @click="finishOrder(orders, index)">完成訂單
+                        </button>
                     </div>
-
+                    <div class="row gap-2 mx-auto justify-content-md-end"
+                         v-else-if="orders.ORDER_STATUS === '4'">
+                        <button class="col-md-2 float-right btn btn-danger" disabled>取消審核中</button>
+                    </div>
                     <div class="row gap-2 mx-auto justify-content-md-end"
                          v-else-if="orders.ORDER_STATUS === '6'">
-                        <button class="col-md-2 float-right btn btn-primary"
+                        <button class="col-md-2 float-right btn btn-outline-warning"
                                 @click="returnOrder(orders, index)">退/換貨申請
                         </button>
                     </div>
                     <div class="row gap-2 mx-auto justify-content-md-end"
                          v-else-if="orders.ORDER_STATUS === '7'">
                         <button class="col-md-2 float-right btn btn-success" disabled>退/換貨申請審核中</button>
+                    </div>
+                    <div class="row gap-2 mx-auto justify-content-md-end"
+                         v-else-if="orders.ORDER_STATUS === '8'">
+                        <button class="col-md-2 float-right btn btn-success" disabled>退/換貨處理中</button>
                     </div>
                 </div>
 
@@ -160,36 +170,46 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
 
-                        <div class="modal-body" v-for="(details, index) in details"
-                             :key="details.itemId">
+                        <div class="modal-body">
 
-                            <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-                                <div class="media-body">
-                                    <a href="#">
-                                        <h5 class="font-weight-bold mb-2">{{ details.itemName }}</h5>
-                                    </a>
-                                    <div class="d-flex align-items-center justify-content-between mt-1">
+                            <table class="container media align-items-lg-center flex-column flex-lg-row p-3">
+                                <tbody class="media-body">
+
+                                <tr class=" justify-content-center mt-1"
+                                    v-for="(details, index) in details"
+                                    :key="details.itemId">
+
+                                    <td>
+                                        <img :src="'data:image/jpeg;base64,' + details.photo" alt="productImg"
+                                             class="rwding rounded">
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-outline-info" @click="showItem(details, index)">
+                                            {{ details.itemName }}
+                                        </button>
+                                    </td>
+                                    <td>
                                         <h6 class="font-weight-bold my-2">NT$ {{ details.itemPrice }}</h6>
+                                    </td>
+                                    <td>
                                         <h6 class="font-weight-bold my-2">商品數量 {{ details.cdAmount }}</h6>
-                                        <!--                                        <ul class="list-inline small">-->
-                                        <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
-                                        <!--                                            </li>-->
-                                        <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
-                                        <!--                                            </li>-->
-                                        <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
-                                        <!--                                            </li>-->
-                                        <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
-                                        <!--                                            </li>-->
-                                        <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star-o text-gray"></i></li>-->
-                                        <!--                                        </ul>-->
-                                    </div>
-                                </div>
-                                <div>
-                                    <img :src="'data:image/jpeg;base64,' + details.photo" alt="productImg"
-                                         class="rwding rounded">
-                                </div>
+                                    </td>
+                                    <!--                                        <ul class="list-inline small">-->
+                                    <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
+                                    <!--                                            </li>-->
+                                    <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
+                                    <!--                                            </li>-->
+                                    <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
+                                    <!--                                            </li>-->
+                                    <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>-->
+                                    <!--                                            </li>-->
+                                    <!--                                            <li class="list-inline-item m-0"><i class="fa fa-star-o text-gray"></i></li>-->
+                                    <!--                                        </ul>-->
+                                </tr>
+                                </tbody>
 
-                            </div>
+
+                            </table>
 
                         </div>
 
@@ -200,7 +220,6 @@
         </div>
     </div>
 </main>
-
 <!-- import bootstrap 5.2.1 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
@@ -297,52 +316,7 @@
                     })
             },
             cancelOrder: function (orders, index) {
-                const swalWithBootstrapButtons = Swal.mixin({
-                    customClass: {
-                        confirmButton: 'btn btn-success',
-                        cancelButton: 'btn btn-warning'
-                    },
-                    buttonsStyling: false
-                })
 
-                swalWithBootstrapButtons.fire({
-                    title: '確認要取消訂單嗎?',
-                    text: "取消需要經過申請才會生效",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: '確認送出',
-                    cancelButtonText: '再想一下',
-                    reverseButtons: true
-
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        var qs = Qs;
-                        axios.post('/CGA104G1/orderBuy/newOrder.do', qs.stringify({}))
-                            .then(res => {
-                                console.log(res);
-                                Swal.fire({
-                                    title: '申請送出中請稍後~',
-                                    timer: 2000,
-                                    html: 'Data uploading...',// add html attribute if you want or remove
-                                    allowOutsideClick: false
-                                })
-                                this.result = res.data
-                                $("#orderForm").html(res.data)
-                            })
-                            .catch(err => {
-                                console.log(err);
-                            })
-                    } else if (
-                        /* Read more about handling dismissals below */
-                        result.dismiss === Swal.DismissReason.cancel
-                    ) {
-                        swalWithBootstrapButtons.fire(
-                            '我們未送出您的申請',
-                            '感謝您的支持~ : )',
-                            'warning'
-                        )
-                    }
-                })
             },
             returnOrder: async function (orders, index) {
                 const {value: formValues} = await Swal.fire({
@@ -358,7 +332,7 @@
                 if (formValues) {
                     var qs = Qs
                     axios.post('/CGA104G1/UpdateOrderServlet', qs.stringify({
-                        orderId: this.orders[index].ORDER_ID, orderOther: formValues
+                        orderId: this.orders[index].ORDER_ID, orderOther: formValues, action: "return"
                     }))
                         .then(res => {
                             console.log(res);
@@ -381,6 +355,62 @@
                         text: '打點內容吧...',
                     })
                 }
+            },
+            finishOrder: function (details, index) {
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-warning'
+                    },
+                    buttonsStyling: false
+                })
+
+                swalWithBootstrapButtons.fire({
+                    title: '確認收到商品了嗎?',
+                    text: "完成訂單後若有瑕疵仍能更換商品",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: '確認送出',
+                    cancelButtonText: '再次確認',
+                    reverseButtons: true
+
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var qs = Qs;
+                        axios.post('/CGA104G1/UpdateOrderServlet', qs.stringify({
+                            orderId: this.orders[index].ORDER_ID, action: 'finish'
+                        }))
+                            .then(res => {
+                                console.log(res);
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: '成功完成訂單',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                                setTimeout(function () {
+                                    window.location.reload();
+                                }, 2000)
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            })
+                    } else if (
+                        /* Read more about handling dismissals below */
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire(
+                            '還未完成訂單',
+                            '請在收到商品後再確認一次 :)',
+                            'warning'
+                        )
+                    }
+                })
+            },
+            showItem: function (details, index) {
+                let itemId = this.details[index].itemId
+                sessionStorage.setItem('itemId', itemId);
+                window.location.assign('/CGA104G1/frontend/item/item_detail.html')
             }
         }
     })
@@ -388,11 +418,16 @@
     vm.mount('#app')
 
 </script>
+
+
 </body>
 <!--  NavBar  -->
 <script src="../../resources/static/js/navbar.js"></script>
 <!--  Footer  -->
 <script src="../../resources/static/js/footer.js"></script>
+
+<!--  Cart -->
+<script type="text/javascript" src="../../resources/static/js/cart.js"></script>
 
 <link rel="stylesheet" type="text/css" href="../../resources/static/css/main.css"/>
 

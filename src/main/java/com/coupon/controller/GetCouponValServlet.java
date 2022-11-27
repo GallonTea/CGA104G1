@@ -2,6 +2,7 @@ package com.coupon.controller;
 
 import com.coupon.model.service.CouponService;
 import com.coupon.model.service.impl.CouponServiceImpl;
+import com.google.gson.JsonObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

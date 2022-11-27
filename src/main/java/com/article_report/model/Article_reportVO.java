@@ -67,5 +67,22 @@ public class Article_reportVO implements java.io.Serializable{
 		com.article.model.ArticleVO articlVO = articleSvc.getOneArticle(article_id);
 	    return articlVO;
     }
+	
+	public com.article_identity.model.Article_identityVO getArticle_identityVO() {
+		com.article_identity.model.Article_identityService article_identitySvc = new com.article_identity.model.Article_identityService();
+		com.article_identity.model.Article_identityVO article_identityVO = article_identitySvc.getOneArticle_picture(mem_id);
+	    return article_identityVO;
+	}
+	
+	public com.mem.model.MemVO getMemVO() {
+		com.mem.model.MemService memSvc = new com.mem.model.MemService();
+		com.mem.model.MemVO memVO = memSvc.getOneMem(mem_id);
+	    return memVO;
+    }
 
+	public com.emp.model.EmpVO getEmpVO() {
+		com.emp.model.EmpService empSvc = new com.emp.model.EmpService();
+		com.emp.model.EmpVO empVO = empSvc.getOneEmp(emp_id);
+	    return empVO;
+    }
 }

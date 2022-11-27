@@ -25,12 +25,14 @@
     <style>
         .evenarticle {
             background-color: white;
+            width: 100%;
             height: 40px;
             position: relative;
             left: 50%;
             transform: translate(-50%);
             display: flex;
             align-items: center;
+            white-space: nowrap;
         }
 
         .title {
@@ -62,6 +64,7 @@
 
         .sort {
             width: 80px;
+            font-size:8px;
             font-weight: 700;
             text-align: center;
             padding-left: 10px;
@@ -88,15 +91,36 @@
             margin-top: 5px;
             padding: 0;
         }
+        
+        .realStatus{
+        	color: red;
+        	font-weight: 700;
+        }
+        
+        .slvStatus{
+        	color: green;
+        	font-weight: 700;
+        }
 
         .repResult {
             width: 90px;
             padding: 0 10px;
+            text-align: center;
         }
 
         .repEmp {
-            width: 90px;
+            width: 120px;
             padding: 0 10px;
+            text-align: center;
+        }
+        
+        .repBack{
+        	font-weight: 700;
+        }
+        
+        .repScs{
+        	color: red;
+        	font-weight: 700;
         }
 
         .none {
@@ -127,6 +151,77 @@
         #home-tab, #profile-tab {
         	border: none;
         }
+        
+        .accordion-button{
+        	width: 100%;
+        }
+        
+        .accordion-header{
+        	display: flex;
+        	white-space: nowrap;
+        	justify-content: center;
+        	align-items: center;
+        }
+        
+        #deleteArt {
+        	display: flex;
+        	height: 40px;
+        	justify-content: center;
+        	align-items: center;
+        }
+        
+        .evenarticle:nth-child(even) {
+			background-color: rgb(240, 240, 240);
+		}
+        
+        /* 設定文章檢舉內容及文章 */
+        .insideTitle{
+        	background-color: black;
+        	color: white;
+        	font-weight: 700;
+        	display: flex;
+        	justify-content: center;
+        	align-items: center;   
+        	padding-left: 10px;
+        }
+        
+        .insideContent{
+        	display: flex;
+        	justify-content: center;
+        	padding-top: 10px;
+        	margin-bottom: 15px;
+        	padding-left: 10px;
+        }
+        
+        .reporter{
+        	width: 30%;
+        }
+        
+        .reason{
+        	width: 70%;
+        }
+        
+        .upPic{
+        	width:40px;
+        	height: 40px;
+        }
+        
+        [aria-expanded="true"].accordion-button{
+        	background-color: hsla(168, 100%, 50%, 0.2);
+            clip-path: inset(0px round 10px);
+            animation: huerotate 6s infinite linear;
+            filter: hue-rotate(360deg);
+        }
+
+        @keyframes huerotate {
+            0% {
+                filter: hue-rotate(0deg);
+            }
+
+            100% {
+                filter: hue-rotate(360deg);
+            }
+        }
     </style>
 </head>
 
@@ -156,11 +251,16 @@
                         <div class="repTime">檢舉時間</div>
 
                     </div>
-                    <jsp:useBean id="articleSvc" scope="page" class="com.article.model.ArticleService" />
-                    <jsp:useBean id="article_sorttypeSvc" scope="page" class="com.article_sorttype.model.Article_sorttypeService" />
-                    <c:forEach var="article_reportVO" items="${list1}">
-                    <div class="evenarticle">
-                        <div class="status">${article_reportVO.afrep_status}</div>
+                    
+                    <c:forEach var="article_reportVO" items="${list1}" varStatus="count">
+                    <div class="accordion-item">
+				    <h2 class="accordion-header" id="heading${count.index}" />
+				      <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${count.index}" aria-expanded="false" aria-controls="collapse${count.index}">
+                        <div class="status">
+                        <c:if test="${article_reportVO.afrep_status == 0}">
+                        <span class="realStatus">未處理</span>
+                        </c:if>
+                        </div>
                         <div class="sort">${article_reportVO.articleVO.article_sorttypeVO.sort_content}</div>
                         <div class="atitle">${article_reportVO.articleVO.article_title}</div>
                         <div class="repTime">${article_reportVO.afrep_date}</div>
@@ -172,8 +272,8 @@
                         	<input type="hidden" name="emp_id" value=3>
                         	<input type="hidden" name="afrep_id" value="${article_reportVO.afrep_id}">
                         	<button type="submit" class="btn btn-success">標示為已處理</button>
-                        </form>&ensp;
-                        <form method="post" action="/CGA104G1/EMPArticle_reportServlet">
+                        </form>&nbsp;
+                        <form method="post" id="deleteArt" action="/CGA104G1/EMPArticle_reportServlet">
                         	<input type="hidden" name="action" value="hideArticle">
                         	<input type="hidden" name="afrep_result" value="2">
                         	<input type="hidden" name="afrep_status" value="1">
@@ -181,10 +281,33 @@
                         	<input type="hidden" name="afrep_id" value="${article_reportVO.afrep_id}">
                         	<input type="hidden" name="article_id" value="${article_reportVO.article_id}">
                         	<button type="submit" class="btn btn-danger">刪除文章</button>
-                        </form>
-                        
-                        
+                        </form>              
                     </div>
+				      </button>
+				    </h2>
+				    <div id="collapse${count.index}" class="accordion-collapse collapse" aria-labelledby="heading${count.index}" data-bs-parent="#accordionExample">
+				      <div class="accordion-body">
+				      	<div class="insideTitle">
+				      		<div class="reporter">檢舉人</div>
+				      		<div class="reason">檢舉原因</div>
+				      	</div>
+				      	<div class="insideContent">
+				      		<div class="reporter">${article_reportVO.article_identityVO.article_pic}&ensp;${article_reportVO.memVO.mem_account}</div>
+				      		<div class="reason">${article_reportVO.afrep_content}</div>
+				      	</div>
+				      	
+				      	<div class="insideTitle">
+				      		<div class="reporter">文章作者</div>
+				      		<div class="reason">文章內容</div>
+				      	</div>
+				      	<div class="insideContent">
+				      		<div class="reporter">${article_reportVO.articleVO.article_identityVO.article_pic}&ensp;${article_reportVO.articleVO.memVO.mem_account}</div>
+				      		<div class="reason">${article_reportVO.articleVO.article_content}</div>
+				      	</div>
+				      	
+				      </div>
+				    </div>
+                    
                     </c:forEach>                   
                 </div>
             </div>
@@ -195,19 +318,28 @@
                         <div class="sort">分類</div>
                         <div class="atitle">標題</div>
                         <div class="repTime">檢舉時間</div>
-                        <div class="repTime">處理時間</div>
                         <div class="repResult">申訴結果</div>
                         <div class="repEmp">處理人員</div>
                     </div>
                     <c:forEach var="article_reportVO" items="${list2}">
                     <div class="evenarticle">
-                        <div class="status">${article_reportVO.afrep_status}</div>
+                        <div class="status">
+							<c:if test="${article_reportVO.afrep_status == 1}">
+                        	<span class="slvStatus">已處理</span>
+                        	</c:if>
+						</div>
                         <div class="sort">${article_reportVO.articleVO.article_sorttypeVO.sort_content}</div>
                         <div class="atitle">${article_reportVO.articleVO.article_title}</div>
                         <div class="repTime">${article_reportVO.afrep_date}</div>
-                        <div class="repTime">處理時間</div>
-                        <div class="repResult">${article_reportVO.afrep_result}</div>
-                        <div class="repEmp">${article_reportVO.emp_id}</div>
+                        <div class="repResult">
+							<c:if test="${article_reportVO.afrep_result == 1}">
+                        	<span class="repBack">檢舉駁回</span>
+                        	</c:if>
+							<c:if test="${article_reportVO.afrep_result == 2}">
+                        	<span class="repScs">刪文</span>
+                        	</c:if>
+						</div>
+                        <div class="repEmp">${article_reportVO.empVO.emp_name}</div>
                     </div>
                     </c:forEach>
                 </div>

@@ -49,6 +49,8 @@
     <!--	sweetalert-->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <!-- import css  -->
+    <link rel="stylesheet" type="text/css" href="../../resources/static/css/main.css"/>
 
     <style>
         .btn {
@@ -1138,56 +1140,56 @@
         </nav>
 
     </header>
-<!--        <div id="outerSliders">-->
-<!--        <div id="outerSlider">-->
-<!--        <div class='slider'>-->
-<!--            <input name="input-slider" id='input-slide-0' type="radio" class='input-slide input-slide-num'>-->
-<!--            <input name="input-slider" id='input-slide-1' type="radio" class='input-slide input-slide-num'>-->
-<!--            <input name="input-slider" id='input-slide-2' type="radio" class='input-slide input-slide-num'>-->
-<!--            <input name="input-slider" id='input-slide-3' type="radio" class='input-slide input-slide-num'>-->
-<!--            <input name="input-slider" id='input-slide-autoplay' type="radio" class='input-slide' checked>-->
-<!--            <ul>-->
-<!--                <li class='slide-0'></li>-->
-<!--                <li class='slide-1'></li>-->
-<!--                <li class='slide-2'></li>-->
-<!--                <li class='slide-3'></li>-->
-<!--            </ul>-->
-<!--            <div class='slide-description'>-->
-<!--                <label class='slide-0'>-->
-<!--
-<!--                </label>-->
-<!--                <label class='slide-1'>-->
-<!--                    <img src="../../resources/static/image/coverPhoto/cover1.png">-->
-<!--                </label>-->
-<!--                <label class='slide-2'>-->
-<!--                    <img src="../../resources/static/image/coverPhoto/cover2.png">-->
-<!--                </label>-->
-<!--                <label class='slide-3'>-->
-<!--                    <img src="../../resources/static/image/coverPhoto/cover4.png">-->
-<!--                </label>-->
+        <div id="outerSliders">
+        <div id="outerSlider">
+        <div class='slider'>
+            <input name="input-slider" id='input-slide-0' type="radio" class='input-slide input-slide-num'>
+            <input name="input-slider" id='input-slide-1' type="radio" class='input-slide input-slide-num'>
+            <input name="input-slider" id='input-slide-2' type="radio" class='input-slide input-slide-num'>
+            <input name="input-slider" id='input-slide-3' type="radio" class='input-slide input-slide-num'>
+            <input name="input-slider" id='input-slide-autoplay' type="radio" class='input-slide' checked>
+            <ul>
+                <li class='slide-0'></li>
+                <li class='slide-1'></li>
+                <li class='slide-2'></li>
+                <li class='slide-3'></li>
+            </ul>
+            <div class='slide-description'>
+                <label class='slide-0'>
+                    <img src="../../resources/static/image/coverPhoto/cover5.png">
+                </label>
+                <label class='slide-1'>
+                    <img src="../../resources/static/image/coverPhoto/cover1.png">
+                </label>
+                <label class='slide-2'>
+                    <img src="../../resources/static/image/coverPhoto/cover2.png">
+                </label>
+                <label class='slide-3'>
+                    <img src="../../resources/static/image/coverPhoto/cover4.png">
+                </label>
 
-<!--            </div>-->
-<!--            <div class='slider-arrow-prev'>-->
-<!--                <label class='slide-0' for='input-slide-0'></label>-->
-<!--                <label class='slide-1' for='input-slide-1'></label>-->
-<!--                <label class='slide-2' for='input-slide-2'></label>-->
-<!--                <label class='slide-3' for='input-slide-3'></label>-->
-<!--            </div>-->
-<!--            <div class='slider-arrow-next'>-->
-<!--                <label class='slide-0' for='input-slide-0'></label>-->
-<!--                <label class='slide-1' for='input-slide-1'></label>-->
-<!--                <label class='slide-2' for='input-slide-2'></label>-->
-<!--                <label class='slide-3' for='input-slide-3'></label>-->
-<!--            </div>-->
-<!--            <div class='slider-dot'>-->
-<!--                <label class='slide-0' for='input-slide-0'></label>-->
-<!--                <label class='slide-1' for='input-slide-1'></label>-->
-<!--                <label class='slide-2' for='input-slide-2'></label>-->
-<!--                <label class='slide-3' for='input-slide-3'></label>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--        </div>-->
-<!--        </div>-->
+            </div>
+            <div class='slider-arrow-prev'>
+                <label class='slide-0' for='input-slide-0'></label>
+                <label class='slide-1' for='input-slide-1'></label>
+                <label class='slide-2' for='input-slide-2'></label>
+                <label class='slide-3' for='input-slide-3'></label>
+            </div>
+            <div class='slider-arrow-next'>
+                <label class='slide-0' for='input-slide-0'></label>
+                <label class='slide-1' for='input-slide-1'></label>
+                <label class='slide-2' for='input-slide-2'></label>
+                <label class='slide-3' for='input-slide-3'></label>
+            </div>
+            <div class='slider-dot'>
+                <label class='slide-0' for='input-slide-0'></label>
+                <label class='slide-1' for='input-slide-1'></label>
+                <label class='slide-2' for='input-slide-2'></label>
+                <label class='slide-3' for='input-slide-3'></label>
+            </div>
+        </div>
+        </div>
+        </div>
     <div class="banner-parent">
         <div class="banner-text-banner">
             <div class="banner-text-banner__item">按分類幫毛孩找好東西</div>
@@ -1331,8 +1333,7 @@
 </div>
 
 
-<!-- import css  -->
-<link rel="stylesheet" type="text/css" href="../../resources/static/css/main.css"/>
+
 <!--  NavBar  -->
 <!--<script src="../../resources/static/js/navbar.js"></script>-->
 <!--footer-->
@@ -1444,13 +1445,6 @@
 
         mounted() {
             let pjName = getProjectName();
-            // axios.get(pjName+'/item/items?action=getAllList')
-            //     .then((resp)=>{
-            //         this.items=resp.data;
-            //         console.log(resp.data)
-            //     })
-
-
             axios.get(pjName + '/item/items?action=GetAll_For_Display_JS&pageNumber=1')
                 .then(resp => {
                     console.log(resp.data);
@@ -1465,11 +1459,6 @@
                     this.page = Math.floor((this.count % 8) === 0 ? (this.count / 8) : (this.count / 8) + 1);
                     console.log(this.page)
                 })
-
-
-
-            //
-
 
         }
     }).mount("#app");

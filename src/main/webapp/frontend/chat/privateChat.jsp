@@ -18,49 +18,96 @@ session.setAttribute("list", list);
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.6.1.js"
         integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
-<title>客服中心</title>
+<title>Barei客服中心</title>
 <style>
-
+		/* 設定版型與背景 */
+		html, body {
+ 			height: 100%; 
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+            background-color: #FFDEE9;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
 		.container {
-			width: 75%;
+			width: 80%;
 		}
 		
         #statusOutput {
-            border: 1px solid black;
+        	display: none;
+            height: 1px;
         }
         
         .none {
         width: 50%
         }
+        
+		/* 標題設定 */
+		.serviceName{
+			display: flex;
+			justify-content: center;
+			margin-top: 15px;
+			margin-bottom: 15px;
+		}
+		
+		.blockName{
+			font-size: 18px;
+			font-weight: 700;
+		}
 
         /* 聊天室設定 */
-        .panel {
-            width: 70%;
-            float: right;
-            border: 1px solid green;
-            display: flex;
-            align-item: center;
-        }
-
         .chatroom {
             width: 60%;
-            float: right;
+        }
+        
+        .panel {
+            width: 50%;
+            position: absolute; 
+ 	        top: 75%; 
+ 	        left: 50%; 
+ 	        transform: translate(-50%,-50%); 
         }
         
         #messagesArea {
+        	width: 50%;
         	height: 350px;
-        	
+         	position: absolute; 
+ 	        top: 40%; 
+ 	        left: 50%; 
+ 	        transform: translate(-50%,-50%); 
+	        border-radius: 5px;
+	        padding: 5px 0;
+	        background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            background-color: rgba(100, 100, 100, 0.7);
+            background-blend-mode: multiply;
+            opacity: 60%;
+        }
+        
+        .input-area{
+        	height: 50px;
+        	padding: 5px 0;
         }
         
         #area {
         	width: 100%;
+        	height: 345px;
+        	padding: 5px 0;
         	overflow-x:hidden;
 			overflow-y:auto;
         }
         
         #message {
-        	height: 38px;
-        	width: 82%;
+        	height: 36px;
+        	width: 88%;
+        	border: none;
+        	border-radius: 5px;
+        }
+        
+        #sendMessage{
+        	float: right;
+        	height: 36px;
         }
 		
 		ul{
@@ -75,7 +122,6 @@ session.setAttribute("list", list);
 			padding: 5px 15px;
 			border-radius: 30px;
 			margin-bottom: 2px;
-			font-family: Helvetica, Arial, sans-serif;
 			}
 			
 	    .friend{
@@ -110,27 +156,18 @@ session.setAttribute("list", list);
 
 <body onload="connect();" onunload="disconnect();">
 <div class="container">
-	<h3 id="statusOutput" class="statusOutput">admin</h3>
+	<h3 id="statusOutput" class="statusOutput"></h3>
 	<div class="serviceName">
-		<span class="blockName">客服中心</span>
+		<span class="blockName">Barei客服中心</span>
 	</div>
-
-<!--     <div id="row"> -->
-<!--     	<span>客服列表</span> -->
-<!--     	<div id="0" class="column" name="friendName" value="admin"> -->
-<!--             <span class="name">admin</span><br> -->
-<!--         </div> -->
-<!--     </div> -->
     <div class="chatroom">
     	
         <div id="messagesArea" class="panel message-area">
         </div>
         <div class="panel input-area">
-            <input id="message" class="text-field" type="text" placeholder="Message"
+            <input id="message" class="text-field" type="text" placeholder="請輸入您遇到的問題"
                 onkeydown="if (event.keyCode == 13) sendMessage();">&ensp;
-            <input type="submit" id="sendMessage" class="button btn btn-primary" value="Send" onclick="sendMessage();">
-            <!-- 		<input type="button" id="connect" class="button" value="Connect" onclick="connect();" />  -->
-            <!-- 		<input type="button" id="disconnect" class="button" value="Disconnect" onclick="disconnect();" /> -->
+            <input type="submit" id="sendMessage" class="button btn btn-info" value="送出" onclick="sendMessage();">
         </div>
     </div>
 </div>
@@ -199,10 +236,10 @@ session.setAttribute("list", list);
 		var message = inputMessage.value.trim();
 
 		if (message === "") {
-			alert("Input a message");
+			alert("請輸入訊息，我們客服不會通靈喔~");
 			inputMessage.focus();
 		} else if (friend === "") {
-			alert("Choose a friend");
+			alert("我們的客服您不喜歡嗎?");
 		} else {
 			var jsonObj = {
 				"type" : "chat",
@@ -215,6 +252,8 @@ session.setAttribute("list", list);
 			inputMessage.value = "";
 			inputMessage.focus();
 		}
+		var scrollHeight = $('#area').prop("scrollHeight");
+	      $('#area').scrollTop(scrollHeight,5000);
 	}
 	
 	$(document).ready(showMessage()); 
@@ -232,7 +271,7 @@ session.setAttribute("list", list);
 			webSocket.send(JSON.stringify(jsonObj));
 		}, 50)
 	}
-
+	
 	
 	function disconnect() {
 		webSocket.close();

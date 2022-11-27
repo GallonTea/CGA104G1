@@ -36,15 +36,15 @@
                     height: 66px;
                 }
                 
-                body {
-		            background-image: url(<%=request.getContextPath()%>/backend/asset/img/share_icon/bg.jpg);
-		            background-repeat: no-repeat !important;
-		            background-attachment: fixed !important;
-		            background-position: center !important;
-		            background-size: cover !important;
-		            background-color: rgba(29, 29, 29, 0.8) !important;
-		            background-blend-mode: multiply !important;
-      			  }
+/*                 body { */
+<%-- 		            background-image: url(<%=request.getContextPath()%>/backend/asset/img/share_icon/bg.jpg); --%>
+/* 		            background-repeat: no-repeat !important; */
+/* 		            background-attachment: fixed !important; */
+/* 		            background-position: center !important; */
+/* 		            background-size: cover !important; */
+/* 		            background-color: rgba(29, 29, 29, 0.8) !important; */
+/* 		            background-blend-mode: multiply !important; */
+/*       			  } */
       			  
 				.log {
 					text-decoration: none;
@@ -106,7 +106,8 @@
                                             aria-expanded="false"> 資訊管理 </a>
                                         <ul class="dropdown-menu bg-dark">
                                             <li><a class="dropdown-item bg-dark text-white-50" href="#">最新消息管理</a></li>
-                                            <li><a class="dropdown-item bg-dark text-white-50" href="#">Q&A管理</a></li>
+                                            <li>
+                                            <a class="dropdown-item bg-dark text-white-50" href="/CGA104G1/NameServlet?userName=admin">客服中心</a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item dropdown"><a class="nav-link" href="#" role="button"

@@ -131,8 +131,8 @@
 	ClassicEditor
     .create(document.querySelector('.editor'), {
         cloudServices: {
-            tokenUrl: 'https://93322.cke-cs.com/token/dev/f61fb72c46962eeef89212e54452b4a95a6198649d6d844997f8a0be111e?limit=10',
-            uploadUrl: 'https://93322.cke-cs.com/easyimage/upload/'
+        	tokenUrl: 'https://93940.cke-cs.com/token/dev/91a66de3b51363daded4bc4c728bc0c521dfcfff6dc0a75d8f54767efd03?limit=10',
+            uploadUrl: 'https://93940.cke-cs.com/easyimage/upload/'
         },
         toolbar: {
             items: [

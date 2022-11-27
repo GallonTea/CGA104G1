@@ -17,7 +17,7 @@ public class ArticleJDBCDAO implements ArticleDAO_interface{
 			"insert into article(mem_id, sort_id, article_title, article_content)"
 			+ " values (?, ?, ?, ?)";
 	private static final String GET_ALL_STMT =
-			"select article_id, mem_id, sort_id, article_title, article_content, article_status, article_like, article_dislike, article_publish, article_update from article order by article_id";
+			"select article_id, mem_id, sort_id, article_title, article_content, article_status, article_like, article_dislike, article_publish, article_update from article where article_status = 1 order by article_id DESC";
 	private static final String GET_ONE_STMT =
 			"select article_id, mem_id, sort_id, article_title, article_content, article_status, article_like, article_dislike, article_publish, article_update from article where article_id = ?";
 	private static final String DELETE = 

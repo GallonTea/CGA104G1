@@ -23,31 +23,40 @@
 	
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
     crossorigin="anonymous"></script>
-
 <style>
+		/*設定版型及背景*/
 		.none {
             height: 80px;
         }
+        
+        .container{
+        	width: 70%;
+        	float: left;
+        }
+        
+        .container2 {
+        	display: block;
+        	width: 30%;
+        	float: right;
+        }
+        
+        body::-webkit-scrollbar {
+    		display: none;
+		}
 
         .evenarticle {
             background-color: white;
-            width: 75%;
+            width: 100%;
             height: 40px;
-            position: relative;
-            left: 50%;
-            transform: translate(-50%);
             display: flex;
             align-items: center;
             padding: 0 10px;
         }
 
         .title {
-            width: 75%;
+            width: 100%;
             height: 30px;
             background-color: #33b5e5;
-            position: relative;
-            left: 50%;
-            transform: translate(-50%);
             display: flex;
             align-items: center;
             padding: 0 10px;
@@ -89,12 +98,6 @@
             text-align: center;
         }
         
-        .btn-outline-dark, .btn-outline-success {
-            position: relative;
-            left: 777px;
-            bottom: 10px;
-        }
-        
         .atitle_but{
         	background: none;
         	outline: none;
@@ -120,9 +123,24 @@
 			background-color: rgb(255, 252, 224);
 		}
 		
-		.form {
-			display: flex;
-			
+		/* 設定動作區塊 */
+		.form{
+			width:100%;
+			height: 150px;
+			text-align: center;
+			padding-right: 60px;
+		}
+		
+		.act{
+			width: 200px;
+			margin-bottom: 5px;
+		}
+		
+		/* 設定廣告區塊 */
+		.ad {
+			width:320px;
+			height: 320px;
+			background-color: pink;
 		}
 </style>
 </head>
@@ -145,15 +163,7 @@
 	
 	<div class="none"></div>
     <div class="container">
-	    <div class="form">
-		    <form action="<%=request.getContextPath() %>/frontend//article/addPic.jsp">
-		    <button class="btn btn-outline-dark text-nowrap" type="submit">新增大頭貼</button>
-		    </form>
-		    <span>&nbsp</span>
-		    <form action="<%=request.getContextPath() %>/frontend//article/addArticle.jsp">
-		    <button class="btn btn-outline-success text-nowrap" type="submit">我要發文</button>
-		    </form>
-	    </div>
+	    
         <div class="title">
             <div class="push titlesty">推</div>
             <div class="sort titlesty">分類</div>
@@ -179,6 +189,35 @@
         </div>
 	</c:forEach>
     </div>
+    
+    <div class="container2">
+    	<div class="form">
+		    <form action="<%=request.getContextPath() %>/frontend/article/addPic.jsp">
+		    <button class="btn btn-dark text-nowrap act" type="submit">新增大頭貼</button>
+		    </form>
+		    <form action="<%=request.getContextPath() %>/frontend/article/addArticle.jsp">
+		    <button class="btn btn-success text-nowrap act" type="submit">我要發文</button>
+		    </form>
+		    <form action="<%=request.getContextPath() %>/frontend/chat/groupChat.jsp">
+		    <button class="btn btn-warning text-nowrap act" type="submit">加入聊天室</button>
+		    </form>
+	    </div>
+	    <div class="ad">
+	    廣告
+	    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5289607100016626"
+     	crossorigin="anonymous"></script>
+			<!-- Barei_320px -->
+			<ins class="adsbygoogle"
+			     style="display:inline-block;width:320px;height:320px"
+			     data-ad-client="ca-pub-5289607100016626"
+			     data-adtest="on"
+			     data-ad-slot="2187951199"></ins>
+			<script>
+			     (adsbygoogle = window.adsbygoogle || []).push({});
+		</script>
+	    </div>
+    </div>
+    	
 
 <script>
 

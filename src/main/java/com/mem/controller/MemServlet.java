@@ -1,6 +1,9 @@
 package com.mem.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Writer;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -14,6 +17,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
+
+import com.emp.model.EmpService;
+import com.emp.model.EmpVO;
 import com.mem.model.MemService;
 import com.mem.model.MemVO;
 import com.verify_code.model.Verify_codeService;
@@ -443,6 +450,28 @@ public class MemServlet extends HttpServlet {
 			successView.forward(req, res);
 
 		}
+		
+		if ("MemSerchPro".equals(action)) {
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			Map<String, String[]> map = (Map<String, String[]>) session.getAttribute("map");
+			if (req.getParameter("whichPage") == null) {
+				Map<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
+				session.setAttribute("map", map1);
+				map = map1;
+			}
+			MemService memSvc = new MemService();
+			List<MemVO> list = memSvc.getAllMem(map);
+			for(MemVO a : list ) {
+				System.out.println(a);
+			}
+
+			req.setAttribute("listallMem", list);
+			RequestDispatcher successView = req.getRequestDispatcher("/backend/mem/select_page.jsp");
+			successView.forward(req, res);
+
+		}
+		
 
 		if ("register".equals(action)) { // 來自login.jsp的請求
 
@@ -555,34 +584,46 @@ public class MemServlet extends HttpServlet {
 			
 		}
 		
-		if ("檢查帳號是否可用".equals(action)) {
+		if ("accountchk".equals(action)) {
 
 				Map<String, String> msg = new LinkedHashMap<String, String>();
 				req.setAttribute("msg", msg);
 
-				
-			String errorMsgs = req.getParameter("errorMsgs");
-			System.out.println(errorMsgs);
 			String mem_account = req.getParameter("mem_account");
-			
 			MemService memSvc = new MemService();
 			MemVO memVO = memSvc.checkAccount(mem_account);
+	        PrintWriter out = res.getWriter();
+	        
+		if(memVO!=null) {	
+			String chkAc = memSvc.checkAccount(mem_account).getMem_account();
+			JSONObject jsonAc = new JSONObject(); 
 
+//	        System.out.println(chkAc);
+//	        System.out.println(jsonAc);
+			
+			jsonAc.put("mem_account", chkAc);
+	        out.println(jsonAc);
+	        
+			req.setAttribute("msg", "此帳號已被使用");
+		
 //			req.setAttribute("mem_account", mem_account);
+		  }else {     
+				JSONObject jsonAcf = new JSONObject(); 
+				String chkAcf = "null";
+				jsonAcf.put("mem_account", chkAcf);
+		        out.println(jsonAcf);
+		    	req.setAttribute("msg", "此帳號可使用");
+			}		
 
-			  if(memVO==null) {				
-				req.setAttribute("msg", "此帳號可使用");
-					session.setAttribute("memVO", memVO); // 含有輸入格式錯誤的memVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/frontend/mem/register.jsp");
-					failureView.forward(req, res);
+//					session.setAttribute("memVO", memVO); // 含有輸入格式錯誤的memVO物件,也存入req
+//					RequestDispatcher failureView = req.getRequestDispatcher("/frontend/mem/register.jsp");
+//					failureView.forward(req, res);
 					
-			  }else {                                      
-		    	
-		    	req.setAttribute("msg", "此帳號已被使用");
-				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/mem/register.jsp");
-				failureView.forward(req, res);
-				req.getRequestDispatcher("/frontend/mem/register.jsp").forward(req, res);
-			}
+
+//				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/mem/register.jsp");
+//				failureView.forward(req, res);
+//				req.getRequestDispatcher("/frontend/mem/register.jsp").forward(req, res);
+
 		}
 		
 		
@@ -645,13 +686,13 @@ public class MemServlet extends HttpServlet {
 			MemService memSvc = new MemService();
 
 			
-		    String username = req.getParameter("username");
+		    String account = req.getParameter("account");
 		    String password = req.getParameter("password");
 
-			MemVO memVO = memSvc.login(username,password);	    
+			MemVO memVO = memSvc.login(account,password);	    
 
 			session.setAttribute("memVO", memVO); // 資料庫取出的物件,存入session
-
+		
 
 			  if(memVO==null) {
 				req.setAttribute("msg", "帳號或密碼錯誤!請重新輸入");
@@ -673,9 +714,17 @@ public class MemServlet extends HttpServlet {
 		String mem_account = req.getParameter("mem_account");
 		String mem_email = req.getParameter("mem_email");
 		String mem_uid = req.getParameter("mem_uid");
+		String account = null;
 		
 		MemService memSvc = new MemService();
-		String account = memSvc.findAccount(mem_email, mem_uid).getMem_account();
+		try {
+			account = memSvc.findAccount(mem_email, mem_uid).getMem_account();
+		} catch (Exception e) {
+			req.setAttribute("msg", "輸入錯誤!請重新輸入");
+			req.getRequestDispatcher("/frontend/mem/forgot.jsp").forward(req, res);
+
+		}
+
 
 
 			req.setAttribute("msg", "  您的帳號為  "  +account+  ", 請妥善保管 ");
@@ -699,10 +748,19 @@ public class MemServlet extends HttpServlet {
 
 				String mem_account = req.getParameter("mem_account");
 				String mem_email = req.getParameter("mem_email");
-
+				String password=null;
 		
 				MemService memSvc = new MemService();
-				String password = memSvc.findPassword(mem_account,mem_email).getMem_password();
+				try {
+					 password = memSvc.findPassword(mem_account,mem_email).getMem_password();
+					
+				} catch (Exception e) {
+					req.setAttribute("msg", "輸入錯誤!請重新輸入");
+					req.getRequestDispatcher("/frontend/mem/forgot.jsp").forward(req, res);
+
+				}
+
+
 
 			      String subject = "Ba-rei購物商城 會員密碼函";
 			      

@@ -11,19 +11,22 @@ session.setAttribute("memVO", memVO);
 %>
 
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<title>login_success.jsp</title>
+<title>notVerify</title>
 </head>
 <body>
-
+<%-- <% System.out.print(mem_email); %> --%>
 <%int memID=memVO.getMem_id(); %>
 <%String memEmail=memVO.getMem_email(); %>
 				<form method="post" action="/CGA104G1/MemServlet" >
 <table border='1' cellpadding='5' cellspacing='0' width="500" height="300">
-		<tr bgcolor='orange' align='center' valign='middle' height='20'>
-			<th>驗證信已發送，請至信箱查收驗證碼：<br> 
+		<tr bgcolor='skyblue' align='center' valign='middle' height='20'>
+			<th>
+			<div style="color:white">您的帳號尚未驗證成功，請重新至信箱查收驗證碼：</div>
+			<br> 
 <!-- 			系統將在<span style="color: red">120</span>秒後跳轉回首頁!<br> -->
 
 				請輸入驗證碼: <input type="text" name="regpasschk"> <br>

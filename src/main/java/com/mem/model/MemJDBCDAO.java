@@ -7,8 +7,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONObject;
+
+import com.emp.model.EmpNoEffect;
+import com.emp.model.EmpVO;
 
 public class MemJDBCDAO implements MemDAO_interface{
 	
@@ -747,6 +751,68 @@ public class MemJDBCDAO implements MemDAO_interface{
 		}
 
 	}
+	
+	
+	public List<MemVO> getAllMem(Map<String, String[]> map) {
+		List<MemVO> list = new ArrayList<MemVO>();
+		MemVO memVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			String MySql = "select * from member "
+					+MemUtil.getWhereCondition(map)
+					+"order by mem_id";
+			pstmt = con.prepareStatement(MySql);
+			rs = pstmt.executeQuery();
+		
+			System.out.println(MySql);
+			while (rs.next()) {
+				memVO = new MemVO();
+				memVO.setMem_account(rs.getString("mem_account"));
+				memVO.setMem_password(rs.getString("mem_password"));
+				memVO.setMem_name(rs.getString("mem_name"));
+				memVO.setMem_address(rs.getString("mem_address"));
+				memVO.setMem_phone(rs.getString("mem_phone"));
+				memVO.setMem_uid(rs.getString("mem_uid"));
+				memVO.setMem_email(rs.getString("mem_email"));
+				memVO.setMem_sex(rs.getString("mem_sex"));
+				memVO.setMem_dob(rs.getDate("mem_dob"));
+				memVO.setMem_status(rs.getInt("mem_status"));
+				memVO.setMem_id(rs.getInt("mem_id"));
+				list.add(memVO);
+			}
+//			Integer enpid = null;
+//			for(EmpVO a :list) {
+//				enpid = a.getEmp_id();
+//				if(enpid==null) {
+//					System.out.println("空資料");
+//					
+//				}
+//			}
+
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null || pstmt != null || con != null) {
+				try {
+					rs.close();
+					pstmt.close();
+					con.close();
+					
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
 	
 
 	public static void main(String[] args) {

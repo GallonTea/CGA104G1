@@ -11,10 +11,11 @@ public class Group_Buy_ReportService {
 		dao = new Group_Buy_ReportDAO();
 	}
 	
-	public Group_Buy_ReportVO addGroup_Buy_Report(Integer mem_id, String frep_content,
+	public Group_Buy_ReportVO addGroup_Buy_Report(Integer gborder_id,Integer mem_id, String frep_content,
 			Integer frep_status, Integer frep_result, Integer emp_id) {
 		
 		Group_Buy_ReportVO gbrVO = new Group_Buy_ReportVO();
+		gbrVO.setGborder_id(gborder_id);
 		gbrVO.setMem_id(mem_id);
 		gbrVO.setFrep_content(frep_content);
 		gbrVO.setFrep_status(frep_status);
@@ -25,11 +26,12 @@ public class Group_Buy_ReportService {
 		return gbrVO;
 	}
 	
-	public Group_Buy_ReportVO updateGroup_Buy_Report(Integer gbfrep_id, Integer mem_id, String frep_content,
+	public Group_Buy_ReportVO updateGroup_Buy_Report(Integer gbfrep_id,Integer gborder_id, Integer mem_id, String frep_content,
 			Integer frep_status, Integer frep_result, Integer emp_id) {
 		
 		Group_Buy_ReportVO gbrVO = new Group_Buy_ReportVO();
 		gbrVO.setGbfrep_id(gbfrep_id);
+		gbrVO.setGborder_id(gborder_id);
 		gbrVO.setMem_id(mem_id);
 		gbrVO.setFrep_content(frep_content);
 		gbrVO.setFrep_status(frep_status);

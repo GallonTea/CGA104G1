@@ -48,10 +48,29 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
     padding: 1px;
   }
 </style>
+<style>
+    .empTable {
+      border-collapse: collapse
+    }
 
+    .empTable th {
+      background-color: #BFBFFF;
+      color: blue;
+      text-align: right;
+      border-style: dotted;
+      font-weight: normal;
+      padding: 5px;
+    }
+
+    .empTable td {
+      border: 2px dotted deepPink;
+      padding: 5px;
+    }
+  </style>
 </head>
 <body bgcolor='white'>
-
+  <div id="showPanel">
+  </div>
 <table id="table-1" ALIGN=center>
 	<tr><td> 
 	<h3>會員註冊 </h3>
@@ -78,13 +97,12 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 
 	<tr>
 		<td>會員帳號:<font color=red><b>*</b></font></td>
-		<td><input type="TEXT" name="mem_account" size="45" 
-			 value="<%= (memVO==null)? "" : memVO.getMem_account()%>" /></td><td style="color:red">${errorMsgs.mem_account}</td>
-<!-- 			 <form> -->
-<!-- 			<input type="hidden" > -->
-			 <td><input type="submit" name="action" value="檢查帳號是否可用" size="45" ></td>
-<!-- 			 <td><input type="submit" name="action" value="帳號是否可用" size="45" value="檢查是否可用"></td> -->
-<!-- 			 </form> -->
+		<td><input id ="mem_account" name="mem_account" type="TEXT" size="45" 
+			 value="<%= (memVO==null)? "" : memVO.getMem_account()%>" />
+			 <input type="button" id="chkaccount" value=" 檢查是否可以使用" ></td><td style="color:red">${errorMsgs.mem_account}</td>
+
+<!-- 			 <td><input type="submit" name="action" value="檢查帳號是否可用" size="45" ></td> -->
+
 
 			 <td style="color:gray">${msg}</td>
 		
@@ -123,7 +141,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 		<tr>
 		<td>會員性別:<font color=red><b>*</b></td>
 		<td>
-		<input type="radio" name="mem_sex" size="45" value="男" ${(memVO.mem_sex=="男")? 'checked':'' } ><b>男</b>
+		<input type="radio" name="mem_sex" size="45" value="男" ${(memVO.mem_sex=="男")? 'checked':'' }><b>男</b>
 		<input type="radio" name="mem_sex" size="45" value="女" ${(memVO.mem_sex=="女")? 'checked':'' }><b>女</b>
 		<input type="hidden" name="mem_sex" value="${memVO.mem_sex}">
 		</td><td style="color:red">${errorMsgs.mem_sex}</td>
@@ -240,5 +258,69 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
         //      }});
         
 </script>
+
+
+  <script>
+    function showEmployee(json) {
+      //剖析json字串,將其轉成js物件
+      let chkAc = JSON.parse(json);      
+      if (chkAc.mem_account == "null") {
+          
+
+          console.log(chkAc.mem_account);
+
+          alert("此帳號可以使用");
+          
+          
+          
+//           let html;
+    	
+	
+
+
+//         html = `
+//         <table class='empTable' align='center'>
+//         <tr><th>工號</th><td>${emp.empno}</td></tr>
+//         <tr><th>姓名</th><td>${emp.ename}</td></tr>
+//         <tr><th>薪資</th><td>${emp.sal}</td></tr>
+//         <tr><th>到職日</th><td>${emp.hiredate}</td></tr>
+//       </table>
+//       `;
+      } else {
+          alert("此帳號已被使用");
+//           html = "<center>查無此員工</center>";
+
+      }
+//       document.getElementById("showPanel").innerHTML = html;
+    }
+    
+    $("#chkaccount").click(function getEmployee() {
+        //===實作(填入程式碼)
+        let xhr = new XMLHttpRequest();
+        let mem_account = $("#mem_account").val();
+        //設定好回呼函數   
+        
+        let url = "/CGA104G1/MemServlet?action=accountchk&mem_account="+mem_account ;
+//         xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+        xhr.open("get", url, true);
+        xhr.onload = function () {
+          if (xhr.status == 200) {
+            console.log(xhr.responseText);
+            showEmployee(xhr.responseText);
+// alert(xhr.responseText);
+//             alert("123");
+          } else {
+            alert(xhr.status);
+          }// status
+        };// onload
+
+        //建立好Get連接與送出請求 
+// let mem_account = document.getElementById("mem_account").value;
+        xhr.send(null);
+      });
+
+    </script>
+
+
 
 </html>

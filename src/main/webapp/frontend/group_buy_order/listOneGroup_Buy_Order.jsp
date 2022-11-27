@@ -68,7 +68,6 @@ th, td {
 			</td>
 		</tr>
 	</table>
-
 	<table>
 		<tr>
 			<th>團購訂單編號</th>
@@ -88,8 +87,6 @@ th, td {
 			<th>收件人地址</th>
 			<th>收件人電話</th>
 			<th>領貨時間</th>
-
-
 		</tr>
 		<tr>
 			<td>${group_buy_orderVO.gborder_id}</td>

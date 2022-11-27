@@ -102,7 +102,6 @@ public class Group_Buy_OrderServlet extends HttpServlet {
 			String url = "/frontend/group_buy_order/listOneGroup_Buy_Order_byMaster.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交jsp
 			successView.forward(req, res);
-		
 		}
 		
 		

@@ -12,7 +12,7 @@ public class Group_JoinService {
 	}
 	
 	public Group_JoinVO addGroup_Join(Integer gb_id, Integer mem_id, 
-			Integer gbpay_status, Integer pickup_status, Integer deliver_status ,Integer gbbuy_amount) {
+			Integer gbpay_status, Integer pickup_status, Integer deliver_status ,Integer gbbuy_amount, Integer gbbuy_price) {
 		
 		Group_JoinVO gjVO = new Group_JoinVO();
 		gjVO.setGb_id(gb_id);
@@ -20,14 +20,16 @@ public class Group_JoinService {
 		gjVO.setGbpay_status(gbpay_status);
 		gjVO.setPickup_status(pickup_status);
 		gjVO.setDeliver_status(deliver_status);
-		gjVO.setDeliver_status(gbbuy_amount);
+		gjVO.setGbbuy_amount(gbbuy_amount);
+		gjVO.setGbbuy_price(gbbuy_price);
+		
 		dao.insert(gjVO);
 		
 		return gjVO;
 	}
 	
 	public Group_JoinVO updateGroup_Join(Integer gb_id, Integer mem_id, 
-			Integer gbpay_status, Integer pickup_status, Integer deliver_status , Integer gbbuy_amount) {
+			Integer gbpay_status, Integer pickup_status, Integer deliver_status , Integer gbbuy_amount ,Integer gbbuy_price) {
 		
 		Group_JoinVO gjVO = new Group_JoinVO();
 		gjVO.setGb_id(gb_id);
@@ -35,20 +37,55 @@ public class Group_JoinService {
 		gjVO.setGbpay_status(gbpay_status);
 		gjVO.setPickup_status(pickup_status);
 		gjVO.setDeliver_status(deliver_status);
-		gjVO.setDeliver_status(gbbuy_amount);
+		gjVO.setGbbuy_amount(gbbuy_amount);
+		gjVO.setGbbuy_price(gbbuy_price);
 		dao.update(gjVO);
 		
 		return gjVO;
 	}
 	
+	public Group_JoinVO updatePay(Integer gb_id, Integer mem_id, Integer gbpay_status) {
+		
+		Group_JoinVO gjVO = new Group_JoinVO();
+		gjVO.setGb_id(gb_id);
+		gjVO.setMem_id(mem_id);
+		gjVO.setGbpay_status(gbpay_status);
+		dao.updatePay(gjVO);
+		
+		return gjVO;
+	}
+	public Group_JoinVO updatePickup(Integer gb_id, Integer mem_id, Integer pickup_status) {
+		
+		Group_JoinVO gjVO = new Group_JoinVO();
+		gjVO.setGb_id(gb_id);
+		gjVO.setMem_id(mem_id);
+		gjVO.setPickup_status(pickup_status);
+		dao.updatePickup(gjVO);
+		
+		return gjVO;
+	}
+	public Group_JoinVO updateDeliver(Integer gb_id, Integer mem_id, Integer deliver_status) {
+		
+		Group_JoinVO gjVO = new Group_JoinVO();
+		gjVO.setGb_id(gb_id);
+		gjVO.setMem_id(mem_id);
+		gjVO.setDeliver_status(deliver_status);
+		dao.updateDeliver(gjVO);
+		
+		return gjVO;
+	}
 	public void deleteEmp(Integer gb_id) {
 		dao.delete(gb_id);
 	}
 
-	public Group_JoinVO getOneEmp(Integer gb_id) {
-		return dao.findByPrimaryKey(gb_id);
+	public Group_JoinVO getOneEmp(Integer gb_id ,Integer mem_id) {
+		return dao.findByPrimaryKey(gb_id,mem_id);
 	}
 
+	public List<Group_JoinVO> getOneGb(Integer gb_id) {
+		return dao.findBygbid(gb_id);
+	}
+	
 	public List<Group_JoinVO> getAll() {
 		return dao.getAll();
 	}

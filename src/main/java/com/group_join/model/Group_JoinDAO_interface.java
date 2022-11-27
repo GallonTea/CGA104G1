@@ -7,10 +7,18 @@ public interface Group_JoinDAO_interface {
 	public void insert(Group_JoinVO Group_JoinVO);
 
 	public void update(Group_JoinVO Group_JoinVO);
+	
+	public void updatePay(Group_JoinVO Group_JoinVO);
+	
+	public void updatePickup(Group_JoinVO Group_JoinVO);
+	
+	public void updateDeliver(Group_JoinVO Group_JoinVO);
 
 	public void delete(Integer gb_id);
 	
-	public Group_JoinVO findByPrimaryKey(Integer gb_id);
+	public Group_JoinVO findByPrimaryKey(Integer gb_id,Integer mem_id);
+	
+	public List<Group_JoinVO> findBygbid(Integer gb_id);
 
 	public List<Group_JoinVO> getAll();
 }

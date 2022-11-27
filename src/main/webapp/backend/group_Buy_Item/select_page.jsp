@@ -56,7 +56,7 @@ h4 {
 				</c:if>
 
 				<ul>
-					<li><a href='<%=request.getContextPath()%>/backend/group_Buy_Item/listAllGroupBuyItem.jsp'>List</a> all Discount. <br>
+					<li><a href='<%=request.getContextPath()%>/backend/group_Buy_Item/listAllGroupBuyItem.jsp'>List</a> all groupBuyItem. <br>
 					<br></li>
 
 
@@ -87,6 +87,44 @@ h4 {
 							<b>團購商品選擇:</b> <select size="1" name="gbitem_id">
 								<c:forEach var="Group_Buy_ItemVO" items="${list}">
 									<option value="${Group_Buy_ItemVO.gbitem_id}">${Group_Buy_ItemVO.gbitem_name}
+								</c:forEach>
+							</select> 
+							<input type="hidden" name="action" value="getOne_For_Display">
+							<input type="submit" value="送出">
+						</FORM>
+					</li>
+					<li>
+						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Group_Buy_Item/groupBuyItem.do">
+							<b>團購商品類別選擇:</b> <select size="1" name="gbitem_id">
+								<c:forEach var="Group_Buy_ItemVO" items="${list}">
+									<option value="${Group_Buy_ItemVO.gbitem_id}">${Group_Buy_ItemVO.gbitem_type}
+									
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '1'}"><td><c:out value="狗狗飼料"></td></c:out></c:if>
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '2'}"><td><c:out value="狗狗罐頭"></td></c:out></c:if>
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '3'}"><td><c:out value="狗狗零時"></td></c:out></c:if>
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '4'}"><td><c:out value="狗狗用品"></td></c:out></c:if>
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '5'}"><td><c:out value="貓咪飼料"></td></c:out></c:if>
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '6'}"><td><c:out value="貓咪主食罐"></td></c:out></c:if>
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '7'}"><td><c:out value="貓咪副食罐"></td></c:out></c:if>
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '8'}"><td><c:out value="貓咪零食"></td></c:out></c:if>
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '9'}"><td><c:out value="犬貓凍乾"></td></c:out></c:if>
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '10'}"><td><c:out value="貓咪用品"></td></c:out></c:if>
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '11'}"><td><c:out value="貓砂"></td></c:out></c:if>
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '12'}"><td><c:out value="犬用保健品"></td></c:out></c:if>
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '13'}"><td><c:out value="貓用保健品"></td></c:out></c:if>
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '14'}"><td><c:out value="冷凍營養鮮食"></td></c:out></c:if>
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '15'}"><td><c:out value="保健食品"></td></c:out></c:if>
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '16'}"><td><c:out value="飲食/飲水"></td></c:out></c:if>
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '17'}"><td><c:out value="寵具/圍籃"></td></c:out></c:if>
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '18'}"><td><c:out value="外出用品"></td></c:out></c:if>
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '19'}"><td><c:out value="居家清潔"></td></c:out></c:if>
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '20'}"><td><c:out value="洗澡/美容"></td></c:out></c:if>
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '21'}"><td><c:out value="寵物訓練用品"></td></c:out></c:if>
+									<c:if test="${Group_Buy_ItemVO.gbitem_type == '22'}"><td><c:out value="除蚤用品"></td></c:out></c:if>
+									
+									
+									
+									
 								</c:forEach>
 							</select> 
 							<input type="hidden" name="action" value="getOne_For_Display">

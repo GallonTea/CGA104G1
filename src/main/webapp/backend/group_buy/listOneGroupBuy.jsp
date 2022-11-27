@@ -63,11 +63,13 @@ th, td {
 			<th>團購團編號</th>
 			<th>團購主編號</th>
 			<th>團購商品編號</th>
-			<th>團購人數低標</th>
-			<th>目前參團人數</th>
+			<th>團購商品數量低標</th>
+			<th>目前團購商品下訂總數</th>
 			<th>團購開始</th>
 			<th>團購結束</th>
 			<th>團購狀態</th>
+			<th>團購價格</th>
+			<th>團購名稱</th>
 		</tr>
 			<tr>
 				<td>${Group_BuyVO.gb_id}</td>
@@ -80,6 +82,8 @@ th, td {
 <%-- 				<td>${Group_BuyVO.gb_status}</td> --%>
 				<c:if test="${Group_BuyVO.gb_status == '0'}"><td><c:out value="參團人數不足"></td></c:out></c:if>
 				<c:if test="${Group_BuyVO.gb_status == '1'}"><td><c:out value="參團人數已達標"></td></c:out></c:if>
+				<td>${Group_BuyVO.gb_price}</td>
+				<td>${Group_BuyVO.gb_name}</td>
 				</table>
 </body>
 </html>

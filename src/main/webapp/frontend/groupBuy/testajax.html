@@ -75,34 +75,18 @@
     <script type="text/javascript">
         let queryString = window.location.search;
         let urlParams = new URLSearchParams(queryString);
-        // let gbitem_id = urlParams.get("gbitem_id")
         let gbitem_id = 1;
         showgroupbuypicture(gbitem_id);
-        // let bidProductVO = 0;
-        // let bidRecord = 0;
-        // $.ajax({
-        //     url: `/CGA104G1/Group_Buy_Item/groupBuyItem.do?gbitem_id=${gbitem_id}`,
-        //     type: "POST",
-        //     success: function (data) {
-        //         showonegroupbuy(data);
-        //     }
-        // })
-
-
-
-        function showgroupbuypicture(data) {
-
-            let all = JSON.parse(data)
-
+        function showgroupbuypicture(e) {
             //取出圖片
             $.ajax({
-                url: `http://localhost:8081/CGA104G1/groupBuyItemPicture/groupBuyItemPictureGetAll.do?=${gbitem_id}`,
+                url: `/CGA104G1/groupBuyItemPicture/groupBuyItemPictureGetAll.do?=${gbitem_id}`,
                 type: "POST",
                 success: function (data) {
                     showAllPic(data);
+                    console.log(data);
                 }
             })
-
             function showAllPic(data) {
                 let pics = JSON.parse(data);
                 console.log(pics);
@@ -113,7 +97,7 @@
                 //     <img src="/CGA104G1/groupBuyItemPicture/groupBuyItemPicture.do?gbitem_id=${pics[0]}" class="d-block w-100" alt="...">
                 // </div>
                 // `;
-                for (let i = 1; i < pics.length; i++) {
+                for (let i = 0; i < pics.length; i++) {
                     groupBuyItemPictureHTML += `
                      <div >
                     <img src="/CGA104G1/groupBuyItemPicture/groupBuyItemPicture.do?gbitem_id=${pics[i]}" >

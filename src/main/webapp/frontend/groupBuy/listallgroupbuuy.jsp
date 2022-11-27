@@ -12,8 +12,6 @@ List<Group_Buy_ItemVO> list = group_Buy_ItemService.getAll();
 pageContext.setAttribute("list", list);
 %>
 
-
-
 <html lang="en">
 
 <head>
@@ -154,11 +152,9 @@ footer img {
 	<main>
 	<div class="container">
 
-
-
 	<!-- 新增團購團申請測試區 -->
 	
-		<form action="<%=request.getContextPath()%>/frontend/groupBuy/addgroupbuyapplylist.jsp">
+		<form action="<%=request.getContextPath()%>/GroupBuyStartNewApplyListServlet">
 		<%-- <input type="hidden" name="gbitem_id"  value="${Group_Buy_ItemVO.gbitem_id}"> --%>
 		<input type="hidden" name="gbitem_id"  value="2">
 		<input type="hidden" name="mem_id"  value="1">
@@ -168,6 +164,7 @@ footer img {
 		<form action="<%=request.getContextPath()%>/GroupBuyMasterApplyListServlet">
 		<%-- <input type="hidden" name="gbitem_id"  value="${Group_Buy_ItemVO.gbitem_id}"> --%>
 		<input type="hidden" name="mem_id"  value="1">
+		<input type="hidden" name="action" value="listAllMyGroupBuy">
 		<button class="btn btn-primary" type="submit">我的團購團</button>
 		</form>
 	<!-- 新增團購團申請測試區 -->		
@@ -187,8 +184,8 @@ footer img {
 									
 									<img
 									class="hover lazyload"
-									data-src="<%=request.getContextPath()%>/groupBuyItemPicture/groupBuyItemPictureGetOneByGBItemID.do?gbip_id=${gbipVO.gbip_id}"
-									src="<%=request.getContextPath()%>/groupBuyItemPicture/groupBuyItemPictureGetOneByGBItemID.do?gbip_id=${gbipVO.gbip_id}" >
+									data-src="<%=request.getContextPath()%>/groupBuyItemPicture/groupBuyItemPictureGetOneByGBItemID.do?gbip_id=${gbipVO.gbip_id+1}"
+									src="<%=request.getContextPath()%>/groupBuyItemPicture/groupBuyItemPictureGetOneByGBItemID.do?gbip_id=${gbipVO.gbip_id+1}" >
 									<div class="product-labels">
 										<span class="lbl on-sale">Sale</span>
 									</div>

@@ -11,6 +11,8 @@ public class Group_BuyVO implements java.io.Serializable{
 	private Timestamp gbstart_date;
 	private Timestamp gbend_date;
 	private Integer gb_status;
+	private Integer gb_price;
+	private String  gb_name;
 	
 	public Integer getGb_id() {
 		return gb_id;
@@ -60,6 +62,24 @@ public class Group_BuyVO implements java.io.Serializable{
 	public void setGb_status(Integer gb_status) {
 		this.gb_status = gb_status;
 	}
+	public Integer getGb_price() {
+		return gb_price;
+	}
+	public void setGb_price(Integer gb_price) {
+		this.gb_price = gb_price;
+	}
+	public String getGb_name() {
+		return gb_name;
+	}
+	public void setGb_name(String gb_name) {
+		this.gb_name = gb_name;
+	}
+	
+	
+	
+	
+	
+	
 	
 	
 	

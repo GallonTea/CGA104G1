@@ -13,7 +13,7 @@ public class Group_Buy_ItemService {
 	}
 	
 	public Group_Buy_ItemVO addGroup_Buy_ItemVO(String gbitem_name, String gbitem_content, 
-			Integer gbitem_price, Integer gbitem_status, Date gbitem_startdate, Date gbitem_enddate) {
+			Integer gbitem_price, Integer gbitem_status, Date gbitem_startdate, Date gbitem_enddate, Integer gbitem_type) {
 		
 		Group_Buy_ItemVO gbiVO = new Group_Buy_ItemVO();
 		
@@ -23,13 +23,14 @@ public class Group_Buy_ItemService {
 		gbiVO.setGbitem_status(gbitem_status);
 		gbiVO.setGbitem_startdate(gbitem_startdate);
 		gbiVO.setGbitem_enddate(gbitem_enddate);
+		gbiVO.setGbitem_type(gbitem_type);
 		dao.insert(gbiVO);
 		
 		return gbiVO;
 	}
 	
 	public Group_Buy_ItemVO updateGroup_Buy_ItemVO(Integer gbitem_id, String gbitem_name, String gbitem_content, 
-			Integer gbitem_price, Integer gbitem_status, Date gbitem_startdate, Date gbitem_enddate) {
+			Integer gbitem_price, Integer gbitem_status, Date gbitem_startdate, Date gbitem_enddate, Integer gbitem_type) {
 		
 		Group_Buy_ItemVO gbiVO = new Group_Buy_ItemVO();
 		
@@ -40,6 +41,7 @@ public class Group_Buy_ItemService {
 		gbiVO.setGbitem_status(gbitem_status);
 		gbiVO.setGbitem_startdate(gbitem_startdate);
 		gbiVO.setGbitem_enddate(gbitem_enddate);
+		gbiVO.setGbitem_type(gbitem_type);
 		dao.update(gbiVO);
 		
 		return gbiVO;

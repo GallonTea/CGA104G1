@@ -12,9 +12,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.discount.model.DiscountService;
 import com.group_buy.model.Group_BuyService;
 import com.group_buy.model.Group_BuyVO;
+import com.group_buy_item.model.Group_Buy_ItemService;
+import com.group_buy_item.model.Group_Buy_ItemVO;
 import com.mem.model.MemVO;
+import com.news.controller.newsServlet;
 
 @WebServlet("/GroupBuyMasterApplyListServlet")
 public class GroupBuyMasterApplyListServlet extends HttpServlet {
@@ -33,37 +37,163 @@ public class GroupBuyMasterApplyListServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 
-		Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-		req.setAttribute("errorMsgs", errorMsgs);
+		if ("confirmGroupBuy".equals(action)) { // 來自chosegroupbuydiscount.jsp "確認開團"
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);
 
-		// 取得會員編號
+			// 取得會員編號
 //		MemVO memVO = (MemVO) req.getSession().getAttribute("memVO");
 //		Integer mem_id = memVO.getMem_id();
 
-		Integer mem_id = null;
-		try {
-			mem_id = Integer.valueOf(req.getParameter("mem_id").trim());
-//			System.out.println(mem_id);
-			if (mem_id == null) {
-				errorMsgs.put("gbitem_id","團購主會員編號': 請勿空白");
+			Integer mem_id = null;
+			try {
+				mem_id = Integer.valueOf(req.getParameter("mem_id").trim());
+				if (mem_id == null) {
+					errorMsgs.put("gbitem_id", "團購主會員編號': 請勿空白");
+				}
+			} catch (NumberFormatException e1) {
+				errorMsgs.put("mem_id", "團購主會員編號請填數字.");
+				e1.printStackTrace();
 			}
-		} catch (NumberFormatException e1) {
-			errorMsgs.put("mem_id","團購主會員編號請填數字.");
-			e1.printStackTrace();
+
+			Integer discount_price = null;
+			try {
+				discount_price = Integer.valueOf(req.getParameter("discount_price").trim());
+			} catch (Exception e) {
+				errorMsgs.put("discount_price", "團購折扣格式不正確");
+			}
+
+			Integer gbitem_price = null;
+			try {
+				gbitem_price = Integer.valueOf(req.getParameter("gbitem_price").trim());
+				if (gbitem_price == null) {
+					errorMsgs.put("gbitem_price", "團購商品價格': 請勿空白");
+				}
+			} catch (NumberFormatException e1) {
+				errorMsgs.put("gbitem_price", "團購商品價格請填數字.");
+				e1.printStackTrace();
+			}
+			Integer gb_id = null;
+			try {
+				gb_id = Integer.valueOf(req.getParameter("gb_id").trim());
+				if (gb_id == null) {
+					errorMsgs.put("gb_id", "團購團編號': 請勿空白");
+				}
+			} catch (NumberFormatException e1) {
+				errorMsgs.put("gb_id", "團購團號請填數字.");
+				e1.printStackTrace();
+			}
+
+			Integer gb_price = null;
+
+			try {
+				gb_price = Integer.valueOf(req.getParameter("gb_price"));
+				if (gb_price == null) {
+					errorMsgs.put("gb_price", "團購價格: 請勿空白");
+				}
+			} catch (NumberFormatException e) {
+				errorMsgs.put("gb_price", "團購價格請填數字");
+				e.printStackTrace();
+			}
+			// Send the use back to the form, if there were errors
+			if (!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/frontend/groupBuy/chosegroupbuydiscount.jsp");
+				failureView.forward(req, res);
+				return;// 程式中斷
+			}
+			/*************************** 2.開始修改資料 *****************************************/
+			Group_BuyVO group_BuyVO = new Group_BuyVO();
+			Group_BuyService group_BuyService = new Group_BuyService();
+			gb_price = (int) (Math.round(discount_price * gbitem_price * 0.01));
+			group_BuyVO = group_BuyService.updateGroup_Buy_GBPrice(gb_id, gb_price);
+			List<Group_BuyVO> list = group_BuyService.getAllGroupBuyApplyListByMemID(mem_id);
+
+			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+			req.setAttribute("list", list);
+			RequestDispatcher successView = req.getRequestDispatcher("/frontend/groupBuy/mygroupbuyapplylist.jsp");
+			successView.forward(req, res);
 		}
-		/*************************** 2.開始修改資料 *****************************************/
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+		if ("listAllMyGroupBuy".equals(action)) { // 來自需要查看自己團購團狀態的需求
 
-		Group_BuyService group_BuyService = new Group_BuyService();
-		List<Group_BuyVO> list = group_BuyService.getAllGroupBuyApplyListByMemID(mem_id);
-//		System.out.println(list);
-		/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			// 取得會員編號
+//			MemVO memVO = (MemVO) req.getSession().getAttribute("memVO");
+//			Integer mem_id = memVO.getMem_id();
 
-//					
-		req.setAttribute("list", list);
-//					
-		RequestDispatcher successView = req.getRequestDispatcher("/frontend/groupBuy/mygroupbuyapplylist.jsp");
-		successView.forward(req, res);
+				Integer mem_id = null;
+				try {
+					mem_id = Integer.valueOf(req.getParameter("mem_id").trim());
+					if (mem_id == null) {
+						errorMsgs.put("gbitem_id", "團購主會員編號': 請勿空白");
+					}
+				} catch (NumberFormatException e1) {
+					errorMsgs.put("mem_id", "團購主會員編號請填數字.");
+					e1.printStackTrace();
+				}
+			
+			
+			/*************************** 2.開始修改資料 *****************************************/
+			Group_BuyVO group_BuyVO = new Group_BuyVO();
+			Group_BuyService group_BuyService = new Group_BuyService();
+			List<Group_BuyVO> list = group_BuyService.getAllGroupBuyApplyListByMemID(mem_id);
 
+			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+			req.setAttribute("list", list);
+			RequestDispatcher successView = req.getRequestDispatcher("/frontend/groupBuy/mygroupbuyapplylist.jsp");
+			successView.forward(req, res);
+			
+		}
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+		if ("transferT2GroupBuyOrder".equals(action)) { 
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			// 取得會員編號
+//			MemVO memVO = (MemVO) req.getSession().getAttribute("memVO");
+//			Integer mem_id = memVO.getMem_id();
+
+				Integer mem_id = null;
+				try {
+					mem_id = Integer.valueOf(req.getParameter("mem_id").trim());
+					if (mem_id == null) {
+						errorMsgs.put("gbitem_id", "團購主會員編號': 請勿空白");
+					}
+				} catch (NumberFormatException e1) {
+					errorMsgs.put("mem_id", "團購主會員編號請填數字.");
+					e1.printStackTrace();
+				}
+				
+				Integer gbitem_id = null;
+				try {
+					gbitem_id = Integer.valueOf(req.getParameter("gbitem_id").trim());
+					if (gbitem_id == null) {
+						errorMsgs.put("gbitem_id", "團購商品編號': 請勿空白");
+					}
+				} catch (NumberFormatException e1) {
+					errorMsgs.put("gbitem_id", "團購商品編號請填數字.");
+					e1.printStackTrace();
+				}
+			
+			/*************************** 2.開始修改資料 *****************************************/
+				//查詢新增團購訂單所需要的欄位
+			Group_BuyVO group_BuyVO = new Group_BuyVO();
+			Group_BuyService group_BuyService = new Group_BuyService();
+			List<Group_BuyVO> list = group_BuyService.getAllGroupBuyApplyListByMemID(mem_id);
+			
+			Group_Buy_ItemService group_Buy_ItemService = new Group_Buy_ItemService();
+			Group_Buy_ItemVO group_Buy_ItemVO = group_Buy_ItemService.getOneGbi(gbitem_id);
+			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+			req.setAttribute("group_BuyVO", list);
+			req.setAttribute("Group_Buy_ItemVO", group_Buy_ItemVO);
+			req.setAttribute("action", "getOne_Discount_For_Display");
+			
+			//轉交團購訂單的Servlet
+			RequestDispatcher successView = req.getRequestDispatcher("/backend/discount/DiscountServlet");
+			successView.forward(req, res);
+		}
+		
 	}
 
 }

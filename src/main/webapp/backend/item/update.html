@@ -17,13 +17,15 @@
     <script src="https://unpkg.com/@vuepic/vue-datepicker@latest"></script>
     <link rel="stylesheet" href="https://unpkg.com/@vuepic/vue-datepicker@latest/dist/main.css">
 
-    <!--	sweetalert-->
+    <!--        sweetAlert-->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!--        錯誤處理-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/4.5.8/vee-validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@vee-validate/rules@4.5.8/dist/vee-validate-rules.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@vee-validate/i18n@4.5.8/dist/vee-validate-i18n.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+
     <title>修改商品詳情</title>
 
     <style>
@@ -38,6 +40,7 @@
         div.half {
             display: inline-block;
             width: 50%;
+            position: relative;
         }
 
         div.half .onehalf {
@@ -182,21 +185,28 @@
         .invalid-feedback {
             margin-left: 16px;
             color: red;
+            position: absolute;
+            top: 10px;
+            left: 300px;
         }
 
         .dp__input:hover {
             border: 4px solid #1c5100;
         }
+        .one{
+            width: 98.5%;
+            position: relative;
 
+        }
         /*1/4 class:onequarter ,1/2 class:onehalf*/
     </style>
 </head>
 <body>
 <div class="contact-us" id="app">
     <h1>商品詳細資訊</h1>
-<!--    @submit="onSubmit"-->
-    <v-form v-slot="{ errors }" @click.prevent.stop="onSubmit" enctype="multipart/form-data">
-        <div style="width: 98.5%">
+    <!--    @submit="onSubmit"-->
+    <v-form v-slot="{ errors }" enctype="multipart/form-data" @submit.prevent>
+        <div class="one">
             <label>商品名稱</label>
             <v-field type="text" placeholder="請輸入商品名稱" v-model="item.itemName" name="name"
                      :rules="checkName"></v-field>
@@ -247,7 +257,8 @@
         <div style="width: 98.5%;">
             <label>上架日期</label>
             <br>
-            <Datepicker v-model="item.itemDate" name="item_date" :value-format="yyyy-MM-dd"></Datepicker>
+            <Datepicker v-model="item.itemDate" :value-format="yyyy-MM-dd"></Datepicker>
+
         </div>
 
         <div style="width: 98.5%;">
@@ -307,7 +318,9 @@
                 photos: [],
                 pjName: '',
                 selected: 0,
-                uploadPhotos: []
+                uploadPhotos: [],
+                pId: -1,
+
             }
         }, methods: {
 
@@ -332,70 +345,52 @@
                             title: '修改成功',
                             showConfirmButton: false,
                             timer: 1500
-                        }).then(
-                            ()=>{
-                                location = "listAllItems.html";
-                            }
-                        )
+                        })
 
                     })
+                setTimeout(function () {
+                    location = "listAllItems.html"
+                }, 2000)
+
+
             },
             onDeleteButtonClick(ipId) {
-                alert("!!!!!!!")
-               // deleteAlert();
-                alert("kkkkkkkk")
+                this.pId = ipId;
                 // const result = confirm("確定刪除此張照片嗎");
-                //
-                // if (result) {
-                //
-                //     let pjName = getProjectName();
-                //     axios.get(pjName + "/item/GetItemPhoto?action=DeletePhoto&ip_id=" + ipId)
-                //         .then((resp) => {
-                //             if (resp.data.successful) {
-                //                 Swal.fire({
-                //                     icon: 'success',
-                //                     title: '刪除成功',
-                //                     showConfirmButton: false,
-                //                     timer: 1500
-                //                 }).then(function () {
-                //                     location.reload();
-                //                 })
-                //             } else {
-                //
-                //                 Swal.fire({
-                //                     icon: 'success',
-                //                     title: '刪除失敗',
-                //                     showConfirmButton: false,
-                //                     timer: 1500
-                //
-                //                 })
-                //                 //  alert(resp.data.successful ? "刪除成功" : "刪除失敗");
-                //
-                //             }
-                //
-                //         })
-                //
-                // }
-            },
-            deleteAlert(){
-                Swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
+                const result = Swal.fire({
+                    title: '確定刪除此張照片嗎?',
+
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: '刪除',
+                    cancelButtonText: '取消'
+
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        Swal.fire(
-                            'Deleted!',
-                            'Your file has been deleted.',
-                            'success'
-                        )
+
+                        let pjName = getProjectName();
+                        axios.get(pjName + "/item/GetItemPhoto?action=DeletePhoto&ip_id=" + this.pId)
+                            .then((resp) => {
+                                if (resp.data.successful) {
+                                    Swal.fire(
+                                        'Deleted!',
+                                        'Your file has been deleted.',
+                                        'success'
+                                    ).then(() => {
+                                        location.reload();
+                                    })
+
+                                }
+
+                            })
+
                     }
                 })
+
             },
+
 
             upload(fileLIst) {
                 let formData = new FormData();
@@ -416,6 +411,13 @@
                     }
                 }
             },
+            checkMinDate() {
+                let currentDay = new Date();
+                currentDay= moment(currentDay).format('YYYY-MM-DD')
+                let minDate = this.item.itemDate;
+                minDate = moment(minDate).format('YYYY-MM-DD')
+                return (minDate>=currentDay)? true : "此欄位必填,選擇日期不能小於今天"
+            }
 
 
         },

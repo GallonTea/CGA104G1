@@ -27,6 +27,8 @@
 
     <link rel="stylesheet" type="text/css" href="../../resources/static/css/orderDetails.css"/>
 
+    <!--	sweetalert-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         [v-clock] {
             display: none;
@@ -164,6 +166,7 @@
             border-color: #e9e9e9;
             padding: 12px 15px;
             vertical-align: middle;
+            font-size: 1.2rem;
         }
 
         table.table tr th:first-child {
@@ -323,7 +326,8 @@
                             <div class="col-sm-8">
                                 <button @click="refresh()" class="btn btn-primary"><i
                                         class="fa-solid fa-arrows-rotate"></i> <span>Refresh List</span></button>
-                                <button class="btn btn-secondary" @click="addItem"><i class="fa-regular fa-file-excel"></i> <span>新增商品</span>
+                                <button class="btn btn-secondary" @click="addItem"><i
+                                        class="fa-regular fa-file-excel"></i> <span>新增商品</span>
                                 </button>
 
                             </div>
@@ -344,16 +348,18 @@
                                 <!--                                </div>-->
                             </div>
                             <div class="col-sm-9">
-                                <button type="button" class="btn btn-primary" @click="searchItem()"><i class="fa fa-search"></i></button>
+                                <button type="button" class="btn btn-primary" @click="searchItem()"><i
+                                        class="fa fa-search"></i></button>
                                 <div class="filter-group">
                                     <label>查詢</label>
-                                    <input type="text" class="form-control" v-model="keyWords" @keyup.enter="searchItem()">
+                                    <input type="text" class="form-control" v-model="keyWords"
+                                           @keyup.enter="searchItem()">
                                 </div>
 
                                 <div class="filter-group">
                                     <label>商品種類</label>
-<!--                                    @change="switchSelect($event)"-->
-                                    <select class="select-group"  @change="searchItem()" v-model="selectedType">
+                                    <!--                                    @change="switchSelect($event)"-->
+                                    <select class="select-group" @change="searchItem()" v-model="selectedType">
                                         <option v-for="type in allType" :value="type.itemtId">{{type.itemtName}}
                                         </option>
                                     </select>
@@ -385,9 +391,9 @@
                             <td><a href="#">{{ item.itemName }}</a></td>
                             <!--                            <td>London</td>-->
                             <td>{{ item.itemtName }}</td>
-                            <td>NT${{ item.itemPrice }}</td>
+                            <td>${{ item.itemPrice }}</td>
                             <td>{{ item.itemAmount }}</td>
-<!--                            <td>{{ item.itemStatus }}</td>-->
+                            <!--                            <td>{{ item.itemStatus }}</td>-->
                             <td v-if="item.itemStatus===0">下架🔴</td>
                             <td v-else>上架🟢</td>
                             <td>{{ item.itemDate }}</td>
@@ -438,55 +444,44 @@
             </div>
         </div>
 
-        <div class="py-2">
-            <div class="modal modal-lg fade" id="myModal">
-                <div class="modal-dialog">
+        <!--        <div class="py-2">-->
+        <!--            <div class="modal modal-lg fade" id="myModal">-->
+        <!--                <div class="modal-dialog">-->
 
-                    <div class="modal-content row d-flex justify-content-center">
-                        <div class="modal-header">
-                            <h5 class="modal-title">商品詳情</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
+        <!--                    <div class="modal-content row d-flex justify-content-center">-->
+        <!--                        <div class="modal-header">-->
+        <!--                            <h5 class="modal-title">商品詳情</h5>-->
+        <!--                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>-->
+        <!--                        </div>-->
 
-                        <!--                        <a href="#">-->
-                        <!--                            <div class="modal-body" v-for="(detail, index) in detail"-->
-                        <!--                                 :key="detail.itemId">-->
+        <!--                                                <a href="#">-->
 
-                        <!--                                <div class="media align-items-lg-center flex-column flex-lg-row p-3">-->
-                        <!--                                    <div class="media-body">-->
-                        <!--                                        <h5 class="font-weight-bold mb-2">{{ detail.itemName }}</h5>-->
-                        <!--                                        &lt;!&ndash;                                    <p class="font-italic text-muted mb-0 small">128 GB ROM | 15.49 cm (6.1 inch)&ndash;&gt;-->
-                        <!--                                        &lt;!&ndash;                                        Display 12MP Rear Camera | 7MP Front Camera A12 Bionic Chip Processor</p>&ndash;&gt;-->
-                        <!--                                        <div class="d-flex align-items-center justify-content-between mt-1">-->
-                        <!--                                            <h6 class="font-weight-bold my-2">$TWD {{ detail.itemPrice }}</h6>-->
-                        <!--                                            <h6 class="font-weight-bold my-2">商品數量 {{ detail.cdAmount }}</h6>-->
-                        <!--                                            &lt;!&ndash;                                        <ul class="list-inline small">&ndash;&gt;-->
-                        <!--                                            &lt;!&ndash;                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>&ndash;&gt;-->
-                        <!--                                            &lt;!&ndash;                                            </li>&ndash;&gt;-->
-                        <!--                                            &lt;!&ndash;                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>&ndash;&gt;-->
-                        <!--                                            &lt;!&ndash;                                            </li>&ndash;&gt;-->
-                        <!--                                            &lt;!&ndash;                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>&ndash;&gt;-->
-                        <!--                                            &lt;!&ndash;                                            </li>&ndash;&gt;-->
-                        <!--                                            &lt;!&ndash;                                            <li class="list-inline-item m-0"><i class="fa fa-star text-success"></i>&ndash;&gt;-->
-                        <!--                                            &lt;!&ndash;                                            </li>&ndash;&gt;-->
-                        <!--                                            &lt;!&ndash;                                            <li class="list-inline-item m-0"><i class="fa fa-star-o text-gray"></i></li>&ndash;&gt;-->
-                        <!--                                            &lt;!&ndash;                                        </ul>&ndash;&gt;-->
-                        <!--                                        </div>-->
-                        <!--                                    </div>-->
-                        <!--                                    <div>-->
-                        <!--                                        <img :src="'data:image/jpeg;base64,' + detail.photo" alt="productImg"-->
-                        <!--                                             class="rwding rounded">-->
-                        <!--                                    </div>-->
 
-                        <!--                                </div>-->
-                        <!--                            </div>-->
-                        <!--                        </a>-->
+        <!--                                                        <div class="media align-items-lg-center flex-column flex-lg-row p-3">-->
+        <!--                                                            <div class="media-body">-->
+        <!--                                                                <h5 class="font-weight-bold mb-2">{{ detail.itemName }}</h5>-->
+        <!--                                                                &lt;!&ndash;                                    <p class="font-italic text-muted mb-0 small">128 GB ROM | 15.49 cm (6.1 inch)&ndash;&gt;-->
+        <!--                                                                &lt;!&ndash;                                        Display 12MP Rear Camera | 7MP Front Camera A12 Bionic Chip Processor</p>&ndash;&gt;-->
+        <!--                                                                <div class="d-flex align-items-center justify-content-between mt-1">-->
+        <!--                                                                    <h6 class="font-weight-bold my-2">$TWD {{ detail.itemPrice }}</h6>-->
+        <!--                                                                    <h6 class="font-weight-bold my-2">商品數量 {{ detail.cdAmount }}</h6>-->
 
-                    </div>
+        <!--                                                                </div>-->
+        <!--                                                            </div>-->
+        <!--                                                            <div>-->
+        <!--                                                                <img :src="'data:image/jpeg;base64,' + detail.photo" alt="productImg"-->
+        <!--                                                                     class="rwding rounded">-->
+        <!--                                                            </div>-->
 
-                </div>
-            </div>
-        </div>
+        <!--                                                        </div>-->
+
+        <!--                                                </a>-->
+
+        <!--                    </div>-->
+
+        <!--                </div>-->
+        <!--            </div>-->
+        <!--        </div>-->
 
     </div>
 </main>
@@ -514,40 +509,40 @@
                 searchAll: [],
                 newItems: [],
                 allType: [],
-                selectedType:0,
-                orderPriceDir:0,
-                orderStatusDir:2
+                selectedType: 0,
+                orderPriceDir: 0,
+                orderStatusDir: 2
             }
         }, methods: {
-            refresh(){
+            refresh() {
                 location.reload();
             },
-            orderPrice(){
-                if(this.orderPriceDir===0 || this.orderPriceDir===-1){
-                    this.items.sort((item1,item2)=>{
-                        return item1.itemPrice-item2.itemPrice;
+            orderPrice() {
+                if (this.orderPriceDir === 0 || this.orderPriceDir === -1) {
+                    this.items.sort((item1, item2) => {
+                        return item1.itemPrice - item2.itemPrice;
                     });
-                    this.orderPriceDir=1;
-                }else if(this.orderPriceDir===1){
-                    this.items.sort((item1,item2)=>{
-                        return item2.itemPrice-item1.itemPrice;
+                    this.orderPriceDir = 1;
+                } else if (this.orderPriceDir === 1) {
+                    this.items.sort((item1, item2) => {
+                        return item2.itemPrice - item1.itemPrice;
                     });
-                    this.orderPriceDir=-1;
+                    this.orderPriceDir = -1;
                 }
 
 
             },
-            orderStatus(){
-                if(this.orderStatusDir===0 || this.orderStatusDir===2){
-                    this.items.sort((item1,item2)=>{
-                        return item1.itemStatus-item2.itemStatus;
+            orderStatus() {
+                if (this.orderStatusDir === 0 || this.orderStatusDir === 2) {
+                    this.items.sort((item1, item2) => {
+                        return item1.itemStatus - item2.itemStatus;
                     });
-                    this.orderStatusDir=1;
-                }else if(this.orderStatusDir===1){
-                    this.items.sort((item1,item2)=>{
-                        return item2.itemStatus-item1.itemStatus;
+                    this.orderStatusDir = 1;
+                } else if (this.orderStatusDir === 1) {
+                    this.items.sort((item1, item2) => {
+                        return item2.itemStatus - item1.itemStatus;
                     });
-                    this.orderStatusDir=2;
+                    this.orderStatusDir = 2;
                 }
 
 
@@ -559,22 +554,33 @@
             deleteItem(id) {
                 let pjName = getProjectName();
                 axios.post(pjName + '/item/items?action=delete', {deleteId: id})
-                location.reload();
-                alert("刪除成功");
+                    .then((resp) => {
+                        Swal.fire({
+                            icon: 'success',
+                            title: '刪除成功',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                    })
+                setTimeout(function () {
+                   location.reload();
+                }, 2000)
+
+
             },
             addItem() {
                 location = 'addItem.html';
             },
             searchItem() {
                 this.newItems = this.items;
-                if (this.keyWords.trim() === ""&&this.selectedType===0) {
+                if (this.keyWords.trim() === "" && this.selectedType === 0) {
                     this.items = this.newItems;
                     location.reload();
                 } else {
                     // alert(this.selectedType)
 
                     let pjName = getProjectName();
-                    axios.get(pjName + "/item/items?action=search&keyWords=" + this.keyWords+"&type="+this.selectedType)
+                    axios.get(pjName + "/item/items?action=search&keyWords=" + this.keyWords + "&type=" + this.selectedType)
                         .then((resp) => {
                             this.searchAll = resp.data;
                             this.newItems = this.items;

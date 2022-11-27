@@ -4,6 +4,7 @@ package com.mem.model;
 	
 	import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.mail.Authenticator;
@@ -133,6 +134,10 @@ import org.json.JSONObject;
 
 		//查詢所有會員
 		public List<MemVO> getAll() {
+			return dao.getAll();
+		}
+		
+		public List<MemVO> getAllMem(Map<String, String[]> map){
 			return dao.getAll();
 		}
 		

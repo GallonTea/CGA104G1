@@ -14,11 +14,10 @@ package com.qualified_doctor.model;
 
 		}
 
-		public Qualified_doctorVO addQualified_doctor(Integer doc_id ,Integer mem_id,Integer doc_status) {
+		public Qualified_doctorVO addQualified_doctor(Integer mem_id,Integer doc_status) {
 
 			Qualified_doctorVO qualified_doctorVO = new Qualified_doctorVO();
 			
-			qualified_doctorVO.setDoc_id(doc_id);
 			qualified_doctorVO.setMem_id(mem_id);
 			qualified_doctorVO.setDoc_status(doc_status);
 
@@ -27,18 +26,14 @@ package com.qualified_doctor.model;
 			return qualified_doctorVO;
 		}
 
-		//預留給 Struts 2 或 Spring MVC 用
-		public void addQualified_doctor(Qualified_doctorVO qualified_doctorVO) {
-			dao.insert(qualified_doctorVO);
-		}
 		
-		public Qualified_doctorVO updateQualified_doctor(Integer doc_id ,Integer mem_id,Integer doc_status) {
+		public Qualified_doctorVO updateQualified_doctor( Integer mem_id,Integer doc_status,Integer doc_id) {
 
 			Qualified_doctorVO qualified_doctorVO = new Qualified_doctorVO();
 
-			qualified_doctorVO.setDoc_id(doc_id);
 			qualified_doctorVO.setMem_id(mem_id);
 			qualified_doctorVO.setDoc_status(doc_status);
+			qualified_doctorVO.setDoc_id(doc_id);
 			dao.update(qualified_doctorVO);
 
 			return dao.findByPrimaryKey(doc_id);
@@ -62,6 +57,10 @@ package com.qualified_doctor.model;
 
 		public List<Qualified_doctorVO> getAll() {
 			return dao.getAll();
+		}
+		
+		public Qualified_doctorVO memidChk(Integer mem_id){
+			return dao.memidChk(mem_id);
 		}
 }
 

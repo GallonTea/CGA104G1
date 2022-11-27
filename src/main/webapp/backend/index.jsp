@@ -123,9 +123,9 @@
                 <div class="list-group">
                     <li class="list-group-item list-group-item-primary img_block myButton"><img src="<%=request.getContextPath()%>/backend/asset/img/share_icon/user.png"
                             width="80px" height="80px" class="block_image"></li>
-                    <a href="#" class="list-group-item list-group-item-action myButton2">會員帳號查詢</a>
-                    <a href="#" class="list-group-item list-group-item-action myButton2">會員帳號管理</a>
-                    <a href="#" class="list-group-item list-group-item-action myButton2">認證醫生管理</a>
+                    <a href="<%=request.getContextPath()%>/frontend/mem/select_page.jsp"  class="list-group-item list-group-item-action myButton2">會員帳號查詢</a>
+                    <a href="<%=request.getContextPath()%>/frontend/mem/listAllMem.jsp" class="list-group-item list-group-item-action myButton2">會員帳號管理</a>
+                    <a href="<%=request.getContextPath()%>/backend/qualified_doctor/listAllqualified_doctor.jsp" class="list-group-item list-group-item-action myButton2">認證醫生管理</a>
                 </div>
             </div>
 

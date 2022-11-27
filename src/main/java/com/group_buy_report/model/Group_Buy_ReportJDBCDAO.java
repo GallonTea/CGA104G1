@@ -19,15 +19,15 @@ public class Group_Buy_ReportJDBCDAO implements Group_Buy_ReportDAO_interface{
 	
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO GROUP_BUY_REPORT (MEM_ID, FREP_CONTENT, FREP_STATUS, FREP_RESULT, EMP_ID) VALUES (?, ?, ?, ?, ?)";
+			"INSERT INTO GROUP_BUY_REPORT (GBORDER_ID,MEM_ID, FREP_CONTENT, FREP_STATUS, FREP_RESULT, EMP_ID) VALUES (?, ?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
-			"SELECT GBFREP_ID,MEM_ID, FREP_CONTENT, FREP_STATUS, FREP_RESULT, EMP_ID FROM GROUP_BUY_REPORT order by GBFREP_ID";
+			"SELECT GBFREP_ID,GBORDER_ID,MEM_ID, FREP_CONTENT, FREP_STATUS, FREP_RESULT, EMP_ID FROM GROUP_BUY_REPORT order by GBFREP_ID";
 	private static final String GET_ONE_STMT = 
-			"SELECT GBFREP_ID,MEM_ID, FREP_CONTENT, FREP_STATUS, FREP_RESULT, EMP_ID FROM GROUP_BUY_REPORT where GBFREP_ID = ?";
+			"SELECT GBFREP_ID,GBORDER_ID,MEM_ID, FREP_CONTENT, FREP_STATUS, FREP_RESULT, EMP_ID FROM GROUP_BUY_REPORT where GBFREP_ID = ?";
 	private static final String DELETE = 
 			"DELETE FROM GROUP_BUY_REPORT where GBFREP_ID = ?";
 	private static final String UPDATE = 
-			"UPDATE GROUP_BUY_REPORT set MEM_ID=?, FREP_CONTENT=?, FREP_STATUS=?, FREP_RESULT=?, EMP_ID=? where GBFREP_ID = ?";
+			"UPDATE GROUP_BUY_REPORT set GBORDER_ID = ? , MEM_ID=?, FREP_CONTENT=?, FREP_STATUS=?, FREP_RESULT=?, EMP_ID=? where GBFREP_ID = ?";
 	
 	
 	
@@ -43,11 +43,12 @@ public class Group_Buy_ReportJDBCDAO implements Group_Buy_ReportDAO_interface{
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(INSERT_STMT);
 
-			pstmt.setInt(1, Group_Buy_ReportVO.getMem_id());
-			pstmt.setString(2, Group_Buy_ReportVO.getFrep_content());
-			pstmt.setInt(3, Group_Buy_ReportVO.getFrep_status());
-			pstmt.setInt(4, Group_Buy_ReportVO.getFrep_result());
-			pstmt.setInt(5, Group_Buy_ReportVO.getEmp_id());
+			pstmt.setInt(1, Group_Buy_ReportVO.getGborder_id());
+			pstmt.setInt(2, Group_Buy_ReportVO.getMem_id());
+			pstmt.setString(3, Group_Buy_ReportVO.getFrep_content());
+			pstmt.setInt(4, Group_Buy_ReportVO.getFrep_status());
+			pstmt.setInt(5, Group_Buy_ReportVO.getFrep_result());
+			pstmt.setInt(6, Group_Buy_ReportVO.getEmp_id());
 
 			pstmt.executeUpdate();
 
@@ -89,12 +90,13 @@ public class Group_Buy_ReportJDBCDAO implements Group_Buy_ReportDAO_interface{
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(UPDATE);
 
-			pstmt.setInt(1, Group_Buy_ReportVO.getMem_id());
-			pstmt.setString(2, Group_Buy_ReportVO.getFrep_content());
-			pstmt.setInt(3, Group_Buy_ReportVO.getFrep_status());
-			pstmt.setInt(4, Group_Buy_ReportVO.getFrep_result());
-			pstmt.setInt(5, Group_Buy_ReportVO.getEmp_id());
-			pstmt.setInt(6, Group_Buy_ReportVO.getGbfrep_id());
+			pstmt.setInt(1, Group_Buy_ReportVO.getGborder_id());
+			pstmt.setInt(2, Group_Buy_ReportVO.getMem_id());
+			pstmt.setString(3, Group_Buy_ReportVO.getFrep_content());
+			pstmt.setInt(4, Group_Buy_ReportVO.getFrep_status());
+			pstmt.setInt(5, Group_Buy_ReportVO.getFrep_result());
+			pstmt.setInt(6, Group_Buy_ReportVO.getEmp_id());
+			pstmt.setInt(7, Group_Buy_ReportVO.getGbfrep_id());
 
 			pstmt.executeUpdate();
 
@@ -184,6 +186,7 @@ public class Group_Buy_ReportJDBCDAO implements Group_Buy_ReportDAO_interface{
 			while (rs.next()) {
 				Group_Buy_ReportVO = new Group_Buy_ReportVO();
 				Group_Buy_ReportVO.setGbfrep_id(rs.getInt("gbfrep_id"));
+				Group_Buy_ReportVO.setGborder_id(rs.getInt("gborder_id"));				
 				Group_Buy_ReportVO.setMem_id(rs.getInt("mem_id"));
 				Group_Buy_ReportVO.setFrep_content(rs.getString("frep_content"));
 				Group_Buy_ReportVO.setFrep_status(rs.getInt("frep_status"));
@@ -242,6 +245,7 @@ public class Group_Buy_ReportJDBCDAO implements Group_Buy_ReportDAO_interface{
 			while (rs.next()) {
 				Group_Buy_ReportVO = new Group_Buy_ReportVO();
 				Group_Buy_ReportVO.setGbfrep_id(rs.getInt("gbfrep_id"));
+				Group_Buy_ReportVO.setGborder_id(rs.getInt("gborder_id"));	
 				Group_Buy_ReportVO.setMem_id(rs.getInt("mem_id"));
 				Group_Buy_ReportVO.setFrep_content(rs.getString("frep_content"));
 				Group_Buy_ReportVO.setFrep_status(rs.getInt("frep_status"));

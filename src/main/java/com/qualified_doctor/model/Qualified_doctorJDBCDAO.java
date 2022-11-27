@@ -26,7 +26,8 @@ public class Qualified_doctorJDBCDAO implements Qualified_doctorDAO_interface {
 		"DELETE FROM qualified_doctor where doc_id = ?";
 	private static final String UPDATE = 
 		"UPDATE qualified_doctor set mem_id=?, doc_status=? where doc_id = ?";
-
+	private static final String MEMID_CHK = 
+		"SELECT mem_id FROM qualified_doctor where mem_id = ?";
 
 	@Override
 	public void insert(Qualified_doctorVO qualified_doctorVO) {
@@ -280,6 +281,65 @@ public class Qualified_doctorJDBCDAO implements Qualified_doctorDAO_interface {
 		}
 		return list;
 	}
+	
+	@Override
+	public Qualified_doctorVO memidChk(Integer mem_id) {
+		Qualified_doctorVO qualified_doctorVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(MEMID_CHK);
+
+			pstmt.setInt(1, mem_id);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				qualified_doctorVO = new Qualified_doctorVO();
+
+				qualified_doctorVO.setMem_id(rs.getInt("mem_id"));
+
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return qualified_doctorVO;
+	}
 
 	public static void main(String[] args) {
 		Qualified_doctorJDBCDAO dao = new Qualified_doctorJDBCDAO();
@@ -292,11 +352,11 @@ public class Qualified_doctorJDBCDAO implements Qualified_doctorDAO_interface {
 //		dao.insert(qualified_doctorVO1);
 //
 //		// 修改
-//		Qualified_doctorVO qualified_doctorVO2 = new Qualified_doctorVO();
-//		qualified_doctorVO2.setMem_id(3);
-//		qualified_doctorVO2.setDoc_status(1);
-//		qualified_doctorVO2.setDoc_id(2);
-//		dao.update(qualified_doctorVO2);
+		Qualified_doctorVO qualified_doctorVO2 = new Qualified_doctorVO();
+		qualified_doctorVO2.setMem_id(2);
+		qualified_doctorVO2.setDoc_status(0);
+		qualified_doctorVO2.setDoc_id(3);
+		dao.update(qualified_doctorVO2);
 //
 //		// 刪除
 //		dao.delete(2);

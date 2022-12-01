@@ -20,7 +20,16 @@ import com.mem.model.MemService;
 import com.mem.model.MemVO;
 
 
-@WebFilter(urlPatterns =  { "/frontend/mem/*" } )
+@WebFilter(urlPatterns =  { "/frontend/article/addArticle.jsp",
+							"/frontend/article/addPic.jsp",
+							"/frontend/article/updateArticle.jsp",
+							"/Article_reportServlet",
+							"/Article_commentServlet",
+							"/CusNameServlet",
+							"/ArtLikeHateServlet",
+							"/frontend/group_join/*",
+							"/frontend/groupBuy/*",
+							} )
 
 public class MemLoginFilter implements Filter {
    

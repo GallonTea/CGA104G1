@@ -28,31 +28,139 @@ pageContext.setAttribute("list", list);
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<!-- import font-style -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link
+	href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap"
+	rel="stylesheet">
+
+<!-- import css stylesheet -->
+<link rel="stylesheet" href="../../resources/static/css/plugins.css">
+<link rel="stylesheet" href="../../resources/static/css/style.css">
+<link rel="stylesheet" href="../../resources/static/css/responsive.css">
+<!-- import jquery-3.6.0 -->
+<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- import icon -->
+<script src="https://kit.fontawesome.com/b5ef6b60f3.js"
+	crossorigin="anonymous"></script>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/qs/6.11.0/qs.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<style>
+html {
+	font-size: 22px;
+}
+
+.home_main {
+	z-index: -999999;
+	position: relative;
+	transition: 3s;
+	opacity: 30%;
+	height: 4160px;
+	width: auto;
+	background-image:
+		url('../resources/static/image/andrew-s-ouo1hbizWwo-unsplash.jpg');
+	background-repeat: no-repeat;
+	background-size: 100%;
+	background-color: transparent;
+	transform: scale(1.111);
+	margin-bottom: 10%;
+}
+
+body {
+	background: #eee;
+}
+
+footer {
+	background: #fbaa70;
+	padding: 50px 10px;
+	font-size: 18px;
+}
+
+.badge {
+	padding-left: 9px;
+	padding-right: 9px;
+	-webkit-border-radius: 9px;
+	-moz-border-radius: 9px;
+	border-radius: 9px;
+}
+
+.label-warning[href], .badge-warning[href] {
+	background-color: #c67605;
+}
+
+#lblCartCount {
+	font-size: 12px;
+	background: #ff0000;
+	color: #fff;
+	padding: 0 5px;
+	vertical-align: top;
+	margin-left: -10px;
+}
+
+/* footer 樣式 */
+footer {
+	border-top: solid 1px #c9c9c9;
+	padding: 80px 0px;
+}
+
+footer a {
+	color: black;
+	text-decoration: none;
+}
+
+footer a:hover {
+	color: #929292;
+	opacity: 60%;
+}
+
+footer {
+	border-top: solid 1px #c9c9c9;
+	padding: 80px 0;
+	background-color: white;
+}
+
+footer img {
+	width: 110px;
+	margin-bottom: 0;
+}
+
+@media all and (min-width: 992px) {
+	.navbar .nav-item .dropdown-menu {
+		display: none;
+	}
+	.navbar .nav-item:hover .nav-link {
+		
+	}
+	.navbar .nav-item:hover .dropdown-menu {
+		display: block;
+	}
+	.navbar .nav-item .dropdown-menu {
+		margin-top: 0;
+	}
+}
+</style>
 </head>
 <body>
-	<div class="container"><main>
+	<main>
 
 	<form
 		action="<%=request.getContextPath()%>/GroupBuyMasterApplyListServlet">
 
-<!-- 		<div class="form-group"> -->
-<!-- 			<label for="formGroupExampleInput2">團購商品原始價格</label> -->
-			<%-- 					<div>${Group_Buy_ItemVO.gbitem_price}</div> --%>
-<!-- 		</div> -->
-
-
-		<!-- 				<FORM METHOD="post" -->
-		<%-- 					ACTION="<%=request.getContextPath()%>/Discount/Discount.do"> --%>
-		<br> <b>選擇折扣:</b> <select size="1" name="discount_price">
+		<br> <b>選擇折扣:</b> <select size="1" name="discount_price" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 			<c:forEach var="DiscountVO" items="${list}">
 				<option value="${DiscountVO.discount_price}">
 					${DiscountVO.discount_nar} , 原始價格為${Group_Buy_ItemVO.gbitem_price}
 					,
-					折扣後價格為${DiscountVO.discount_price*Group_Buy_ItemVO.gbitem_price*0.01}
+					折扣後價格為 <c:out value="${Math.round(DiscountVO.discount_price*Group_Buy_ItemVO.gbitem_price*0.01)}" />
 				
 			</c:forEach>
 		</select> 
 		<br>
+		
 		<input type="hidden" name="gbitem_price"
 			value="${Group_Buy_ItemVO.gbitem_price}"> <input
 			type="hidden" name="gb_id" value="${Group_BuyVO.gb_id}"> 
@@ -70,8 +178,12 @@ pageContext.setAttribute("list", list);
 		<input type="hidden" name="action" value="deleteByGroupBuyMaster">
 	</FORM>
 
-</main></div>
-	
+</main>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	<!--  NavBar  -->
+	<script src="../../resources/static/js/navbar.js"></script>
+	<!--  Footer  -->
+	<script src="../../resources/static/js/footer.js"></script>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>

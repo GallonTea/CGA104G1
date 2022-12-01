@@ -1,5 +1,6 @@
 package com.group_buy.model;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 public class Group_BuyVO implements java.io.Serializable{
@@ -13,6 +14,15 @@ public class Group_BuyVO implements java.io.Serializable{
 	private Integer gb_status;
 	private Integer gb_price;
 	private String  gb_name;
+	
+	private String gbitem_name;
+	private String gbitem_content;
+	private Integer gbitem_price;
+	private Integer gbitem_status;
+	private Date gbitem_startdate;
+	private Date gbitem_enddate;
+	private Integer gbitem_type;
+	
 	
 	public Integer getGb_id() {
 		return gb_id;
@@ -73,6 +83,51 @@ public class Group_BuyVO implements java.io.Serializable{
 	}
 	public void setGb_name(String gb_name) {
 		this.gb_name = gb_name;
+	}
+	
+	
+	
+	public String getGbitem_name() {
+		return gbitem_name;
+	}
+	public void setGbitem_name(String gbitem_name) {
+		this.gbitem_name = gbitem_name;
+	}
+	public String getGbitem_content() {
+		return gbitem_content;
+	}
+	public void setGbitem_content(String gbitem_content) {
+		this.gbitem_content = gbitem_content;
+	}
+	public Integer getGbitem_price() {
+		return gbitem_price;
+	}
+	public void setGbitem_price(Integer gbitem_price) {
+		this.gbitem_price = gbitem_price;
+	}
+	public Integer getGbitem_status() {
+		return gbitem_status;
+	}
+	public void setGbitem_status(Integer gbitem_status) {
+		this.gbitem_status = gbitem_status;
+	}
+	public Date getGbitem_startdate() {
+		return gbitem_startdate;
+	}
+	public void setGbitem_startdate(Date gbitem_startdate) {
+		this.gbitem_startdate = gbitem_startdate;
+	}
+	public Date getGbitem_enddate() {
+		return gbitem_enddate;
+	}
+	public void setGbitem_enddate(Date gbitem_enddate) {
+		this.gbitem_enddate = gbitem_enddate;
+	}
+	public Integer getGbitem_type() {
+		return gbitem_type;
+	}
+	public void setGbitem_type(Integer gbitem_type) {
+		this.gbitem_type = gbitem_type;
 	}
 	
 	

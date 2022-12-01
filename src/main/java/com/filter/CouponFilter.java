@@ -48,7 +48,7 @@ public class CouponFilter extends HttpFilter implements Filter {
 			}
 		}
 		session.setAttribute("location", req.getRequestURI());
-		res.sendRedirect(req.getContextPath() + "/backend/login/login.jsp");
+		res.sendRedirect(req.getContextPath() + "/backend/login/backLogin.jsp");
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {

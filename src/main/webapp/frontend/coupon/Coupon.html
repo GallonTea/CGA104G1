@@ -44,6 +44,7 @@
         }
     </style>
 
+
 </head>
 
 <body>
@@ -52,26 +53,26 @@
 <article>
     <div class="container" style="height: 1000px">
 
-        <div id="app" v-cloak>
+        <div id="app">
 
             <template class="row d-flex justify-content-center align-items-center container">
 
                 <div style="height: 10px"></div>
 
                 <div class="col-1"></div>
-                <button class="col-2 btn btn-success" @click="goHome()" style="opacity: 60%;z-index: 9999">
+                <button class="col-2 btn btn-success" @click="goHome()" style="opacity: 60%;z-index: 999999999">
                     回到首頁
                 </button>
                 <div class="col-5"></div>
-                <button class="col-2 btn btn-success" @click="goCoupon()" style="opacity: 60%;z-index: 9999">
-                    領取折價券
+                <button class="col-2 btn btn-success" @click="goCoupon()" style="opacity: 60%;z-index: 999999999">
+                    領取優惠券
                 </button>
                 <div class="col-1"></div>
 
-                <!--                <header style="height: 100px">-->
-                <!--                    <img src="../../resources/static/image/raphael-maksian-qmpNzGjO_KE-unsplash.jpg" alt="img"-->
-                <!--                         class="couponpageimg"/>-->
-                <!--                </header>-->
+                <header style="height: 100px">
+                    <img src="../../resources/static/image/raphael-maksian-qmpNzGjO_KE-unsplash.jpg" alt="img"
+                         class="couponpageimg"/>
+                </header>
 
 
                 <div id="couponBody" class="cd-flex card text-center col-md-6" v-for="coupon in coupon"
@@ -103,6 +104,10 @@
     </div>
 </article>
 
+
+<!-- import main.js -->
+<script src="#"></script>
+
 <!-- import bootstrap 5.2.1 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
@@ -111,10 +116,6 @@
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-<!--  NavBar  -->
-<script src="../../resources/static/js/navbar.js"></script>
-<!--  Footer  -->
-<script src="../../resources/static/js/footer.js"></script>
 
 <script>
 
@@ -128,22 +129,22 @@
             }
         },
         beforeCreate() {
-            // let member = sessionStorage.getItem('mem-info');
-            // if (!member) {
-            //     Swal.fire({
-            //         icon: 'error',
-            //         title: '你還沒登入喔!',
-            //     })
-            //     setTimeout(function () {
-            //         window.location.assign('/CGA104G1/frontend/mem/login.jsp')
-            //     }, 1500)
-            // }
-            // let memberId = JSON.parse(member).memberId
+            let member = sessionStorage.getItem('mem-info');
+            if (!member) {
+                Swal.fire({
+                    icon: 'error',
+                    title: '你還沒登入喔!',
+                })
+                setTimeout(function () {
+                    window.location.assign('/CGA104G1/frontend/mem/login.jsp')
+                }, 1500)
+            }
+            let memberId = JSON.parse(member).memberId
 
             let qs = Qs; // 序列化工具 有內建
             // axios.post(api地址(servlet 位置啦), 要傳的內容(先序列化)
             axios.post('/CGA104G1/MemberCouponServlet', qs.stringify({
-
+                memberId: memberId,
             }))
                 .then(res => {   // 接收回傳
                     this.coupon = res.data; // 將回傳資料賦予 coupon
@@ -161,7 +162,9 @@
                 }))
         },
         mounted() {
-
+            let member = sessionStorage.getItem('mem-info');
+            this.memberName = JSON.parse(member).memberName;
+            this.memberId = JSON.parse(member).memberId;
         },
         methods: {
             goHome: function () {
@@ -177,9 +180,6 @@
 
 
 </script>
-
-<!--  Cart -->
-<script type="text/javascript" src="../../resources/static/js/cart.js"></script>
 
 
 </body>

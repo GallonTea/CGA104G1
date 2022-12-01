@@ -28,7 +28,7 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <link rel="stylesheet" type="text/css" href="../resources/static/css/main.css"/>
-    <link rel="stylesheet" type="text/css" href="../resources/static/css/bestSell.css"/>
+
 
     <style>
         body {
@@ -40,13 +40,6 @@
             z-index: -999999;
             /*opacity: 30%;*/
         }
-
-        .inner img {
-            /*max-width: 100%;*/
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-        }
     </style>
 
 </head>
@@ -56,29 +49,8 @@
 
 <main>
 
-    <div id="myApp" style="height: auto; min-height:700px;background-color: rgba(255,255,255,0.51)" v-cloak>
-
-        <article class="container" id="recommend">
-
-            <section id="shop_best_seller">
-
-                <div class="col-md-12 text-center">
-                    <h1>站長推薦商品<i class="fa-solid fa-fire" style="color: red;"></i></h1>
-                </div>
-                <br>
-
-                <div class="response row">
-                    <div class="outer" v-for="(result, index) in result" :key="result.itemId">
-                        <div class="inner"><img :src="'data:image/jpeg;base64,' + result.photo" alt="productImg"><h4>
-                            {{ result.itemName }}</h4>
-                            <span>NT$ {{ result.itemPrice }}</span></div>
-                    </div>
-                </div>
-
-            </section>
-        </article>
+    <div id="app" style="height: 700px">
     </div>
-
 
 </main>
 
@@ -88,12 +60,9 @@
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
         crossorigin="anonymous"></script>
 
-
 <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script src="https://unpkg.com/vue-router@4"></script>
-
-
 <!--  NavBar  -->
 <script src="../resources/static/js/navbar.js"></script>
 <!--  Footer  -->

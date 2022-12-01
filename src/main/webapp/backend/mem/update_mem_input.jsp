@@ -6,11 +6,11 @@
 <%
 MemVO memVO = (MemVO) request.getAttribute("memVO");
 %>
-<%@include file="/backend/backNavbar.jsp"%>
-<%= memVO==null %>
+
 <html>
 <head>
 <title>會員資料修改</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -123,6 +123,10 @@ th, td {
 </head>
 <body bgcolor='white'>
 
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
 <table id="table-1">
 	<tr><td>
 		 <h3>會員資料修改 </h3>
@@ -209,6 +213,11 @@ th, td {
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="mem_id" value="<%=memVO.getMem_id()%>">
 <input type="submit" style="margin-left:38%" value="送出修改"></FORM>
+
+		</section>
+	</main>
+
+
 
 </body>
 

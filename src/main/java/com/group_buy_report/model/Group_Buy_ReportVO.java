@@ -70,10 +70,15 @@ public class Group_Buy_ReportVO implements java.io.Serializable{
 	}
 	
 	public com.mem.model.MemVO getmemVO() {
-		com.mem.model.MemService empSvc = new com.mem.model.MemService();
-	    com.mem.model.MemVO memVO = empSvc.getOneMem(mem_id);
+		com.mem.model.MemService memSvc = new com.mem.model.MemService();
+	    com.mem.model.MemVO memVO = memSvc.getOneMem(mem_id);
 	    return memVO;
     }
+//	public com.mem.model.MemVO getmemVO() {
+//		com.mem.model.MemService memSvc = new com.mem.model.MemService();
+//		com.mem.model.MemVO memVO = memSvc.getOneMem(mem_id);
+//		return memVO;
+//	}
 	
 	
 }

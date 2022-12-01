@@ -73,8 +73,8 @@ public class MemFilter extends HttpFilter implements Filter {
 			} else {
 //				被停權用戶
 		session.setAttribute("location", req.getRequestURI());
-		session.invalidate();
 		res.sendRedirect(req.getContextPath() + "/frontend/memLogin/freezeAc.jsp");
+//		session.invalidate();
 			}
 	}
 

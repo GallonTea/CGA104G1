@@ -1,15 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="utf-8"%>
 <%@ page import="com.mem.model.*"%>
-<%-- 此頁暫練習採用 Script 的寫法取值 --%>
-
 <%
 MemVO memVO = (MemVO) request.getAttribute("memVO");
 %>
 
-
-<%= memVO==null %>
 <html>
 <head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <title>會員資料 </title>
 
 <style>
@@ -44,7 +41,11 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 
 </head>
 <body bgcolor='white'>
-
+<!-- 複製起點 -->
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
 <table id="table-1">
 	<tr><td>
 		 <h3>會員資料 </h3>
@@ -91,6 +92,10 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 			</c:if>
 	</tr>
 </table>
+
+		</section>
+	</main>
+
 
 </body>
 </html>

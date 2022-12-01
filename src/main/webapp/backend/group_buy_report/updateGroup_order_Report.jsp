@@ -10,10 +10,11 @@ Group_Buy_ReportVO Group_Buy_ReportVO = (Group_Buy_ReportVO) request.getAttribut
 %>
 
 <%= Group_Buy_ReportVO==null %>
-<%@include file="/backend/backNavbar.jsp"%>
+
 <html>
 <head>
 <title>團購檢舉修改</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -126,6 +127,10 @@ th, td {
 </head>
 <body bgcolor='white'>
 
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
 <table id="table-1">
 	<tr><td>
 		 <h3>團購檢舉資料修改 </h3>
@@ -157,7 +162,8 @@ th, td {
 	  <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
 	<tr>
 		<td style="color: gray"><b>會員編號:</b></td>
-		<td><input type="TEXT" name="mem_id" readonly style="color: gray" size="45" value="<%=Group_Buy_ReportVO.getMem_id()%>" /></td>
+		<td><input type="TEXT" readonly style="color: gray" size="45" value="${Group_Buy_ReportVO.mem_id}-${Group_Buy_ReportVO.memVO.mem_name}"/></td>
+		<td><input type="hidden" name="mem_id"  value="${Group_Buy_ReportVO.mem_id}"/></td>
 	</tr>
 	<tr>
 		<td><b style="color: gray">團購檢舉內容:</b></td>
@@ -174,7 +180,7 @@ th, td {
 <!-- 		</tr> -->
 		
 	<tr >
-		<td><b>團購檢舉審核結果:</b><font color=red><b>*</b></font></td>
+		<td style="color:black"><b>團購檢舉審核結果:</b><font color=red><b>*</b></font></td>
 		<td><select size="1" name="frep_result">
 				<option value="0" ${(Group_Buy_ReportVO.frep_result==0)? 'selected':'' } >尚未審核完畢</option>
 				<option value="1" ${(Group_Buy_ReportVO.frep_result==1)? 'selected':'' } >檢舉屬實</option>
@@ -192,7 +198,7 @@ th, td {
 	
 	  <jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
        	<tr >
-		<td><b>選擇員工:</b></td>
+		<td style="color:black"><b>選擇員工:</b></td>
        	  <td><select size="1" name=emp_id>
           <c:forEach var="EmpVO" items="${empSvc.all}" > 
           <option value="${EmpVO.emp_id}">${EmpVO.emp_id} -【${EmpVO.emp_name}】
@@ -211,6 +217,10 @@ th, td {
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="gbfrep_id" value="<%=Group_Buy_ReportVO.getGbfrep_id()%>">
 <input type="submit" style="margin-left:39%" value="送出修改"></FORM>
+		</section>
+	</main>
+
+
 </body>
 
 </html>

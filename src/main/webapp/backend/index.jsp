@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-        <!doctype html>
+<%@ page import="java.util.*"%>
+<%@ page import="com.news.model.*"%>
+
+<%
+    NewsService newsSvc = new NewsService();
+    List<NewsVO> list = newsSvc.getAll();
+    pageContext.setAttribute("list",list);
+%>
+
+<!doctype html>
 <html>
 
 <head>
@@ -9,181 +18,151 @@
     <title>Barei後臺首頁</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-
-    <style>
-        .myButton {
-            box-shadow: inset 0px 1px 0px 0px #fff6af;
-            background: linear-gradient(to bottom, #ffec64 5%, #ffab23 100%);
-            background-color: #ffec64;
-            border: 1px solid #ffaa22;
-            display: inline-block;
-            color: #333333;
-            font-family: Arial;
-            font-size: 14px;
-            font-weight: bold;
-            padding: 6px 24px;
-            text-decoration: none;
-            text-shadow: 0px 1px 0px #ffee66;
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/news.css">
+	<style>
+/* 		設定上方滾動公告 */
+		.iconfont {
+            font-size: 16px;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -webkit-text-stroke-width: 0.2px;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        .myButton2 {
-            box-shadow: inset 0px 1px 0px 0px #fff6af;
-            background-color: transparent;
-            border: 1px solid #ffaa22;
-            display: inline-block;
-            cursor: pointer;
-            color: #333333;
-            font-family: Arial;
-            font-size: 14px;
-            font-weight: bold;
-            padding: 6px 24px;
-            text-decoration: none;
-            text-align: center;
-        }
-
-        .myButton2:hover {
-            color: #f0094a;
-            background: transparent;
-            box-shadow: none;
-        }
-
-        .myButton2:before,
-        .myButton2:after {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            height: 2px;
-            width: 0;
-            background: #f0094a;
-            box-shadow:
-                -1px -1px 5px 0px #fff,
-                7px 7px 20px 0px #0003,
-                4px 4px 5px 0px #0002;
-            transition: 400ms ease all;
-        }
-
-        .myButton2:after {
-            right: inherit;
-            top: inherit;
-            left: 0;
-            bottom: 0;
-        }
-
-        .myButton2:hover:before,
-        .myButton2:hover:after {
-            width: 100%;
-            transition: 800ms ease all;
-        }
-
-        .block_text {
-            display: block;
-        }
-
-        .EMPINFO {
-            text-align: right;
-        }
-
-        .fixed-top {
-            position: sticky;
-        }
-
-        .img_block {
-            border: 0;
-            padding: 0;
-            height: 150px;
+        .ad {
+            width: 94%;
+            background-color: #fff;
+            border-radius: 8px;
+            box-sizing: border-box;
+            padding: 0 20px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: flex-start;
+            box-shadow: 2px 1px 8px 1px rgb(228, 232, 235);
+            margin: 40px auto;
         }
 
-        .list-group-item {
-            width: 150px;
+        .mdi-bell-ring {
+            color: #ff6146;
+            font-size: 20px;
+            margin-right: 10px;
         }
 
-        .no {
-            content: "";
-            height: 100px;
+        @keyframes marquee {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
         }
-    </style>
+
+        .content {
+            flex: 1;
+            overflow: hidden;
+            margin-top: 13px;
+        }
+
+        .announcement {
+            display: block;
+            width: auto;
+            white-space: nowrap;
+            animation: marquee 30s linear infinite;
+            padding-left: 105%;
+            padding-right: 120%;
+            font-size: 18px;
+            font-weight: 600;
+            color: balck;
+        }
+
+        :hover {
+            animation-play-state: paused;
+        }
+        
+/*         設定下方靜態公告 */
+
+		.newsTitle{
+			width: 100%;
+			font-size: 24px;
+			font-weight: 700;
+			text-align: center;
+			margin-bottom: 10px;
+		}
+		
+		.newsHead{
+			background-color: black;
+			height: 50px;
+			display: flex;
+			align-items: center;
+		}
+		
+		.nTitle{
+			padding-left: 23px;
+		}
+		
+		.nTime{
+			padding-right: 12px;
+		}
+		
+		hr{
+			margin: 0 !important;
+		}
+	</style>
 </head>
-
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#"><img src="<%=request.getContextPath()%>/backend/asset/img/share_icon/logo.png" width="100px" height="40px"></a>
-            <span id="EMPINFO" style="color: white">員工編號000 Gallon您好</span>
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+		
+    	
+    	
+    	<div class="container">
+		<div class='ad'>
+        <i class="mdi mdi-bell-ring"></i>
+        <p class='content'>
+            <span class="announcement"> 
+            重要公告:為維護乾淨的廁所環境及提高同仁的工作效率，Barei洗手間從今日起不再提供衛生紙，且9:00~9:30如廁禁止攜帶手機，請同仁見諒。&ensp;&ensp;
+            本月傑出員工: 03張東穎、05余若華、15賴昭延、19蔡嘉倫、20黃震熊、23許立晟 
+            </span>
+        </p>
+    	</div>
+    	
+        <div class="newsTitle">Barei最新公告</div>
+        <div class="displayBox">
+        <div class="newsHead">
+            <div class="nTitle">公告標題</div>
+            <div class="nTime">發布時間</div>
         </div>
-    </nav>
 
-    <div class="no"></div>
-    <div class="container">
-        <div class="row">
-            <div class="col-2">
-                <div class="list-group">
-                    <li class="list-group-item list-group-item-primary img_block myButton"><img src="<%=request.getContextPath()%>/backend/asset/img/share_icon/user.png"
-                            width="80px" height="80px" class="block_image"></li>
-                    <a href="<%=request.getContextPath()%>/frontend/mem/select_page.jsp"  class="list-group-item list-group-item-action myButton2">會員帳號查詢</a>
-                    <a href="<%=request.getContextPath()%>/frontend/mem/listAllMem.jsp" class="list-group-item list-group-item-action myButton2">會員帳號管理</a>
-                    <a href="<%=request.getContextPath()%>/backend/qualified_doctor/listAllqualified_doctor.jsp" class="list-group-item list-group-item-action myButton2">認證醫生管理</a>
+		<c:forEach var="newsVO" items="${list}">
+        <div class="accordion accordion-flush" id="accordionFlushExample${newsVO.newsId}">
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="flush-heading${newsVO.newsId}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapse${newsVO.newsId}" aria-expanded="false" aria-controls="flush-collapse${newsVO.newsId}">
+                        <div class="allNews">
+                            <div class="Title"><span class="newsTit">${newsVO.newsTitle}</span></div>
+                            <div class="Time"><fmt:formatDate value="${newsVO.createTime}" type="both" /></div>
+                        </div>
+                    </button>
+                </h2>
+
+                <div id="flush-collapse${newsVO.newsId}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                    data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body"><span class="newsCon">${newsVO.newsContent}</span></div>
                 </div>
             </div>
-
-            <div class="col-2">
-                <div class="list-group">
-                    <li class="list-group-item list-group-item-primary img_block myButton"><img src="<%=request.getContextPath()%>/backend/asset/img/share_icon/cart.png"
-                            width="80px" height="80px" class="block_image"></li>
-                    <a href="<%=request.getContextPath()%>/backend/commodityDetails/selectCommodityDetails.jsp" class="list-group-item list-group-item-action myButton2">商品管理</a>
-                    <a href="#" class="list-group-item list-group-item-action myButton2">商城訂單管理</a>
-                    <a href="#" class="list-group-item list-group-item-action myButton2">折價券管理</a>
-                </div>
-            </div>
-
-            <div class="col-2">
-                <div class="list-group">
-                    <li class="list-group-item list-group-item-primary img_block myButton"><img src="<%=request.getContextPath()%>/backend/asset/img/share_icon/group.png"
-                            width="80px" height="80px" class="block_image"></li>
-                    <a href="<%=request.getContextPath()%>/backend/Discount/select_page.jsp" class="list-group-item list-group-item-action myButton2">團購折扣管理</a>
-                    <a href="<%=request.getContextPath()%>/backend/Group_Buy_Item/select_page.jsp" class="list-group-item list-group-item-action myButton2">團購商品管理</a>
-                    <a href="#" class="list-group-item list-group-item-action myButton2">團購訂單管理</a>
-                    <a href="#" class="list-group-item list-group-item-action myButton2">團購檢舉管理</a>
-                </div>
-            </div>
-
-            <div class="col-2">
-                <div class="list-group">
-                    <li class="list-group-item list-group-item-primary img_block myButton"><img src="<%=request.getContextPath()%>/backend/asset/img/share_icon/forum.png"
-                            width="80px" height="80px" class="block_image"></li>
-                    <a href="#" class="list-group-item list-group-item-action myButton2">文章分類管理</a>
-                    <a href="<%=request.getContextPath()%>/backend/article/selectPage.jsp" class="list-group-item list-group-item-action myButton2">文章檢舉管理</a>
-                </div>
-            </div>
-
-            <div class="col-2">
-                <div class="list-group">
-                    <li class="list-group-item list-group-item-primary img_block myButton"><img src="<%=request.getContextPath()%>/backend/asset/img/share_icon/info.png"
-                            width="80px" height="80px" class="block_image"></li>
-                    <a href="#" class="list-group-item list-group-item-action myButton2">最新消息管理</a>
-                    <a href="#" class="list-group-item list-group-item-action myButton2">Q&A管理</a>
-                </div>
-            </div>
-
-            <div class="col-2">
-                <div class="list-group">
-                    <li class="list-group-item list-group-item-primary img_block myButton"><img src="<%=request.getContextPath()%>/backend/asset/img/share_icon/staff.png"
-                            width="80px" height="80px" class="block_image"></li>
-                    <a href="<%=request.getContextPath()%>/backend/emp/select_page.jsp" class="list-group-item list-group-item-action myButton2">員工資料查詢與管理</a>
-                    <a href="<%=request.getContextPath()%>/backend/effect/select_page.jsp" class="list-group-item list-group-item-action myButton2">權限查詢與管理</a>
-                </div>
-            </div>
+        </div>
+        <hr>
+        </c:forEach>
         </div>
     </div>
+		</section>
+	</main>
 
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
 </body>
 
 </html>

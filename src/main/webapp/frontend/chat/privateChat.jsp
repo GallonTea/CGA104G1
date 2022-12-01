@@ -39,7 +39,7 @@ session.setAttribute("list", list);
         }
         
         .none {
-        width: 50%
+        	width: 50%
         }
         
 		/* 標題設定 */
@@ -51,7 +51,7 @@ session.setAttribute("list", list);
 		}
 		
 		.blockName{
-			font-size: 18px;
+			font-size: 14px;
 			font-weight: 700;
 		}
 
@@ -63,7 +63,7 @@ session.setAttribute("list", list);
         .panel {
             width: 50%;
             position: absolute; 
- 	        top: 75%; 
+ 	        top: 87%; 
  	        left: 50%; 
  	        transform: translate(-50%,-50%); 
         }
@@ -72,7 +72,7 @@ session.setAttribute("list", list);
         	width: 50%;
         	height: 350px;
          	position: absolute; 
- 	        top: 40%; 
+ 	        top: 60%; 
  	        left: 50%; 
  	        transform: translate(-50%,-50%); 
 	        border-radius: 5px;
@@ -173,6 +173,7 @@ session.setAttribute("list", list);
 </div>
 </body>
 
+<script src="<%=request.getContextPath() %>/resources/static/js/navbar.js"></script>
 <script>
 	var MyPoint = "/FriendWS/${userName}";
 	var host = window.location.host;

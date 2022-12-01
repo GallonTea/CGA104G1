@@ -15,7 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
-@WebFilter(urlPatterns =  { "/backend/emp/*" , "/backend/effect/*"} )
+@WebFilter(urlPatterns =  { "/backend/emp/*", 
+							"/backend/effect/*", 
+							"/backend/article/*", 
+							"/backend/news/*", 
+							"/NameServlet" ,
+							"/backend/item/*"
+							} )
 
 public class EmpLoginFilter implements Filter {
    

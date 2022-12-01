@@ -30,7 +30,7 @@ pageContext.setAttribute("list", list);
         }
 
         .title {
-            width: 75%;
+            width: 100%;
             height: 40px;
             background-color: #33b5e5;
             position: relative;
@@ -38,6 +38,7 @@ pageContext.setAttribute("list", list);
             transform: translate(-50%);
             display: flex;
             align-items: center;
+            padding: 0 10px;
         }
 
         #sort {
@@ -47,11 +48,12 @@ pageContext.setAttribute("list", list);
         }
 
         .author_block {
-            width: 75%;
+            width: 100%;
             height: 80px;
             position: relative;
             left: 50%;
             transform: translate(-50%);
+            padding: 0 20px;
         }
         
         #autBlock {
@@ -89,22 +91,23 @@ pageContext.setAttribute("list", list);
         }
 
         hr {
-            width: 75%;
+            width: 95%;
             position: relative;
             left: 50%;
             transform: translate(-50%);
         }
 
         .content {
-            width: 75%;
+            width: 100%;
             min-height: 200px;
             position: relative;
             left: 50%;
             transform: translate(-50%);
+            padding: 0 20px;
         }
 
         .comment {
-            width: 75%;
+            width: 100%;
             position: relative;
             left: 50%;
             transform: translate(-50%);
@@ -118,15 +121,18 @@ pageContext.setAttribute("list", list);
         }
 
         .edit_block {
-            width: 75%;
+            width: 100%;
             position: relative;
             left: 50%;
             transform: translate(-50%);
+            padding: 0 20px;
         }
 
         .edit {
+        	display: flex;
             text-align: right;
             white-space: nowrap;
+            align-items: center;
         }
 
         #delete {
@@ -141,6 +147,7 @@ pageContext.setAttribute("list", list);
             width: 100%;
             white-space: nowrap;
             display: flex;
+            padding: 0 20px;
         }
 
         div.comments {
@@ -237,26 +244,42 @@ pageContext.setAttribute("list", list);
         	width: 100%;
         	color: rgb(165, 165, 165);
         }
+        
+        .block {
+        	width: 160px;
+        }
+        
+        .container{
+        	width: 75%;
+        }
+        
+        .displayBox{
+		    background-color:white;
+		    margin-right:20px;
+		    box-shadow:-3px -3px 9px gray;
+		    margin-bottom: 20px;
+        }
     </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-light fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="<%=request.getContextPath() %>/frontend/article/select_page.jsp"><img
-                    id="logo" src="<%=request.getContextPath() %>/frontend/article/img/logo.png"></a>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="請輸入文章編號">
-                    <button class="btn btn-outline-info text-nowrap" type="submit">查詢</button>
-                </form>
-            </div>
-        </div>
-    </nav>
-    <div class="none"></div>
+<!--     <nav class="navbar navbar-expand-lg bg-light fixed-top"> -->
+<!--         <div class="container-fluid"> -->
+<%--             <a class="navbar-brand" href="<%=request.getContextPath() %>/frontend/article/select_page.jsp"><img --%>
+<%--                     id="logo" src="<%=request.getContextPath() %>/frontend/article/img/logo.png"></a> --%>
+<!--             <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
+<!--                 <ul class="navbar-nav me-auto mb-2 mb-lg-0"> -->
+<!--                 </ul> -->
+<!--                 <form class="d-flex" role="search"> -->
+<!--                     <input class="form-control me-2" type="search" placeholder="請輸入文章編號"> -->
+<!--                     <button class="btn btn-outline-info text-nowrap" type="submit">查詢</button> -->
+<!--                 </form> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--     </nav> -->
+<!--     <div class="none"></div> -->
     <div class="container">
+    <div class="displayBox">
         <div class="title">
             <jsp:useBean id="article_sorttypeSvc" scope="page"
                 class="com.article_sorttype.model.Article_sorttypeService" />
@@ -306,7 +329,7 @@ pageContext.setAttribute("list", list);
             </div>
             <div class="col-3"></div>
             <div class="edit col-6">
-
+				<div class="block"></div>
                 <form method="post" action="/CGA104G1/ArticleServlet" id="delete">
                     <button type="submit" class="btn btn-outline-danger" value="刪除">刪除文章</button>
                     <input type="hidden" name="article_id" value="${articleVO.article_id}"> 
@@ -353,15 +376,15 @@ pageContext.setAttribute("list", list);
                     <input type="hidden" name="mem_id" value=4>
                     <input type="hidden" name="action" value="insert">
                     <input type="text" class="form-control insert" name="com_content" value="${param.com_content}"
-                        placeholder="跟樓主說點話吧!">&ensp;&ensp;
+                        placeholder="跟樓主說點話吧!">&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
                     <button type="submit" class="btn btn-info">發表留言</button>
                 </form>
-
+			</div>
             </div>
-            <div class="test"></div>
-            <div class="test2"></div>
-        </div>
-
+            </div>
+</div>
+		<script src="<%=request.getContextPath() %>/resources/static/js/navbar.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.7/dist/sweetalert2.all.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.1.js"
             integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
         <script>
@@ -424,20 +447,48 @@ pageContext.setAttribute("list", list);
             });
             
             $('#reportBTN').click(function(){
-            	console.log(1)
             	$('#reportReason').attr('type', 'text');
             	$('#reportSubmit').attr('style', '');
             });
             
-            document.querySelectorAll('oembed[url]').forEach( element => {
-            	const videoLabel = document.createElement('video');
-            	
-            	videoLabel.setAttribute('src', element.getAttribute('url'));
-            	videoLabel.setAttribute('controls', 'controls');
-            	videoLabel.setAttribute('style', 'width: 100%; height: 100%');
-            	
-            	element.appendChild(videoLabel);
-            })
+            $('#reportSubmit').click(function(e){
+        		e.preventDefault();
+        		var form = $(this).parents('form');
+        		Swal.fire({
+        			  title: '確認要檢舉文章嗎？',
+        			  showCancelButton: true,
+        			  cancelButtonText: "取消",
+        			  confirmButtonText: '確定',
+        			  confirmButtonColor: 'green',
+        			}).then((result) => {
+        			  if (result.isConfirmed) {
+        			    Swal.fire('檢舉成功，自動轉跳回首頁', '', 'success'),
+        			    setTimeout(function(){
+        			    	form.submit();
+        				},1000);
+        			  } 
+        			})
+        	})
+        	
+        	$('.btn-outline-danger').click(function(e){
+        		e.preventDefault();
+        		var form = $(this).parents('form');
+        		Swal.fire({
+        			  title: '確定要文章嗎？',
+        			  showCancelButton: true,
+        			  cancelButtonText: "取消",
+        			  confirmButtonText: '確定',
+        			  confirmButtonColor: 'red',
+        			}).then((result) => {
+        			  if (result.isConfirmed) {
+        			    Swal.fire('文章已刪除!', '', 'success'),
+        			    setTimeout(function(){
+        			    	form.submit();
+        				},1000);
+        			  } 
+        			})
+        	})
+        	
         </script>
 </body>
 

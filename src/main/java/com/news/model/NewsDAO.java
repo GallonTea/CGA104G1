@@ -42,7 +42,7 @@ public class NewsDAO implements NewsDAO_interface{
 			beginTransaction();
 			NewsVO newsVO = new NewsVO();
 			newsVO.setNewsId(newsId);
-			getSession().remove(newsId);
+			getSession().remove(newsVO);
 			commit();
 		} catch (Exception e) {
 			rollback();
@@ -69,7 +69,7 @@ public class NewsDAO implements NewsDAO_interface{
 		try {
 			beginTransaction();
 			List<NewsVO> list = new ArrayList<NewsVO>();
-			final String hql = "FROM NewsVO ORDER BY newsId";
+			final String hql = "FROM NewsVO ORDER BY newsId DESC";
 			list = getSession().createQuery(hql, NewsVO.class).list();
 			commit();
 			return list;

@@ -25,6 +25,6 @@
     </resource-ref>
     <error-page>
         <error-code>404</error-code>
-        <location>/resources/templates/error/_404.html</location>
+        <location>/resources/templates/error/404.jsp</location>
     </error-page>
 </web-app>

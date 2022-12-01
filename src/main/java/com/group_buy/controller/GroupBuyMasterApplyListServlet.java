@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.discount.model.DiscountService;
 import com.group_buy.model.Group_BuyService;
@@ -107,7 +108,7 @@ public class GroupBuyMasterApplyListServlet extends HttpServlet {
 			Group_BuyService group_BuyService = new Group_BuyService();
 			gb_price = (int) (Math.round(discount_price * gbitem_price * 0.01));
 			group_BuyVO = group_BuyService.updateGroup_Buy_GBPrice(gb_id, gb_price);
-			List<Group_BuyVO> list = group_BuyService.getAllGroupBuyApplyListByMemID(mem_id);
+			List<Group_BuyVO> list = group_BuyService.joinGBIGetAllWhereMemID(mem_id);
 
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("list", list);
@@ -119,31 +120,63 @@ public class GroupBuyMasterApplyListServlet extends HttpServlet {
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+			HttpSession session = req.getSession();
 			// 取得會員編號
 //			MemVO memVO = (MemVO) req.getSession().getAttribute("memVO");
 //			Integer mem_id = memVO.getMem_id();
-
-				Integer mem_id = null;
-				try {
-					mem_id = Integer.valueOf(req.getParameter("mem_id").trim());
-					if (mem_id == null) {
-						errorMsgs.put("gbitem_id", "團購主會員編號': 請勿空白");
-					}
-				} catch (NumberFormatException e1) {
-					errorMsgs.put("mem_id", "團購主會員編號請填數字.");
-					e1.printStackTrace();
+//				Integer mem_id = null;
+//				try {
+//					mem_id = Integer.valueOf(req.getParameter("mem_id").trim());
+//					if (mem_id == null) {
+//						errorMsgs.put("gbitem_id", "團購主會員編號': 請勿空白");
+//					}
+//				} catch (NumberFormatException e1) {
+//					errorMsgs.put("mem_id", "團購主會員編號請填數字.");
+//					e1.printStackTrace();
+//				}
+				
+				//尋找mem_id為團主或是團員
+				Integer mem = (Integer) session.getAttribute("mem_id");
+			
+				Integer gb_id = 1;
+				Group_BuyService group_buySvc = new Group_BuyService();
+				Group_BuyVO group_buyVO = group_buySvc.getOneGroup_Buy(gb_id);
+				Integer master = group_buyVO.getMem_id();
+				
+				
+				
+				int master_id = master;
+				int mem_id = mem;
+				if (master_id == mem_id) {
+					
+					Group_BuyVO group_BuyVO = new Group_BuyVO();
+					Group_BuyService group_BuyService = new Group_BuyService();
+					List<Group_BuyVO> list = group_BuyService.joinGBIGetAllWhereMemID(mem_id);
+					req.setAttribute("list", list);
+					String url = "/frontend/groupBuy/mygroupbuyapplylist.jsp";
+					RequestDispatcher successView = req.getRequestDispatcher(url);
+					successView.forward(req, res);
+					return;
 				}
+				
+				Group_BuyVO group_BuyVO = new Group_BuyVO();
+				Group_BuyService group_BuyService = new Group_BuyService();
+				List<Group_BuyVO> list = group_BuyService.joinGBIGetAllWhereMemID(mem_id);
+				req.setAttribute("list", list);
+				String url = "/frontend/groupBuy/mygroupbuyNOTGroupMasterApplylist.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
 			
 			
-			/*************************** 2.開始修改資料 *****************************************/
-			Group_BuyVO group_BuyVO = new Group_BuyVO();
-			Group_BuyService group_BuyService = new Group_BuyService();
-			List<Group_BuyVO> list = group_BuyService.getAllGroupBuyApplyListByMemID(mem_id);
-
-			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-			req.setAttribute("list", list);
-			RequestDispatcher successView = req.getRequestDispatcher("/frontend/groupBuy/mygroupbuyapplylist.jsp");
-			successView.forward(req, res);
+//			/*************************** 2.開始修改資料 *****************************************/
+//			Group_BuyVO group_BuyVO = new Group_BuyVO();
+//			Group_BuyService group_BuyService = new Group_BuyService();
+//			List<Group_BuyVO> list = group_BuyService.joinGBIGetAllWhereMemID(mem_id);
+//		
+//			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+//			req.setAttribute("list", list);
+//			RequestDispatcher successView = req.getRequestDispatcher("/frontend/groupBuy/mygroupbuyapplylist.jsp");
+//			successView.forward(req, res);
 			
 		}
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		

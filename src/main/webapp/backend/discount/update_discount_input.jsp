@@ -5,12 +5,11 @@
 <%
 DiscountVO discountVO = (DiscountVO) request.getAttribute("DiscountVO");
 %>
-<%@include file="/backend/backNavbar.jsp"%>
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>團購折扣資料修改 - update_GroupBuy_input.jsp</title>
-
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <style>
   table#table-1 {
 	background-color: #CCCCFF;
@@ -30,7 +29,7 @@ DiscountVO discountVO = (DiscountVO) request.getAttribute("DiscountVO");
 
 <style>
   table {
-	width: 450px;
+	width: 600px;
 	background-color: white;
 	margin-top: 1px;
 	margin-bottom: 1px;
@@ -40,12 +39,20 @@ DiscountVO discountVO = (DiscountVO) request.getAttribute("DiscountVO");
   }
   th, td {
     padding: 1px;
+    color: black;
   }
 </style>
 
 </head>
 <body bgcolor='white'>
 
+
+<!-- 複製起點 -->
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+<!-- 		把原本body的東西貼到這邊 -->
 <table id="table-1">
 	<tr><td>
 		 <h3>團購折扣資料修改 - update_GroupBuy_input.jsp</h3>
@@ -99,6 +106,13 @@ DiscountVO discountVO = (DiscountVO) request.getAttribute("DiscountVO");
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="discount_id" value="<%=discountVO.getDiscount_id()%>">
 <input type="submit" value="送出修改"></FORM>
+		</section>
+	</main>
+<!-- 複製終點 -->
+
+
+
+
 </body>
 
 

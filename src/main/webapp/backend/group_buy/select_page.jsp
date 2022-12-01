@@ -8,17 +8,20 @@ Group_BuyService group_BuyService = new Group_BuyService();
 List<Group_BuyVO> list = group_BuyService.getAll();
 pageContext.setAttribute("list", list);
 %>
-<%@include file="/backend/backNavbar.jsp"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>GroupBuy: Home</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 </head>
 <body>
-
-<!--main content start-->
+<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+			<!--main content start-->
 	<section id="main-content">
 		<section class="wrapper">
 			<div id="gbi-select">
@@ -31,7 +34,7 @@ pageContext.setAttribute("list", list);
 						</c:forEach>
 					</ul>
 				</c:if>
-
+			<table>
 				<ul>
 					<li><a href='listAllGroupBuy.jsp' action="">List</a> all Discount. <br>
 					<br></li>
@@ -68,12 +71,15 @@ pageContext.setAttribute("list", list);
 				<ul>
 					<li><a href='addGroupBuy.jsp'>Add</a> a new groupBuy.</li>
 				</ul>
-
+			</table>
 			</div>
 		</section>
 	</section>
 
 	<!--main content end-->
+		</section>
+	</main>
+
 
 
 

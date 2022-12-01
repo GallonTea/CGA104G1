@@ -46,7 +46,8 @@ public class MemberCouponServlet extends HttpServlet {
         res.setHeader("Access-Control-Allow-Credentials", "true");
 
         HttpSession session = req.getSession();
-        final Integer memId = (Integer) session.getAttribute("memId");
+        final Integer memId = (Integer) session.getAttribute("mem_id");
+        System.out.println(memId);
 
         PrintWriter pw = res.getWriter();
 

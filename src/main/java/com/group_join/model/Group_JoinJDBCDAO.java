@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class Group_JoinJDBCDAO implements Group_JoinDAO_interface{
+public class Group_JoinJDBCDAO {
 
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/ba_rei?serverTimezone=Asia/Taipei";
@@ -28,7 +28,6 @@ public class Group_JoinJDBCDAO implements Group_JoinDAO_interface{
 	private static final String UPDATE = 
 			"UPDATE GROUP_JOIN set  GBPAY_STATUS=?, PICKUP_STATUS=?, DELIVER_STATUS=? where (GB_ID = ?) and (MEM_ID = ?)";
 
-	@Override
 	public void insert(Group_JoinVO Group_JoinVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -74,7 +73,6 @@ public class Group_JoinJDBCDAO implements Group_JoinDAO_interface{
 		}
 	}
 
-	@Override
 	public void update(Group_JoinVO Group_JoinVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -120,6 +118,7 @@ public class Group_JoinJDBCDAO implements Group_JoinDAO_interface{
 		}
 	}
 
+
 	@Override
 	public void updatePay(Group_JoinVO Group_JoinVO) {
 
@@ -149,7 +148,6 @@ public class Group_JoinJDBCDAO implements Group_JoinDAO_interface{
 	public List<Group_JoinVO> findBygbid(Integer gb_id) {
 		return null;
 	}
-
 
 	public void delete(Integer gb_id) {
 		Connection con = null;
@@ -251,7 +249,6 @@ public class Group_JoinJDBCDAO implements Group_JoinDAO_interface{
 		return Group_JoinVO;
 	}
 
-	@Override
 	public List<Group_JoinVO> getAll() {
 		
 		List<Group_JoinVO> list = new ArrayList<Group_JoinVO>();

@@ -7,11 +7,12 @@
 Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribute("qualified_doctorVO");
 %>
 <%-- <%= memVO==null %> --%>
-<%@include file="/backend/backNavbar.jsp"%>
+
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
 <title>認證醫師修改 </title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 
 <style>
   table#table-1 {
@@ -23,6 +24,9 @@ Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribut
     color: red;
     display: block;
     margin-bottom: 1px;
+  }
+  b{
+      color: black;
   }
   h4 {
     color: blue;
@@ -49,10 +53,14 @@ Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribut
 </head>
 <body bgcolor='white'>
 
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
 <table id="table-1">
 	<tr><td>
-		 <h3>醫師認證狀態 </h3>
-		 <h4><a href="<%=request.getContextPath()%>/backend/index.jsp">回首頁</a></h4>
+		 <h3><b>醫師認證狀態</b> </h3>
+			<button onclick="location.href='<%=request.getContextPath()%>/backend/index.jsp'">回到後台首頁</button>
 	</td></tr>
 </table>
 
@@ -78,7 +86,7 @@ Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribut
 
 <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
 		<tr>
-		<td style="color:gray">會員編號:</td>
+		<td style="color:gray"><b>會員編號:</b></td>
 		<td><input type="TEXT" name="mem_id" readonly style="color:gray" size="45" 
 			value="${qualified_doctorVO.mem_id}- 【${memVO.mem_name}】"></td>
 <%-- 			 value="<%= (qualified_doctorVO==null)? "1" : qualified_doctorVO.getMem_id()%>" /></td> --%>
@@ -102,7 +110,7 @@ Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribut
 <!-- 	</tr> -->
 
 		<tr>
-		<td >狀態修改:</td>
+		<td ><b>狀態修改:</b></td>
 		<td>
 
 		<input type="radio" name="doc_status" size="45" value="0" ${(qualified_doctorVO.doc_status==0)? 'checked':'' }><b>關閉中</b>
@@ -117,6 +125,9 @@ Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribut
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="doc_id" value="<%=qualified_doctorVO.getDoc_id()%>">
 <input type="submit" value="送出修改"></FORM>
+		</section>
+	</main>
+
 <script>		console.log(${qualified_doctorVO.doc_status});</script>
 </body>
 

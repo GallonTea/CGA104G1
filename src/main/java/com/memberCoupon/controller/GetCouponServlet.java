@@ -47,7 +47,8 @@ public class GetCouponServlet extends HttpServlet {
         res.setHeader("Access-Control-Allow-Credentials", "true");
 
         HttpSession session = req.getSession();
-        final Integer memId = (Integer) session.getAttribute("memId");
+        final Integer memId = (Integer) session.getAttribute("mem_id");
+        System.out.println(memId);
         final Integer couponId = Integer.valueOf(req.getParameter("couponId"));
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());

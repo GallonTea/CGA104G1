@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.group_buy.model.*"%>
-
+<%@ page import="com.group_buy_item.model.*"%>
 <%
 pageContext.getAttribute("list");
 %>
@@ -143,6 +143,7 @@ footer img {
 			</c:if>
 			<a
 				href="<%=request.getContextPath()%>/frontend/groupBuy/listallgroupbuy.html">返回團購首頁</a>
+				<h1>這是一班會員團購狀態頁</h1>
 			<table class="table table-hover thead-light table-bordered table-sm .table-responsive">
 				<tr>
 					<th>團購編號</th>
@@ -227,57 +228,8 @@ footer img {
 <!-- 						</FORM> -->
 <!-- 						</td> -->
 
-
-						<td><FORM METHOD="post"
-							ACTION="<%=request.getContextPath()%>/GroupBuyServlet"
-							style="margin-bottom: 0px;">
-							
-							<c:if test="${Group_BuyVO.gb_status != '8' && Group_BuyVO.gb_status != '9' && Group_BuyVO.gb_status != '3' && Group_BuyVO.gb_status != '4'}">
-							<input type="submit" value="修改團購資訊"> 
-							</c:if>
-							<c:if test="${Group_BuyVO.gb_status == '8' || Group_BuyVO.gb_status == '9' || Group_BuyVO.gb_status == '3' || Group_BuyVO.gb_status == '4'}">
-							<input type="submit" value="修改團購資訊" disabled="disabled"> 
-							</c:if>
-							
-							<input type="hidden" name="gb_id" value="${Group_BuyVO.gb_id}"> 
-							<input type="hidden" name="mem_id" value="${Group_BuyVO.mem_id}">
-							<input type="hidden" name="action" value="getOneMyGroupBuy_For_Update">
-						</FORM></td>
 						
-						<td><FORM METHOD="post"
-							ACTION="<%=request.getContextPath()%>/Group_JoinServlet"
-							style="margin-bottom: 0px;">
-							
-							<c:if test="${Group_BuyVO.gb_min <= Group_BuyVO.gb_amount}">
-							<input type="submit" value="立即結帳"> 
-							</c:if>
-							<c:if test="${Group_BuyVO.gb_min > Group_BuyVO.gb_amount}">
-							<input type="submit" value="立即結帳" disabled="disabled"> 
-							</c:if>
-							
-							
-							<input type="hidden" name="gb_price" value="${Group_BuyVO.gb_price}"> 
-							<input type="hidden" name="gbitem_name" value="${Group_BuyVO.gbitem_id}"> 
-							<input type="hidden" name="gb_id" value="${Group_BuyVO.gb_id}">
-							<input type="hidden" name="mem_id" value="${Group_BuyVO.mem_id}"><br> 
-							<input type="hidden" name="gbitem_id" value="${Group_BuyVO.gbitem_id}"> 
-							<input type="hidden" name="gb_min" value="${Group_BuyVO.gb_min}"> 
-							<input type="hidden" name="gb_amount" value="${Group_BuyVO.gb_amount}">
-							<input type="hidden" name="gbstart_date" value="${Group_BuyVO.gbstart_date}"> 
-							<input type="hidden" name="gbend_date" value="${Group_BuyVO.gbend_date}"> 
-							<input type="hidden" name="gb_status" value="${Group_BuyVO.gb_status}"> 
-							<input type="hidden" name="action" value="go_join">
-						</FORM></td>
 						
-<!-- 						<td><FORM METHOD="post" -->
-<%-- 							ACTION="<%=request.getContextPath()%>/GroupBuyServlet" --%>
-<!-- 							style="margin-bottom: 0px;"> -->
-<!-- 							<input type="submit" value="團購結束">  -->
-<%-- 							<input type="hidden" name="gb_id" value="${Group_BuyVO.gb_id}">  --%>
-<%-- 							<input type="hidden" name="mem_id" value="${Group_BuyVO.mem_id}"> --%>
-<!-- 							<input type="hidden" name="gb_status" value="9"> -->
-<!-- 							<input type="hidden" name="action" value="updateGBStatusByGroupBuyMaster"> -->
-<!-- 						</FORM></td> -->
 				</c:forEach>
 			</table>
 			<%-- 		<%@ include file="page2.file" %> --%>

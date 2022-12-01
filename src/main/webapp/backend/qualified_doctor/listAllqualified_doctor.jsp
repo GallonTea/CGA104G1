@@ -8,13 +8,14 @@
     List<Qualified_doctorVO> list = qualified_doctorSvc.getAll();
     pageContext.setAttribute("list",list);
 %>
-<%@include file="/backend/backNavbar.jsp"%>
+
 
 <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
 <%-- <jsp:useBean id="qualified_doctorSvc" scope="page" class="com.qualified_doctor.model.Qualified_doctorService" /> --%>
 <html>
 <head>
 <title>認證醫師</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -40,7 +41,7 @@
 }
 
 .styled-table thead tr {
-	background-color: #212529;
+	background-color: gray;
 	color: #ffffff;
 	text-align: left;
 }
@@ -67,6 +68,9 @@
 }
 
 /* <!-- ===========================================樣式欄位================================================================== --> */
+b {
+	color: black;
+}
 table#table-1 {
 	background-color: #212529;
 	border: 2px solid black;
@@ -115,12 +119,22 @@ th, td {
 	text-align: left;
 }
 
+
+
+thead {
+	color: white !important;
+}
+
 </style>
 
 </head>
 
 <body bgcolor='white'>
 
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
 <table id="table-1">
 	<tr>
 		<td>
@@ -195,6 +209,9 @@ th, td {
 
 	</table>
 
+
+		</section>
+	</main>
 
 <script>
 

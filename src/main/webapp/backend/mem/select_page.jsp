@@ -5,11 +5,11 @@
 <%
 MemVO memVO = (MemVO) session.getAttribute("memVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
 %>
-<%@include file="/backend/backNavbar.jsp"%>
 
 <html>
 <head>
 <title>會員查詢</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <style>
   table#table-1 {
 	width: 450px;
@@ -33,8 +33,11 @@ MemVO memVO = (MemVO) session.getAttribute("memVO"); //EmpServlet.java(Concrolle
 
 </head>
 <body bgcolor='white' >
-
-<table id="table-1">
+<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+			<table id="table-1">
    <tr><td><h3>會員資料查詢 </h3>
   <button onclick="location.href='<%=request.getContextPath()%>/backend/mem/listAllMem.jsp'">查詢所有會員</button>
   <button onclick="location.href='<%=request.getContextPath()%>/backend/index.jsp'">回到後台首頁</button>
@@ -105,6 +108,9 @@ MemVO memVO = (MemVO) session.getAttribute("memVO"); //EmpServlet.java(Concrolle
         <input type="submit" value="送出">
         
      </FORM>
+		</section>
+	</main>
+
 
 
 </body>

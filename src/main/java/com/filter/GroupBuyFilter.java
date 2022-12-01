@@ -15,6 +15,7 @@ import com.emp.model.EmpVO;
 						   "/backend/group_buy/*",
 						   "/backend/group_Buy_Item/*",
 						   "/backend/group_buy_order/*",
+						   "/backend/group_join/*",
 						   "/backend/group_buy_report/*"
 						})
 public class GroupBuyFilter extends HttpFilter implements Filter {

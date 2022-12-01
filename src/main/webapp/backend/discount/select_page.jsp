@@ -8,10 +8,10 @@ DiscountService discountService = new DiscountService();
 List<DiscountVO> list = discountService.getAll();
 pageContext.setAttribute("list", list);
 %>
-<%@include file="/backend/backNavbar.jsp"%>
 <html>
 <head>
 <title>GroupBUy: Home</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <style>
   table#table-1 {
 	width: 450px;
@@ -34,12 +34,13 @@ pageContext.setAttribute("list", list);
 </style>
 
 </head>
-<body bgcolor='white'>
+<body>
 
-
-	
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
+<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+			<c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
 	<ul>
 	    <c:forEach var="message" items="${errorMsgs}">
@@ -96,6 +97,11 @@ pageContext.setAttribute("list", list);
 <ul>
   <li><a href='addDiscount.jsp'>Add</a> a new Discount.</li>
 </ul>
+		</section>
+	</main>
+	
+<%-- 錯誤表列 --%>
+
   
 </body>
 </html>

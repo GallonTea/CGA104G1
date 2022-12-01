@@ -5,10 +5,10 @@
 
 <%-- <jsp:useBean id="listEmps_ByCompositeQuery" scope="request" type="java.util.List<EmpVO>" /> <!-- 於EL此行可省略 --> --%>
 
-<%@include file="/backend/backNavbar.jsp"%>
 <html>
 <head>
 <title>關鍵字查詢</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -121,6 +121,11 @@ th, td {
 </head>
 <body bgcolor='white'>
 
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+
 	<table id="table-1">
 		<tr>
 			<th><h3>會員資料</h3>
@@ -189,6 +194,7 @@ th, td {
 
 	</table>
 	
+
 <script>
 
 function up_confirm(){

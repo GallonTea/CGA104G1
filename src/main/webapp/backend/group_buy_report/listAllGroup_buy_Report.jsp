@@ -9,13 +9,14 @@
     List<Group_Buy_ReportVO> list = GBRSvc.getAll();
     pageContext.setAttribute("list",list);
 %>
-<%@include file="/backend/backNavbar.jsp"%>
+
 
 
 
 <html>
 <head>
 <title>團購檢舉</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -92,6 +93,10 @@ table#table-1 h4 {
 	margin-bottom: 1px;
 }
 
+b{
+	color: black;
+}
+
 h3 {
 	color: #6c757d;
 }
@@ -128,6 +133,10 @@ th, td {
 </head>
 <body bgcolor='white'>
 
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
 <table id="table-1" >
 
 		<td>
@@ -157,11 +166,11 @@ th, td {
 	<c:forEach var="Group_Buy_ReportVO" items="${list}">
 		
 		<tr>
-			<td>${Group_Buy_ReportVO.gbfrep_id}</td>
-			<td>${Group_Buy_ReportVO.gborder_id}</td>
-			<td>${Group_Buy_ReportVO.mem_id}</td>
-			<td>${Group_Buy_ReportVO.frep_content}</td>
-			<td>${Group_Buy_ReportVO.frep_time}</td>
+			<td><b>${Group_Buy_ReportVO.gbfrep_id}</b></td>
+			<td><b>${Group_Buy_ReportVO.gborder_id}</b></td>
+			<td><b>${Group_Buy_ReportVO.mem_id}</b></td>
+			<td><b>${Group_Buy_ReportVO.frep_content}</b></td>
+			<td><b>${Group_Buy_ReportVO.frep_time}</b></td>
 
 
 
@@ -216,6 +225,9 @@ th, td {
 
 	</table>
 
+
+		</section>
+	</main>
 
 <script>
 

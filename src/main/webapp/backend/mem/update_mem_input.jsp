@@ -6,57 +6,130 @@
 <%
 MemVO memVO = (MemVO) request.getAttribute("memVO");
 %>
-
+<%@include file="/backend/backNavbar.jsp"%>
 <%= memVO==null %>
 <html>
 <head>
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>會員資料修改 </title>
+<title>會員資料修改</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+	crossorigin="anonymous"></script>
 
 <style>
-  table#table-1 {
-	background-color: gray;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
-  .password{
-  }
-</style>
+/* <!-- ===========================================樣式欄位================================================================== --> */
 
-<style>
-  table {
-	width: 450px;
-	background-color: white;
-	margin-top: 1px;
+/* tr:nth-child(odd){ */
+/*   background:white; */
+/* } */
+
+/* tr:nth-child(even){ */
+/*   background:#a4a9ad; */
+/* } */
+.styled-table {
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	margin: auto;
+	font-size: 0.9em;
+	font-family: sans-serif;
+	min-width: 400px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+	background-color: #212529;
+	color: #ffffff;
+	text-align: left;
+}
+
+.styled-table th, .styled-table td {
+	padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+	border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+	background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+	border-bottom: 2px solid #212529;
+}
+
+.styled-table tbody tr.active-row {
+	font-weight: bold;
+	color: #212529;
+}
+
+/* <!-- ===========================================樣式欄位================================================================== --> */
+table#table-1 {
+	background-color: #212529;
+	border: 2px solid black;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	width: 1000px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+table#table-1 h4 {
+	color: red;
+	display: block;
 	margin-bottom: 1px;
-  }
-  table, th, td {
-    border: 0px solid black;
-  }
-  th, td {
-    padding: 1px;
-  }
+}
+
+h3 {
+	color: #6c757d;
+}
+
+h4 {
+	color: blue;
+	display: inline;
+}
+
+/*   a{ */
+/*     color: white; */
+/*     display: inline; */
+/*   } */
 </style>
+
+<style>
+table {
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+/*    table, th, td {  */
+/*      border: 1px solid #212529;  */
+/*    }  */
+th, td {
+	padding: 5px;
+	text-align: left;
+}
+
+</style>
+
 </head>
 <body bgcolor='white'>
 
 <table id="table-1">
 	<tr><td>
 		 <h3>會員資料修改 </h3>
-		 <h4><a href="<%=request.getContextPath()%>/frontend/mem/select_page.jsp">回首頁</a></h4>
+		 <h4><a href="<%=request.getContextPath()%>/backend/mem/select_page.jsp">回首頁</a></h4>
 	</td></tr>
 </table>
 
-<h3>資料修改:</h3>
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -72,36 +145,36 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 <table>
 
 	<tr>
-		<td>會員帳號:</td>
-		<td><input type="TEXT" name="mem_account" size="45" readonly value="<%=memVO.getMem_account()%>" /></td>
+		<td style="color: gray"><b>會員帳號:</b></td>
+		<td><input type="TEXT" name="mem_account" size="45" readonly style="color: gray" value="<%=memVO.getMem_account()%>" /></td>
 	</tr>
 	<tr>
-		<td>會員密碼:</td>
-		<td><input type="password" name="mem_password" size="45" readonly value="<%=memVO.getMem_password()%>"/></td>
+		<td style="color: gray"><b>會員密碼:</b></td>
+		<td><input type="password" name="mem_password" size="45" readonly style="color: gray" value="<%=memVO.getMem_password()%>"/></td>
 	</tr>
 	<tr>
-		<td>會員姓名:</td>
+		<td><b>會員姓名:</b></td>
 		<td><input type="TEXT" name="mem_name" size="45" value="<%=memVO.getMem_name()%>" /></td>
 	</tr>
 	<tr>
-		<td>會員地址:</td>
+		<td><b>會員地址:</b></td>
 		<td><input type="TEXT" name="mem_address" size="45"	value="<%=memVO.getMem_address()%>" /></td>
 	</tr>
 	<tr>
-		<td>會員電話:</td>
+		<td><b>會員電話:</b></td>
 		<td><input type="TEXT" name="mem_phone" size="45"	value="<%=memVO.getMem_phone()%>" /></td>
 	</tr>
 	<tr>
-		<td>會員證號:</td>
+		<td><b>會員證號:</b></td>
 		<td><input type="TEXT" name="mem_uid" size="45" value="<%=memVO.getMem_uid()%>" /></td>
 	</tr>
 		<tr>
-		<td>會員Email:</td>
+		<td><b>會員Email:</b></td>
 		<td><input type="TEXT" name="mem_email" size="45" value="<%=memVO.getMem_email()%>" /></td>
 	</tr>
 
 		<tr>
-		<td>會員性別:</td>
+		<td><b>會員性別:</b></td>
 		<td>
 		<input type="radio" name="mem_sex" size="45" value="男" ${(memVO.mem_sex=="男")? 'checked':'' } ><b>男</b>
 		<input type="radio" name="mem_sex" size="45" value="女" ${(memVO.mem_sex=="女")? 'checked':'' }><b>女</b>
@@ -110,7 +183,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 		</tr>
 
 		<tr>
-		<td>會員生日:</td>
+		<td><b>會員生日:</b></td>
 		<td><input type="TEXT" name="mem_dob" size="45" id="dob_date1" /></td>
 	</tr>
 <!-- 	<tr> -->
@@ -121,7 +194,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 		
 <%-- 		<jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" /> --%>
 	<tr>
-		<td>會員狀態:<font color=red><b>*</b></font></td>
+		<td><b>會員狀態:</b><font color=red><b>*</b></font></td>
 		<td><select size="1" name="mem_status">
 				<option value="0" ${(memVO.mem_status==0)? 'selected':'' } >停權</option>
 				<option value="1" ${(memVO.mem_status==1)? 'selected':'' } >未驗證</option>
@@ -135,7 +208,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 <br>
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="mem_id" value="<%=memVO.getMem_id()%>">
-<input type="submit" value="送出修改"></FORM>
+<input type="submit" style="margin-left:38%" value="送出修改"></FORM>
 
 </body>
 

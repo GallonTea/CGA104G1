@@ -48,7 +48,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 <table id="table-1">
 	<tr><td>
 		 <h3>會員資料 </h3>
-		 <h4><a href="<%=request.getContextPath()%>/frontend/mem/select_page.jsp">回首頁</a></h4>
+		 <h4><a href="<%=request.getContextPath()%>/backend/mem/select_page.jsp">回首頁</a></h4>
 	</td></tr>
 </table>
 

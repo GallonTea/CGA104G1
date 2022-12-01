@@ -671,6 +671,7 @@ public class MemJDBCDAO implements MemDAO_interface{
 				memVO.setMem_id(rs.getInt("mem_id"));
 				
 			}
+
 			
 			// Handle any driver errors
 		} catch (ClassNotFoundException e) {

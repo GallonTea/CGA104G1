@@ -13,4 +13,9 @@ public interface Group_Buy_ReportDAO_interface {
 	public Group_Buy_ReportVO findByPrimaryKey(Integer gbfrep_id);
 
 	public List<Group_Buy_ReportVO> getAll();
+
+    public void updatestatus0(Integer frep_result,Integer gborder_id,Integer mem_id) ;
+	
+	public void updatestatus1(Integer frep_result,Integer gborder_id,Integer mem_id);
+
 }

@@ -4,14 +4,19 @@ import java.sql.Timestamp;
 
 public class Group_Buy_ReportVO implements java.io.Serializable{
 	
+
+	private static final long serialVersionUID = 1L;
+	
 	private Integer gbfrep_id;
 	private Integer gborder_id;
 	private Integer mem_id;
 	private String frep_content;
-	private Timestamp fred_time;
+	private Timestamp frep_time;
 	private Integer frep_status;
 	private Integer frep_result;
 	private Integer emp_id;
+	
+	
 	public Integer getGbfrep_id() {
 		return gbfrep_id;
 	}
@@ -36,11 +41,11 @@ public class Group_Buy_ReportVO implements java.io.Serializable{
 	public void setFrep_content(String frep_content) {
 		this.frep_content = frep_content;
 	}
-	public Timestamp getFred_time() {
-		return fred_time;
+	public Timestamp getFrep_time() {
+		return frep_time;
 	}
-	public void setFred_time(Timestamp fred_time) {
-		this.fred_time = fred_time;
+	public void setFrep_time(Timestamp frep_time) {
+		this.frep_time = frep_time;
 	}
 	public Integer getFrep_status() {
 		return frep_status;
@@ -60,7 +65,15 @@ public class Group_Buy_ReportVO implements java.io.Serializable{
 	public void setEmp_id(Integer emp_id) {
 		this.emp_id = emp_id;
 	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	
+	public com.mem.model.MemVO getmemVO() {
+		com.mem.model.MemService empSvc = new com.mem.model.MemService();
+	    com.mem.model.MemVO memVO = empSvc.getOneMem(mem_id);
+	    return memVO;
+    }
 	
 	
 }

@@ -13,7 +13,7 @@
 </head>
 <body>
 	<center>
-		<form action="/CGA104G1/MemServlet" method="post">
+		<form action="<%=request.getContextPath()%>/MemServlet" method="post">
 
 			<table border=1>
 				<tr>
@@ -43,7 +43,7 @@
 					
 			</table>
 		</form>
-		<form action="/CGA104G1/MemServlet" method="post">
+		<form action="<%=request.getContextPath()%>/MemServlet" method="post">
 
 			<table border=1>
 				<tr>

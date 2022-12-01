@@ -38,7 +38,7 @@
                     </a>
                     <div class="collapse" id="member">
                         <ul class="nav flex-column sub-menu">
-                            <li class="nav-item"> <a class="nav-link" href="<%=request.getContextPath()%>/frontend/mem/listAllMem.jsp"> 會員帳號管理 </a></li>
+                            <li class="nav-item"> <a class="nav-link" href="<%=request.getContextPath()%>/backend/mem/select_page.jsp"> 會員帳號管理 </a></li>
                             <li class="nav-item"> <a class="nav-link" href="<%=request.getContextPath()%>/backend/qualified_doctor/listAllqualified_doctor.jsp"> 認證醫生管理 </a></li>
                         </ul>
                     </div>
@@ -55,7 +55,7 @@
                     <div class="collapse" id="store">
                         <ul class="nav flex-column sub-menu">
                             <li class="nav-item"> <a class="nav-link" href="<%=request.getContextPath()%>/backend/item/listAllItems.html"> 商品管理 </a></li>
-                            <li class="nav-item"> <a class="nav-link" href="#"> 商城訂單管理 </a></li>
+                            <li class="nav-item"> <a class="nav-link" href="<%=request.getContextPath()%>/backend/commodityDetails/ListOrderBackend.html"> 商城訂單管理 </a></li>
                             <li class="nav-item"> <a class="nav-link" href="<%=request.getContextPath()%>/backend/coupon/listAllCoupon.jsp"> 折價券管理 </a></li>
                         </ul>
                     </div>
@@ -74,6 +74,8 @@
                             <li class="nav-item"> <a class="nav-link" href="<%=request.getContextPath()%>/backend/discount/select_page.jsp"> 團購折扣管理 </a></li>
                             <li class="nav-item"> <a class="nav-link" href="<%=request.getContextPath()%>/backend/group_Buy_Item/select_page.jsp"> 團購商品管理 </a></li>
                             <li class="nav-item"> <a class="nav-link" href="<%=request.getContextPath()%>/backend/group_buy_order/select_page.jsp"> 團購訂單管理 </a></li>
+                            <li class="nav-item"> <a class="nav-link" href="<%=request.getContextPath()%>/backend/group_buy/select_page.jsp"> 團購團管理 </a></li>
+                            <li class="nav-item"> <a class="nav-link" href="<%=request.getContextPath()%>/backend/group_buy_report/listAllGroup_buy_Report.jsp"> 團購檢舉 </a></li>
                         </ul>
                     </div>
                 </li>

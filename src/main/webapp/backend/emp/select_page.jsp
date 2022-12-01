@@ -2,9 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<%@include file="/backend/backNavbar.jsp"%>
+
 <html>
 <head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
+
 <title>首頁</title>
 <style>
 
@@ -33,42 +35,12 @@ h4 {
 
 </head>
 <body bgcolor='white'>
-	<!-- ====================================================== -->
-	<!--  <div class="container"> -->
-	<!--       <h2>Video Category</h2> -->
 
-	<!--       <div class="select-box"> -->
-	<!--         <div class="options-container"> -->
-	<!--           <div class="option"> -->
-	<!--             <input -->
-	<!--               type="radio" -->
-	<!--               class="radio" -->
-	<!--               id="automobiles" -->
-	<!--               name="category" -->
-	<!--             /> -->
-	<!--             <label for="automobiles">Automobiles</label> -->
-	<!--           </div> -->
-
-	<!--           <div class="option"> -->
-	<!--             <input type="radio" class="radio" id="film" name="category" /> -->
-	<!--             <label for="film">Film & Animation</label> -->
-	<!--           </div> -->
-
-	<!--           <div class="option"> -->
-	<!--             <input type="radio" class="radio" id="science" name="category" /> -->
-	<!--             <label for="science">Science & Technology</label> -->
-	<!--           </div> -->
-	<!--         </div> -->
-
-	<!--         <div class="selected"> -->
-	<!--           Select Video Category -->
-	<!--         </div> -->
-	<!--       </div> -->
-	<!--     </div> -->
-
-	<!-- ====================================================== -->
-
-
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+	
 	<h3>資料查詢:</h3>
 	<table id="table-1">
 		<c:forEach var="empVO" items="${list}" begin="0" end="0">
@@ -91,47 +63,7 @@ h4 {
 
 
 				<li>
-		<!-- 			<FORM METHOD="get" ACTION="EmpServlet"> -->
-		<!-- 				<input type="text" name="emp_id"> <input type="hidden" -->
-		<!-- 					name="action" value="getOne_For_Display"> <input -->
-		<!-- 					type="submit" value="送出"> -->
-		<!-- 			</FORM> -->
-		<!-- 		</li> -->
 
-		<%-- 		<jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" /> --%>
-
-		<!-- 		<li> -->
-		<!-- 			<FORM METHOD="post" ACTION="EmpServlet"> -->
-		<!-- 				<b>選擇員工編號:</b> <select size="1" name="emp_id"> -->
-		<%-- 					<c:forEach var="empVO" items="${empSvc.all}"> --%>
-		<%-- 						<option value="${empVO.emp_id}">${empVO.emp_id} --%>
-		<%-- 					</c:forEach> --%>
-		<!-- 				</select> <input type="hidden" name="action" value="getOne_For_Display"> -->
-		<!-- 				<input type="submit" value="送出"> -->
-		<!-- 			</FORM> -->
-		<!-- 		</li> -->
-
-		<!-- 		<li> -->
-		<!-- 			<FORM METHOD="post" ACTION="EmpServlet"> -->
-		<!-- 				<b>選擇員工名稱:</b> <select size="1" name="emp_id"> -->
-		<%-- 					<c:forEach var="empVO" items="${empSvc.all}"> --%>
-		<%-- 						<option value="${empVO.emp_id}">${empVO.emp_name} --%>
-		<%-- 					</c:forEach> --%>
-		<!-- 				</select> <input type="hidden" name="action" value="getOne_For_Display"> -->
-		<!-- 				<input type="submit" value="送出"> -->
-		<!-- 			</FORM> -->
-		<!-- 		</li> -->
-		<%-- 		<jsp:useBean id="effectSvc" scope="page" --%>
-		<%-- 			class="com.effect.model.EffectService" /> --%>
-		<!-- 		<li> -->
-<!-- 		<FORM METHOD="post" ACTION="EffectServlet"> -->
-<!-- 			<b>選擇員工名稱:</b> <select size="1" name="emp_id"> -->
-<%-- 				<c:forEach var="empVO" items="${empSvc.all}"> --%>
-<%-- 					<option value="${empVO.emp_id}">${empVO.emp_name} --%>
-<%-- 				</c:forEach> --%>
-<!-- 			</select> <input type="hidden" name="action" value="getOne_For_Display"> -->
-<!-- 			<input type="submit" value="送出"> -->
-<!-- 		</FORM> -->
 		<FORM METHOD="post" ACTION="EmpServlet" name="form1">
 			<b><font color=blue>萬用複合查詢:</font></b> <br> <span
 				class="label-desc">輸入員工編號:</span> <input type="text" name="emp_id"
@@ -159,6 +91,9 @@ h4 {
 		<li><a href='addEmp.jsp'>Add</a> a new Emp.</li>
 	</ul>
 
+
+		</section>
+	</main>
 
 </body>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />

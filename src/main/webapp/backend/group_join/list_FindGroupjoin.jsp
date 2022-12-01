@@ -2,10 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.group_join.model.*"%>
-<%@include file="/backend/backNavbar.jsp"%>
 <jsp:useBean id="group_buySvc" scope="page" class="com.group_buy.model.Group_BuyService" />
 <html>
 <head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <title>參團查詢後資料</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
@@ -98,8 +98,11 @@ th, td {
 
 </head>
 <body bgcolor='white'>
-
-	<table id="table-1">
+<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+<table id="table-1">
 		<tr>
 			<th><h3>參團資料</h3>
 				<h4>
@@ -171,5 +174,8 @@ th, td {
 		</tbody>
 
 	</table>
+		</section>
+	</main>
+	
 </body>
 </html>

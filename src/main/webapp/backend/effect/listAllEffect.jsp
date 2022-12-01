@@ -8,9 +8,10 @@ EffectService effectSvc = new EffectService();
 List<EffectVO> list = effectSvc.getAll();
 pageContext.setAttribute("list", list);
 %>
-<%@include file="/backend/backNavbar.jsp"%>
+
 <html>
 <head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <title>所有權限資料</title>
 
 <style>
@@ -48,6 +49,10 @@ pageContext.setAttribute("list", list);
 
 </head>
 <body bgcolor='white'>
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
 <table id="table-1">
 	<tr><td>
 		 <h3>所有權限資料</h3>
@@ -88,6 +93,9 @@ pageContext.setAttribute("list", list);
 		</tr>
 	</c:forEach>
 </table>
+		</section>
+	</main>
+
 
 
 </body>

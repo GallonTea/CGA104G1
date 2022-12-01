@@ -12,7 +12,6 @@ Group_Buy_OrderVO group_buy_orderVO = (Group_Buy_OrderVO) request.getAttribute("
 	class="com.group_buy_item.model.Group_Buy_ItemService" />
 <html>
 <head>
-
 <title>團購訂單資料</title>
 <!-- ===============================來自團購主查詢 付款和領貨============================================= -->
 <!-- ===============================抓取團購團會員編號和登入帳號同編號<未執行>============================================= -->
@@ -28,7 +27,9 @@ table#table-1 h4 {
 	display: block;
 	margin-bottom: 1px;
 }
-
+body{
+color: black;
+}
 h4 {
 	color: blue;
 	display: inline;
@@ -51,12 +52,15 @@ th, td {
 	padding: 5px;
 	text-align: center;
 }
+
+th {
+color: black;
+}
 </style>
 
 </head>
 <body bgcolor='white'>
-
-	<table id="table-1">
+<table id="table-1">
 		<tr>
 			<td>
 				<h3>我的訂單</h3>
@@ -168,7 +172,6 @@ th, td {
 				</FORM>
 			</td>
 		</tr>
-	</table>
-
+	</table>	
 </body>
 </html>

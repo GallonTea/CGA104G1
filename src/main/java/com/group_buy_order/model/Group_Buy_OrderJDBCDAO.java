@@ -12,7 +12,7 @@ import java.util.List;
 
 import com.group_buy_item.model.Group_Buy_ItemVO;
 
-public class Group_Buy_OrderJDBCDAO implements Group_Buy_OrderDAO_interface {
+public class Group_Buy_OrderJDBCDAO  {
 
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/ba_rei?serverTimezone=Asia/Taipei";
@@ -25,7 +25,7 @@ public class Group_Buy_OrderJDBCDAO implements Group_Buy_OrderDAO_interface {
 	private static final String DELETE = "DELETE FROM GROUP_BUY_ORDER where GBORDER_ID = ?";
 	private static final String UPDATE = "UPDATE GROUP_BUY_ORDER set GBITEM_ID=?, GB_ID=?, GBITEM_AMOUNT=?, GBORIGINAL_PRICE=?, DISCOUNT_ID=?, GB_ENDPRICE=?, GBORDER_DATE=?, GBORDER_PAYING=?, GBORDER_SEND=?, GBORDER_STATUS=?, GBORDER_OTHER=?, TRACKING_NUM=?, RECEIVER_NAME=?, RECEIVER_ADDRESS=?, RECEIVER_PHONE=?, PICKUP_TIME=? where GBORDER_ID = ?";
 
-	@Override
+
 	public void insert(Group_Buy_OrderVO Group_Buy_OrderVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -40,7 +40,6 @@ public class Group_Buy_OrderJDBCDAO implements Group_Buy_OrderDAO_interface {
 			pstmt.setInt(2, Group_Buy_OrderVO.getGb_id());
 			pstmt.setInt(3, Group_Buy_OrderVO.getGbitem_amount());
 			pstmt.setInt(4, Group_Buy_OrderVO.getGboriginal_price());
-			pstmt.setInt(5, Group_Buy_OrderVO.getDiscount_id());
 			pstmt.setInt(6, Group_Buy_OrderVO.getGb_endprice());
 			pstmt.setTimestamp(7, Group_Buy_OrderVO.getGborder_date());
 			pstmt.setInt(8, Group_Buy_OrderVO.getGborder_paying());
@@ -78,7 +77,7 @@ public class Group_Buy_OrderJDBCDAO implements Group_Buy_OrderDAO_interface {
 		}
 	}
 
-	@Override
+
 	public void update(Group_Buy_OrderVO Group_Buy_OrderVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -93,7 +92,6 @@ public class Group_Buy_OrderJDBCDAO implements Group_Buy_OrderDAO_interface {
 			pstmt.setInt(2, Group_Buy_OrderVO.getGb_id());
 			pstmt.setInt(3, Group_Buy_OrderVO.getGbitem_amount());
 			pstmt.setInt(4, Group_Buy_OrderVO.getGboriginal_price());
-			pstmt.setInt(5, Group_Buy_OrderVO.getDiscount_id());
 			pstmt.setInt(6, Group_Buy_OrderVO.getGb_endprice());
 			pstmt.setTimestamp(7, Group_Buy_OrderVO.getGborder_date());
 			pstmt.setInt(8, Group_Buy_OrderVO.getGborder_paying());
@@ -134,7 +132,6 @@ public class Group_Buy_OrderJDBCDAO implements Group_Buy_OrderDAO_interface {
 		}
 	}
 
-	@Override
 	public void delete(Integer gborder_id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -171,7 +168,6 @@ public class Group_Buy_OrderJDBCDAO implements Group_Buy_OrderDAO_interface {
 		}
 	}
 
-	@Override
 	public Group_Buy_OrderVO findByPrimaryKey(Integer gborder_id) {
 		Group_Buy_OrderVO Group_Buy_OrderVO = null;
 		Connection con = null;
@@ -195,7 +191,6 @@ public class Group_Buy_OrderJDBCDAO implements Group_Buy_OrderDAO_interface {
 				Group_Buy_OrderVO.setGb_id(rs.getInt("gb_id"));
 				Group_Buy_OrderVO.setGbitem_amount(rs.getInt("gbitem_amount"));
 				Group_Buy_OrderVO.setGboriginal_price(rs.getInt("gboriginal_price"));
-				Group_Buy_OrderVO.setDiscount_id(rs.getInt("discount_id"));
 				Group_Buy_OrderVO.setGb_endprice(rs.getInt("gb_endprice"));
 
 				Group_Buy_OrderVO.setGborder_date(rs.getTimestamp("gborder_date"));
@@ -243,7 +238,6 @@ public class Group_Buy_OrderJDBCDAO implements Group_Buy_OrderDAO_interface {
 		return Group_Buy_OrderVO;
 	}
 
-	@Override
 	public List<Group_Buy_OrderVO> getAll() {
 		List<Group_Buy_OrderVO> list = new ArrayList<Group_Buy_OrderVO>();
 		Group_Buy_OrderVO Group_Buy_OrderVO = null;
@@ -266,7 +260,6 @@ public class Group_Buy_OrderJDBCDAO implements Group_Buy_OrderDAO_interface {
 				Group_Buy_OrderVO.setGb_id(rs.getInt("gb_id"));
 				Group_Buy_OrderVO.setGbitem_amount(rs.getInt("gbitem_amount"));
 				Group_Buy_OrderVO.setGboriginal_price(rs.getInt("gboriginal_price"));
-				Group_Buy_OrderVO.setDiscount_id(rs.getInt("discount_id"));
 				Group_Buy_OrderVO.setGb_endprice(rs.getInt("gb_endprice"));
 
 				Group_Buy_OrderVO.setGborder_date(rs.getTimestamp("gborder_date"));
@@ -350,7 +343,6 @@ public class Group_Buy_OrderJDBCDAO implements Group_Buy_OrderDAO_interface {
 		gboVO2.setGb_id(2);
 		gboVO2.setGbitem_amount(100);
 		gboVO2.setGboriginal_price(78000);
-		gboVO2.setDiscount_id(1);
 		gboVO2.setGb_endprice(54600);
 
 		gboVO2.setGborder_date(Timestamp.valueOf(LocalDateTime.now()));
@@ -401,7 +393,6 @@ public class Group_Buy_OrderJDBCDAO implements Group_Buy_OrderDAO_interface {
 			System.out.print(aGbo.getGb_id() + ",");
 			System.out.print(aGbo.getGbitem_amount() + ",");
 			System.out.print(aGbo.getGboriginal_price() + ",");
-			System.out.print(aGbo.getDiscount_id() + ",");
 			System.out.print(aGbo.getGb_endprice() + ",");
 			System.out.print(aGbo.getGborder_date() + ",");
 			System.out.print(aGbo.getGborder_paying() + ",");

@@ -2,11 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<%@include file="/backend/backNavbar.jsp"%>
+
 <html>
 <head>
 <!-- ===============================來自團購編號查詢============================================= -->
-
 <title>團購查詢</title>
 <style>
   table#table-1 {
@@ -31,7 +30,6 @@
 
 </head>
 <body bgcolor='white'>
-
 <table id="table-1">
    <tr><td><h3>團購訂單查詢</h3></td></tr>
 </table>
@@ -51,8 +49,5 @@
   </li>
 
 </ul>
-
-
-
 </body>
 </html>

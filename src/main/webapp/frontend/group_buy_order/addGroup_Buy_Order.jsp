@@ -12,7 +12,6 @@
 // List<EmpVO> list = empSvc.getAll();             未改
 // pageContext.setAttribute("list", list);
 %>
-<%@include file="/backend/backNavbar.jsp"%>
 <html>
 <head>
 <link
@@ -28,6 +27,9 @@
 	integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
 	crossorigin="anonymous"></script>
 <title>團購訂單新增資料</title>
+<!-- ===============================地址============================================= -->
+   <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://demeter.5fpro.com/tw/zipcode-selector.js"></script>
 <!-- ===============================來自團購團資料============================================= -->
 
 <style>
@@ -128,6 +130,52 @@
 				<!--  ==============================團購主確認================================== -->
 				<td><input type="TEXT" name="receiver_address" size="45" placeholder="請輸入地址"  required/></td><td><font color=red>${errorMsgs.receiver_address}</font></td>
 			</tr>
+			<!--  ==============================地址================================== -->
+			 <div>收件地址</div>
+
+                    <div class="row mt-4">
+      
+                        <div class="form-group">
+
+                            <input class="js-demeter-tw-zipcode-selector form-control" data-city="#city"
+                                   data-dist="#dist"  name= "zipcode"
+                                   placeholder="請輸入郵遞區號" >
+                        </div>
+                        
+                        <div class="form-group col-md-6">
+
+                            <select class="form-select" id="city" name= "city" placeholder="請選擇縣市" >
+                                <option value="0" disabled selected>請選擇縣市</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+
+                            <select class="form-select" id="dist"  name= "dist" placeholder="請選擇鄉鎮區" >
+                                <option value="0" disabled selected>請先選擇縣市</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+
+                    <div class="form-group">
+                     
+                        <input type="text" class="form-control" id="inputAddress"  name="address"
+                               placeholder="請輸入地址" required>
+                        <div class="invalid-feedback">
+                            寄件地址為必要項目
+                        </div>
+                    </div>
+			
+			
+			
+			
+			
+			
+			<!--  ==============================團購主確認================================== -->
+			
+			
+			
+			
 			<tr>
 				<td>收件人電話:</td>
 				<!--  ==============================團購主確認================================== -->

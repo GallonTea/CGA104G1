@@ -4,7 +4,6 @@
 <jsp:useBean id="group_buySvc" scope="page" class="com.group_buy.model.Group_BuyService" />
 <html>
 <head>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
@@ -19,11 +18,6 @@
 
 </head>
 <body bgcolor='white'>
-
-<nav><%@include file="/backend/topNavbar.jsp"%></nav>
-	<main>
-		<%@include file="/backend/leftside.jsp"%>
-		<section>
 <table id="table-1">
 		<tr>
 			<td>
@@ -88,8 +82,8 @@
 			</tr>
 			<tr>
 				<td>總價格<font color=red><b>*</b></font></td>
-				<td><input type="TEXT" name="gbbuy_price" size="45"
-					value="${group_joinVO.gbbuy_price}" /><font color=red>${errorMsgs.gbbuy_price}</font></td>
+				<td><input type="hidden" name="gbbuy_price" size="45"
+					value="${group_joinVO.gbbuy_price}"  readonly />${group_joinVO.gbbuy_price}<font color=red>${errorMsgs.gbbuy_price}</font></td>
 			</tr>
 		</table>
 
@@ -98,9 +92,6 @@
 			<input type="hidden" name="mem_id" value="${group_joinVO.mem_id}"> <input
 			type="submit" value="送出修改" class="btn btn-warning">
 	</FORM>
-		</section>
-	</main>
-
 	
 </body>
 </html>

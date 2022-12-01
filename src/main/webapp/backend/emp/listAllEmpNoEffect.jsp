@@ -8,9 +8,10 @@
 
 <%-- <jsp:useBean id="listEmps_ByCompositeQuery" scope="request" type="java.util.List<EmpVO>" /> <!-- 於EL此行可省略 --> --%>
 
-<%@include file="/backend/backNavbar.jsp"%>
+
 <html>
 <head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <title>複合查詢 - listAllEmpNoEffect.jsp</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
@@ -131,8 +132,11 @@ th, td {
 
 </head>
 <body bgcolor='white'>
-
-	<table id="table-1">
+<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+<table id="table-1">
 		<tr>
 			<th><h3>所有員工資料</h3>
 				<h4>
@@ -191,5 +195,8 @@ th, td {
 		</tbody>
 
 	</table>
+		</section>
+	</main>
+	
 </body>
 </html>

@@ -12,6 +12,7 @@ public class Group_JoinVO implements java.io.Serializable{
 	private Integer gbitem_id;
 	private Integer gbbuy_price;
 	private String gb_name;
+	
 
 	
 	public com.group_buy_item.model.Group_Buy_ItemVO getOneGbi() {

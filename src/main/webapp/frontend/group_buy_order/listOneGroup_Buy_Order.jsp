@@ -12,7 +12,6 @@ Group_Buy_OrderVO group_buy_orderVO = (Group_Buy_OrderVO) request.getAttribute("
 	class="com.group_buy_item.model.Group_Buy_ItemService" />
 <html>
 <head>
-
 <title>團購訂單資料</title>
 <style>
 table#table-1 {
@@ -26,6 +25,12 @@ table#table-1 h4 {
 	display: block;
 	margin-bottom: 1px;
 }
+b {
+color: black;
+}
+
+
+
 
 h4 {
 	color: blue;
@@ -42,6 +47,7 @@ table {
 }
 
 table, th, td {
+font-weight: bolder;
 	border: 1px solid #CCCCFF;
 }
 
@@ -53,7 +59,6 @@ th, td {
 
 </head>
 <body bgcolor='white'>
-
 	<table id="table-1">
 		<tr>
 			<td>
@@ -67,7 +72,7 @@ th, td {
 	</table>
 	<table>
 		<tr>
-			<th>團購訂單編號</th>
+			<th><b>團購訂單編號</b></th>
 			<th>購買商品</th>
 			<th>團購團編號</th>
 			<th>商品數量</th>
@@ -144,6 +149,5 @@ th, td {
 
 		</tr>
 	</table>
-
 </body>
 </html>

@@ -159,7 +159,6 @@ public class Group_Buy_OrderServlet extends HttpServlet {
 				fail.forward(req, res);
 				return;
 			}
-
 			Integer gborder_id = null;
 			try {
 				gborder_id = Integer.valueOf(str);
@@ -321,6 +320,15 @@ public class Group_Buy_OrderServlet extends HttpServlet {
 
 			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 
+			
+			String address = req.getParameter("address");
+			String zipcode = req.getParameter("zipcode");
+			String city = req.getParameter("city");
+			String dist = req.getParameter("dist");
+			
+			System.out.println(zipcode+city+dist+address);
+			
+			
 			Integer gborder_id = 0;
 
 			Integer gbitem_id = (Integer) session.getAttribute("gbitem_id");
@@ -365,11 +373,8 @@ public class Group_Buy_OrderServlet extends HttpServlet {
 				errorMsgs.put("receiver_name", "收件人請勿留白");
 			}
 
-			String receiver_address = req.getParameter("receiver_address");
-			if (receiver_address == null || receiver_address.trim().length() == 0) {
-				errorMsgs.put("receiver_address", "地址請勿留白");
-			}
-
+			String receiver_address = zipcode+"  "+city+dist+address;
+		
 			String receiver_phone = req.getParameter("receiver_phone");
 			if (receiver_phone == null || receiver_phone.trim().length() == 0) {
 

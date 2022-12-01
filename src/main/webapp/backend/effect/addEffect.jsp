@@ -5,10 +5,9 @@
 <%
   EffectVO effectVO = (EffectVO) request.getAttribute("effectVO");
 %>
-<%@include file="/backend/backNavbar.jsp"%>
 <html>
 <head>
-
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <title>權限新增資料 </title>
 
 <style>
@@ -45,7 +44,10 @@
 
 </head>
 <body bgcolor='white'>
-
+<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
 <table id="table-1">
 	<tr><td>
 		 <h3>權限資料新增 - addEmp.jsp</h3></td><td>
@@ -88,5 +90,8 @@
 <br>
 <input type="hidden" name="action" value="insert">
 <input type="submit" value="送出新增"></FORM>
+		</section>
+	</main>
+
 </body>
 

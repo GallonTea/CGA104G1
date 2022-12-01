@@ -6,7 +6,7 @@ EmpVO empVO = (EmpVO) request.getAttribute("empVO");
 %>
 <html>
 <head>
-
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <title>員工資料</title>
 
 <style>
@@ -49,7 +49,11 @@ th, td {
 </head>
 <body bgcolor='white'>
 
-	<table id="table-1">
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+<table id="table-1">
 		<tr>
 			<td>
 				<h3>員工資料</h3>
@@ -86,5 +90,9 @@ th, td {
 		</tr>
 	</table>
 
+		</section>
+	</main>
+
+	
 </body>
 </html>

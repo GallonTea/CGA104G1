@@ -48,6 +48,7 @@ public class group_JoinServlet extends HttpServlet {
 			String gbitem_name = req.getParameter("gbitem_name");
 			String gb_name = req.getParameter("gb_name");
 
+			System.out.println(gbitem_name);
 			/*********************** 抓登入ID ,未測試 ************************/
 			Integer mem_id = Integer.valueOf(req.getParameter("mem_id").trim());
 			/*********************** 抓登入ID *************************/
@@ -84,7 +85,7 @@ public class group_JoinServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-			String gbitem_name = (String) session.getAttribute("gbitem_name");
+			String gbitem_name = (String) req.getAttribute("gbitem_name");
 			System.out.println(gbitem_name);
 			/*********************** 抓登入ID ,未測試 ************************/
 //			Integer mem_id = Integer.valueOf(req.getParameter("mem_id").trim());
@@ -102,7 +103,7 @@ public class group_JoinServlet extends HttpServlet {
 //			Timestamp gbstart_date = java.sql.Timestamp.valueOf(req.getParameter("gbstart_date").trim());
 //			Timestamp gbend_date = java.sql.Timestamp.valueOf(req.getParameter("gbend_date").trim());
 //			Integer gb_status = Integer.valueOf(req.getParameter("gb_status").trim());
-
+			Integer gb_price = Integer.valueOf(req.getParameter("gb_price").trim());
 			Integer gbpay_status = Integer.valueOf(req.getParameter("gbpay_status").trim());
 			Integer pickup_status = Integer.valueOf(req.getParameter("pickup_status").trim());
 			Integer deliver_status = Integer.valueOf(req.getParameter("deliver_status").trim());
@@ -111,7 +112,6 @@ public class group_JoinServlet extends HttpServlet {
 		
 
 			System.out.println(req.getParameter("gb_price"));
-			Integer gb_price = (Integer) session.getAttribute("gb_price");
 
 			Integer gbbuy_price = (gb_price) * (gbbuy_amount);
 
@@ -128,6 +128,7 @@ public class group_JoinServlet extends HttpServlet {
 			session.setAttribute("pickup_status", pickup_status);
 			session.setAttribute("deliver_status", deliver_status);
 			session.setAttribute("gbbuy_amount", gbbuy_amount);
+			session.setAttribute("gbbuy_price", gbbuy_price);
 			session.setAttribute("gbbuy_price", gbbuy_price);
 
 			String url = "/frontend/group_join/addgroupjoinprice.jsp";
@@ -153,15 +154,9 @@ public class group_JoinServlet extends HttpServlet {
 			Integer pickup_status = Integer.valueOf(req.getParameter("pickup_status").trim());
 			Integer deliver_status = Integer.valueOf(req.getParameter("deliver_status").trim());
 			Integer gbbuy_amount = Integer.valueOf(req.getParameter("gbbuy_amount").trim());
-		
-
-			
 			Integer gbbuy_price = (Integer) session.getAttribute("gbbuy_price");
-		
 			
-			Group_JoinVO group_joinVO = new Group_JoinVO();
-			
-			
+			Group_JoinVO group_joinVO = new Group_JoinVO();	
 			group_joinVO.setGb_id(gb_id);
 			group_joinVO.setMem_id(mem_id);
 			group_joinVO.setGbitem_id(gbitem_id);
@@ -171,18 +166,19 @@ public class group_JoinServlet extends HttpServlet {
 			group_joinVO.setGbbuy_amount(gbbuy_amount);
 			group_joinVO.setGbbuy_price(gbbuy_price);
 			
-			
-			
-			 
-			
-			// Send the use back to the form, if there were errors
-//			if (!errorMsgs.isEmpty()) {
-//				req.setAttribute("group_joinVO", group_joinVO); // 含有輸入格式錯誤的empVO物件,也存入req
-//				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/group_join/addgroupjoinprice.jsp");
-//				failureView.forward(req, res);
-//				return;
-//			}
+			/*************************到資料庫查詢是否重複購買**************************/
 			Group_JoinService group_joinSvc = new Group_JoinService();
+			group_joinVO = group_joinSvc.getOneEmp(gb_id,mem_id);
+			
+			
+			if (group_joinVO!=null) {
+				req.setAttribute("group_joinVO", group_joinVO); // 含有輸入格式錯誤的empVO物件,也存入req
+				
+				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/group_join/update_delete.jsp");
+				failureView.forward(req, res);
+				return;
+			}
+
 			group_joinVO = group_joinSvc.addGroup_Join(gb_id, mem_id,gbpay_status,pickup_status,deliver_status,gbbuy_amount,gbbuy_price );
 			
 			Integer gb_amount = ((Integer) session.getAttribute("gb_amount"))+group_joinVO.getGbbuy_amount();
@@ -242,12 +238,28 @@ public class group_JoinServlet extends HttpServlet {
 			
 //			Integer gb_id = (Integer)session.getAttribute("gb_id");
 			Integer gb_id = Integer.valueOf(req.getParameter("gb_id").trim());
-			/*************************** 2.開始查詢資料 *****************************************/
+			/*************************** 進入資料庫查詢是團主或是團員 *****************************************/
 
+			Group_BuyService group_buySvc = new Group_BuyService();
+			Group_BuyVO group_buyVO = group_buySvc.getOneGroup_Buy(gb_id);
+
+			Integer master = group_buyVO.getMem_id();
+			Integer mem = (Integer) session.getAttribute("mem_id");
+			int master_id = master;
+			int mem_id = mem;
+			if (master_id != mem_id) {
+				
+				
+				
+				
+				
+				String url = "/frontend/group_buy_order/listOneGroup_Buy_Order_byMaster.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				return;
+			}
 			Group_JoinService group_joinSvc = new Group_JoinService();
 			List<Group_JoinVO> group_joinVO = group_joinSvc.getOneGb(gb_id);
-			
-
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
 			boolean verify = true;
 			
@@ -447,12 +459,14 @@ public class group_JoinServlet extends HttpServlet {
 			Group_BuyVO group_buyVO = new Group_BuyVO();
 			Group_BuyService group_buySvc = new Group_BuyService();
 			group_buyVO = group_buySvc.updateGroup_Buy_GBStatus(gb_id, gb_status);
+			group_buyVO = group_buySvc.getOneGroup_Buy(gb_id);
+			Integer mem_id = group_buyVO.getMem_id();
 			
-//			group_buyVO = group_buySvc.getOneGroup_Buy(gb_id);
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-			req.setAttribute("group_buyVO", group_buyVO); 
+			req.setAttribute("group_buyVO", group_buyVO);
+			session.setAttribute("mem_id", mem_id); 
 			
-			String url = "/CGA104G1/frontend/groupBuy/listallgroupbuuy.jsp";
+			String url = "request.getContextPath()/CGA104G1/frontend/groupBuy/mygroupbuyapplylist.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); 
 			successView.forward(req, res);
 		}

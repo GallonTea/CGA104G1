@@ -2,13 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.group_buy_order.model.*"%>
-<%@include file="/backend/backNavbar.jsp"%>
 <% Group_Buy_OrderVO group_Buy_OrderVO = (Group_Buy_OrderVO) request.getAttribute("group_Buy_OrderVO"); %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>查看更新資料</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -129,6 +129,10 @@ th, td {
 </style>
 </head>
 <body>
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
 <table id="table-1">
 		<tr>
 			<th><h3>所有員工資料</h3>
@@ -229,6 +233,9 @@ th, td {
 
 	</table>
 
+
+		</section>
+	</main>
 
 </body>
 </html>

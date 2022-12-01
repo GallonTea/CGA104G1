@@ -60,8 +60,7 @@ h4 {
 
 </head>
 <body bgcolor='white'>
-
-	<table id="table-1">
+<table id="table-1">
 		<tr>
 			<td>
 				<h3>參團資料查詢</h3>
@@ -120,3 +119,5 @@ h4 {
 
 		</tr>
 	</table>
+	</body>
+	</html>

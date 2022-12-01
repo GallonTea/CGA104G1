@@ -15,7 +15,6 @@ Group_JoinVO group_buy_orderVO = (Group_JoinVO) session.getAttribute("group_buy_
 <html>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <head>
-
 <title>參團</title>
 <style>
 table#table-1 {
@@ -26,6 +25,9 @@ table#table-1 {
 	border: 3px ridge Gray;
 	height: 80px;
 	text-align: center;
+}
+body{
+color: black;
 }
 
 table#table-1 h4 {
@@ -42,7 +44,6 @@ h4 {
 
 </head>
 <body bgcolor='white'>
-
 	<table id="table-1">
 		<tr>
 			<td>
@@ -74,18 +75,18 @@ h4 {
 			<tr>
 				<td>團購付款狀態:</td>
 				<td><input type="hidden" name="gbpay_status" size="45"
-					value="1" />未付款</td>
+					value="1"  readonly />未付款</td>
 			</tr>
 			<tr>
 				<td>取貨狀態:</td>
 				<td><input type="hidden" name="pickup_status" size="45"
-					value="0" />未取貨</td>
+					value="0"  readonly />未取貨</td>
 			</tr>
 			
 			<tr>
 				<td>物流狀態:</td>
 				<td><input type="hidden" name="deliver_status" size="45"
-					value="0" />未出貨</td>
+					value="0"  readonly />未出貨</td>
 			</tr>
 			<tr>
 			<td>購買數量:</td>
@@ -102,8 +103,5 @@ h4 {
 		
 		
 	</FORM>
-	<script>
-
-</script>
 </body>
 </html>

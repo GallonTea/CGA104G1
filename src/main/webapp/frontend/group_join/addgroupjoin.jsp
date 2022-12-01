@@ -16,7 +16,6 @@ Group_JoinVO Group_JoinVO = (Group_JoinVO) session.getAttribute("Group_JoinVO");
 <html>
 <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
 <head>
-
 <title>參團</title>
 <style>
 table#table-1 {
@@ -43,8 +42,7 @@ h4 {
 
 </head>
 <body bgcolor='white'>
-
-	<table id="table-1">
+<table id="table-1">
 		<tr>
 			<td>
 				<h3>參團資料新增</h3>
@@ -97,6 +95,7 @@ h4 {
 			<td>購買數量:</td>
 			<td>
 			<input type="number"  name="gbbuy_amount" min="1" max="${gb_min-gb_amount}" step="1"  required>
+			<input type="hidden"  name="gb_price" value="${gb_price}"  readonly>
 			</td>
 			</tr>		
 		</table>
@@ -105,6 +104,5 @@ h4 {
 		
 
 	</FORM>
-
 </body>
 </html>

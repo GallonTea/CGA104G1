@@ -15,10 +15,14 @@ session.setAttribute("list", list);
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <title>login_success.jsp</title>
 </head>
 <body>
-
+<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
 <FORM ACTION="LoginServlet" method="post">
 <input type="hidden" name="action" value="logout">
 							<input type=submit value="登出">
@@ -64,5 +68,8 @@ session.setAttribute("list", list);
 </table>
 	
 	
+		</section>
+	</main>
+
 </body>
 </html>

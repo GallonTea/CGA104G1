@@ -2,12 +2,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<%@include file="/backend/backNavbar.jsp"%>
 
 <html>
 <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <head>
-
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <title>團購查詢</title>
 <style>
 table#table-1 {
@@ -34,7 +33,10 @@ h4 {
 
 </head>
 <body bgcolor='white'>
-
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
 	<table id="table-1">
 		<tr>
 			<td><h3>團購訂單查詢</h3></td>
@@ -123,6 +125,10 @@ $('#f_date2').datetimepicker({
 </script>
 
 
+
+
+		</section>
+	</main>
 
 
 </body>

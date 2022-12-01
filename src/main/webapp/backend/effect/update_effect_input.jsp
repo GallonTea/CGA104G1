@@ -4,9 +4,9 @@
 <%
   EffectVO effectVO = (EffectVO) request.getAttribute("effectVO"); 
 %>
-<%@include file="/backend/backNavbar.jsp"%>
 <html>
 <head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <title>權限資料修改</title>
 
 <style>
@@ -43,7 +43,10 @@
 
 </head>
 <body bgcolor='white'>
-
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
 <table id="table-1">
 	<tr><td>
 		 <h3>權限資料修改</h3>
@@ -85,4 +88,7 @@
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="effect_id" value="<%=effectVO.getEffect_id()%>">
 <input type="submit" value="送出修改"></FORM>
+		</section>
+	</main>
+
 </body>

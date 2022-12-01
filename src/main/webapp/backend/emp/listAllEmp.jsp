@@ -14,9 +14,9 @@ Emp_effectService emp_effectSvc = new Emp_effectService();
 List<Emp_effectVO> list2 = emp_effectSvc.getAll();
 pageContext.setAttribute("list2", list2);
 %>
-<%@include file="/backend/backNavbar.jsp"%>
 <html>
 <head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <title>所有員工資料</title>
 
 <style>
@@ -64,6 +64,11 @@ pageContext.setAttribute("list2", list2);
 
 </head>
 <body bgcolor='white'>
+
+<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
 <div class="box-a">
 <table id="table-1">
 	<tr><td>
@@ -125,5 +130,8 @@ pageContext.setAttribute("list2", list2);
 	</c:forEach>
 </table>
 </div>
+		</section>
+	</main>
+
 </body>
 </html>

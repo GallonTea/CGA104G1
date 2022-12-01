@@ -126,7 +126,7 @@ th, td {
 
 </head>
 <body>
-	<table class="styled-table">
+<table class="styled-table">
 		<thead>
 			<tr>
 				<!-- 				<th>購買商品</th> -->

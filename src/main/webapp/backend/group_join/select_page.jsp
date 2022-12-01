@@ -2,8 +2,8 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<%@include file="/backend/backNavbar.jsp"%>
 <html>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <head>
 <title>參團查詢首頁</title>
 <style>
@@ -36,7 +36,11 @@ h3{
 
 </head>
 <body bgcolor='white'>
-	<h3>資料查詢:</h3>
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+<h3>資料查詢:</h3>
 	<table id="table-1">
 		<c:forEach var="empVO" items="${list}" begin="0" end="0">
 			<tr>
@@ -96,6 +100,9 @@ h3{
 	<a class="btn btn-warning" href="<%=request.getContextPath()%>/backend/group_join/addNewGj.jsp">新增參團資料</a>
 	
 
+		</section>
+	</main>
+	
 
 </body>
 

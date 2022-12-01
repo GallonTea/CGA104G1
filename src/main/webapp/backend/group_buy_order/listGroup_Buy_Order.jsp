@@ -2,10 +2,10 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.group_buy_order.model.*"%>
-<%@include file="/backend/backNavbar.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <meta charset="UTF-8">
 <title>符合條件訂單查詢</title>
 <link
@@ -92,13 +92,6 @@ h4 {
 	display: inline;
 }
 
-/*   a{ */
-/*     color: white; */
-/*     display: inline; */
-/*   } */
-</style>
-
-<style>
 table {
 	margin-left: auto;
 	margin-right: auto;
@@ -115,21 +108,14 @@ th, td {
 	text-align: center;
 }
 
-/* th, td { display: block; } */
-/*   td:first-child{ */
-/*   border-top-left-radius: 10px; */
-/*   border-bottom-left-radius: 10px; */
-/* } */
-
-/* td:last-child{ */
-/*   border-top-right-radius: 10px; */
-/*   border-bottom-right-radius: 10px; */
-/* } */
 </style>
 </head>
 <body>
-
-	<table class="styled-table">
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+<table class="styled-table">
 		<thead>
 			<tr>
 				<th>團購訂單編號</th>
@@ -225,6 +211,10 @@ th, td {
 		</tbody>
 
 	</table>
+		</section>
+	</main>
+
+	
 
 
 </body>

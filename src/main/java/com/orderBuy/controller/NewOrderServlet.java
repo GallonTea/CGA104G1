@@ -66,7 +66,7 @@ public class NewOrderServlet extends HttpServlet {
         JSONObject jsonMsg = new JSONObject();
 
         HttpSession session = req.getSession();
-        final Integer memberId = (Integer) session.getAttribute("memId");
+        final Integer memberId = (Integer) session.getAttribute("mem_id");
 
         final Integer couponId = Integer.valueOf(req.getParameter("couponId"));
 

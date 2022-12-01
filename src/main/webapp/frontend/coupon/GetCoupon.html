@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>領取優惠券</title>
+    <title>領取折價券</title>
     <!-- import bootstrap 5.2.1 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
@@ -28,10 +28,17 @@
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <link rel="stylesheet" type="text/css" href="../../resources/static/css/coupon.css"/>
+    <link rel="stylesheet" type="text/css" href="../../resources/static/css/main.css"/>
 
     <style>
-        .couponpageimg {
-            background-image: url("../../resources/static/image/raphael-maksian-qmpNzGjO_KE-unsplash.jpg");
+        body {
+            background: rgba(0, 0, 0, .6) url('../../resources/static/image/raphael-maksian-qmpNzGjO_KE-unsplash.jpg') no-repeat fixed center center;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+            -o-background-size: cover;
+            z-index: -999999;
+            /*opacity: 30%;*/
         }
     </style>
 
@@ -43,7 +50,7 @@
 <article>
     <div class="container" style="height: 1000px">
 
-        <div id="app">
+        <div id="app" v-cloak>
 
 
             <template class="row d-flex justify-content-center align-items-center container">
@@ -51,20 +58,14 @@
                 <div style="height: 10px"></div>
 
                 <div class="col-1"></div>
-                <button class="col-2 btn btn-success" @click="goHome()" style="opacity: 60%;z-index: 999999999">
+                <button class="col-2 btn btn-success" @click="goHome()" style="opacity: 60%;z-index: 99">
                     回到首頁
                 </button>
                 <div class="col-5"></div>
-                <button class="col-2 btn btn-success" @click="goOwnCoupon()" style="opacity: 60%;z-index: 99999">
+                <button class="col-2 btn btn-success" @click="goOwnCoupon()" style="opacity: 60%;z-index: 99">
                     我的折價券
                 </button>
                 <div class="col-1"></div>
-
-                <header style="height: 100px">
-                    <img src="../../resources/static/image/raphael-maksian-qmpNzGjO_KE-unsplash.jpg" alt="img"
-                         class="couponpageimg"/>
-                </header>
-
 
                 <div id="couponBody" class="cd-flex card text-center col-md-6"
                      v-for=" (coupon, index) in coupon"
@@ -105,6 +106,10 @@
     </div>
 </article>
 
+<!--  NavBar  -->
+<script src="../../resources/static/js/navbar.js"></script>
+<!--  Footer  -->
+<script src="../../resources/static/js/footer.js"></script>
 
 <script>
     let vm = Vue.createApp({
@@ -117,21 +122,10 @@
             }
         },
         beforeCreate() {
-            let member = sessionStorage.getItem('mem-info');
-            if (!member) {
-                Swal.fire({
-                    icon: 'error',
-                    title: '你還沒登入喔!',
-                })
-                setTimeout(function () {
-                    window.location.assign('/CGA104G1/frontend/mem/login.jsp')
-                }, 1500)
-            }
-            let memberId = JSON.parse(member).memberId
 
             let qs = Qs;
             axios.post('/CGA104G1/ListAllCouponServlet', qs.stringify({
-                memberId: memberId
+
             }))
                 .then(res => {
                     this.coupon = res.data;
@@ -146,20 +140,16 @@
                 })
                 .catch(err => {
                     console.log(err);
-                    console.log(memberId)
                 })
         },
         mounted() {
-            let member = sessionStorage.getItem('mem-info');
-            this.memberName = JSON.parse(member).memberName;
-            this.memberId = JSON.parse(member).memberId;
+
         },
         methods: {
             getCoupon: function (coupon, index) {
                 qs = Qs;
                 axios.post('/CGA104G1/GetCouponServlet', qs.stringify({
                     action: this.action,
-                    memberId: this.memberId,
                     couponId: this.coupon[index].COUPON_ID
                 }))
                     .then(res => {
@@ -190,6 +180,10 @@
     vm.mount('#app');
 
 </script>
+
+<!--  Cart -->
+<script type="text/javascript" src="../../resources/static/js/cart.js"></script>
+
 
 <!-- import bootstrap 5.2.1 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"

@@ -66,9 +66,9 @@
                             <li v-for="orderItems in orderItems"
                                 class="list-group-item d-flex justify-content-between lh-condensed">
                                 <div>
-                                    <h6 class="my-0">{{ orderItems.name }}×{{ orderItems.quantity }}</h6>
+                                    <h6 class="my-0">{{ orderItems.itemName }}×{{ orderItems.quantity }}</h6>
                                 </div>
-                                <span class="text-muted">${{ orderItems.price }}</span>
+                                <span class="text-muted">${{ orderItems.itemPrice }}</span>
                             </li>
 
                             <li class="list-group-item d-flex justify-content-between bg-light">
@@ -263,17 +263,7 @@
             }
         },
         beforeCreate() {
-            // let member = sessionStorage.getItem('mem-info');
-            // if (!member) {
-            //     Swal.fire({
-            //         icon: 'error',
-            //         title: '你還沒登入喔!',
-            //     })
-            //     setTimeout(function () {
-            //         window.location.assign('/CGA104G1/frontend/loginMem/login.jsp')
-            //     }, 2000)
-            // }
-            // let memberId = JSON.parse(member).memberId
+
             let qs = Qs;
             axios.post('/CGA104G1/MemberCouponServlet', qs.stringify({}))
                 .then(res => {

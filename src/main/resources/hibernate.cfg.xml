@@ -31,7 +31,6 @@
         <mapping class="com.coupon.model.entity.Coupon"/>
         <mapping class="com.memberCoupon.model.entity.MemberCoupon"/>
         <mapping class="com.orderBuy.model.entity.OrderBuy"/>
-        <mapping class="com.pojo.shopReview.model.entity.ShopReview"/>
         <mapping class="com.news.model.NewsVO"/>
         <mapping class="com.item.model.ItemVO"/>
         <mapping class="com.itemType.model.ItemTypeVO"/>

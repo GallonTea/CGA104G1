@@ -14,8 +14,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.util.List;
 
 import static java.lang.System.out;
@@ -39,15 +42,19 @@ public class ListAllCouponServlet extends HttpServlet {
 
         res.setContentType("text/html;charset=utf-8");
 
-        final Integer memId = Integer.valueOf(req.getParameter("memberId"));
+        HttpSession session = req.getSession();
+        final Integer memId = (Integer) session.getAttribute("memId");
 
         PrintWriter pw = res.getWriter();
 
         MemberCouponService couponService = new MemberCouponServiceImpl();
-
-        List<Coupon> allCoupon = service.listAllCoupon();
-
-        List<MemberCoupon> ownCoupon = couponService.listOwnCoupon(memId);
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        List<Coupon> allCoupon = service.listAllCoupon()
+                .stream()
+                .filter(a -> a.getReceiveStart().compareTo(timestamp) < 0)
+                .filter(a -> a.getReceiveOver().compareTo(timestamp) > 0)
+                .toList();
+        List<MemberCoupon> ownCoupon = couponService.ownCoupon(memId);
 
         List<Integer> all = allCoupon
                 .stream()
@@ -61,7 +68,7 @@ public class ListAllCouponServlet extends HttpServlet {
 
         List<Integer> result = all
                 .stream()
-                .filter(item -> !own.contains(item))
+                .filter(o -> !own.contains(o))
                 .toList();
 
         JSONArray items = new JSONArray();

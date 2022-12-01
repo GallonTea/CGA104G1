@@ -40,7 +40,8 @@ public class ListOrderDetailsServlet extends HttpServlet {
         /* 是否攜帶 cookie */
         res.setHeader("Access-Control-Allow-Credentials", "true");
 
-        final Integer memId = Integer.valueOf(req.getParameter("memberId"));
+        HttpSession session = req.getSession();
+        final Integer memId = (Integer) session.getAttribute("memId");
 
         PrintWriter pw = res.getWriter();
         OrderBuyService orderBuyService = new OrderBuyServiceImpl();

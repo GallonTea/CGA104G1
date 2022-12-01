@@ -1,13 +1,19 @@
 package com.memberCoupon.model.service.impl;
 
+import com.coupon.model.dao.CouponDAO;
+import com.coupon.model.dao.impl.CouponDAOImpl;
+import com.coupon.model.entity.Coupon;
 import com.memberCoupon.model.dao.impl.MemberCouponDAOImpl;
 import com.memberCoupon.model.dao.MemberCouponDAO;
 import com.memberCoupon.model.entity.MemberCoupon;
 import com.memberCoupon.model.service.MemberCouponService;
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.sql.Timestamp;
 import java.util.List;
+
+import static java.lang.System.out;
 
 public class MemberCouponServiceImpl implements MemberCouponService {
 
@@ -47,10 +53,59 @@ public class MemberCouponServiceImpl implements MemberCouponService {
     }
 
     @Override
-    public List<MemberCoupon> listOwnCoupon(Integer memId) {
+    public JSONArray listOwnCoupon(Integer memId) {
+        MemberCouponDAO memberCouponDAO = new MemberCouponDAOImpl();
+        CouponDAO couponDAO = new CouponDAOImpl();
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+
+        List<MemberCoupon> own = memberCouponDAO.getDetail(memId);
+        List<Coupon> all = couponDAO.selectAll();
+
+        List<Coupon> notUse = all
+                .stream()
+                .filter(a -> a.getUseStart().compareTo(timestamp) > 0)
+                .filter(a -> a.getUseOver().compareTo(timestamp) < 0)
+                .toList();
+
+        List<Integer> notUseId = notUse
+                .stream()
+                .map(Coupon::getCouponId)
+                .toList();
+
+        List<Integer> ownId = own
+                .stream()
+                .map(MemberCoupon::getCouponId)
+                .toList();
+
+        List<Integer> result = ownId
+                .stream()
+                .filter(o -> !notUseId.contains(o))
+                .toList();
+
+        JSONArray jsonArr = new JSONArray();
+        JSONObject jsonObj;
+
+        try {
+            for (Integer integer : result) {
+                JSONArray jsonArr3 = couponDAO.getById(integer);
+                for (int i = 0; i < jsonArr3.length(); i++) {
+                    jsonObj = jsonArr3.getJSONObject(i);
+                    jsonArr.put(jsonObj);
+                }
+            }
+        } catch (Exception e) {
+            out.println("ERROR: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return jsonArr;
+    }
+
+    @Override
+    public List<MemberCoupon> ownCoupon(Integer memId) {
         MemberCouponDAO memberCouponDAO = new MemberCouponDAOImpl();
         return memberCouponDAO.getDetail(memId);
     }
+
 
     @Override
     public Integer getNewsCount() {

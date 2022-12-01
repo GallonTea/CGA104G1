@@ -24,297 +24,12 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.11.0/qs.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <link rel="stylesheet" type="text/css" href="../../resources/static/css/orderDetails.css"/>
 
+    <link rel="stylesheet" type="text/css" href="../../resources/static/css/backendDetail.css"/>
     <style>
-        [v-clock] {
-            display: none;
-        }
-
-        body {
-            color: #566787;
-            background: #f5f5f5;
-            font-size: 13px;
-        }
-
-        .table-responsive {
-            margin: 30px 0;
-        }
-
-        .table-wrapper {
-            min-width: 1000px;
-            background: #fff;
-            padding: 20px 25px;
-            border-radius: 3px;
-            box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
-        }
-
-        .table-wrapper .btn {
-            float: right;
-            color: #333;
-            background-color: #fff;
-            border-radius: 3px;
-            border: none;
-            outline: none !important;
-            margin-left: 10px;
-        }
-
-        .table-wrapper .btn:hover {
-            color: #333;
-            background: #f2f2f2;
-        }
-
-        .table-wrapper .btn.btn-primary {
-            color: #fff;
-            background: #03A9F4;
-        }
-
-        .table-wrapper .btn.btn-primary:hover {
-            background: #03a3e7;
-        }
-
-        .table-title .btn {
-            font-size: 13px;
-            border: none;
-        }
-
-        .table-title .btn i {
-            float: left;
-            font-size: 21px;
-            margin-right: 5px;
-        }
-
-        .table-title .btn span {
-            float: left;
-            margin-top: 2px;
-        }
-
-        .table-title {
-            color: #fff;
-            background: #4b5366;
-            padding: 16px 25px;
-            margin: -20px -25px 10px;
-            border-radius: 3px 3px 0 0;
-        }
-
-        .table-title h2 {
-            margin: 5px 0 0;
-            font-size: 24px;
-        }
-
-        .show-entries select.form-control {
-            width: 60px;
-            margin: 0 5px;
-        }
-
-        .table-filter .filter-group {
-            float: right;
-            margin-left: 15px;
-        }
-
-        .table-filter input, .table-filter select {
-            height: 34px;
-            border-radius: 3px;
-            border-color: #ddd;
-            box-shadow: none;
-        }
-
-        .table-filter {
-            padding: 5px 0 15px;
-            border-bottom: 1px solid #e9e9e9;
-            margin-bottom: 5px;
-        }
-
-        .table-filter .btn {
-            height: 34px;
-        }
-
-        .table-filter label {
-            font-weight: normal;
-            margin-left: 10px;
-        }
-
-        .table-filter select, .table-filter input {
-            display: inline-block;
-            margin-left: 5px;
-        }
-
-        .table-filter input {
-            width: 200px;
-            display: inline-block;
-        }
-
-        .filter-group select.form-control {
-            width: 110px;
-        }
-
-        .filter-icon {
-            float: right;
-            margin-top: 7px;
-        }
-
-        .filter-icon i {
-            font-size: 18px;
-            opacity: 0.7;
-        }
-
-        table.table tr th, table.table tr td {
-            border-color: #e9e9e9;
-            padding: 12px 15px;
-            vertical-align: middle;
-        }
-
-        table.table tr th:first-child {
-            width: 60px;
-        }
-
-        table.table tr th:last-child {
-            width: 80px;
-        }
-
-        table.table-striped tbody tr:nth-of-type(odd) {
-            background-color: #fcfcfc;
-        }
-
-        table.table-striped.table-hover tbody tr:hover {
-            background: #f5f5f5;
-        }
-
-        table.table th i {
-            font-size: 13px;
-            margin: 0 5px;
-            cursor: pointer;
-        }
-
-        table.table td a {
-            font-weight: bold;
-            color: #566787;
-            display: inline-block;
-            text-decoration: none;
-        }
-
-        table.table td a:hover {
-            color: #2196F3;
-        }
-
-        table.table td a.view {
-            width: 30px;
-            height: 30px;
-            color: #2196F3;
-            border: 2px solid;
-            border-radius: 30px;
-            text-align: center;
-        }
-
-        table.table td a.view i {
-            font-size: 22px;
-            margin: 2px 0 0 1px;
-        }
-
-        table.table .avatar {
-            border-radius: 50%;
-            vertical-align: middle;
-            margin-right: 10px;
-        }
-
-        .status {
-            font-size: 30px;
-            margin: 2px 2px 0 0;
-            display: inline-block;
-            vertical-align: middle;
-            line-height: 10px;
-        }
-
-        .text-success {
-            color: #10c469;
-        }
-
-        .text-info {
-            color: #62c9e8;
-        }
-
-        .text-warning {
-            color: #FFC107;
-        }
-
-        .text-danger {
-            color: #ff5b5b;
-        }
-
-        .pagination {
-            float: right;
-            margin: 0 0 5px;
-        }
-
-        .pagination li a {
-            border: none;
-            font-size: 13px;
-            min-width: 30px;
-            min-height: 30px;
-            color: #999;
-            margin: 0 2px;
-            line-height: 30px;
-            border-radius: 2px !important;
-            text-align: center;
-            padding: 0 6px;
-        }
-
-        .pagination li a:hover {
-            color: #666;
-        }
-
-        .pagination li.active a {
-            background: #03A9F4;
-        }
-
-        .pagination li.active a:hover {
-            background: #0397d6;
-        }
-
-        .pagination li.disabled i {
-            color: #ccc;
-        }
-
-        .pagination li i {
-            font-size: 16px;
-            padding-top: 6px
-        }
-
-        .hint-text {
-            float: left;
-            margin-top: 10px;
-            font-size: 13px;
-        }
-
-        .rwding {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-
-        }
-
-        a {
-            color: #0a0a0a;
-            text-decoration: none;
-        }
-
-        body {
-            font-size: 16px;
-        }
-
-        .dropdown:hover .dropdown-menu {
-            display: block;
-            margin-top: 0;
-        }
-
-        ul.navbar-nav a:hover {
-            color: #FFC107 !important;
-        }
-
-        #none {
-            height: 66px;
-        }
 
         body {
             background-image: url('../asset/img/share_icon/bg.jpg');
@@ -329,7 +44,7 @@
 </head>
 <body>
 
-<div style="height: 100px"></div>
+<div style="height: 50.6px"></div>
 <main>
 
     <div id="app" class="container" v-cloak>
@@ -345,8 +60,8 @@
                             <div class="col-sm-8">
                                 <button @click="refresh()" class="btn btn-primary"><i
                                         class="fa-solid fa-arrows-rotate"></i> <span>Refresh List</span></button>
-                                <button class="btn btn-secondary"><i class="fa-regular fa-file-excel"></i> <span>Export to Excel</span>
-                                </button>
+                                <!--                                <button class="btn btn-secondary"><i class="fa-regular fa-file-excel"></i> <span>Export to Excel</span>-->
+                                <!--                                </button>-->
                             </div>
                         </div>
                     </div>
@@ -365,15 +80,11 @@
                                 <!--                                </div>-->
                             </div>
                             <div class="col-sm-9">
-                                <button type="button" class="btn btn-primary"><i class="fa fa-search"></i></button>
-<!--                                <div class="filter-group">-->
-<!--                                    <label>姓名</label>-->
-<!--                                    <input type="text" class="form-control">-->
-<!--                                </div>-->
 
                                 <div class="filter-group">
                                     <label>訂單狀態</label>
-                                    <select class="select-group form-control" @change="filterStatus()"
+                                    <select class="form-select-sm" @change="filterStatus()"
+                                            aria-label="Default select example"
                                             v-model="filterSta">
                                         <option value="" disabled selected>請選擇</option>
                                         <option value="0">待付款</option>
@@ -381,9 +92,9 @@
                                         <option value="3">運輸中</option>
                                         <option value="2">準備出貨中</option>
                                         <option value="4">取消審核中</option>
+                                        <option value="9">訂單已取消</option>
                                         <option value="5">未取貨退回</option>
                                         <option value="1">未付款取消</option>
-                                        <option value="9">訂單已取消</option>
                                         <option value="7">退換貨申請中</option>
                                         <option value="8">退換貨處理中</option>
                                     </select>
@@ -406,14 +117,15 @@
                         <tbody v-for="(details, index) in filterStatus" :key="details.ITEM_ID"
                         >
                         <tr>
-                            <td>{{ details.MEM_ID }}</td>
-                            <td><a href="#">{{ details.RECEIVER_NAME }}</a></td>
+                            <td>{{ details.ORDER_ID }}</td>
+                            <td>{{ details.RECEIVER_NAME }}</td>
                             <!--                            <td>London</td>-->
                             <td>{{ details.ORDER_DATE }}</td>
                             <td>{{ statusFilter(details.ORDER_STATUS) }}</td>
                             <td>NT$ {{ details.FINAL_PRICE }}</td>
                             <td>
-                                <button @click="viewDetail(details, index)" class="btn view" title="View Details"
+                                <button @click="viewDetail(details, index)" class="btn btn-outline-info view"
+                                        title="View Details"
                                         data-bs-target="#myModal" data-bs-toggle="modal"
                                         data-toggle="tooltip"><i
                                         class="fa-solid fa-right-long"></i></button>
@@ -441,28 +153,65 @@
             </div>
         </div>
 
+        <!-- 針對個別訂單操作之彈出視窗 -->
         <div class="py-2">
             <div class="modal modal-lg fade" id="myModal">
                 <div class="modal-dialog">
-
                     <div class="modal-content row d-flex justify-content-center">
                         <div class="modal-header">
-                            <h5 class="modal-title">商品詳情</h5>
+                            <h5 class="modal-title">訂單詳情</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
+                        <br>
 
-                        <div class="modal-body" v-for="(detail, index) in detail"
-                             :key="detail.itemId">
-                            <div class="media align-items-lg-center flex-column flex-lg-row p-3">
-                                <div class="media-body">
-                                    <div class="d-flex align-items-center justify-content-between mt-1">
-                                        <a href="#">
-                                            <img :src="'data:image/jpeg;base64,' + detail.photo" alt="productImg"
-                                                 class="img-sm border rounded">
-                                        <strong class="font-weight-bold mb-2">{{ detail.itemName }}</strong>
-                                        </a>
-                                        <small class="font-weight-bold my-2">單價 TW$ {{ detail.itemPrice }}</small>
-                                        <small class="font-weight-bold my-2">商品數量 {{ detail.cdAmount }}</small>
+                        <h4>{{ statusFilter(tmpStatus) }}</h4>
+                        <!--  後台人員操作訂單  -->
+                        <div v-if="tmpStatus === '2'"
+                             class="d-flex justify-content-end gap-2">
+                            <button class="btn btn-outline-success" data-bs-dismiss="modal" aria-label="Close"
+                                    @click="startShip()">完成出貨
+                            </button>
+                        </div>
+                        <div v-else-if="tmpStatus === '3'"
+                             class="d-flex justify-content-end gap-2">
+                            <button class="btn btn-outline-success" data-bs-dismiss="modal" aria-label="Close"
+                                    @click="startShip()">修改物流編號
+                            </button>
+                        </div>
+
+                        <div v-else-if="tmpStatus === '7'"
+                             class="d-flex justify-content-end gap-2">
+                            <button class="btn btn-outline-success" @click="acceptReturn()">接受申請</button>
+                            <button class="btn btn-outline-danger" @click="rejectReturn()">拒絕申請</button>
+                        </div>
+                        <div v-else-if="tmpStatus === '8'"
+                             class="d-flex justify-content-end gap-2">
+                            <button class="btn btn-outline-success" data-bs-dismiss="modal" aria-label="Close"
+                                    @click="startShip()">完成出貨
+                            </button>
+                        </div>
+                        <!-- END -->
+
+                        <strong>訂單日誌</strong>
+                        <div class="overflow-auto" style="max-height: 200px;">
+                            <p v-html="tmpOther"></p>
+                        </div>
+                        <hr>
+                        <div class="modal-body">
+                            <div class="media-body">
+                                <div class="container d-flex align-items-center justify-content-between mt-1"
+                                     v-for="(detail, index) in detail"
+                                     :key="detail.itemId">
+                                    <img :src="'data:image/jpeg;base64,' + detail.photo" alt="productImg"
+                                         class="img-sm border rounded">
+                                    <strong class="font-weight-bold mb-2">{{ detail.itemName }}</strong>
+                                    <div class="row">
+                                        <small class="font-weight-bold col-md-12 my-2">單價 NT$ {{
+                                                detail.itemPrice
+                                            }}</small>
+                                        <small class="font-weight-bold col-md-12 my-2">商品數量 {{
+                                                detail.cdAmount
+                                            }}</small>
                                     </div>
                                 </div>
                                 <div>
@@ -491,11 +240,14 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 
+<!--<script src="../../resources/static/js/listOrderBackend.js"></script>-->
 <script>
-
     let vm = Vue.createApp({
         data() {
             return {
+                tmpOrderId: '',
+                tmpStatus: '',
+                tmpOther: '',
                 filterSta: '',
                 statusSelect: '',
                 details: [],
@@ -546,19 +298,162 @@
                 }))
                     .then(res => {
                         console.log(res);
-                        this.detail = res.data
+                        this.detail = res.data;
+                        this.tmpOther = this.details[index].ORDER_OTHER.replace(/(\r\n)|(\n)/g, '<br>');
+                        this.tmpStatus = this.details[index].ORDER_STATUS;
+                        this.tmpOrderId = this.details[index].ORDER_ID;
                     })
                     .catch(err => {
                         console.log(err);
                     })
             },
             refresh: function () {
-                this.filterSta = ''
+                window.location.reload();
+            },
+            startShip: async function () {
+                const {value: formValues} = await Swal.fire({
+                    title: '請輸入該訂單之物流編號',
+                    html:
+                        '<input id="swal-input1" class="swal2-input">' + '<br>' +
+                        '<div style="color: red">送出前請再次核對物流編號是否正確</div>',
+                    focusConfirm: false,
+                    preConfirm: () => {
+                        return document.getElementById('swal-input1').value
+                    }
+                })
+                if (formValues) {
+                    var qs = Qs
+                    axios.post('/CGA104G1/UpdateOrderServlet', qs.stringify({
+                        orderId: this.tmpOrderId, orderOther: formValues, action: "ship"
+                    }))
+                        .then(res => {
+                            console.log(res);
+                            window.location.reload()
+                        })
+                        .catch(err => {
+                            console.log(err);
+                        })
+                    Swal.fire({
+                        icon: 'success',
+                        title: '成功更新訂單狀態~',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                } else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: '警告',
+                        text: '請輸入訂單之物流編號!',
+                    })
+                }
+            },
+            acceptReturn: function () {
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-warning'
+                    },
+                    buttonsStyling: false
+                })
+
+                swalWithBootstrapButtons.fire({
+                    title: '確認接受退/換貨嗎?',
+                    text: "請在客服人員取得詳細資訊並審核後在接受申請",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: '確認送出',
+                    cancelButtonText: '再次確認',
+                    reverseButtons: true
+
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var qs = Qs;
+                        axios.post('/CGA104G1/UpdateOrderServlet', qs.stringify({
+                            orderId: this.tmpOrderId, action: 'acceptReturn'
+                        }))
+                            .then(res => {
+                                console.log(res);
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: '成功批準審核',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                                setTimeout(function () {
+                                    window.location.reload();
+                                }, 2000)
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            })
+                    } else if (
+                        /* Read more about handling dismissals below */
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire(
+                            '尚未批准審核',
+                            '您的操作將影響公司利益，所以本系統皆會有詳細紀錄 :)',
+                            'warning'
+                        )
+                    }
+                })
+            }, rejectReturn: function () {
+                const swalWithBootstrapButtons = Swal.mixin({
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-warning'
+                    },
+                    buttonsStyling: false
+                })
+
+                swalWithBootstrapButtons.fire({
+                    title: '確認拒絕退/換貨嗎?',
+                    text: "請在客服人員取得詳細資訊並審核後在拒絕申請",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: '確認送出',
+                    cancelButtonText: '再次確認',
+                    reverseButtons: true
+
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        var qs = Qs;
+                        axios.post('/CGA104G1/UpdateOrderServlet', qs.stringify({
+                            orderId: this.tmpOrderId, action: 'rejectReturn'
+                        }))
+                            .then(res => {
+                                console.log(res);
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: '成功拒絕審核',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                })
+                                setTimeout(function () {
+                                    window.location.reload();
+                                }, 2000)
+                            })
+                            .catch(err => {
+                                console.log(err);
+                            })
+                    } else if (
+                        /* Read more about handling dismissals below */
+                        result.dismiss === Swal.DismissReason.cancel
+                    ) {
+                        swalWithBootstrapButtons.fire(
+                            '尚未批准審核',
+                            '您的操作將影響公司利益，所以本系統皆會有詳細紀錄 :)',
+                            'warning'
+                        )
+                    }
+                })
             }
         },
         computed: {
             filterStatus() {
                 return this.details.filter(result => result.ORDER_STATUS.match(this.filterSta))
+            },
+            totalReturnTask() {
             }
         }
     });
@@ -569,6 +464,6 @@
 </body>
 
 <!--  NavBar  -->
-<script src="../../resources/static/js/backNarbar.js"></script>
+<script src="../../resources/static/js/backNavbar.js"></script>
 
 </html>

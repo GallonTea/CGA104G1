@@ -65,15 +65,14 @@ public class NewOrderServlet extends HttpServlet {
         PrintWriter pw = res.getWriter();
         JSONObject jsonMsg = new JSONObject();
 
-        final Integer memberId = Integer.valueOf(req.getParameter("memberId"));
+        HttpSession session = req.getSession();
+        final Integer memberId = (Integer) session.getAttribute("memId");
 
         final Integer couponId = Integer.valueOf(req.getParameter("couponId"));
 
         final Byte orderPaying = Byte.valueOf(req.getParameter("orderPaying"));
 
         final Byte orderSend = Byte.valueOf(req.getParameter("orderSend"));
-
-        final String orderOther = req.getParameter("orderOther");
 
         final String receiverName = req.getParameter("receiverName");
         final String nameReg = "^[\\u4e00-\\u9fa5]+$|^[a-zA-Z\\s]+$";
@@ -107,7 +106,7 @@ public class NewOrderServlet extends HttpServlet {
         }
 
         if (!jsonMsg.isEmpty()) {
-            pw.println(jsonMsg.toString());
+            pw.println(jsonMsg);
             return;
         }
 
@@ -143,7 +142,7 @@ public class NewOrderServlet extends HttpServlet {
 
                 Integer itemId = tmp.getInt("itemId");
 
-                Integer cdAmount = tmp.getInt("cdAmount");
+                Integer cdAmount = tmp.getInt("quantity");
                 ItemVO item = itemSvc.getItem(itemId);
 
                 Integer itemPrice = item.getItemPrice();
@@ -172,6 +171,10 @@ public class NewOrderServlet extends HttpServlet {
         finalPrice = originalPrice - discountPrice;
 
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Date date = new Date();
+        String orderOther = "訂單成立時間: " + date
+                + "\n" + "訂單收件人姓名: " + receiverName + "收件人電話: " + receiverPhone
+                + "\n" + "收件地址: " + receiverAddress;
 
         // 寫入資料庫
 
@@ -182,9 +185,9 @@ public class NewOrderServlet extends HttpServlet {
         orderBuy.setFinalPrice(finalPrice);
         orderBuy.setOrderDate(timestamp);
         orderBuy.setOrderPaying(orderPaying);
+        orderBuy.setOrderOther(orderOther);
         orderBuy.setOrderSend(orderSend);
         orderBuy.setOrderStatus((byte) 0);
-        orderBuy.setOrderOther(orderOther);
         orderBuy.setReceiverName(receiverName);
         orderBuy.setReceiverAddress(receiverAddress);
         orderBuy.setReceiverPhone(receiverPhone);
@@ -236,15 +239,16 @@ public class NewOrderServlet extends HttpServlet {
         if (b) {
 
             JSONArray newOrder = new JSONArray();
-            orderBuySvc.NewOrder(url, orderId, memberId, finalPrice, receiverName, couponId);
+
+            String result = orderBuySvc.NewOrder(url, orderId, memberId, finalPrice, receiverName, couponId);
+            if (result == null) {
+                jsonMsg.put("payErr", "綠界發生錯誤，請重稍後再試");
+                return;
+            }
+            newOrder.put(result);
+            pw.print(newOrder);
 
         } else {
-
-            pw.print("系統繁忙中，請重新確認");
-            return; // 程式中斷
-        }
-
-        res.sendRedirect("shop.html");
 
             jsonMsg.put("payErr", "系統繁忙中，請重新確認");
             pw.print(jsonMsg);

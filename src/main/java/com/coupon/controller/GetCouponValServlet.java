@@ -1,7 +1,11 @@
 package com.coupon.controller;
 
+import com.coupon.model.entity.Coupon;
 import com.coupon.model.service.CouponService;
 import com.coupon.model.service.impl.CouponServiceImpl;
+import com.google.gson.JsonObject;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -34,15 +38,26 @@ public class GetCouponValServlet extends HttpServlet {
         res.setHeader("Access-Control-Allow-Credentials", "true");
 
         final Integer couponId = Integer.valueOf(req.getParameter("couponId"));
-        System.out.println(couponId);
+        final Double finalPrice = Double.valueOf(req.getParameter("finalPrice"));
 
+        JSONObject jsonMsg = new JSONObject();
         PrintWriter pw = res.getWriter();
 
         CouponService couponService = new CouponServiceImpl();
+        Coupon coupon = couponService.getCouponById(couponId);
 
-        String val = String.valueOf(couponService.getCouponById(couponId).getCouponVal());
+        Double minimum = coupon.getMinimum();
+        if (finalPrice < minimum) {
+            jsonMsg.put("minimumErr", "無法使用折價券，未達到最低消費 NT$" + minimum);
+            jsonMsg.put("couponVal", "0");
+        }
+        if (!jsonMsg.isEmpty()) {
+            pw.println(jsonMsg);
+            return;
+        }
+        jsonMsg.put("couponVal", String.valueOf(coupon.getCouponVal()));
 
-        pw.println(val);
+        pw.println(jsonMsg);
     }
 
 }

@@ -22,9 +22,9 @@ const navbar =  `<header>
                                     <li class="nav-item dropdown"><a class="nav-link" href="#" role="button"
                                             aria-expanded="false"> 商城管理 </a>
                                         <ul class="dropdown-menu bg-dark">
-                                            <li><a class="dropdown-item bg-dark text-white-50" href="/CGA104G1/backend/commodityDetails/ListOrderBackend.html">商品管理</a></li>
-                                            <li><a class="dropdown-item bg-dark text-white-50" href="#">商城訂單管理</a></li>
-                                            <li><a class="dropdown-item bg-dark text-white-50" href="#">折價券管理</a></li>
+                                            <li><a class="dropdown-item bg-dark text-white-50" href="/CGA104G1/backend/item/listAllItems.html">商品管理</a></li>
+                                            <li><a class="dropdown-item bg-dark text-white-50" href="/CGA104G1/backend/commodityDetails/ListOrderBackend.html">商城訂單管理</a></li>
+                                            <li><a class="dropdown-item bg-dark text-white-50" href="/CGA104G1/backend/coupon/listAllCoupon.jsp">折價券管理</a></li>
                                         </ul>
                                     </li>
                                     <li class="nav-item dropdown"><a class="nav-link" href="#" role="button"
@@ -58,6 +58,9 @@ const navbar =  `<header>
                                         </ul>
                                     </li>
                                 </ul>
+                                  <a class="d-flex log" href="CGA104G1/backend/emp/backLogin.html">
+									<button class="btn btn-warning">員工登入</button>
+								</a>
                             </div>
                         </div>
                     </nav>

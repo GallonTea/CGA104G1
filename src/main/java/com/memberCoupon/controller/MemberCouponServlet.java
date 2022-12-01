@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -44,12 +45,13 @@ public class MemberCouponServlet extends HttpServlet {
         /* 是否攜帶 cookie */
         res.setHeader("Access-Control-Allow-Credentials", "true");
 
-        final Integer memId = Integer.valueOf(req.getParameter("memberId"));
+        HttpSession session = req.getSession();
+        final Integer memId = (Integer) session.getAttribute("memId");
 
         PrintWriter pw = res.getWriter();
 
         MemberCouponService memberCouponService = new MemberCouponServiceImpl();
-        JSONArray items = memberCouponService.getOwnCoupon(memId);
+        JSONArray items = memberCouponService.listOwnCoupon(memId);
 
         pw.println(items);
     }

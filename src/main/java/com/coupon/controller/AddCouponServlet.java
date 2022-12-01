@@ -131,5 +131,11 @@ public class AddCouponServlet extends HttpServlet {
             successView.forward(req, res);
 
         }
+
+        if ("quit".equals(action)) {
+            String url = "/backend/coupon/listAllCoupon.jsp";
+            RequestDispatcher successView = req.getRequestDispatcher(url);
+            successView.forward(req, res);
+        }
     }
 }

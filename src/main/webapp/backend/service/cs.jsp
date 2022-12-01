@@ -1,12 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ include file="/backend/backNavbar.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 <script src="https://code.jquery.com/jquery-3.6.1.js"
@@ -14,7 +14,7 @@
 <title>客服中心</title>
 <style>
 		/* 設定版型與背景 */
-		html, body {
+		html, body, section {
  			height: 100%; 
             background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
             background-color: #FFDEE9;
@@ -33,6 +33,7 @@
 			width: 25%;
 			overflow-x:hidden;
 			overflow-y:auto;
+			margin-left: 50px;
 		}
 		
         #statusOutput {
@@ -62,10 +63,17 @@
 			font-size: 18px;
 			padding: 5px;
 		}
+		
+		.columnBlock:hover {
+			cursor: pointer;
+			background-color: white;
+			opacity: 0.8;
+		}
 
         /* 聊天室設定 */
         .chat{
         	width: 70%;
+        	margin-right: 70px;
         }
         .panel {
             width: 70%;
@@ -80,7 +88,7 @@
         }
         
         #messagesArea {
-        	height: 350px;
+        	height: 400px;
         	border-radius: 5px;
 	        padding: 5px 0;
 	        background-repeat: no-repeat;
@@ -159,22 +167,28 @@
 		}
     </style>
 </head>
-<body onload="connect();" onunload="disconnect();">
+<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+			<body onload="connect();" onunload="disconnect();">
+				<div class="container">
+					<div id="row">
+					<span class="text">客服清單</span>
+					</div>
+					<div class="chat">
+					<h3 id="statusOutput" class="statusOutput"></h3>
+					<div id="messagesArea" class="panel message-area" ></div>
+					<div class="panel input-area">
+						<input id="message" class="text-field" type="text" placeholder="請輸入訊息" onkeydown="if (event.keyCode == 13) sendMessage();" />&ensp; 
+						<input type="submit" id="sendMessage" class="button btn btn-info" value="送出" onclick="sendMessage();" /> 
+					</div>
+					</div>
+				</div>
+			</body>
+		</section>
+	</main>
 
-<div class="container">
-	<div id="row">
-	<span class="text">客服清單</span>
-	</div>
-	<div class="chat">
-	<h3 id="statusOutput" class="statusOutput"></h3>
-	<div id="messagesArea" class="panel message-area" ></div>
-	<div class="panel input-area">
-		<input id="message" class="text-field" type="text" placeholder="請輸入訊息" onkeydown="if (event.keyCode == 13) sendMessage();" />&ensp; 
-		<input type="submit" id="sendMessage" class="button btn btn-info" value="送出" onclick="sendMessage();" /> 
-	</div>
-	</div>
-</div>
-</body>
 
 <script>
 	var MyPoint = "/FriendWS/${userName}";

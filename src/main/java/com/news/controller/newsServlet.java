@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+import com.article.model.ArticleService;
+import com.article.model.ArticleVO;
 import com.google.gson.Gson;
 import com.news.model.NewsService;
 import com.news.model.NewsVO;
@@ -78,28 +80,34 @@ public class newsServlet extends HttpServlet {
 		}
 		
 		if("update".equals(action)) {
-			BufferedReader br = new BufferedReader(new InputStreamReader(req.getInputStream(),"UTF-8"));
-			String json = "";
-			if(br != null) {
-				json = br.readLine();
-			}
-			JSONObject obj = new JSONObject(json);
-			JSONObject updateNews = obj.getJSONObject("value");
-			String newsTitle = String.valueOf((String) updateNews.get("newsTitle"));
-			String newsContent = String.valueOf((String) updateNews.get("newsContent"));
+			System.out.println(1);
+			Integer newsId = Integer.valueOf(req.getParameter("newsId").trim());
+			String newsTitle = req.getParameter("newsTitle").trim();
+			String newsContent = req.getParameter("newsContent").trim();
 			
 			NewsVO newsVO = new NewsVO();
+			newsVO.setNewsId(newsId);
 			newsVO.setNewsTitle(newsTitle);
 			newsVO.setNewsContent(newsContent);
 			
 			NewsService newsSvc = new NewsService();
 			newsSvc.updateNews(newsVO);
+			
+			String url = "/backend/news/newsIndex.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
 		}
 		
 		if("delete".equals(action)) {
+			System.out.println("近來");
 			Integer newsId = Integer.valueOf(req.getParameter("newsId"));
+			System.out.println(newsId);
 			NewsService newsSvc = new NewsService();
 			newsSvc.deleteNews(newsId);
+			System.out.println("delete");
+			String url = "/backend/news/newsIndex.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
 		}
 	}
 

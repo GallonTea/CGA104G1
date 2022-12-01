@@ -12,7 +12,7 @@
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <style>
         body {
-            background-image: url(/img/asset/back.jpg);
+            background-image: url(../asset/img/share_icon/back.jpg);
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-position: center;

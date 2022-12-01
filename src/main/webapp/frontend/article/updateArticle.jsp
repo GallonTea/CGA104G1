@@ -68,35 +68,43 @@
         }
 
         .btn-warning {
-            position: absolute;
-            right: 2%;
+        	margin-top: 10px;
             color: white;
             font-weight: 600;
         }
         
         #logo {
-	width: 100px;
-	height: 40px;
-}
+			width: 100px;
+			height: 40px;
+		}
+		
+		.displayBox{
+			min-height: 355px;
+		    background-color:white;
+		    margin-right:20px;
+		    box-shadow:-3px -3px 9px gray;
+		    margin-bottom: 20px;
+        }
     </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-light fixed-top">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="<%=request.getContextPath() %>/frontend/article/select_page.jsp"><img id="logo" src="<%=request.getContextPath() %>/frontend/article/img/logo.png"></a>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="請輸入文章編號">
-                    <button class="btn btn-outline-info text-nowrap" type="submit">查詢</button>
-                </form>
-            </div>
-        </div>
-    </nav>
-    <div class="none"></div>
+<!--     <nav class="navbar navbar-expand-lg bg-light fixed-top"> -->
+<!--         <div class="container-fluid"> -->
+<%--             <a class="navbar-brand" href="<%=request.getContextPath() %>/frontend/article/select_page.jsp"><img id="logo" src="<%=request.getContextPath() %>/frontend/article/img/logo.png"></a> --%>
+<!--             <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
+<!--                 <ul class="navbar-nav me-auto mb-2 mb-lg-0"> -->
+<!--                 </ul> -->
+<!--                 <form class="d-flex" role="search"> -->
+<!--                     <input class="form-control me-2" type="search" placeholder="請輸入文章編號"> -->
+<!--                     <button class="btn btn-outline-info text-nowrap" type="submit">查詢</button> -->
+<!--                 </form> -->
+<!--             </div> -->
+<!--         </div> -->
+<!--     </nav> -->
+<!--     <div class="none"></div> -->
     <div class="container">
+    	<div class="displayBox">
         <div class="title">編輯文章</div>
         <div class="form">
             <form method="post" action="/CGA104G1/ArticleServlet" name="form1">
@@ -121,12 +129,20 @@
                 <input type="hidden" name="article_id" value="${param.article_id}">
                 <input type="hidden" name="mem_id" value="1">
                 <input type="hidden" name="action" value="update">
+                <div style="width:100%; display:flex;">
+                <div style="width:89%;"></div>
                 <button class="btn btn-warning" value="送出修改">確認修改</button>
+                </div>
             </form>
+        </div>
         </div>
     </div>
 
     <script src="<%=request.getContextPath() %>/ckeditor5/build/ckeditor.js"></script>
+    <script src="<%=request.getContextPath() %>/resources/static/js/navbar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.7/dist/sweetalert2.all.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+            integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 	<script>
 	ClassicEditor
     .create(document.querySelector('.editor'), {
@@ -146,6 +162,25 @@
     .then(editor => {
         console.log(editor);
     });
+	
+	$('.btn-warning').click(function(e){
+		e.preventDefault();
+		var form = $(this).parents('form');
+		Swal.fire({
+			  title: '確認要修改文章嗎？',
+			  showCancelButton: true,
+			  cancelButtonText: "取消",
+			  confirmButtonText: '確定',
+			  confirmButtonColor: 'green',
+			}).then((result) => {
+			  if (result.isConfirmed) {
+			    Swal.fire('修改成功', '', 'success'),
+			    setTimeout(function(){
+			    	form.submit();
+				},1000);
+			  } 
+			})
+	})
 	</script>
 </body>
 </html>

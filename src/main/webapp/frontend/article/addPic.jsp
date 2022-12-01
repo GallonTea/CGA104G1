@@ -64,21 +64,21 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg bg-light fixed-top">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="select_page.jsp"><img id="logo" src="img/logo.png"></a>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				</ul>
-				<form class="d-flex" role="search">
-					<input class="form-control me-2" type="search"
-						placeholder="請輸入文章編號">
-					<button class="btn btn-outline-info text-nowrap" type="submit">查詢</button>
-				</form>
-			</div>
-		</div>
-	</nav>
-    <div class="none"></div>
+<!--     <nav class="navbar navbar-expand-lg bg-light fixed-top"> -->
+<!-- 		<div class="container-fluid"> -->
+<!-- 			<a class="navbar-brand" href="select_page.jsp"><img id="logo" src="img/logo.png"></a> -->
+<!-- 			<div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
+<!-- 				<ul class="navbar-nav me-auto mb-2 mb-lg-0"> -->
+<!-- 				</ul> -->
+<!-- 				<form class="d-flex" role="search"> -->
+<!-- 					<input class="form-control me-2" type="search" -->
+<!-- 						placeholder="請輸入文章編號"> -->
+<!-- 					<button class="btn btn-outline-info text-nowrap" type="submit">查詢</button> -->
+<!-- 				</form> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</nav> -->
+<!--     <div class="none"></div> -->
     <div class="flex-container">
         <div class="but"><label class="btn btn-info"><input id="upload_img" style="display:none;" type="file"
                     accept="image/*"><i class="fa fa-photo"></i> 上傳圖片</label></div>
@@ -100,6 +100,7 @@
         <button type="submit" class="btn btn-success">確認送出</button>
     </form>
 
+	<script src="<%=request.getContextPath() %>/resources/static/js/navbar.js"></script>
     <script>
         (function ($) {
             var width_crop = 100, // 圖片裁切寬度 px 值

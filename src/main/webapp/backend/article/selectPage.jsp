@@ -2,7 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.article_report.model.*"%>   
 <%@ page import="java.util.*"%> 
-<%@ include file="/backend/backNavbar.jsp"%>
 
 <%
     Article_reportService article_reportSvc = new Article_reportService();
@@ -17,11 +16,12 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>文章檢舉管理</title>
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
+<!--     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" -->
+<!--         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" -->
+<!--         crossorigin="anonymous"></script> -->
     <style>
         .evenarticle {
             background-color: white;
@@ -58,7 +58,7 @@
         }
 
         .atitle {
-            width: 620px;
+            width: 350px;
             text-align: center;
         }
 
@@ -67,14 +67,18 @@
             font-size:8px;
             font-weight: 700;
             text-align: center;
-            padding-left: 10px;
+            padding-left: 15px;
         }
 
         .status {
             width: 60px;
             font-weight: 700;
             text-align: center;
-            padding-left: 20px;
+            padding-left: 15px;
+        }
+        
+        .astitle{
+        	width: 500px;
         }
 
         .evenarticle:hover {
@@ -103,7 +107,7 @@
         }
 
         .repResult {
-            width: 90px;
+            width: 100px;
             padding: 0 10px;
             text-align: center;
         }
@@ -153,7 +157,10 @@
         }
         
         .accordion-button{
-        	width: 100%;
+        	position: relative;
+		    display: flex;
+		    align-items: center;
+		    width: 75% !important;
         }
         
         .accordion-header{
@@ -226,7 +233,11 @@
 </head>
 
 <body>
-    <div class="container">
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+			<div class="container">
 
 		<h1 class="topTitle">討論區文章檢舉一覽</h1>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -245,6 +256,7 @@
                 tabindex="0">
                 <div class="container" id="container2">
                     <div class="title">
+                    &ensp;&ensp;&ensp;&ensp;
                         <div class="status">狀態</div>
                         <div class="sort">分類</div>
                         <div class="atitle">標題</div>
@@ -269,7 +281,7 @@
                         	<input type="hidden" name="action" value="updateRes">
                         	<input type="hidden" name="afrep_result" value=1>
                         	<input type="hidden" name="afrep_status" value=1>
-                        	<input type="hidden" name="emp_id" value=3>
+                        	<input type="hidden" name="emp_id" value="<c:forEach var="empVO" items="${empList}" begin="0" end="0" >${empVO.emp_id}</c:forEach>">
                         	<input type="hidden" name="afrep_id" value="${article_reportVO.afrep_id}">
                         	<button type="submit" class="btn btn-success">標示為已處理</button>
                         </form>&nbsp;
@@ -277,7 +289,8 @@
                         	<input type="hidden" name="action" value="hideArticle">
                         	<input type="hidden" name="afrep_result" value="2">
                         	<input type="hidden" name="afrep_status" value="1">
-                        	<input type="hidden" name="emp_id" value="3">
+                        	<input type="hidden" name="emp_id" value="
+                        	<c:forEach var="empVO" items="${empList}" begin="0" end="0" >${empVO.emp_id}</c:forEach>">
                         	<input type="hidden" name="afrep_id" value="${article_reportVO.afrep_id}">
                         	<input type="hidden" name="article_id" value="${article_reportVO.article_id}">
                         	<button type="submit" class="btn btn-danger">刪除文章</button>
@@ -316,7 +329,7 @@
                     <div class="title">
                         <div class="status">狀態</div>
                         <div class="sort">分類</div>
-                        <div class="atitle">標題</div>
+                        <div class="atitle astitle">標題</div>
                         <div class="repTime">檢舉時間</div>
                         <div class="repResult">申訴結果</div>
                         <div class="repEmp">處理人員</div>
@@ -329,7 +342,7 @@
                         	</c:if>
 						</div>
                         <div class="sort">${article_reportVO.articleVO.article_sorttypeVO.sort_content}</div>
-                        <div class="atitle">${article_reportVO.articleVO.article_title}</div>
+                        <div class="atitle astitle">${article_reportVO.articleVO.article_title}</div>
                         <div class="repTime">${article_reportVO.afrep_date}</div>
                         <div class="repResult">
 							<c:if test="${article_reportVO.afrep_result == 1}">
@@ -346,8 +359,9 @@
             </div>
         </div>
     </div>
+		</section>
+	</main>
+    
 </body>
-<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
-    crossorigin="anonymous"></script>
 
 </html>

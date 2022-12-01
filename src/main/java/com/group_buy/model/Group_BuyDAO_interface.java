@@ -30,4 +30,6 @@ public interface Group_BuyDAO_interface {
 
 	public List<Group_BuyVO> getAll2End();
 
+	public List<Group_BuyVO> joinGBIGetAllWhereMemID(Integer mem_id);
+
 }

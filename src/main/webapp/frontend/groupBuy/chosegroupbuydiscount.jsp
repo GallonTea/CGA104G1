@@ -161,9 +161,8 @@ footer img {
 		</select> 
 		<br>
 		
-		<input type="hidden" name="gbitem_price"
-			value="${Group_Buy_ItemVO.gbitem_price}"> <input
-			type="hidden" name="gb_id" value="${Group_BuyVO.gb_id}"> 
+			<input type="hidden" name="gbitem_price"value="${Group_Buy_ItemVO.gbitem_price}"> 
+			<input type="hidden" name="gb_id" value="${Group_BuyVO.gb_id}"> 
 			<input type="hidden" name="gb_price" value="${Group_BuyVO.gb_price}">
 			<input type="hidden" name="mem_id" value="${Group_BuyVO.mem_id}">
 			<input type="hidden" name="action" value="confirmGroupBuy"> 

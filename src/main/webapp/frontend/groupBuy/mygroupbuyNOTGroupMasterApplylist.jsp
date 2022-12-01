@@ -1,16 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.group_buy.model.*"%>
-
 
 <%
 pageContext.getAttribute("list");
 %>
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -131,11 +129,9 @@ footer img {
 	}
 }
 </style>
-
 </head>
-
 <body>
-	<main>
+<main>
 		<%-- 錯誤表列 --%>
 			<c:if test="${not empty errorMsgs}">
 				<font style="color: red">請修正以下錯誤:</font>
@@ -302,5 +298,4 @@ footer img {
 	<!--  Footer  -->
 	<script src="../../resources/static/js/footer.js"></script>
 </body>
-
 </html>

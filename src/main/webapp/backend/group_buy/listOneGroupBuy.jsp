@@ -80,8 +80,34 @@ th, td {
 				<td>${Group_BuyVO.gbstart_date}</td>
 				<td>${Group_BuyVO.gbend_date}</td>
 <%-- 				<td>${Group_BuyVO.gb_status}</td> --%>
-				<c:if test="${Group_BuyVO.gb_status == '0'}"><td><c:out value="參團人數不足"></td></c:out></c:if>
-				<c:if test="${Group_BuyVO.gb_status == '1'}"><td><c:out value="參團人數已達標"></td></c:out></c:if>
+				<c:if test="${Group_BuyVO.gb_status == '0'}">
+							<td><c:out value="尚未達到開團時間"></td>
+							</c:out>
+						</c:if>
+						<c:if test="${Group_BuyVO.gb_status == '1'}">
+							<td><c:out value="團購進行中，目前團購商品下訂總數不足"></td>
+							</c:out>
+						</c:if>
+						<c:if test="${Group_BuyVO.gb_status == '2'}">
+							<td><c:out value="團購進行中，目前團購商品下訂總數已達標"></td>
+							</c:out>
+						</c:if>
+						<c:if test="${Group_BuyVO.gb_status == '3'}">
+							<td><c:out value="團購關閉，出貨處理中"></td>
+							</c:out>
+						</c:if>
+						<c:if test="${Group_BuyVO.gb_status == '4'}">
+							<td><c:out value="團購關閉，已出貨"></td>
+							</c:out>
+						</c:if>
+						<c:if test="${Group_BuyVO.gb_status == '8'}">
+							<td><c:out value="團購結束。團購時間逾期且團購商品下訂總數不足"></td>
+							</c:out>
+						</c:if>
+						<c:if test="${Group_BuyVO.gb_status == '9'}">
+							<td><c:out value="團購結束。訂單已完成"></td>
+							</c:out>
+						</c:if>
 				<td>${Group_BuyVO.gb_price}</td>
 				<td>${Group_BuyVO.gb_name}</td>
 				</table>

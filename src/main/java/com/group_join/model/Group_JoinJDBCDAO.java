@@ -161,7 +161,7 @@ public class Group_JoinJDBCDAO implements Group_JoinDAO_interface{
 		}
 	}
 
-	@Override
+	
 	public Group_JoinVO findByPrimaryKey(Integer gb_id) {
 		
 		Group_JoinVO Group_JoinVO = null;

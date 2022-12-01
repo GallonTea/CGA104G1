@@ -59,6 +59,19 @@ public class Group_BuyService {
 	public List<Group_BuyVO> getAll() {
 		return dao.getAll();
 	}
+	public List<Group_BuyVO> joinGBIGetAll() {
+		return dao.joinGBIGetAll();
+	}
+	//查詢團購狀態等於0的(團購尚未開始)，而且團購開始時間大於現在時間(為了要更改狀態為團購進行中)
+	public List<Group_BuyVO> getAll2InProgress(){
+		return dao.getAll2InProgress();
+	}
+	
+	//查詢團購狀態等於1的(團購進行中)，而且現在時間>=團購結束時間(為了要更改狀態為團購關閉OR結束)
+	public List<Group_BuyVO> getAll2End(){
+		return dao.getAll2End();
+	}
+	
 	
 	// 用 mem_id 取得所有資料
 	public List<Group_BuyVO> getAllGroupBuyApplyListByMemID(Integer mem_id) {
@@ -87,7 +100,7 @@ public class Group_BuyService {
 		Group_BuyVO gbVO = new Group_BuyVO();
 		gbVO.setGb_id(gb_id);
 		gbVO.setGb_status(gb_status);
-		dao.updateGbprice(gbVO);
+		dao.updateGbStatus(gbVO);
 		
 		return gbVO;
 	}

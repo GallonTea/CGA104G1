@@ -62,6 +62,10 @@ public class Group_BuyService {
 	public List<Group_BuyVO> joinGBIGetAll() {
 		return dao.joinGBIGetAll();
 	}
+	
+	public List<Group_BuyVO> joinGBIGetAllWhereMemID(Integer mem_id) {
+		return dao.joinGBIGetAllWhereMemID(mem_id);
+	}
 	//查詢團購狀態等於0的(團購尚未開始)，而且團購開始時間大於現在時間(為了要更改狀態為團購進行中)
 	public List<Group_BuyVO> getAll2InProgress(){
 		return dao.getAll2InProgress();
@@ -108,5 +112,6 @@ public class Group_BuyService {
 	public Group_BuyVO getLastGroup_Buy() {
 		return dao.findLast();
 	}
+	
 	
 }

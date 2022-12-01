@@ -19,6 +19,9 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
 
+ 	<!--item_detail.css	-->
+    <link rel="stylesheet" type="text/css" href="../../resources/static/css/item_detail.css">
+
 	<!-- import css stylesheet -->
 	<link rel="stylesheet" href="../../css/style.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css">
@@ -89,7 +92,7 @@
 		<!-- 導覽列 -->
 		<nav class="navbar navbar-expand-lg">
 			<div class="container-fluid">
-				<a class="navbar-brand" href="#">
+				<a class="navbar-brand" href="/CGA104G1/frontend/groupBuy/listallgroupbuy.html">
 					<!-- 網站 logo --> <img src="../../resources/static/image/Ba-Rei-logo3.png" alt="Logo" width="200px"
 						height="10%" class="d-inline-block align-text-top">
 				</a>
@@ -146,11 +149,9 @@
 <!-- 							<a href="" class="btn btn-rounded btn-dark" onclick="addToTrace()" id="Trace"><span>trace</span></a> -->
 							<h5 id="gb_price"></h5>
 							
-							<label for="">購買數量 </label><input type='button' value='-' class='qtyminus' field='quantity' />
-							<input type='text' name='quantity' value='0' class='qty' />
-							<input type='button' value='+' class='qtyplus' field='quantity' />
+							
 							<div id="2groupjoinhidden"></div>
-							<input type="hidden" name="action" value="group_buy_goOrder">
+							<input type="hidden" name="action" value="go_join">
 							
 							
 							
@@ -328,6 +329,7 @@
 		crossorigin="anonymous"></script>
 		
 		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+		<script src="../../resources/static/js/cart.js"></script>
 	<!--  NavBar  -->
 	<script src="../../resources/static/js/navbar.js"></script>
 	<!--  Footer  -->
@@ -354,32 +356,32 @@
 
 
 
-	<script type="text/javascript">
-		// 購買數量按鈕
+<!-- 	<script type="text/javascript"> -->
+// 		// 購買數量按鈕
 
-		$(function () {
-			$('.qtyplus').click(function (e) {
-				e.preventDefault();
-				fieldName = $(this).attr('field');
-				var currentVal = parseInt($('input[name=' + fieldName + ']').val());
-				if (!isNaN(currentVal)) {
-					$('input[name=' + fieldName + ']').val(currentVal + 1);
-				} else {
-					$('input[name=' + fieldName + ']').val(0);
-				}
-			});
-			$(".qtyminus").click(function (e) {
-				e.preventDefault();
-				fieldName = $(this).attr('field');
-				var currentVal = parseInt($('input[name=' + fieldName + ']').val());
-				if (!isNaN(currentVal) && currentVal > 0) {
-					$('input[name=' + fieldName + ']').val(currentVal - 1);
-				} else {
-					$('input[name=' + fieldName + ']').val(0);
-				}
-			});
-		});
-	</script>
+// 		$(function () {
+// 			$('.qtyplus').click(function (e) {
+// 				e.preventDefault();
+// 				fieldName = $(this).attr('field');
+// 				var currentVal = parseInt($('input[name=' + fieldName + ']').val());
+// 				if (!isNaN(currentVal)) {
+// 					$('input[name=' + fieldName + ']').val(currentVal + 1);
+// 				} else {
+// 					$('input[name=' + fieldName + ']').val(0);
+// 				}
+// 			});
+// 			$(".qtyminus").click(function (e) {
+// 				e.preventDefault();
+// 				fieldName = $(this).attr('field');
+// 				var currentVal = parseInt($('input[name=' + fieldName + ']').val());
+// 				if (!isNaN(currentVal) && currentVal > 0) {
+// 					$('input[name=' + fieldName + ']').val(currentVal - 1);
+// 				} else {
+// 					$('input[name=' + fieldName + ']').val(0);
+// 				}
+// 			});
+// 		});
+<!-- 	</script> -->
 
 
 
@@ -442,6 +444,7 @@
 							<input type="hidden" name="gb_amount" id="hiddengb_amount" value="${groupBuy.gb_amount}">
 							<input type="hidden" name="gb_status"id="hiddengb_status" value="${groupBuy.gb_status}">
 							<input type="hidden" name="mem_id" id="hiddenmem_id" value="${groupBuy.mem_id}">
+							<input type="hidden" name="gb_name" id="hiddenmem_id" value="${groupBuy.gb_name}">
 					`);
 					if(Date.parse(groupBuy.gbstart_date) > now){
 						$("#addToCart").prop("disabled" , true)

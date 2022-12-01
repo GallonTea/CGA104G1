@@ -121,9 +121,9 @@
                     </button>
                     <div class="row gap-2 mx-auto justify-content-md-end"
                          v-if="orders.ORDER_STATUS === '0'">
-<!--                        <button class="col-md-2 float-right btn btn-outline-danger"-->
-<!--                                @click="cancelOrder(orders, index)">取消訂單-->
-<!--                        </button>-->
+                        <!--                        <button class="col-md-2 float-right btn btn-outline-danger"-->
+                        <!--                                @click="cancelOrder(orders, index)">取消訂單-->
+                        <!--                        </button>-->
                     </div>
                     <div class="row gap-2 mx-auto justify-content-md-end"
                          v-else-if="orders.ORDER_STATUS === '3'">
@@ -256,6 +256,9 @@
                                 '<a class="btn btn-warning" href="/CGA104G1/frontend/groupBuy/listallgroupbuy.html"><strong>前往團購</strong></a>' +
                                 '</div>'
                         })
+                        setTimeout(function () {
+                            window.location.assign('/CGA104G1/frontend/item/shop.html')
+                        }, 2000)
                     }
                     this.orders = res.data;
                 })

@@ -6,13 +6,13 @@
 <%
 Group_BuyVO group_BuyVO = (Group_BuyVO) request.getAttribute("Group_BuyVO");
 %>
-<%@include file="/backend/backNavbar.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title>團購團資料新增 - addGroupBuy.jsp</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <style>
 table#table-1 {
 	background-color: #CCCCFF;
@@ -34,7 +34,7 @@ h4 {
 
 <style>
 table {
-	width: 450px;
+	width: 800px;
 	background-color: white;
 	margin-top: 1px;
 	margin-bottom: 1px;
@@ -50,6 +50,11 @@ th, td {
 </style>
 </head>
 <body>
+<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+<!-- 		把原本body的東西貼到這邊 -->
 <h4>
 	<a href="<%=request.getContextPath()%>/backend/group_buy/select_page.jsp">回首頁</a>
 </h4>
@@ -124,6 +129,9 @@ th, td {
 		<input type="submit" value="送出新增">
 	</FORM>
 				
+		</section>
+	</main>
+
 </body>
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->
 

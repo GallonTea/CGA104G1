@@ -20,6 +20,8 @@ public class EffectJDBCDAO implements EffectDAO_interface {
 	private static final String DELETE = "DELETE FROM effect where effect_id = ?";
 	private static final String UPDATE = "UPDATE effect set effect_name=? ,effect_info=? where effect_id = ?";
 
+	
+	
 	@Override
 	public void insert(EffectVO effectVO) {
 

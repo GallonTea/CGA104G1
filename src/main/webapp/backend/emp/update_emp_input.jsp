@@ -7,7 +7,7 @@ EmpVO empVO = (EmpVO) request.getAttribute("empVO");
 <html>
 <head>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
-<title>權限資料修改</title>
+<title>員工資料修改</title>
 
 <style>
 table#table-1 {
@@ -56,7 +56,7 @@ th, td {
 	<table id="table-1">
 		<tr>
 			<td>
-				<h3>權限資料修改</h3>
+				<h3>員工資料修改</h3>
 				<h4>
 					<a href="select_page.jsp">回首頁</a>
 				</h4>

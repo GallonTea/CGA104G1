@@ -123,17 +123,25 @@
 			background-color: rgb(255, 252, 224);
 		}
 		
+		.displayBox{
+		    background-color:white;
+		    margin-right:20px;
+		    box-shadow:-3px -3px 9px gray;
+		    margin-bottom: 20px;
+        }
+		
 		/* 設定動作區塊 */
 		.form{
 			width:100%;
 			height: 150px;
 			text-align: center;
-			padding-right: 60px;
+			padding-right: 10px;
 		}
 		
 		.act{
-			width: 200px;
+			width: 300px;
 			margin-bottom: 5px;
+			float: right;
 		}
 		
 		/* 設定廣告區塊 */
@@ -141,29 +149,30 @@
 			width:320px;
 			height: 320px;
 			background-color: pink;
+			float: right;
 		}
 </style>
 </head>
 
 <body>
-	<nav class="navbar navbar-expand-lg bg-light fixed-top">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="<%=request.getContextPath() %>/frontend/article/select_page.jsp"><img id="logo" src="<%=request.getContextPath() %>/frontend//article/img/logo.png"></a>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				</ul>
-				<form class="d-flex" role="search" method="post" action="/CGA104G1/ArticleServlet">
-					<input class="form-control me-2" type="search" placeholder="請輸入關鍵字" name="article_id"> 
-					<input type="hidden" name="action" value="getOne_For_Display">
-					<button class="btn btn-outline-info text-nowrap" type="submit" value="送出">查詢</button>
-				</form>
-			</div>
-		</div>
-	</nav>
+<!-- 	<nav class="navbar navbar-expand-lg bg-light fixed-top"> -->
+<!-- 		<div class="container-fluid"> -->
+<%-- 			<a class="navbar-brand" href="<%=request.getContextPath() %>/frontend/article/select_page.jsp"><img id="logo" src="<%=request.getContextPath() %>/frontend//article/img/logo.png"></a> --%>
+<!-- 			<div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
+<!-- 				<ul class="navbar-nav me-auto mb-2 mb-lg-0"> -->
+<!-- 				</ul> -->
+<!-- 				<form class="d-flex" role="search" method="post" action="/CGA104G1/ArticleServlet"> -->
+<!-- 					<input class="form-control me-2" type="search" placeholder="請輸入關鍵字" name="article_id">  -->
+<!-- 					<input type="hidden" name="action" value="getOne_For_Display"> -->
+<!-- 					<button class="btn btn-outline-info text-nowrap" type="submit" value="送出">查詢</button> -->
+<!-- 				</form> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</nav> -->
 	
-	<div class="none"></div>
+<!-- 	<div class="none"></div> -->
     <div class="container">
-	    
+	    <div class="displayBox">
         <div class="title">
             <div class="push titlesty">推</div>
             <div class="sort titlesty">分類</div>
@@ -188,6 +197,7 @@
             <div class="ptime">${articleVO.article_publish}</div>
         </div>
 	</c:forEach>
+    </div>
     </div>
     
     <div class="container2">
@@ -219,9 +229,7 @@
     </div>
     	
 
-<script>
-
-</script>
+<script src="<%=request.getContextPath() %>/resources/static/js/navbar.js"></script>
 </body>
 
 </html>

@@ -1,6 +1,9 @@
 package com.group_join.model;
 
 import java.util.List;
+import java.util.Map;
+
+import com.emp.model.EmpVO;
 
 
 public class Group_JoinService {
@@ -11,8 +14,9 @@ public class Group_JoinService {
 		dao = new Group_JoinDAO();
 	}
 	
+	
 	public Group_JoinVO addGroup_Join(Integer gb_id, Integer mem_id, 
-			Integer gbpay_status, Integer pickup_status, Integer deliver_status ,Integer gbbuy_amount, Integer gbbuy_price) {
+			Integer gbpay_status, Integer pickup_status, Integer deliver_status ,Integer gbbuy_amount, Integer gbbuy_price ) {
 		
 		Group_JoinVO gjVO = new Group_JoinVO();
 		gjVO.setGb_id(gb_id);
@@ -22,6 +26,7 @@ public class Group_JoinService {
 		gjVO.setDeliver_status(deliver_status);
 		gjVO.setGbbuy_amount(gbbuy_amount);
 		gjVO.setGbbuy_price(gbbuy_price);
+	
 		
 		dao.insert(gjVO);
 		
@@ -29,7 +34,7 @@ public class Group_JoinService {
 	}
 	
 	public Group_JoinVO updateGroup_Join(Integer gb_id, Integer mem_id, 
-			Integer gbpay_status, Integer pickup_status, Integer deliver_status , Integer gbbuy_amount ,Integer gbbuy_price) {
+			Integer gbpay_status, Integer pickup_status, Integer deliver_status , Integer gbbuy_amount ,Integer gbbuy_price ) {
 		
 		Group_JoinVO gjVO = new Group_JoinVO();
 		gjVO.setGb_id(gb_id);
@@ -74,8 +79,8 @@ public class Group_JoinService {
 		
 		return gjVO;
 	}
-	public void deleteEmp(Integer gb_id) {
-		dao.delete(gb_id);
+	public void deleteGj(Integer gb_id , Integer mem_id) {
+		dao.deleteGj(gb_id , mem_id);
 	}
 
 	public Group_JoinVO getOneEmp(Integer gb_id ,Integer mem_id) {
@@ -89,4 +94,8 @@ public class Group_JoinService {
 	public List<Group_JoinVO> getAll() {
 		return dao.getAll();
 	}
+	public List<Group_JoinVO> getAll(Map<String, String[]> map) {
+		return dao.getAll(map);
+	}
+	
 }

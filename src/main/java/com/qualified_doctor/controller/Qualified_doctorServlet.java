@@ -129,45 +129,22 @@ public class Qualified_doctorServlet extends HttpServlet {
 			Qualified_doctorVO qualified_doctorVO = new Qualified_doctorVO();
 			
 			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
-//			String str = req.getParameter("mem_id");
-//			if (str == null || (str.trim()).length() == 0) {
-//				errorMsgs.put("mem_id", "請輸入員工編號");
-//			}
-//
-//			if (!errorMsgs.isEmpty()) {
-//				RequestDispatcher failureView = req.getRequestDispatcher("/backend/qualified_doctor/addQualified_doctor.jsp");
-//				failureView.forward(req, res);
-//				return;// 程式中斷
-//			}
-//
-//			Integer mem_id = null;
-//			try {
-//				mem_id = Integer.valueOf(str);
-//			} catch (Exception e) {
-//				errorMsgs.put("mem_id", "員工編號格式不正確");
-//			}
-//			// Send the use back to the form, if there were errors
-//			if (!errorMsgs.isEmpty()) {
-//				RequestDispatcher failureView = req.getRequestDispatcher("/backend/qualified_doctor/addQualified_doctor.jsp");
-//				failureView.forward(req, res);
-//				return;// 程式中斷
-//			}
-//			
-			
-			Integer mem_id = Integer.valueOf(req.getParameter("mem_id").trim());
-			Qualified_doctorVO memidChk = qualified_doctorSvc.memidChk(mem_id);
 
-			if(memidChk != null) {	
-					errorMsgs.put("errorMsgs", "員工編號重複輸入");
+			Integer mem_id = Integer.valueOf(req.getParameter("mem_id").trim());
+			Qualified_doctorVO memidVO = qualified_doctorSvc.memidChk(mem_id);
+
+			if(memidVO != null) {	
+					errorMsgs.put("錯誤狀態", "員工編號重複輸入");
 					
 			}
-			
-			Integer	doc_status = Integer.valueOf(req.getParameter("doc_status"));
+
+			Integer doc_status=null;
+
 			try {
-					doc_status = Integer.valueOf(req.getParameter("doc_status").trim());
+				 doc_status = Integer.valueOf(req.getParameter("doc_status").trim());
 			} catch (Exception e) {
 				e.printStackTrace();
-				errorMsgs.put("errorMsgs", "狀態請勿空白");
+				errorMsgs.put("錯誤狀態", "狀態請勿空白");
 			}
 //			Integer doc_id = Integer.valueOf(req.getParameter("doc_id").trim());
 			

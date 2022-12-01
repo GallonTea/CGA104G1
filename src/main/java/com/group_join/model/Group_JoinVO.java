@@ -11,10 +11,38 @@ public class Group_JoinVO implements java.io.Serializable{
 	private Integer gbbuy_amount;
 	private Integer gbitem_id;
 	private Integer gbbuy_price;
+	private String gb_name;
 
 	
+	public com.group_buy_item.model.Group_Buy_ItemVO getOneGbi() {
+	    com.group_buy_item.model.Group_Buy_ItemService group_buy_itemSvc = new com.group_buy_item.model.Group_Buy_ItemService();
+	    com.group_buy_item.model.Group_Buy_ItemVO group_buy_itemVO = group_buy_itemSvc.getOneGbi(gbitem_id);
+	    return group_buy_itemVO;
+    }
+	
+	 public com.mem.model.MemVO getMemVO() {
+		 com.mem.model.MemService memService = new com.mem.model.MemService();
+		 com.mem.model.MemVO memVO = memService.getOneMem(mem_id);
+		    return memVO;
+	  }
+	
+	 
+	 public com.group_buy.model.Group_BuyVO getGroup_BuyVO() {
+		 com.group_buy.model.Group_BuyService group_buyService = new com.group_buy.model.Group_BuyService();
+		 com.group_buy.model.Group_BuyVO group_buyVO = group_buyService.getOneGroup_Buy(gb_id);
+		    return group_buyVO;
+	  }
+	 
 	public Integer getGbbuy_price() {
 		return gbbuy_price;
+	}
+
+	public String getGb_name() {
+		return gb_name;
+	}
+
+	public void setGb_name(String gb_name) {
+		this.gb_name = gb_name;
 	}
 
 	public void setGbbuy_price(Integer gbbuy_price) {
@@ -29,11 +57,7 @@ public class Group_JoinVO implements java.io.Serializable{
 		this.gbitem_id = gbitem_id;
 	}
 
-	public com.group_buy_item.model.Group_Buy_ItemVO getOneGbi() {
-	    com.group_buy_item.model.Group_Buy_ItemService group_buy_itemSvc = new com.group_buy_item.model.Group_Buy_ItemService();
-	    com.group_buy_item.model.Group_Buy_ItemVO group_buy_itemVO = group_buy_itemSvc.getOneGbi(gbitem_id);
-	    return group_buy_itemVO;
-    }
+
 	
 	public Integer getGbbuy_amount() {
 		return gbbuy_amount;

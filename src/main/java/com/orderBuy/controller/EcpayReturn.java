@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
@@ -69,51 +70,27 @@ public class EcpayReturn extends HttpServlet {
         }
 
         OrderBuyService orderBuyService = new OrderBuyServiceImpl();
-        OrderBuy orderBuy = new OrderBuy();
-        List<OrderBuy> orderBuys = orderBuyService.listAllOrder();
+        assert orderId != null;
+        OrderBuy orderBuy = orderBuyService.getOrderById(Integer.valueOf(orderId));
 
-        Integer memberId = null;
-        Double originalPrice = null;
-        Double discountPrice = null;
-        Double finalPrice = null;
-        Timestamp orderDate = null;
-        Byte orderSend = null;
-        String orderOther = null;
-        String receiverName = null;
-        String receiverAddress = null;
-        String receiverPhone = null;
 
-        for (OrderBuy buy : orderBuys) {
-            memberId = buy.getMemId();
-            originalPrice = buy.getOriginalPrice();
-            discountPrice = buy.getDiscountPrice();
-            finalPrice = buy.getFinalPrice();
-            orderDate = buy.getOrderDate();
-            orderSend = buy.getOrderSend();
-            orderOther = buy.getOrderOther();
-            receiverName = buy.getReceiverName();
-            receiverAddress = buy.getReceiverAddress();
-            receiverPhone = buy.getReceiverPhone();
-        }
+        Integer memberId = orderBuy.getMemId();
+        Double finalPrice = orderBuy.getFinalPrice();
+        String orderOther = orderBuy.getOrderOther();
+        String receiverName = orderBuy.getReceiverName();
 
 
         if ("1".equals(RtnCode)) {
 
-            assert orderId != null;
-            orderBuy.setOrderId(Integer.valueOf(orderId));
-            orderBuy.setMemId(memberId);
-            orderBuy.setOriginalPrice(originalPrice);
-            orderBuy.setDiscountPrice(discountPrice);
-            orderBuy.setFinalPrice(finalPrice);
-            orderBuy.setOrderDate(orderDate);
-            orderBuy.setOrderPaying(orderPaying);
-            orderBuy.setOrderSend(orderSend);
-            orderBuy.setOrderStatus((byte) 2);
-            orderBuy.setOrderOther(orderOther);
-            orderBuy.setReceiverName(receiverName);
-            orderBuy.setReceiverAddress(receiverAddress);
-            orderBuy.setReceiverPhone(receiverPhone);
+            Date date = new Date();
+            String newOrderOther = orderOther
+                    + "\n" + "----- " + date + " -----"
+                    + "\n" + "付款成功，準備出貨"
+                    + "\n" + "綠界訂單編號: " + MerchantTradeNo;
 
+            orderBuy.setOrderStatus((byte) 2);
+            orderBuy.setOrderPaying(orderPaying);
+            orderBuy.setOrderOther(newOrderOther);
             orderBuyService.updateOrder(orderBuy);
 
             MemService memService = new MemService();
@@ -136,20 +113,15 @@ public class EcpayReturn extends HttpServlet {
             // 將優惠券切換為 0: 未使用
             memberCouponSvc.updateCouponStatus(memberId, Integer.valueOf(couponId), (byte) 0);
 
-            assert orderId != null;
-            orderBuy.setOrderId(Integer.valueOf(orderId));
-            orderBuy.setMemId(memberId);
-            orderBuy.setOriginalPrice(originalPrice);
-            orderBuy.setDiscountPrice(discountPrice);
-            orderBuy.setFinalPrice(finalPrice);
-            orderBuy.setOrderDate(orderDate);
-            orderBuy.setOrderPaying(orderPaying);
-            orderBuy.setOrderSend(orderSend);
+            Date date = new Date();
+            String newOrderOther = orderOther
+                    + "\n" + "----- " + date + " -----"
+                    + "\n" + "付款失敗，訂單取消";
+
+
             orderBuy.setOrderStatus((byte) 9);
-            orderBuy.setOrderOther(orderOther);
-            orderBuy.setReceiverName(receiverName);
-            orderBuy.setReceiverAddress(receiverAddress);
-            orderBuy.setReceiverPhone(receiverPhone);
+            orderBuy.setOrderPaying(orderPaying);
+            orderBuy.setOrderOther(newOrderOther);
 
             orderBuyService.updateOrder(orderBuy);
 

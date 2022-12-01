@@ -7,8 +7,6 @@
 MemVO memVO = (MemVO) session.getAttribute("memVO");
 %>
 
-<%= memVO==null %>
-
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
@@ -52,7 +50,7 @@ MemVO memVO = (MemVO) session.getAttribute("memVO");
 <table id="table-1">
 	<tr><td>
 		 <h3>會員資料修改 </h3>
-		 <h4><a href="<%=request.getContextPath()%>/frontend/mem/select_page.jsp">回首頁</a></h4>
+		 <h4><a href="<%=request.getContextPath()%>/frontend/mem/mem_index.jsp">回會員中心</a></h4>
 	</td></tr>
 </table>
 
@@ -68,22 +66,17 @@ MemVO memVO = (MemVO) session.getAttribute("memVO");
 	</ul>
 </c:if>
 
-<FORM METHOD="post" ACTION="/CGA104G1/MemServlet" name="form1">
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/MemServletFront" name="form1">
 <table>
 
-<!-- 	<tr> -->
-<!-- 		<td>會員帳號:</td> -->
-<%-- 		<td><input type="TEXT" name="mem_account" size="45" value="<%=memVO.getMem_account()%>" /></td> --%>
-<!-- 	</tr> -->
+	<tr>
+		<td>會員帳號:</td>
+		<td><input type="TEXT" name="mem_account" disabled size="45" value="<%=memVO.getMem_account()%>" /></td>
+	</tr>
 	<tr>
 		<td>會員密碼:</td>
 		<td><input type="password" name="mem_password" size="45"	value="<%=memVO.getMem_password()%>" /></td>
 	</tr>
-<!-- 		<tr> -->
-<!-- 		<td>確認密碼:</td> -->
-<%-- 		<td><input type="TEXT" name="mem_password" size="45"	value="<%=memVO.getMem_password()%>" /></td> --%>
-<!-- 	</tr> -->
-
 	<tr>
 		<td>會員姓名:</td>
 		<td><input type="TEXT" name="mem_name" size="45" value="<%=memVO.getMem_name()%>" /></td>
@@ -116,23 +109,7 @@ MemVO memVO = (MemVO) session.getAttribute("memVO");
 		<td>會員生日:</td>
 		<td><input type="TEXT" name="mem_dob" size="45" id="dob_date1" /></td>
 	</tr>
-<!-- 	<tr> -->
-<!-- 		<td>會員狀態:</td> -->
-<%-- 		<td><input type="TEXT" name="mem_status" size="45"	value="<%=memVO.getMem_status()%>" /></td> --%>
-<!-- 	</tr> -->
-	
-	
 
-<!-- 	<tr > -->
-<!-- 		<td>會員狀態:<font color=red><b>*</b></font></td> -->
-<!-- 		<td><select size="1" name="mem_status"> -->
-<%-- 				<option value="0" ${(memVO.mem_status==0)? 'selected':'' } >停權</option> --%>
-<%-- 				<option value="1" ${(memVO.mem_status==1)? 'selected':'' } >未驗證</option> --%>
-<%-- 				<option value="2" ${(memVO.mem_status==2)? 'selected':'' } >已驗證</option> --%>
-<!-- 		</select></td> -->
-<!-- 	</tr> -->
-
-	
 	
 	
 </table>

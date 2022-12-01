@@ -16,13 +16,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
 
-    <!-- import css stylesheet -->
-
     <!-- import jquery-3.6.0 -->
     <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <!-- import icon -->
     <script src="https://kit.fontawesome.com/b5ef6b60f3.js" crossorigin="anonymous"></script>
+
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.11.0/qs.min.js"></script>
@@ -52,10 +50,6 @@
 <main>
 
     <div id="app" style="height: 700px">
-        <div class="container" style="background-color: #8e8e8e">
-            <h4>測試以會員編號3身份登入</h4>
-            <button class="btn btn-danger" @click="storeIntoSession()">測試</button>
-        </div>
     </div>
 
 </main>
@@ -73,25 +67,13 @@
 <script src="../resources/static/js/navbar.js"></script>
 <!--  Footer  -->
 <script src="../resources/static/js/footer.js"></script>
-<script>
-    let vm = Vue.createApp({
-        data() {
-            return {
-                memInfo: {
-                    memberId: 3,
-                    memberName: 'Wade'
-                }
-            }
-        },
-        methods: {
-            storeIntoSession: function () {
-                sessionStorage.setItem('mem-info', JSON.stringify(this.memInfo));
-                alert(' #測試用\r\n 登入資訊 \r\n 會員編號: 3 會員名稱: Wade')
-            }
-        }
-    })
-    vm.mount('#app')
-</script>
+
+
+<script type="text/javascript" src="../resources/static/js/home.js"></script>
+<!--  Cart -->
+<script type="text/javascript" src="../resources/static/js/cart.js"></script>
 
 </body>
+
+
 </html>

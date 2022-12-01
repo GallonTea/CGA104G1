@@ -131,6 +131,7 @@
 
 </body>
 
+<script src="<%=request.getContextPath() %>/resources/static/js/navbar.js"></script>
 <script>
 	var MyPoint = "/GroupChat/gallon";
 	var host = window.location.host;

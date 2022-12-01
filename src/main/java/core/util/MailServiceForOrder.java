@@ -21,7 +21,7 @@ import java.util.*;
 public class MailServiceForOrder {
 
     // 設定傳送郵件:至收信人的Email信箱,Email主旨,Email內容
-    public void sendMail(String to, String subject, String PaymentDate ,String memName, String memId, String orderId, String finalPrice) {
+    public void sendMail(String to, String subject, String PaymentDate, String memName, String memId, String orderId, String finalPrice) {
 
         try {
             // 設定使用SSL連線至 Gmail smtp Server
@@ -86,9 +86,10 @@ public class MailServiceForOrder {
                     + "                                        <table width=\"100%\" border=\"0\" align=\"center\" cellpadding=\"0\" cellspacing=\"0\">\r\n"
                     + "                                            <tr>\r\n"
                     + "                                                <td>\r\n"
-                    + "                                                    <h1 style=\"color: #1e1e2d; font-weight: 500; margin: 0;margin-bottom: 10px; font-size: 32px;font-family:'Rubik',sans-serif;\">Hi" + " " + memName+",</h1>\r\n"
-                    + "                                                    <p style=\"font-size:15px; color:#455056; line-height:10px; margin:8px 0 30px;\">您的會員編號:"+ memId +"</p>\r\n"
-                    + "                                                    <p style=\"font-size:15px; color:#455056; line-height:10px; margin:8px 0 30px;\">付款成功日期:"+ PaymentDate +"</p>\r\n"
+                    + "                                                    <h1 style=\"color: #1e1e2d; font-weight: 500; margin: 0;margin-bottom: 10px; font-size: 32px;font-family:'Rubik',sans-serif;\">Hi" + " " + memName + ",</h1>\r\n"
+                    + "                                                    <p style=\"font-size:15px; color:#455056; line-height:10px; margin:8px 0 30px;\">您的會員編號: " + memId + " 訂單編號: " + orderId + "</p>\r\n"
+                    + "                                                    <p style=\"font-size:15px; color:#455056; line-height:10px; margin:8px 0 30px;\">付款成功日期: " + PaymentDate + "</p>\r\n"
+                    + "                                                    <p style=\"font-size:15px; color:#455056; line-height:10px; margin:8px 0 30px;\">訂單明細: " + "</p>\r\n"
                     + "                                                </td>\r\n"
                     + "                                            </tr>\r\n" + "\r\n" + "\r\n"
                     + "                                            <!-- 表格內容 -->\r\n"
@@ -122,6 +123,8 @@ public class MailServiceForOrder {
             html.append("</tr>");
 
             html.append("\r\n" + "</td>\r\n" + "</tr>\r\n" + "</table>\r\n"
+
+                    + "                                                    <p style=\"font-size:15px; color:#455056; line-height:10px; margin:8px 0 30px;\">本郵件由系統自動產生，請勿直接回信，如有需求直接聯繫客服人員謝謝! " + "</p>\r\n"
                     + "                                    </td>\r\n" + "                                </tr>\r\n"
                     + "                            </table>\r\n" + "                        </td>\r\n"
                     + "                    </tr>\r\n" + "                    <tr>\r\n"
@@ -163,7 +166,8 @@ public class MailServiceForOrder {
             e.printStackTrace();
         }
     }
-    public static void main (String[] args){
+
+    public static void main(String[] args) {
 
 //			RequestDispatcher failureView = req.getRequestDispatcher("/frontend/mem/select_page.jsp");
 //			failureView.forward(req, res);
@@ -178,8 +182,8 @@ public class MailServiceForOrder {
 
         String memName = "吳永志";
 
-		mailService.sendMail(to, subject, "2022-12-11", memName, "1", "5", "1000.0");
+//        mailService.sendMail(to, subject, "2022-12-11", memName, "1", "27", "1000.0");
 
-   }
+    }
 
 }

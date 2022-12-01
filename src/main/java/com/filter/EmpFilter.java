@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 import com.emp.model.EmpService;
 import com.emp.model.EmpVO;
 
-@WebFilter(urlPatterns = { "/backend/emp/*" })
+@WebFilter(urlPatterns = { "/backend/emp/*", "/backend/effect/*" })
 public class EmpFilter extends HttpFilter implements Filter {
 
 	private static final long serialVersionUID = 1L;
@@ -46,15 +46,13 @@ public class EmpFilter extends HttpFilter implements Filter {
 		for (EmpVO a : list) {
 			effectid= a.getEffect_id();
 			
-			if (effectid == 1) {
-				System.out.println("進入emp");
+			if (effectid == 6) {
 			chain.doFilter(request, response);	
-			System.out.println("離開emp");
 			return;
 			} 
 		}
 		session.setAttribute("location", req.getRequestURI());
-		res.sendRedirect(req.getContextPath() + "/backend/login/backLogin.jsp");
+		res.sendRedirect(req.getContextPath() + "/backend/accessReject.html");
 	}
 
 	public void init(FilterConfig fConfig) throws ServletException {

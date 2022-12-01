@@ -19,50 +19,44 @@ import javax.sql.DataSource;
 import com.emp.model.EmpNoEffect;
 import com.emp.model.EmpVO;
 
-
 public class Group_Buy_OrderDAO implements Group_Buy_OrderDAO_interface {
-	
+
 	private static DataSource ds = null;
 	static {
 		try {
 			Context ctx = new InitialContext();
-		ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
 		} catch (NamingException e) {
-		e.printStackTrace();
+			e.printStackTrace();
 		}
 	}
-	
-	private static final String INSERT_STMT_FIRST = "insert into GROUP_BUY_ORDER (GBITEM_ID, GBITEM_AMOUNT, GBORIGINAL_PRICE, DISCOUNT_ID, GB_ENDPRICE, GBORDER_PAYING,GBORDER_SEND, GBORDER_STATUS, GBORDER_OTHER, RECEIVER_NAME, RECEIVER_ADDRESS, RECEIVER_PHONE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
-	private static final String INSERT_STMT = "insert into GROUP_BUY_ORDER (GBITEM_ID, GB_ID, GBITEM_AMOUNT, GBORIGINAL_PRICE, DISCOUNT_ID, GB_ENDPRICE, GBORDER_DATE, GBORDER_PAYING, GBORDER_SEND, GBORDER_STATUS, GBORDER_OTHER, TRACKING_NUM, RECEIVER_NAME, RECEIVER_ADDRESS, RECEIVER_PHONE, PICKUP_TIME) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = "SELECT GBORDER_ID, GBITEM_ID, GB_ID, GBITEM_AMOUNT, GBORIGINAL_PRICE, DISCOUNT_ID, GB_ENDPRICE, GBORDER_DATE, GBORDER_PAYING, GBORDER_SEND, GBORDER_STATUS, GBORDER_OTHER, TRACKING_NUM, RECEIVER_NAME, RECEIVER_ADDRESS, RECEIVER_PHONE, PICKUP_TIME FROM GROUP_BUY_ORDER order by GBORDER_ID";
-	private static final String GET_ONE_STMT = "SELECT GBORDER_ID, GBITEM_ID, GB_ID, GBITEM_AMOUNT, GBORIGINAL_PRICE, DISCOUNT_ID, GB_ENDPRICE, GBORDER_DATE, GBORDER_PAYING, GBORDER_SEND, GBORDER_STATUS, GBORDER_OTHER, TRACKING_NUM, RECEIVER_NAME, RECEIVER_ADDRESS, RECEIVER_PHONE, PICKUP_TIME FROM GROUP_BUY_ORDER where GBORDER_ID = ?";
+
+	private static final String INSERT_STMT_FIRST = "insert into GROUP_BUY_ORDER (GBITEM_ID, GBITEM_AMOUNT, GBORIGINAL_PRICE, GB_ENDPRICE, GBORDER_PAYING,GBORDER_SEND, GBORDER_STATUS, GBORDER_OTHER, RECEIVER_NAME, RECEIVER_ADDRESS, RECEIVER_PHONE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+	private static final String INSERT_STMT = "insert into GROUP_BUY_ORDER (GBITEM_ID, GB_ID, GBITEM_AMOUNT, GBORIGINAL_PRICE,, GB_ENDPRICE, GBORDER_DATE, GBORDER_PAYING, GBORDER_SEND, GBORDER_STATUS, GBORDER_OTHER, TRACKING_NUM, RECEIVER_NAME, RECEIVER_ADDRESS, RECEIVER_PHONE, PICKUP_TIME) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	private static final String GET_ALL_STMT = "SELECT GBORDER_ID, GBITEM_ID, GB_ID, GBITEM_AMOUNT, GBORIGINAL_PRICE, GB_ENDPRICE, GBORDER_DATE, GBORDER_PAYING, GBORDER_SEND, GBORDER_STATUS, GBORDER_OTHER, TRACKING_NUM, RECEIVER_NAME, RECEIVER_ADDRESS, RECEIVER_PHONE, PICKUP_TIME FROM GROUP_BUY_ORDER order by GBORDER_ID";
+	private static final String GET_ONE_STMT = "SELECT GBORDER_ID, GBITEM_ID, GB_ID, GBITEM_AMOUNT, GBORIGINAL_PRICE, GB_ENDPRICE, GBORDER_DATE, GBORDER_PAYING, GBORDER_SEND, GBORDER_STATUS, GBORDER_OTHER, TRACKING_NUM, RECEIVER_NAME, RECEIVER_ADDRESS, RECEIVER_PHONE, PICKUP_TIME FROM GROUP_BUY_ORDER where GBORDER_ID = ?";
 	private static final String DELETE = "DELETE FROM GROUP_BUY_ORDER where GBORDER_ID = ?";
-	private static final String UPDATE = "UPDATE GROUP_BUY_ORDER set GBITEM_ID=?, GB_ID=?, GBITEM_AMOUNT=?, GBORIGINAL_PRICE=?, DISCOUNT_ID=?, GB_ENDPRICE=?, GBORDER_DATE=?, GBORDER_PAYING=?, GBORDER_SEND=?, GBORDER_STATUS=?, GBORDER_OTHER=?, TRACKING_NUM=?, RECEIVER_NAME=?, RECEIVER_ADDRESS=?, RECEIVER_PHONE=?, PICKUP_TIME=? where GBORDER_ID = ?";
+	private static final String UPDATE = "UPDATE GROUP_BUY_ORDER set GBITEM_ID=?, GB_ID=?, GBITEM_AMOUNT=?, GBORIGINAL_PRICE=?, GB_ENDPRICE=?, GBORDER_DATE=?, GBORDER_PAYING=?, GBORDER_SEND=?, GBORDER_STATUS=?, GBORDER_OTHER=?, TRACKING_NUM=?, RECEIVER_NAME=?, RECEIVER_ADDRESS=?, RECEIVER_PHONE=?, PICKUP_TIME=? where GBORDER_ID = ?";
 
-													/***********************團購主收確認***************************/
+	/*********************** 團購主收確認 ***************************/
 	private static final String UPDATE_P_T = "UPDATE GROUP_BUY_ORDER set PICKUP_TIME=current_timestamp() where GBORDER_ID = ?";
-	
-													/***********************團購主繳費確認***************************/
-	private static final String UPDATE_PAYING = "UPDATE GROUP_BUY_ORDER set GBORDER_STATUS =3 where GBORDER_ID = ?";
-	@Override
-	
-	/***********************團購主收確認***************************/
 
+	/*********************** 團購主繳費確認 ***************************/
+	private static final String UPDATE_PAYING = "UPDATE GROUP_BUY_ORDER set GBORDER_STATUS =3 where GBORDER_ID = ?";
+
+	@Override
+
+	/*********************** 團購主收確認 ***************************/
 
 	public void update_pt(Group_Buy_OrderVO group_Buy_OrderVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
-
 
 		try {
 
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_P_T);
 			pstmt.setInt(1, group_Buy_OrderVO.getGborder_id());
-			
-			
-		
 
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
@@ -78,8 +72,8 @@ public class Group_Buy_OrderDAO implements Group_Buy_OrderDAO_interface {
 			}
 		}
 	}
-	
-	/***********************團購主繳費確認***************************/
+
+	/*********************** 團購主繳費確認 ***************************/
 
 	public void update_paying(Group_Buy_OrderVO group_Buy_OrderVO) {
 		Connection con = null;
@@ -90,7 +84,6 @@ public class Group_Buy_OrderDAO implements Group_Buy_OrderDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(UPDATE_PAYING);
 			pstmt.setInt(1, group_Buy_OrderVO.getGborder_id());
-		
 
 			pstmt.executeUpdate();
 		} catch (SQLException se) {
@@ -106,84 +99,75 @@ public class Group_Buy_OrderDAO implements Group_Buy_OrderDAO_interface {
 			}
 		}
 	}
-	
-	public  Group_Buy_OrderVO insert_first(Group_Buy_OrderVO Group_Buy_OrderVO) {
+
+	public Group_Buy_OrderVO insert_first(Group_Buy_OrderVO Group_Buy_OrderVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		PreparedStatement pstmt2 = null;
-		 int gborder_id = 0;
-
+		int gborder_id = 0;
 
 		try {
 
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT_STMT_FIRST,pstmt.RETURN_GENERATED_KEYS);
-			
+			pstmt = con.prepareStatement(INSERT_STMT_FIRST, pstmt.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, Group_Buy_OrderVO.getGbitem_id());
 			pstmt.setInt(2, Group_Buy_OrderVO.getGbitem_amount());
 			pstmt.setInt(3, Group_Buy_OrderVO.getGboriginal_price());
-			pstmt.setInt(4, Group_Buy_OrderVO.getDiscount_id());
-			pstmt.setInt(5, Group_Buy_OrderVO.getGb_endprice());
-			pstmt.setInt(6, Group_Buy_OrderVO.getGborder_paying());
-			pstmt.setInt(7, Group_Buy_OrderVO.getGborder_send());
-			pstmt.setInt(8, Group_Buy_OrderVO.getGborder_status());
-			pstmt.setString(9, Group_Buy_OrderVO.getGborder_other());
-			pstmt.setString(10, Group_Buy_OrderVO.getReceiver_name());
-			pstmt.setString(11, Group_Buy_OrderVO.getReceiver_address());
-			pstmt.setString(12, Group_Buy_OrderVO.getReceiver_phone());
-						
+			pstmt.setInt(4, Group_Buy_OrderVO.getGb_endprice());
+			pstmt.setInt(5, Group_Buy_OrderVO.getGborder_paying());
+			pstmt.setInt(6, Group_Buy_OrderVO.getGborder_send());
+			pstmt.setInt(7, Group_Buy_OrderVO.getGborder_status());
+			pstmt.setString(8, Group_Buy_OrderVO.getGborder_other());
+			pstmt.setString(9, Group_Buy_OrderVO.getReceiver_name());
+			pstmt.setString(10, Group_Buy_OrderVO.getReceiver_address());
+			pstmt.setString(11, Group_Buy_OrderVO.getReceiver_phone());
+
 			pstmt.executeUpdate();
-			
+
 			ResultSet rs = pstmt.getGeneratedKeys();
-			if(rs.next()) {
+			if (rs.next()) {
 				gborder_id = rs.getInt(1);
 			}
 
-			
 			pstmt2 = con.prepareStatement(GET_ONE_STMT);
 			pstmt2.setInt(1, gborder_id);
 			rs = pstmt2.executeQuery();
 
 			while (rs.next()) {
 				Group_Buy_OrderVO = new Group_Buy_OrderVO();
-				
+
 				Group_Buy_OrderVO.setGborder_id(rs.getInt("gborder_id"));
 				Group_Buy_OrderVO.setGbitem_id(rs.getInt("gbitem_id"));
 				Group_Buy_OrderVO.setGb_id(rs.getInt("gb_id"));
 				Group_Buy_OrderVO.setGbitem_amount(rs.getInt("gbitem_amount"));
 				Group_Buy_OrderVO.setGboriginal_price(rs.getInt("gboriginal_price"));
-				Group_Buy_OrderVO.setDiscount_id(rs.getInt("discount_id"));
 				Group_Buy_OrderVO.setGb_endprice(rs.getInt("gb_endprice"));
-
 				Group_Buy_OrderVO.setGborder_date(rs.getTimestamp("gborder_date"));
-
 				Group_Buy_OrderVO.setGborder_paying(rs.getInt("gborder_paying"));
 				Group_Buy_OrderVO.setGborder_send(rs.getInt("gborder_send"));
 				Group_Buy_OrderVO.setGborder_status(rs.getInt("gborder_status"));
-
 				Group_Buy_OrderVO.setGborder_other(rs.getString("gborder_other"));
 				Group_Buy_OrderVO.setTracking_num(rs.getString("tracking_num"));
 				Group_Buy_OrderVO.setReceiver_name(rs.getString("receiver_name"));
 				Group_Buy_OrderVO.setReceiver_address(rs.getString("receiver_address"));
 				Group_Buy_OrderVO.setReceiver_phone(rs.getString("receiver_phone"));
-
 				Group_Buy_OrderVO.setPickup_time(rs.getTimestamp("pickup_time"));
 			}
-			
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (pstmt != null || con != null  || pstmt2 != null) {
+			if (pstmt != null || con != null || pstmt2 != null) {
 				try {
 					pstmt.close();
 				} catch (SQLException se) {
 					se.printStackTrace(System.err);
 				}
 			}
-			
-		} return Group_Buy_OrderVO;
+
+		}
+		return Group_Buy_OrderVO;
 	}
 
 	public void insert(Group_Buy_OrderVO Group_Buy_OrderVO) {
@@ -199,7 +183,6 @@ public class Group_Buy_OrderDAO implements Group_Buy_OrderDAO_interface {
 			pstmt.setInt(2, Group_Buy_OrderVO.getGb_id());
 			pstmt.setInt(3, Group_Buy_OrderVO.getGbitem_amount());
 			pstmt.setInt(4, Group_Buy_OrderVO.getGboriginal_price());
-			pstmt.setInt(5, Group_Buy_OrderVO.getDiscount_id());
 			pstmt.setInt(6, Group_Buy_OrderVO.getGb_endprice());
 			pstmt.setTimestamp(7, Group_Buy_OrderVO.getGborder_date());
 			pstmt.setInt(8, Group_Buy_OrderVO.getGborder_paying());
@@ -211,23 +194,18 @@ public class Group_Buy_OrderDAO implements Group_Buy_OrderDAO_interface {
 			pstmt.setString(14, Group_Buy_OrderVO.getReceiver_address());
 			pstmt.setString(15, Group_Buy_OrderVO.getReceiver_phone());
 			pstmt.setTimestamp(16, Group_Buy_OrderVO.getPickup_time());
-//			pstmt.setInt(17, Group_Buy_OrderVO.getGborder_id());
 
 			pstmt.executeUpdate();
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (pstmt != null) {
+			if (pstmt != null || con != null) {
 				try {
 					pstmt.close();
+					con.close();
 				} catch (SQLException se) {
 					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
 				} catch (Exception e) {
 					e.printStackTrace(System.err);
 				}
@@ -242,7 +220,6 @@ public class Group_Buy_OrderDAO implements Group_Buy_OrderDAO_interface {
 		PreparedStatement pstmt2 = null;
 		ResultSet rs = null;
 
-
 		try {
 
 			con = ds.getConnection();
@@ -252,77 +229,61 @@ public class Group_Buy_OrderDAO implements Group_Buy_OrderDAO_interface {
 			pstmt.setInt(2, group_buy_orderVO.getGb_id());
 			pstmt.setInt(3, group_buy_orderVO.getGbitem_amount());
 			pstmt.setInt(4, group_buy_orderVO.getGboriginal_price());
-			pstmt.setInt(5, group_buy_orderVO.getDiscount_id());
-			pstmt.setInt(6, group_buy_orderVO.getGb_endprice());
-			pstmt.setTimestamp(7, group_buy_orderVO.getGborder_date());
-			pstmt.setInt(8, group_buy_orderVO.getGborder_paying());
-			pstmt.setInt(9, group_buy_orderVO.getGborder_send());
-			pstmt.setInt(10, group_buy_orderVO.getGborder_status());
-			pstmt.setString(11, group_buy_orderVO.getGborder_other());
-			pstmt.setString(12, group_buy_orderVO.getTracking_num());
-			pstmt.setString(13, group_buy_orderVO.getReceiver_name());
-			pstmt.setString(14, group_buy_orderVO.getReceiver_address());
-			pstmt.setString(15, group_buy_orderVO.getReceiver_phone());
-			pstmt.setTimestamp(16, group_buy_orderVO.getPickup_time());
-			pstmt.setInt(17, group_buy_orderVO.getGborder_id());
-
-		
+			pstmt.setInt(5, group_buy_orderVO.getGb_endprice());
+			pstmt.setTimestamp(6, group_buy_orderVO.getGborder_date());
+			pstmt.setInt(7, group_buy_orderVO.getGborder_paying());
+			pstmt.setInt(8, group_buy_orderVO.getGborder_send());
+			pstmt.setInt(9, group_buy_orderVO.getGborder_status());
+			pstmt.setString(10, group_buy_orderVO.getGborder_other());
+			pstmt.setString(11, group_buy_orderVO.getTracking_num());
+			pstmt.setString(12, group_buy_orderVO.getReceiver_name());
+			pstmt.setString(13, group_buy_orderVO.getReceiver_address());
+			pstmt.setString(14, group_buy_orderVO.getReceiver_phone());
+			pstmt.setTimestamp(15, group_buy_orderVO.getPickup_time());
+			pstmt.setInt(16, group_buy_orderVO.getGborder_id());
 			pstmt.executeUpdate();
-			
-			
-			
+
 			pstmt2 = con.prepareStatement(GET_ONE_STMT);
 			pstmt2.setInt(1, group_buy_orderVO.getGborder_id());
-			
-			
+
 			rs = pstmt2.executeQuery();
 
 			while (rs.next()) {
 				group_buy_orderVO = new Group_Buy_OrderVO();
-				
 				group_buy_orderVO.setGborder_id(rs.getInt("gborder_id"));
 				group_buy_orderVO.setGbitem_id(rs.getInt("gbitem_id"));
 				group_buy_orderVO.setGb_id(rs.getInt("gb_id"));
 				group_buy_orderVO.setGbitem_amount(rs.getInt("gbitem_amount"));
 				group_buy_orderVO.setGboriginal_price(rs.getInt("gboriginal_price"));
-				group_buy_orderVO.setDiscount_id(rs.getInt("discount_id"));
 				group_buy_orderVO.setGb_endprice(rs.getInt("gb_endprice"));
-
 				group_buy_orderVO.setGborder_date(rs.getTimestamp("gborder_date"));
-System.out.println(rs.getTimestamp("gborder_date"));
 				group_buy_orderVO.setGborder_paying(rs.getInt("gborder_paying"));
 				group_buy_orderVO.setGborder_send(rs.getInt("gborder_send"));
 				group_buy_orderVO.setGborder_status(rs.getInt("gborder_status"));
-
 				group_buy_orderVO.setGborder_other(rs.getString("gborder_other"));
 				group_buy_orderVO.setTracking_num(rs.getString("tracking_num"));
 				group_buy_orderVO.setReceiver_name(rs.getString("receiver_name"));
 				group_buy_orderVO.setReceiver_address(rs.getString("receiver_address"));
 				group_buy_orderVO.setReceiver_phone(rs.getString("receiver_phone"));
-
 				group_buy_orderVO.setPickup_time(rs.getTimestamp("pickup_time"));
 			}
 
-			// Handle any driver errors
-		}  catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
+
 		} finally {
-			if (pstmt != null) {
+			if (pstmt != null || con != null) {
 				try {
 					pstmt.close();
+					con.close();
 				} catch (SQLException se) {
 					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
 				} catch (Exception e) {
 					e.printStackTrace(System.err);
 				}
 			}
-		}return group_buy_orderVO;
+		}
+		return group_buy_orderVO;
 	}
 
 	@Override
@@ -339,19 +300,15 @@ System.out.println(rs.getTimestamp("gborder_date"));
 
 			pstmt.executeUpdate();
 
-		}  catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (pstmt != null) {
+			if (pstmt != null || con != null) {
 				try {
 					pstmt.close();
+					con.close();
 				} catch (SQLException se) {
 					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
 				} catch (Exception e) {
 					e.printStackTrace(System.err);
 				}
@@ -365,9 +322,7 @@ System.out.println(rs.getTimestamp("gborder_date"));
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
 		try {
-
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STMT);
 
@@ -382,16 +337,11 @@ System.out.println(rs.getTimestamp("gborder_date"));
 				Group_Buy_OrderVO.setGb_id(rs.getInt("gb_id"));
 				Group_Buy_OrderVO.setGbitem_amount(rs.getInt("gbitem_amount"));
 				Group_Buy_OrderVO.setGboriginal_price(rs.getInt("gboriginal_price"));
-				Group_Buy_OrderVO.setDiscount_id(rs.getInt("discount_id"));
 				Group_Buy_OrderVO.setGb_endprice(rs.getInt("gb_endprice"));
-
 				Group_Buy_OrderVO.setGborder_date(rs.getTimestamp("gborder_date"));
-
-				System.out.println(rs.getTimestamp("gborder_date"));
 				Group_Buy_OrderVO.setGborder_paying(rs.getInt("gborder_paying"));
 				Group_Buy_OrderVO.setGborder_send(rs.getInt("gborder_send"));
 				Group_Buy_OrderVO.setGborder_status(rs.getInt("gborder_status"));
-
 				Group_Buy_OrderVO.setGborder_other(rs.getString("gborder_other"));
 				Group_Buy_OrderVO.setTracking_num(rs.getString("tracking_num"));
 				Group_Buy_OrderVO.setReceiver_name(rs.getString("receiver_name"));
@@ -401,14 +351,18 @@ System.out.println(rs.getTimestamp("gborder_date"));
 				Group_Buy_OrderVO.setPickup_time(rs.getTimestamp("pickup_time"));
 			}
 
-		}  catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (rs != null || pstmt != null || con != null ) {
+			if (rs != null || pstmt != null || con != null) {
 				try {
 					rs.close();
+					pstmt.close();
+					con.close();
 				} catch (SQLException se) {
 					se.printStackTrace(System.err);
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
 			}
 		}
@@ -437,45 +391,30 @@ System.out.println(rs.getTimestamp("gborder_date"));
 				Group_Buy_OrderVO.setGb_id(rs.getInt("gb_id"));
 				Group_Buy_OrderVO.setGbitem_amount(rs.getInt("gbitem_amount"));
 				Group_Buy_OrderVO.setGboriginal_price(rs.getInt("gboriginal_price"));
-				Group_Buy_OrderVO.setDiscount_id(rs.getInt("discount_id"));
 				Group_Buy_OrderVO.setGb_endprice(rs.getInt("gb_endprice"));
-
 				Group_Buy_OrderVO.setGborder_date(rs.getTimestamp("gborder_date"));
-
 				Group_Buy_OrderVO.setGborder_paying(rs.getInt("gborder_paying"));
 				Group_Buy_OrderVO.setGborder_send(rs.getInt("gborder_send"));
 				Group_Buy_OrderVO.setGborder_status(rs.getInt("gborder_status"));
-
 				Group_Buy_OrderVO.setGborder_other(rs.getString("gborder_other"));
 				Group_Buy_OrderVO.setTracking_num(rs.getString("tracking_num"));
 				Group_Buy_OrderVO.setReceiver_name(rs.getString("receiver_name"));
 				Group_Buy_OrderVO.setReceiver_address(rs.getString("receiver_address"));
 				Group_Buy_OrderVO.setReceiver_phone(rs.getString("receiver_phone"));
-
 				Group_Buy_OrderVO.setPickup_time(rs.getTimestamp("pickup_time"));
 				list.add(Group_Buy_OrderVO);
 			}
 
-		}  catch (SQLException se) {
+		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (rs != null) {
+			if (rs != null || pstmt != null || con != null) {
 				try {
 					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
 					pstmt.close();
+					con.close();
 				} catch (SQLException se) {
 					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
 				} catch (Exception e) {
 					e.printStackTrace(System.err);
 				}
@@ -483,23 +422,22 @@ System.out.println(rs.getTimestamp("gborder_date"));
 		}
 		return list;
 	}
-	
+
 	public List<Group_Buy_OrderVO> getAll(Map<String, String[]> map) {
 		List<Group_Buy_OrderVO> list = new ArrayList<Group_Buy_OrderVO>();
-		Group_Buy_OrderVO  group_Buy_OrderVO= null;
+		Group_Buy_OrderVO group_Buy_OrderVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
-			
+
 			con = ds.getConnection();
-			String MySql = "select * from group_buy_order "
-					+Group_Buy_Order_Complx.getWhereCondition(map)
-					+"order by gborder_id";
+			String MySql = "select * from group_buy_order " + Group_Buy_Order_Complx.getWhereCondition(map)
+					+ "order by gborder_id";
 			pstmt = con.prepareStatement(MySql);
 			rs = pstmt.executeQuery();
-		
+
 			System.out.println(MySql);
 			while (rs.next()) {
 				group_Buy_OrderVO = new Group_Buy_OrderVO();
@@ -508,7 +446,6 @@ System.out.println(rs.getTimestamp("gborder_date"));
 				group_Buy_OrderVO.setGb_id(rs.getInt("gb_id"));
 				group_Buy_OrderVO.setGbitem_amount(rs.getInt("gbitem_amount"));
 				group_Buy_OrderVO.setGboriginal_price(rs.getInt("gboriginal_price"));
-				group_Buy_OrderVO.setDiscount_id(rs.getInt("discount_id"));
 				group_Buy_OrderVO.setGb_endprice(rs.getInt("gb_endprice"));
 				group_Buy_OrderVO.setGborder_date(rs.getTimestamp("gborder_date"));
 				group_Buy_OrderVO.setGborder_paying(rs.getInt("gborder_paying"));
@@ -530,9 +467,10 @@ System.out.println(rs.getTimestamp("gborder_date"));
 					rs.close();
 					pstmt.close();
 					con.close();
-					
 				} catch (SQLException se) {
 					se.printStackTrace(System.err);
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
 				}
 			}
 		}
@@ -618,9 +556,5 @@ System.out.println(rs.getTimestamp("gborder_date"));
 //			System.out.print(aGbo.getReceiver_phone() + ",");
 //			System.out.print(aGbo.getPickup_time());
 //			System.out.println();
-		}
 	}
-
-
-
-
+}

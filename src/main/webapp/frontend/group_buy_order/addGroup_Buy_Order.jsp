@@ -50,7 +50,6 @@
 				<h3>訂單新增</h3>
 			</td>
 			<td>
-				<!-- 				<h4> --> <!-- 					<a href="select_page.jsp">首頁</a> --> <!-- 				</h4> -->
 			</td>
 		</tr>
 	</table>
@@ -58,76 +57,39 @@
 	<h3>資料新增:</h3>
 	<FORM METHOD="post" ACTION="/CGA104G1/Group_Buy_OrderServlet" name="form1">
 		<table>
-			<!-- 		=======================================自主================================= -->
-			<!-- 			<tr> -->
-			<!-- 				<td>團購訂單編號:</td> -->
-			<!-- 				<td><input type="TEXT" name="gborder_id" size="45" -->
-			<%-- 					value="${group_buy_orderVO.gborder_id}" /></td> --%>
-			<!-- 			</tr> -->
-
-			<!-- 		=======================================前台不需顯示================================= -->
-			<!-- 			<tr> -->
-			<!-- 				<td>團購商品編號:</td> -->
-			<!-- 				<td><input type="TEXT" name="gbitem_id" size="45" -->
-			<%-- 					value="${gbitem_id}" readonly="readonly" /> 假資料</td> --%>
-			<!-- 			</tr> -->
-
-			<!-- 		=======================================前團購團自主================================= -->
-
-			<!-- 			<tr> -->
-			<!-- 				<td>團購團編號:</td> -->
-			<!-- 				<td><input type="TEXT" name="gb_id" size="45" -->
-			<%-- 					value="${gb_id}" readonly="readonly" /></td> --%>
-			<!-- 			</tr> -->
+			<tr>
+				<td>團購團名稱:</td>
+				<td><input type="TEXT" name="gb_name" size="45" value="${gb_name}" /></td>			
+			</tr>
 			<tr>
 				<td>團購商品名稱:</td>
 				<td><input type="TEXT" name="gbitem_name" size="45"
-					value="${gbitem_name}" />假資料</td>
+					value="${gbitem_name}" /></td>
 			</tr>
 			<tr>
 				<td>團購商品內容:</td>
-				<!--  ==============================團購主確認================================== -->
 				<td><input type="TEXT" name="gbitem_content" size="45"
-					value="${gbitem_content}" />假資料</td>
+					value="${gbitem_content}" /></td>
 			</tr>
 			<tr>
 				<td>團購數量:</td>
-				<td><input type="TEXT" name="discount_minamount" size="45"
-					value="${DiscountVO.discount_minamount}" readonly="readonly" /></td>
+				<td><input type="TEXT" name="gbitem_amount" size="45"
+					value="${gb_min}" readonly="readonly" /></td>
 			</tr>
 
 			<tr>
 				<td>原價:</td>
 				<td><input type="TEXT" name="gboriginal_price" size="45"
-					value="${gbitem_price*DiscountVO.discount_minamount}"
+					value="${gbitem_price*gb_min}"
 					readonly="readonly" />假資料</td>
 			</tr>
-
-			<!-- 		=======================================後台看================================= -->
-
-						<tr>
-							<td>折扣:</td>
-							<td><input type="hidden" name="discount_id" size="45"
-								value="${DiscountVO.discount_id}" />${DiscountVO.discount_nar}</td>
-						</tr>
-
 			<tr>
 				<td>團購價:</td>
 				<td><input type="TEXT" name="gb_endprice" size="45"
-					value="${DiscountVO.discount_price*DiscountVO.discount_minamount}" /></td>
+					value="${gb_min*gb_price}" /></td>
 			</tr>
-
-			<!-- 		=======================================資料庫自己生成================================= -->
-			<!-- 			<tr> -->
-			<%-- 				<td>團購訂單時間:${group_buy_orderVO.gbitem_amount}</td> --%>
-			<!-- 				<td><input type="TEXT" name="gbitem_amount" size="45" -->
-			<%-- 					value="${group_buy_orderVO.gbitem_amount}" />${group_buy_orderVO.gbitem_amount}</td> --%>
-			<!-- 			</tr> -->
-
-
 			<tr>
 				<td>團購付款方式:</td>
-<!-- 				<input type="hidden" name="gborder_paying" size="45" id="select" /> -->
 				<td><select class="status" name="gborder_paying" id="select">
 						<option value=" " selected></option>
 						<option value="0">貨到付款</option>
@@ -138,16 +100,12 @@
 			<tr>
 			<tr>
 				<td>團購送貨方式:</td>
-<!-- 					<input type="hidden" name="gborder_send" size="45" id="select" /> -->
 				<td><select class="status2" name="gborder_send" id="select">
 						<option value=" " selected></option>
 						<option value="0">宅配</option>
 						<option value="1">便利商店</option>
 				</select></td><td><font color=red>${errorMsgs.gborder_send}</font></td>
 			</tr>
-			
-<!-- 			=======================前台不可更改,後台可更改======================= -->
-
 			<tr>
 				<td>團購訂單狀態:</td>
 				<td>
@@ -160,60 +118,26 @@
 				<td><input type="TEXT" name="gborder_other" size="45"
 					placeholder="如有需要注意事項請於此輸入" /></td>
 			</tr>
-			
-			
-		<!-- 			=======================前台不可更改,後台可更改,後台更改後顯示======================= -->
-<!-- 			<tr> -->
-<!-- 				<td>物流編號:</td> -->
-<!-- 				<td><input type="TEXT" name="tracking_num" size="45"-->
-<%-- 					value="${group_buy_itemVO.tracking_num}" /></td> --%>
-<!-- 			</tr> -->
 			<tr>
 				<td>收件人姓名:</td>
-				<td><input type="TEXT" name="receiver_name" size="45"
-					 placeholder="請輸入姓名" /></td><td><font color=red>${errorMsgs.receiver_name}</font></td>
+				<td><input type="TEXT" name="receiver_name" size="45" placeholder="請輸入姓名"  required/></td><td><font color=red>${errorMsgs.receiver_name}</font></td>
 			</tr>
 			
 			<tr>
 				<td>收件人地址:</td>
 				<!--  ==============================團購主確認================================== -->
-				<td><input type="TEXT" name="receiver_address" size="45"
-					placeholder="請輸入地址" /></td><td><font color=red>${errorMsgs.receiver_address}</font></td>
+				<td><input type="TEXT" name="receiver_address" size="45" placeholder="請輸入地址"  required/></td><td><font color=red>${errorMsgs.receiver_address}</font></td>
 			</tr>
 			<tr>
 				<td>收件人電話:</td>
 				<!--  ==============================團購主確認================================== -->
-				<td><input type="TEXT" name="receiver_phone" size="45"
-					placeholder="請輸入電話" /></td><td><font color=red>${errorMsgs.receiver_phone}</font></td>
+				<td><input type="TEXT" name="receiver_phone" size="45" placeholder="請輸入電話"  required/></td><td><font color=red>${errorMsgs.receiver_phone}</font></td>
 			</tr>
-			<!--  ==============================後台或團主確認================================== -->
-<!-- 			<tr> -->
-<!-- 				<td>領貨時間:</td> -->
-<!-- 				<td><input type="TEXT" name="emp_id" size="45" -->
-<%-- 					value="${group_buy_orderVO.gborder_status}" />${group_buy_orderVO.gborder_status}</td> --%>
-<!-- 			</tr> -->
-		
-			<!-- 				<tr> -->
-			<!-- 				<td>物流編號:</td>    	 ==============================確認付款後新增================================== -->
-			<!-- 				<td><input type="TEXT" name="emp_id" size="45" -->
-			<%-- 			 value="${group_buy_orderVO.tracking_num}" />${group_buy_orderVO.tracking_num}</td> --%>
-			<!-- 				</tr> -->
-			
-
-
-
 		</table>
 		<br>
 		<br> <input type="hidden" name="action" value="insert_NewOrder"> <input
-			type="submit" value="送出新增"class="btn btn-warning">
-			
+			type="submit" value="送出新增"class="btn btn-warning">		
 	</FORM>
-
-
-
-
-
-
 	<script type="text/javascript">
 	let type = $('#select option:selected') .val();
 	

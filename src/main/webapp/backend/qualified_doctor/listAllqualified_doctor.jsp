@@ -3,77 +3,166 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.qualified_doctor.model.*"%>
 
-
 <%
-Qualified_doctorService qualified_doctorSvc = new Qualified_doctorService();
+	Qualified_doctorService qualified_doctorSvc = new Qualified_doctorService();
     List<Qualified_doctorVO> list = qualified_doctorSvc.getAll();
     pageContext.setAttribute("list",list);
 %>
 <%@include file="/backend/backNavbar.jsp"%>
 
-
-
+<jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
+<%-- <jsp:useBean id="qualified_doctorSvc" scope="page" class="com.qualified_doctor.model.Qualified_doctorService" /> --%>
 <html>
 <head>
-<title>認證醫師總覽 </title>
+<title>認證醫師</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+	crossorigin="anonymous"></script>
 
 <style>
-  table#table-1 {
-	background-color: gray;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
+/* <!-- ===========================================樣式欄位================================================================== --> */
 
+.styled-table {
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	margin: auto;
+	font-size: 0.9em;
+	font-family: sans-serif;
+	min-width: 400px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+	background-color: #212529;
+	color: #ffffff;
+	text-align: left;
+}
+
+.styled-table th, .styled-table td {
+	padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+	border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+	background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+	border-bottom: 2px solid #212529;
+}
+
+.styled-table tbody tr.active-row {
+	font-weight: bold;
+	color: #212529;
+}
+
+/* <!-- ===========================================樣式欄位================================================================== --> */
+table#table-1 {
+	background-color: #212529;
+	border: 2px solid black;
+	text-align: left;
+	margin-left: auto;
+	margin-right: auto;
+	width: 1000px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+
+table#table-1 h4 {
+	color: red;
+	display: block;
+	margin-bottom: 1px;
+}
+
+h3 {
+	color: #6c757d;
+}
+
+h4 {
+	color: blue;
+	display: inline;
+}
+
+/*   a{ */
+/*     color: white; */
+/*     display: inline; */
+/*   } */
 </style>
 
 <style>
-  table {
-	width: 100%;
-	background-color: white;
+table {
+	margin-left: auto;
+	margin-right: auto;
+	width: 80%;
 	margin-top: 5px;
 	margin-bottom: 5px;
-  }
-  table, th, td {
-    border: 1px solid #CCCCFF;
-  }
-  th, td {
-    padding: 4px;
-    text-align: center;
-  }
+}
+/*    table, th, td {  */
+/*      border: 1px solid #212529;  */
+/*    }  */
+th, td {
+	padding: 5px;
+	text-align: left;
+}
+
 </style>
 
 </head>
+
 <body bgcolor='white'>
 
 <table id="table-1">
 	<tr>
 		<td>
 		 	<h3>認證醫師總覽</h3>
-		 	<h4><a href="<%=request.getContextPath()%>/backend/index.jsp">回首頁</a></h4>
+			<button onclick="location.href='<%=request.getContextPath()%>/backend/index.jsp'">回到後台首頁</button>
+			<button onclick="location.href='<%=request.getContextPath()%>/backend/qualified_doctor/addQualified_doctor.jsp'">認證醫師開通</button>
+
 		</td>
 	</tr>
 </table>
 
-<table>
-	<tr>
-		<th>醫師編號</th>
-		<th>會員編號</th>
-		<th>認證醫師狀態</th>
-		<th>修改</th>
-		<th>刪除</th>
+	<table class="styled-table">
+		<thead>
+			<tr>
+		<th><b>醫師編號</b></th>
+		<th><b>會員編號</b></th>
+		<th><b>認證醫師狀態</b></th>
+		<th><b>修改</b></th>
+		<th><b>刪除</b></th>
 	</tr>
-
+		</thead>
+		<tbody>
 	<c:forEach var="qualified_doctorVO" items="${list}">
 		
-		<tr>
-			<td>${qualified_doctorVO.doc_id}</td>
-			<td>${qualified_doctorVO.mem_id}</td>
+</tr>
 
+			<td><b>${qualified_doctorVO.doc_id}</b></td>
+
+				<td>
+
+				<div>
+
+				<c:forEach var="memVO" items="${memSvc.all}">
+                <c:if test="${qualified_doctorVO.mem_id==memVO.mem_id}"><b>
+	            	${memVO.mem_id}-【${memVO.mem_name} 醫師】
+	            	</b>
+                </c:if>
+                </c:forEach>
+
+				</div>
+
+				</td>
 
 <!-- 		<td><select  name="doc_status"> -->
 <%-- 				<option value="0" ${(qualified_doctorVO.doc_status==0)? 'selected':'' } >關閉中</option> --%>
@@ -81,10 +170,10 @@ Qualified_doctorService qualified_doctorSvc = new Qualified_doctorService();
 <!-- 		</select></td> -->
 			
 				<c:if test="${qualified_doctorVO.doc_status==0}" >
-					<td><c:out value="關閉中" ></c:out></td>
+					<td><b><c:out value="關閉中" ></c:out></b></td>
 				</c:if>
 				<c:if test="${qualified_doctorVO.doc_status==1}">
-					<td><c:out value="已啟用"></c:out></td>
+					<td><b><c:out value="已啟用"></c:out></b></td>
 				</c:if>
 
 			<td>
@@ -102,9 +191,10 @@ Qualified_doctorService qualified_doctorSvc = new Qualified_doctorService();
 			</td>
 		</tr>
 	</c:forEach>
-</table>
+</tbody>
 
-<a href="<%=request.getContextPath()%>/backend/qualified_doctor/addQualified_doctor.jsp" >新增醫師</a>
+	</table>
+
 
 <script>
 

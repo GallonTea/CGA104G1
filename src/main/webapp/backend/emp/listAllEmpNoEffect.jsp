@@ -191,30 +191,5 @@ th, td {
 		</tbody>
 
 	</table>
-
-	<!-- ============================================================================================================= -->
-
-	<!-- <table> -->
-	<!-- 	<tr> -->
-	<!-- 		<th>員工編號</th> -->
-	<!-- 		<th>員工姓名</th> -->
-	<!-- 		<th>雇用日期</th> -->
-	<!-- 		<th>員工狀態</th> -->
-
-	<!-- 	</tr> -->
-	<%-- <%-- 	<%@ include file="pages/page1_ByCompositeQuery.file" %> --%>
-
-	<%-- 	<c:forEach var="empVO" items="${listemp_no_effect}"> --%>
-	<!-- 		<tr align='center' valign='middle'> -->
-	<%-- 			<td>${empVO.emp_id}</td> --%>
-	<%-- 			<td>${empVO.emp_name}</td> --%>
-	<%-- 			<td>${empVO.onjob_date}</td> --%>
-	<%-- 			<td>${empVO.emp_status}</td>			 --%>
-
-
-	<!-- 		</tr> -->
-	<%-- 	</c:forEach> --%>
-	<!-- </table> -->
-
 </body>
 </html>

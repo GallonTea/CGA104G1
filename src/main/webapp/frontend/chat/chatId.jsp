@@ -56,6 +56,7 @@ html, body {
 		</form>
 	</div>
 </body>
+<script src="<%=request.getContextPath() %>/resources/static/js/navbar.js"></script>
 <script>
 	var inputUserName = document.getElementById("userName");
 	inputUserName.focus();

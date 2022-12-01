@@ -1,6 +1,7 @@
 package com.login.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -43,14 +44,14 @@ public class LoginServlet extends HttpServlet {
 //		Map<String, String> sessionid = new HashMap<String, String>();
 		// 登入
 		if ("login".equals(action)) {
-			System.out.println(1);
+//			System.out.println(1);
 			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			String ac = req.getParameter("account");
 			String pa = req.getParameter("password");
-			System.out.println(3);
+//			System.out.println(3);
 			if (ac == null || (ac.trim()).length() == 0) {
 				errorMsgs.put("account","請輸入帳號");
 			}
@@ -104,8 +105,8 @@ public class LoginServlet extends HttpServlet {
 				} catch (IllegalStateException e) {
 					e.printStackTrace();
 				}
-				System.out.println(4);
-				String url = "/backend/emp/login_success.jsp";
+//				System.out.println(4);
+				String url = "/backend/index.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 			}

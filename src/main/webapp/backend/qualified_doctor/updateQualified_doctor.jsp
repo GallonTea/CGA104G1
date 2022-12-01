@@ -7,11 +7,11 @@
 Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribute("qualified_doctorVO");
 %>
 <%-- <%= memVO==null %> --%>
-
+<%@include file="/backend/backNavbar.jsp"%>
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-<title>醫師認證修改 </title>
+<title>認證醫師修改 </title>
 
 <style>
   table#table-1 {
@@ -51,7 +51,7 @@ Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribut
 
 <table id="table-1">
 	<tr><td>
-		 <h3>醫師認證修改 </h3>
+		 <h3>醫師認證狀態 </h3>
 		 <h4><a href="<%=request.getContextPath()%>/backend/index.jsp">回首頁</a></h4>
 	</td></tr>
 </table>
@@ -75,11 +75,15 @@ Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribut
 <!-- 		<td><input type="TEXT" name="doc_id" size="45"  -->
 <%-- 			 value="<%= (qualified_doctorVO==null)? "" : qualified_doctorVO.getDoc_id()%>" /></td> --%>
 <!-- 	</tr> -->
+
+<jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
 		<tr>
-		<td>會員編號:</td>
-		<td><input type="TEXT" name="mem_id" size="45" 
-			 value="<%= (qualified_doctorVO==null)? "1" : qualified_doctorVO.getMem_id()%>" /></td>
+		<td style="color:gray">會員編號:</td>
+		<td><input type="TEXT" name="mem_id" readonly style="color:gray" size="45" 
+			value="${qualified_doctorVO.mem_id}- 【${memVO.mem_name}】"></td>
+<%-- 			 value="<%= (qualified_doctorVO==null)? "1" : qualified_doctorVO.getMem_id()%>" /></td> --%>
 	</tr>
+
 <!-- 	<tr> -->
 <!-- 		<td>會員帳號:</td> -->
 <!-- 		<td><input type="TEXT" name="mem_account" size="45"  -->
@@ -98,7 +102,7 @@ Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribut
 <!-- 	</tr> -->
 
 		<tr>
-		<td>認證醫生狀態:</td>
+		<td >狀態修改:</td>
 		<td>
 
 		<input type="radio" name="doc_status" size="45" value="0" ${(qualified_doctorVO.doc_status==0)? 'checked':'' }><b>關閉中</b>

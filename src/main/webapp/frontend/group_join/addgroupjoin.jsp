@@ -7,8 +7,9 @@
 Integer gb_id = (Integer) request.getAttribute("gb_id");
 Group_JoinVO Group_JoinVO = (Group_JoinVO) session.getAttribute("Group_JoinVO");
 %>
-<jsp:useBean id="Group_Buy_ItemService" scope="page"
-	class="com.group_buy_item.model.Group_Buy_ItemService" />
+<jsp:useBean id="Group_Buy_ItemService" scope="page" class="com.group_buy_item.model.Group_Buy_ItemService" />
+<jsp:useBean id="Group_BuyService" scope="page" class="com.group_buy.model.Group_BuyService" />
+<jsp:useBean id="MemService" scope="page" class="com.mem.model.MemService" />
 <!DOCTYPE html>
 
 
@@ -67,6 +68,11 @@ h4 {
 				<td><input type="hidden" name="gb_id" size="45" value="${gb_id}" />${gb_id}</td>
 			</tr>
 			<tr>
+				<td>團購團名稱:</td>
+				<td><input type="hidden" name="gb_name" size="45" value="${gb_name}" />${gb_name}</td>
+			</tr>
+			
+			<tr>
 				<td>會員編號:</td>
 				<td><input type="hidden" name="mem_id" size="45"
 					value="${mem_id}" />${mem_id}</td>
@@ -74,7 +80,7 @@ h4 {
 			<tr>
 				<td>團購付款狀態:</td>
 				<td><input type="hidden" name="gbpay_status" size="45"
-					value="1" /> 未付款</td>
+					value="0" /> 未付款</td>
 			</tr>
 			<tr>
 				<td>取貨狀態:</td>
@@ -91,10 +97,7 @@ h4 {
 			<td>購買數量:</td>
 			<td>
 			<input type="number"  name="gbbuy_amount" min="1" max="${gb_min-gb_amount}" step="1"  required>
-
 			</td>
-
-			
 			</tr>		
 		</table>
 		<br> <input type="hidden" name="action" value="gb_goprice"> <input

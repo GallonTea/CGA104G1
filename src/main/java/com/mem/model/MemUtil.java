@@ -46,7 +46,7 @@ public class MemUtil {
 
 		// 配合 req.getParameterMap()方法 回傳 java.util.Map<java.lang.String,java.lang.String[]> 之測試
 		Map<String, String[]> map = new TreeMap<String, String[]>();
-		map.put("mem_id", new String[] { "" });
+		map.put("mem_id", new String[] { "1" });
 		map.put("mem_name", new String[] { "" });
 		map.put("mem_dob", new String[] { "" });
 		map.put("action", new String[] { "getXXX" }); // 注意Map裡面會含有action的key

@@ -50,7 +50,11 @@ public class NewsVO implements java.io.Serializable{
 		this.createTime = createTime;
 	}
 	
-	
+	public com.emp.model.EmpVO getEmpVO() {
+		com.emp.model.EmpService empSvc = new com.emp.model.EmpService();
+		com.emp.model.EmpVO empVO = empSvc.getOneEmp(empId);
+	    return empVO;
+    }
 
 
 }

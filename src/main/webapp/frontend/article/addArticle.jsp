@@ -68,10 +68,9 @@
 }
 
 .btn-warning {
-	position: absolute;
-	right: 2%;
 	color: white;
 	font-weight: 600;
+	margin-bottom: 10px;
 }
 
 #logo {
@@ -79,26 +78,34 @@
 	height: 40px;
 }
 
+.displayBox{
+    background-color:white;
+    margin-right:20px;
+    box-shadow:-3px -3px 9px gray;
+    margin-bottom: 20px;
+      }
+
 </style>
 </head>
 
 <body>
-	<nav class="navbar navbar-expand-lg bg-light fixed-top">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="select_page.jsp"><img id="logo" src="img/logo.png"></a>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				</ul>
-				<form class="d-flex" role="search">
-					<input class="form-control me-2" type="search"
-						placeholder="請輸入文章編號">
-					<button class="btn btn-outline-info text-nowrap" type="submit">查詢</button>
-				</form>
-			</div>
-		</div>
-	</nav>
-	<div class="none"></div>
+<!-- 	<nav class="navbar navbar-expand-lg bg-light fixed-top"> -->
+<!-- 		<div class="container-fluid"> -->
+<!-- 			<a class="navbar-brand" href="select_page.jsp"><img id="logo" src="img/logo.png"></a> -->
+<!-- 			<div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
+<!-- 				<ul class="navbar-nav me-auto mb-2 mb-lg-0"> -->
+<!-- 				</ul> -->
+<!-- 				<form class="d-flex" role="search"> -->
+<!-- 					<input class="form-control me-2" type="search" -->
+<!-- 						placeholder="請輸入文章編號"> -->
+<!-- 					<button class="btn btn-outline-info text-nowrap" type="submit">查詢</button> -->
+<!-- 				</form> -->
+<!-- 			</div> -->
+<!-- 		</div> -->
+<!-- 	</nav> -->
+<!-- 	<div class="none"></div> -->
 	<div class="container">
+		<div class="displayBox">
 		<div class="title">發表新文章</div>
 		<div class="form">
 			<form method="post" action="/CGA104G1/ArticleServlet" name="form1">
@@ -114,20 +121,29 @@
 				</div>
 				<div class="atitle">
 					<input type="text" class="ititle" name="article_title"
-						value="${param.article_title}" placeholder="請輸入文章標題">
+						value="${param.article_title}" placeholder="請輸入文章標題" required>
 				</div>
 				<div class="acontent">
 					<span id="tcontent">文章內容</span>
 					<textarea name="article_content" class="editor" value="${param.article_content}"></textarea>
 				</div>
+				
 				<input type="text" name="mem_id" value="${param.mem_id}"> 
 				<input type="hidden" name="action" value="insert">
-				<button class="btn btn-warning" value="送出新增">確認發文</button>
+				<div style="width:100%; display:flex;">
+                <div style="width:89%;"></div>
+                <button class="btn btn-warning" value="送出新增" type="button">確認發文</button>
+                </div>
 			</form>
+			</div>
 		</div>
 	</div>
-
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.7/dist/sweetalert2.all.min.js"></script>
 	<script src="<%=request.getContextPath() %>/ckeditor5/build/ckeditor.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/static/js/navbar.js"></script>
+	<script src="https://code.jquery.com/jquery-3.6.1.js"
+            integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+	
 	<script>
 	ClassicEditor
     .create(document.querySelector('.editor'), {
@@ -147,6 +163,25 @@
     .then(editor => {
         console.log(editor);
     });
+	
+	$('.btn-warning').click(function(e){
+		e.preventDefault();
+		var form = $(this).parents('form');
+		Swal.fire({
+			  title: '確認要發表文章嗎？',
+			  showCancelButton: true,
+			  cancelButtonText: "取消",
+			  confirmButtonText: '確定',
+			  confirmButtonColor: 'green',
+			}).then((result) => {
+			  if (result.isConfirmed) {
+			    Swal.fire('發表成功，自動轉跳回首頁', '', 'success'),
+			    setTimeout(function(){
+			    	form.submit();
+				},1000);
+			  } 
+			})
+	})
 	</script>
 </body>
 </html>

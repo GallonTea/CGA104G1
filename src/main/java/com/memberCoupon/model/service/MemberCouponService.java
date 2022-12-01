@@ -3,7 +3,6 @@ package com.memberCoupon.model.service;
 import com.memberCoupon.model.entity.MemberCoupon;
 import org.json.JSONArray;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface MemberCouponService {
@@ -21,7 +20,9 @@ public interface MemberCouponService {
 
     List<MemberCoupon> listAllCoupon();
 
-    List<MemberCoupon> listOwnCoupon(Integer memId);
+    JSONArray listOwnCoupon(Integer memId);
+
+    List<MemberCoupon> ownCoupon(Integer memId);
 
     Integer getNewsCount();
 

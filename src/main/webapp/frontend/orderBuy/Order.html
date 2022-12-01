@@ -34,17 +34,7 @@
     <link rel="stylesheet" type="text/css" href="../../resources/static/css/main.css"/>
 
     <style>
-        /*body {*/
-        /*    background: rgba(0, 0, 0, .6) url('../../resources/static/image/andrew-s-ouo1hbizWwo-unsplash.jpg') no-repeat fixed center center;*/
-        /*    -webkit-background-size: cover;*/
-        /*    -moz-background-size: cover;*/
-        /*    background-size: cover;*/
-        /*    -o-background-size: cover;*/
-        /*    z-index: -999999;*/
-        /*    !*opacity: 30%;*!*/
-        /*}*/
-
-        [v-clock] {
+        [v-cloak] {
             display: none;
         }
     </style>
@@ -76,16 +66,16 @@
                             <li v-for="orderItems in orderItems"
                                 class="list-group-item d-flex justify-content-between lh-condensed">
                                 <div>
-                                    <h6 class="my-0">{{ orderItems.itemName }}×{{ orderItems.cdAmount }}</h6>
+                                    <h6 class="my-0">{{ orderItems.name }}×{{ orderItems.quantity }}</h6>
                                 </div>
-                                <span class="text-muted">${{ orderItems.itemPrice }}</span>
+                                <span class="text-muted">${{ orderItems.price }}</span>
                             </li>
 
                             <li class="list-group-item d-flex justify-content-between bg-light">
                                 <div class="text-success">
-                                    <h6 class="my-0">{{ couponSelected }}</h6>
+                                    <h6 class="my-0"> 折價券 </h6>
                                 </div>
-                                <span class="text-success">-${{ couponVal }}</span>
+                                <span class="text-success">-${{ couponVal.couponVal }}</span>
                             </li>
                             <li class="list-group-item d-flex justify-content-between">
                                 <span>Total (NT$)</span>
@@ -95,16 +85,20 @@
 
                         <form>
                             <div class="from-group">
-                                <select v-model="couponSelected" v-for="(coupon, index) in coupon"
-                                        @change="couponSelectChange(coupon, index)"
-                                        class="form-select"
-                                        :key="coupon.COUPON_ID">
+                                <select class="form-select"
+                                        v-model="couponSelected"
+                                        @change="couponSelectChange()">
                                     <option value="" disabled selected>使用折價券</option>
-                                    <option style="display: none">{{ index }}</option>
-                                    <option>
+                                    <option style="display: none"></option>
+                                    <option v-for="(coupon, index) in coupon"
+                                            :key="coupon.COUPON_ID"
+                                            :value="coupon.COUPON_ID">
                                         {{ coupon.COUPON_NAR }}
                                     </option>
                                 </select>
+                                <strong style="color: red"> {{
+                                    couponVal.minimumErr
+                                    }}</strong>
                             </div>
                         </form>
                     </div>
@@ -130,7 +124,7 @@
                         <div class="col-md-6 form-group">
                             <br>
                             <label for="name"> 收件人姓名 </label><strong style="color: red"> {{
-                                result.receiverNameErr
+                            result.receiverNameErr
                             }}</strong>
                             <br>
                             <input type="text" class="form-control" id="name" v-model="orderName"
@@ -242,44 +236,22 @@
 <script src="../../resources/static/js/navbar.js"></script>
 <!--  Footer  -->
 <script src="../../resources/static/js/footer.js"></script>
+
+
 <script>
     let vm = Vue.createApp({
         data() {
             return {
+                couponTmp: [],
                 zipcode: '',
                 city: '',
                 dist: '',
                 couponSelected: '',
-                couponVal: '0',
+                couponVal: {couponVal: '0'},
                 couponId: '0',
                 memberId: '',
                 coupon: [],
-                orderItems: [
-                    {
-                        "itemId": 1,
-                        "itemName": "[Zeniter先立特] 頂級無穀幼母犬1.2kg 幼母犬糧 狗飼料",
-                        "cdAmount": 2,
-                        "itemPrice": 499
-                    },
-                    {
-                        "itemId": 3,
-                        "itemName": "Petkit 小佩智能感應式除臭貓砂盆",
-                        "cdAmount": 1,
-                        "itemPrice": 2380
-                    },
-                    {
-                        "itemId": 7,
-                        "itemName": "Petkit 小佩 寵物智能去味器-除臭首推",
-                        "cdAmount": 1,
-                        "itemPrice": 790
-                    },
-                    {
-                        "itemId": 11,
-                        "itemName": "『爆玩新品』PIDAN 電動小雪怪-翻滾玩具",
-                        "cdAmount": 1,
-                        "itemPrice": 160
-                    }
-                ],
+                orderItems: [],
                 orderPaying: 2,
                 orderSend: 0,
                 orderOther: '',
@@ -291,35 +263,40 @@
             }
         },
         beforeCreate() {
-            let member = sessionStorage.getItem('mem-info');
-            if (!member) {
-                Swal.fire({
-                    icon: 'error',
-                    title: '你還沒登入喔!',
-                })
-                setTimeout(function () {
-                    window.location.assign('/CGA104G1/frontend/mem/login.jsp')
-                }, 2000)
-            }
-            let memberId = JSON.parse(member).memberId
+            // let member = sessionStorage.getItem('mem-info');
+            // if (!member) {
+            //     Swal.fire({
+            //         icon: 'error',
+            //         title: '你還沒登入喔!',
+            //     })
+            //     setTimeout(function () {
+            //         window.location.assign('/CGA104G1/frontend/loginMem/login.jsp')
+            //     }, 2000)
+            // }
+            // let memberId = JSON.parse(member).memberId
             let qs = Qs;
-            axios.post('/CGA104G1/MemberCouponServlet', qs.stringify({
-                memberId: memberId
-            }))
+            axios.post('/CGA104G1/MemberCouponServlet', qs.stringify({}))
                 .then(res => {
                     console.log(res);
                     this.coupon = res.data;
-
                 })
                 .catch(err => {
                     console.log(err);
                 })
         },
         mounted() {
-            let member = sessionStorage.getItem('mem-info');
-            this.memberId = JSON.parse(member).memberId
-            // let cart = sessionStorage.getItem('part')
-            // this.orderItems = JSON.stringify(cart)
+            let cart = sessionStorage.getItem('part')
+            if (!cart) {
+                Swal.fire({
+                    icon: 'error',
+                    title: '你的購物車還沒有東西喔!',
+                    footer: '<a href="/CGA104G1/frontend/item/shop.html">快去買買吧!</a>'
+                })
+                setTimeout(function () {
+                    window.location.assign('/CGA104G1/frontend/item/shop.html')
+                }, 2000)
+            }
+            this.orderItems = JSON.parse(cart)
         },
         computed: {
             finalPrice: function () {
@@ -327,9 +304,9 @@
                 let finalPrice = 0;
                 for (let i in this.orderItems) {
                     var attr = this.orderItems[i];
-                    total += parseInt((attr.itemPrice * attr.cdAmount));
+                    total += parseInt((attr.price * attr.quantity));
                 }
-                finalPrice = total - this.couponVal;
+                finalPrice = total - this.couponVal.couponVal;
                 return finalPrice;
             }
         },
@@ -337,8 +314,8 @@
             nextStep: function () {
                 const swalWithBootstrapButtons = Swal.mixin({
                     customClass: {
-                        confirmButton: 'btn btn-success',
-                        cancelButton: 'btn btn-warning'
+                        confirmButton: 'btn btn-light',
+                        cancelButton: 'btn btn-light'
                     },
                     buttonsStyling: false
                 })
@@ -356,7 +333,6 @@
                     if (result.isConfirmed) {
                         var qs = Qs;
                         axios.post('/CGA104G1/orderBuy/newOrder.do', qs.stringify({
-                            memberId: this.memberId,
                             couponId: this.couponId,
                             orderPaying: this.orderPaying,
                             orderSend: this.orderSend,
@@ -378,6 +354,9 @@
                                 })
                                 this.result = res.data
                                 $("#orderForm").html(res.data)
+                                if ("#orderForm") {
+                                    sessionStorage.removeItem('part')
+                                }
                             })
                             .catch(err => {
                                 console.log(err);
@@ -394,15 +373,14 @@
                     }
                 })
             },
-            couponSelectChange: function (coupon, index) {
+            couponSelectChange: function () {
                 var qs = Qs;
                 axios.post('/CGA104G1/getCouponValServlet', qs.stringify({
-                    couponId: this.coupon[index].COUPON_ID
+                    couponId: this.couponSelected, finalPrice: this.finalPrice
                 }))
                     .then(res => {
                         console.log(res)
                         this.couponVal = res.data
-                        this.couponId = this.coupon[index].COUPON_ID
                     })
                     .catch(err => {
                         console.log(err)
@@ -412,6 +390,10 @@
     });
     vm.mount('#app');
 </script>
+
+<!--  Cart -->
+<script type="text/javascript" src="../../resources/static/js/cart.js"></script>
+
 
 </body>
 

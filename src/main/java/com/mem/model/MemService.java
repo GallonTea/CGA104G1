@@ -138,7 +138,7 @@ import org.json.JSONObject;
 		}
 		
 		public List<MemVO> getAllMem(Map<String, String[]> map){
-			return dao.getAll();
+			return dao.getAllMem(map);
 		}
 		
 		//寄送驗證信
@@ -199,9 +199,6 @@ import org.json.JSONObject;
 		
 		public void updateStatus(Integer mem_id) {
 			
-//			MemVO memVO = new MemVO();
-
-//			memVO.setMem_account(Mem_account);
 			dao.updateStatus(mem_id);
 		}
 		

@@ -5,61 +5,125 @@
 
 
 <%
-MemService memSvc = new MemService();
+	MemService memSvc = new MemService();
     List<MemVO> list = memSvc.getAll();
     pageContext.setAttribute("list",list);
 %>
 <%@include file="/backend/backNavbar.jsp"%>
 
 
-
 <html>
 <head>
 <title>會員帳號管理 </title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+	crossorigin="anonymous"></script>
 
 <style>
-  table#table-1 {
-	background-color: gray;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
+/* <!-- ===========================================樣式欄位================================================================== --> */
 
-</style>
+.styled-table {
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	margin: auto;
+	font-size: 0.9em;
+	font-family: sans-serif;
+	min-width: 400px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
 
-<style>
-  table {
-	width: 100%;
-	background-color: white;
+.styled-table thead tr {
+	background-color: #212529;
+	color: #ffffff;
+	text-align: left;
+}
+
+.styled-table th, .styled-table td {
+	padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+	border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+	background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+	border-bottom: 2px solid #212529;
+}
+
+.styled-table tbody tr.active-row {
+	font-weight: bold;
+	color: #212529;
+}
+
+/* <!-- ===========================================樣式欄位================================================================== --> */
+table#table-1 {
+	background-color: #212529;
+	border: 2px solid black;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+	width: 1000px;
 	margin-top: 5px;
 	margin-bottom: 5px;
-  }
-  table, th, td {
-    border: 1px solid #CCCCFF;
-  }
-  th, td {
-    padding: 4px;
-    text-align: center;
-  }
+}
+
+table#table-1 h4 {
+	color: red;
+	display: block;
+	margin-bottom: 1px;
+}
+
+h3 {
+	color: #6c757d;
+}
+
+h4 {
+	color: blue;
+	display: inline;
+}
 </style>
+
+<style>
+table {
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	margin-top: 5px;
+	margin-bottom: 5px;
+}
+th, td {
+	padding: 5px;
+	text-align: center;
+}
+</style>
+
+
 
 </head>
 <body bgcolor='white'>
 
 <table id="table-1">
 	<tr>
-		<td>
+		<th>
 		 <h3>會員帳號管理 </h3>
-		 <h4><a href="<%=request.getContextPath()%>/frontend/mem/select_page.jsp">回首頁</a></h4>
-		</td>
+		 <h4><a class="btn btn-light" href="<%=request.getContextPath()%>/backend/mem/select_page.jsp">回到會員資料查詢</a></h4>
+		</th>
 	</tr>
 </table>
 
-<table>
+	<table class="styled-table">
+	<thead>
 	<tr>
 		<th>會員編號</th>
 		<th>會員帳號</th>
@@ -74,10 +138,12 @@ MemService memSvc = new MemService();
 		<th>修改</th>
 		<th>刪除</th>
 	</tr>
+	</thead>
 
+	<tbody>
 	<c:forEach var="memVO" items="${list}">
 		
-		<tr>
+		<tr class="active-row" align='center' valign='middle'>
 			<td>${memVO.mem_id}</td>
 			<td>${memVO.mem_account}</td>
 			<td>${memVO.mem_name}</td>
@@ -122,6 +188,7 @@ MemService memSvc = new MemService();
 			</td>
 		</tr>
 	</c:forEach>
+	</tbody>
 </table>
 
 <script>

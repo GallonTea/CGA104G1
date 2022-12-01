@@ -20,7 +20,7 @@ session.setAttribute("memVO", memVO);
 
 <%int memID=memVO.getMem_id(); %>
 <%String memEmail=memVO.getMem_email(); %>
-				<form method="post" action="/CGA104G1/MemServlet" >
+				<form method="post" action="<%=request.getContextPath()%>/MemServlet" >
 <table border='1' cellpadding='5' cellspacing='0' width="500" height="300">
 		<tr bgcolor='orange' align='center' valign='middle' height='20'>
 			<th>驗證信已發送，請至信箱查收驗證碼：<br> 
@@ -35,7 +35,7 @@ session.setAttribute("memVO", memVO);
 					<input type="hidden" name="mem_id" value="<%= memID %>">
 					<input id="1" type="submit" value="確認送出" style="margin-left: 100px"></form>
 					
-					<form method="post" action="/CGA104G1/MemServlet" >
+					<form method="post" action="<%=request.getContextPath()%>/MemServlet" >
 					<input type="hidden" name="action" value="resend"> 
 					<input type="hidden" name="mem_email" value="<%= memEmail %>">
 					<input type="hidden" name="mem_id" value="<%= memID %>">

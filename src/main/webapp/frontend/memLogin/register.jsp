@@ -74,12 +74,12 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 <table id="table-1" ALIGN=center>
 	<tr><td> 
 	<h3>會員註冊 </h3>
-		 <h4><a href='<%=request.getContextPath()%>/frontend/mem/login.jsp'>回登入首頁</a></h4>
+		 <h4><a href='<%=request.getContextPath()%>/frontend/memLogin/login.jsp'>回登入首頁</a></h4>
 	</td></tr>
 </table>
 
 
-<%-- 錯誤表列 --%>
+<!-- 錯誤表列 -->
 <%-- <c:if test="${not empty errorMsgs}"> --%>
 <!-- 	<font style="color:red">請修正以下錯誤:</font> -->
 <!-- 	<ul> -->
@@ -90,14 +90,14 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 <%-- </c:if> --%>
 
 
-<FORM  ALIGN=center METHOD="post" ACTION="/CGA104G1/MemServlet">
+<FORM  ALIGN=center METHOD="post" ACTION="<%=request.getContextPath()%>/MemServlet">
 
 
 <table ALIGN=center>
 
 	<tr>
 		<td>會員帳號:<font color=red><b>*</b></font></td>
-		<td><input id ="mem_account" name="mem_account" type="TEXT" size="45" 
+		<td><input id ="mem_account" name="mem_account" type="TEXT" size="38" 
 			 value="<%= (memVO==null)? "" : memVO.getMem_account()%>" />
 			 <input type="button" id="chkaccount" value=" 檢查是否可以使用" ></td><td style="color:red">${errorMsgs.mem_account}</td>
 
@@ -109,46 +109,46 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 	</tr>
 	<tr>
 		<td>會員密碼:<font color=red><b>*</b></font></td>
-		<td><input type="TEXT" name="mem_password" size="45"
+		<td><input type="TEXT" name="mem_password" size="38"
 			 value="<%= (memVO==null)? "" : memVO.getMem_password()%>" /></td><td style="color:red">${errorMsgs.mem_password}</td>
 	</tr>
 		<tr>
 	<tr>
 		<td>會員姓名:<font color=red><b>*</b></font></td>
-		<td><input type="TEXT" name="mem_name" size="45" 
+		<td><input type="TEXT" name="mem_name" size="38" 
 			 value="<%= (memVO==null)? "" : memVO.getMem_name()%>" /></td><td style="color:red">${errorMsgs.mem_name}</td>
 	</tr>
 		<tr>
 		<td>會員地址:<font color=red><b>*</b></font></td>
-		<td><input type="TEXT" name="mem_address" size="45"
+		<td><input type="TEXT" name="mem_address" size="38"
 			 value="<%= (memVO==null)? "" : memVO.getMem_address()%>" /></td><td style="color:red">${errorMsgs.mem_address}</td>
 	</tr>
 	<tr>
 		<td>會員電話:<font color=red><b>*</b></font></td>
-		<td><input type="TEXT" name="mem_phone" size="45"
+		<td><input type="TEXT" name="mem_phone" size="38"
 			 value="<%= (memVO==null)? "" : memVO.getMem_phone()%>" /></td><td style="color:red">${errorMsgs.mem_phone}</td>
 	</tr>
 	<tr>
-		<td>會員證號:<font color=red><b>*</b></font></td>
-		<td><input type="TEXT" name="mem_uid" size="45"
+		<td>身分證字號:<font color=red><b>*</b></font></td>
+		<td><input type="TEXT" name="mem_uid" size="38"
 			 value="<%= (memVO==null)? "" : memVO.getMem_uid()%>" /></td><td style="color:red">${errorMsgs.mem_uid}</td>
 	</tr>
 		<tr>
 		<td>會員信箱:<font color=red><b>*</b></font></td>
-		<td><input type="TEXT" name="mem_email" size="45"
+		<td><input type="TEXT" name="mem_email" size="38"
 			 value="<%= (memVO==null)? "" : memVO.getMem_email()%>" /></td><td style="color:red">${errorMsgs.mem_email}</td>
 	</tr>
 		<tr>
 		<td>會員性別:<font color=red><b>*</b></td>
 		<td>
-		<input type="radio" name="mem_sex" size="45" value="男" ${(memVO.mem_sex=="男")? 'checked':'' }><b>男</b>
-		<input type="radio" name="mem_sex" size="45" value="女" ${(memVO.mem_sex=="女")? 'checked':'' }><b>女</b>
+		<input type="radio" name="mem_sex" size="38" value="男" ${(memVO.mem_sex=="男")? 'checked':'' }><b>男</b>
+		<input type="radio" name="mem_sex" size="38" value="女" ${(memVO.mem_sex=="女")? 'checked':'' }><b>女</b>
 		<input type="hidden" name="mem_sex" value="${memVO.mem_sex}">
 		</td><td style="color:red">${errorMsgs.mem_sex}</td>
 		</tr>
 	<tr>
 		<td>會員生日:<font color=red><b>*</b></font></td>
-		<td><input type="TEXT" name="mem_dob" id="dob_date1" size="45" /></td><td style="color:red">${errorMsgs.mem_dob}</td>
+		<td><input type="TEXT" name="mem_dob" id="dob_date1" size="38" /></td><td style="color:red">${errorMsgs.mem_dob}</td>
 	</tr>
 
 	
@@ -264,20 +264,15 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
     function showEmployee(json) {
       //剖析json字串,將其轉成js物件
       let chkAc = JSON.parse(json);      
-      if (chkAc.mem_account == "null") {
+      
+      if (!(chkAc.mem_account == "null")) {
           
 
           console.log(chkAc.mem_account);
 
-          alert("此帳號可以使用");
-          
-          
-          
-//           let html;
-    	
-	
-
-
+          alert("此帳號已被使用");
+                           
+//         let html;
 //         html = `
 //         <table class='empTable' align='center'>
 //         <tr><th>工號</th><td>${emp.empno}</td></tr>
@@ -285,14 +280,20 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 //         <tr><th>薪資</th><td>${emp.sal}</td></tr>
 //         <tr><th>到職日</th><td>${emp.hiredate}</td></tr>
 //       </table>
-//       `;
-      } else {
-          alert("此帳號已被使用");
+
+       }else {
+          alert("此帳號可以使用");
 //           html = "<center>查無此員工</center>";
 
       }
-//       document.getElementById("showPanel").innerHTML = html;
+      
+
+     
+      
     }
+     
+//       document.getElementById("showPanel").innerHTML = html;
+    
     
     $("#chkaccount").click(function getEmployee() {
         //===實作(填入程式碼)

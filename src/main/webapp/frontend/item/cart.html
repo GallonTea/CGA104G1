@@ -49,6 +49,9 @@
     <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.11.0/qs.min.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+    <!--	sweetalert-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 </head>
 
@@ -460,7 +463,7 @@
 
                         <h1 @click="showDetail(item.itemId)">{{item.itemName}}</h1>
 
-                        {{item.content}}
+                        {{item.itemContent}}
 
                     </div>
 
@@ -527,8 +530,21 @@
 
         },
         mounted() {
-            let part = sessionStorage.getItem("part");
-            this.cart = JSON.parse(part);
+
+
+            let cart = sessionStorage.getItem('part')
+            this.cart = JSON.parse(cart);
+            if (!cart) {
+                Swal.fire({
+                    icon: 'error',
+                    title: '你的購物車還沒有東西喔!',
+                    footer: '<a href="/CGA104G1/frontend/item/shop.html">快去買買吧!</a>'
+                })
+                setTimeout(function () {
+                    window.location.assign('/CGA104G1/frontend/item/shop.html')
+                }, 2000)
+            }
+
         },
         computed: {
             total() {

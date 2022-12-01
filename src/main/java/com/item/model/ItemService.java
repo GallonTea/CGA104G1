@@ -19,6 +19,8 @@ import com.util.ServiceCommon;
 import com.itemPhotos.model.ItemPhotosInterface;
 import org.json.JSONObject;
 
+import javax.persistence.criteria.CriteriaBuilder;
+
 public class ItemService implements ServiceCommon {
 	private ItemDAO_interface itemDao;
 	private ItemPhotosInterface itemPhotoDao;
@@ -196,8 +198,7 @@ public class ItemService implements ServiceCommon {
 		
 	}
 
-	public void insertFavList(JsonObject obj){
-		final String memId = obj.get("memId").getAsString();
+	public void insertFavList(JsonObject obj, String memId){
 		final JsonObject item = obj.get("item").getAsJsonObject();
 		JsonArray jsonArray;
 		String favListStr = itemDao.getFavList(memId);

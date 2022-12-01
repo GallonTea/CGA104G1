@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 public class Group_JoinJDBCDAO implements Group_JoinDAO_interface{
@@ -120,6 +121,36 @@ public class Group_JoinJDBCDAO implements Group_JoinDAO_interface{
 	}
 
 	@Override
+	public void updatePay(Group_JoinVO Group_JoinVO) {
+
+	}
+
+	@Override
+	public void updatePickup(Group_JoinVO Group_JoinVO) {
+
+	}
+
+	@Override
+	public void updateDeliver(Group_JoinVO Group_JoinVO) {
+
+	}
+
+	@Override
+	public void deleteGj(Integer gb_id, Integer mem_id) {
+
+	}
+
+	@Override
+	public Group_JoinVO findByPrimaryKey(Integer gb_id, Integer mem_id) {
+		return null;
+	}
+
+	@Override
+	public List<Group_JoinVO> findBygbid(Integer gb_id) {
+		return null;
+	}
+
+
 	public void delete(Integer gb_id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -278,6 +309,12 @@ public class Group_JoinJDBCDAO implements Group_JoinDAO_interface{
 		}
 		return list;
 	}
+
+	@Override
+	public List<Group_JoinVO> getAll(Map<String, String[]> map) {
+		return null;
+	}
+
 	public static void main(String[] args) {
 
 		Group_JoinJDBCDAO dao = new Group_JoinJDBCDAO();

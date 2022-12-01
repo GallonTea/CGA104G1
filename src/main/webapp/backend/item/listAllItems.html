@@ -307,6 +307,15 @@
             font-size: 20px;
         }
 
+        .thPoint:hover {
+            cursor: pointer;
+        }
+
+        .container-xl {
+          margin-top: 150px;
+        }
+
+
     </style>
 </head>
 <body>
@@ -375,18 +384,18 @@
                             <th>名稱</th>
                             <th>種類</th>
 
-                            <th @click="orderPrice">單價</th>
+                            <th @click="orderPrice" class="thPoint">單價</th>
                             <th>數量</th>
-                            <th @click="orderStatus">狀態</th>
+                            <th @click="orderStatus" class="thPoint">狀態</th>
                             <th>上架日</th>
                             <th>下架日</th>
                             <th>圖片</th>
                             <th>更動</th>
                         </tr>
                         </thead>
-                        <tbody v-for="(item, index) in items" :key="item.itemId"
+                        <tbody
                         >
-                        <tr>
+                        <tr v-for="(item, index) in items" :key="item.itemId">
                             <td>{{ item.itemId }}</td>
                             <td><a href="#">{{ item.itemName }}</a></td>
                             <!--                            <td>London</td>-->
@@ -492,6 +501,8 @@
         crossorigin="anonymous"></script>
 
 
+<!--  BackNavBar  -->
+<script src="../../resources/static/js/backNarbar.js"></script>
 <!-- import vue.js  -->
 <script src="https://unpkg.com/vue@3"></script>
 <script src="https://unpkg.com/vue-router@4"></script>
@@ -563,7 +574,7 @@
                         })
                     })
                 setTimeout(function () {
-                   location.reload();
+                    location.reload();
                 }, 2000)
 
 
@@ -590,10 +601,17 @@
 
                         })
                 }
+            }, getAllType() {
+                let pjName = getProjectName();
+                axios.get(pjName + "/item/type?action=getAllType")
+                    .then((resp) => {
+
+                        this.allType = resp.data;
+                    })
             }
 
         },
-        beforeCreate() {
+        mounted() {
             let pjName = getProjectName();
             axios.get(pjName + '/item/items?action=getAllList')
                 .then((resp) => {

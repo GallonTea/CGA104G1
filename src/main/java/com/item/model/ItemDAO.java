@@ -91,20 +91,25 @@ public class ItemDAO implements ItemDAO_interface {
     public JSONArray search(String keyWords, Integer type) {
 
         final StringBuilder sql = new StringBuilder().append("From ItemVO  where ");
+        List<ItemVO> list=null;
         if (keyWords.trim().length() != 0 && !(keyWords == null)) {
-            sql.append(" " + "itemName" + " " + "like" + " " + '"' + "%" + keyWords + "%" + '"' + " ");
+            sql.append(" " + "itemName like :keyWords");
+//            sql.append(" " + "itemName" + " " + "like" + " "  + "'%" + keyWords + "%'" + " ");
             if (type != 0) {
-                sql.append("and");
+                sql.append(" "+"and"+" " + "itemtId" + " " + "=" + " " + type + " ");
+
             }
+             list = getSession().createQuery(sql.toString(), ItemVO.class).setParameter("keyWords","%"+keyWords+"%").list();
         }
-        if (!(type == 0)) {
-            ;
+        if (!(type == 0)&&(keyWords.isEmpty())) {
+
             sql.append(" " + "itemtId" + " " + "=" + " " + type + " " );
+            list=getSession().createQuery(sql.toString(), ItemVO.class).list();
         }
 
         // sql.append(" "+"ITEM_STATUS"+" "+"="+" "+"0 or ITEM_STATUS=1");
         JSONArray jsonArray = new JSONArray();
-        List<ItemVO> list = getSession().createQuery(sql.toString(), ItemVO.class).list();
+
         for (ItemVO itemVO : list) {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("itemId", itemVO.getItemId());

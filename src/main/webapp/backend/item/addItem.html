@@ -24,6 +24,8 @@
     <script src="https://cdn.jsdelivr.net/npm/@vee-validate/rules@4.5.8/dist/vee-validate-rules.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@vee-validate/i18n@4.5.8/dist/vee-validate-i18n.min.js"></script>
 
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
     <title>新增商品</title>
 
@@ -203,7 +205,7 @@
 <body>
 <div class="contact-us" id="app">
     <h1>商品詳細資訊</h1>
-    <v-form v-slot="{ errors }" enctype="multipart/form-data" @submit="onSubmit">
+    <v-form v-slot="{ errors,onSubmit }" enctype="multipart/form-data" @submit="onSubmit(submitForm)">
         <div  class="one">
             <label>商品名稱</label>
             <v-field type="text" placeholder="請輸入商品名稱" v-model="item.itemName" name="商品名稱"
@@ -278,14 +280,19 @@
         </div>
 
 
-        <div style="width: 98.5%">
+        <div style="width: 98.5%" class="one">
             <label>商品描述</label>
-            <textarea placeholder="Type your Message" class="message-box" v-model="item.itemContent"></textarea>
+<!--            <v-field placeholder="Type your Message" class="message-box" v-model="item.itemContent"></v-field>-->
+            <v-field type="text" placeholder="請輸入商品描述" class="message-box" v-model="item.itemContent" name="商品描述"
+                     :rules="checkContent"></v-field>
+            <error-message name="商品描述" class="invalid-feedback"></error-message>
         </div>
 
         <button class="insert">新增商品</button>
     </v-form>
 </div>
+
+
 
 <script>
     const {defineRule, Form, Field, ErrorMessage, configure} = VeeValidate
@@ -337,7 +344,13 @@
                 maxDate = moment(maxDate).format('YYYY-MM-DD')
                 return (maxDate>=minDate)? true : "下架日期必填,選擇的日期不能小於上架日期"
             },
-
+            checkContent(value){
+                if (!value) {
+                    return "商品描述不得為空";
+                } else {
+                    return true;
+                }
+            },
             onSubmit() {
                 let pjName = getProjectName();
                 axios.post(pjName+'/item/items?action=insertItem',{item: this.item, photo: this.photos})

@@ -25,7 +25,7 @@
             rel="stylesheet">
 
     <!-- import css stylesheet -->
-    <link rel="stylesheet" href="./css/style.css">
+<!--    <link rel="stylesheet" href="./css/style.css">-->
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css">
@@ -186,10 +186,11 @@
 
                     </form>
                     <div class="product_meta">
-							<span class="posted_in">Categories: <a href="#">Bottom</a>,
-								<a href="#">Clothing</a></span> <span class="tagged_as">Tags: <a
-                            href="#">Art</a>, <a href="#">Design</a>, <a href="#">Music</a>,
-								<a href="#">Photography</a></span>
+                        <span class="posted_in">Categories: <span id="product-category" style="font-weight:200"></span>
+<!--								<a href="#">Clothing</a></span> -->
+<!--                        <span class="tagged_as">Tags: <a-->
+<!--                            href="#">Art</a>, <a href="#">Design</a>, <a href="#">Music</a>,-->
+<!--								<a href="#">Photography</a></span>-->
                     </div>
                 </div>
                 <div class="col-sm-12">
@@ -204,10 +205,7 @@
                             </ul>
                         </div> -->
                         <!-- Tab panes -->
-                        <div class="tab-content">
 
-                            <div class="tab-pane fade" id="tab-content-2"></div>
-                        </div>
                     </div>
                 </div>
                 <!-- <div class="col-sm-12">
@@ -375,7 +373,7 @@
             .then(item => { /* 物件本人 */
 
                 $("#product-title").text(item.itemName);
-                $("#product-price").html(`<p id="price">${item.itemPrice}</p>`);
+                $("#product-price").html(`<p id="price">NT$ ${item.itemPrice}</p>`);
                 $("#product-content").html(`<p>${item.itemContent}</p>`)
                 $("#product-amount").html(`
    							<input type="number" step="1" min="1" max="${item.itemAmount}" name="quantity"
@@ -383,11 +381,12 @@
 							id="quantity" size="4"
 							pattern="[0-9]*" inputmode="numeric">
    							`)
-
+                $("#product-category").html(item.itemtName);
+                console.log(item.itemtName);
                 object.itemId = sessionStorage.getItem('itemId');
-                object.price = item.itemPrice;
-                object.name = item.itemName;
-                object.content = item.itemContent;
+                object.itemPrice = item.itemPrice;
+                object.itemName = item.itemName;
+                object.itemContent = item.itemContent;
 
                 traceObject.itemId = sessionStorage.getItem('itemId');
                 traceObject.itemPrice = item.itemPrice;

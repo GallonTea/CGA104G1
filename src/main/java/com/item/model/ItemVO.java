@@ -49,7 +49,7 @@ public class ItemVO implements java.io.Serializable {
 	private List<ItemPhotosVO> photos;
 
 	@OneToOne
-	@JoinColumn(name = "ITEM_ID",insertable = false,updatable = false)
+	@JoinColumn(name = "ITEMT_ID",insertable = false,updatable = false)
 	private ItemTypeVO itemTypeVO;
 
 	@OneToMany(mappedBy = "item")

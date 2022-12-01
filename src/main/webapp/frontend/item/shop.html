@@ -197,7 +197,7 @@
 
         #outerSliders {
             width: 100%;
-            margin: 0 auto;
+            margin: -40px auto;
             font-family: 'Raleway', sans-serif;
             color: #FFF;
             font-size: 1.75vw;
@@ -996,6 +996,7 @@
             width: 102.6%;
             box-shadow: 0 3px 10px rgb(0 0 0 / 5%);
             border-radius: 10px;
+            margin-top:30px;
 
         }
 
@@ -1036,6 +1037,15 @@
             margin: 0 auto;
         }
 
+        #logo {
+            width: 200px;
+            height: 10%;
+        }
+
+        nav {
+            position: fixed;
+        }
+
         /**********************************!type!************************************************/
 
     </style>
@@ -1043,14 +1053,14 @@
 <body>
 
 <div id="app">
-    <header>
+    <header style="margin-bottom: 10%">
 
-        <nav class="navbar navbar-expand-lg">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light static-top mb-5 shadow fixed-top">
             <div class="container-fluid">
                 <a class="navbar-brand" href="">
                     <!-- 網站 logo -->
-                    <img src="../../resources/static/image/ba-rei 02.png" alt="Logo" width="200px" height="10%"
-                         class="d-inline-block align-text-top">
+                    <img src="/CGA104G1/resources/static/image/ba-rei%2002.png" alt="Logo" width="200px" height="10%"
+                         class="d-inline-block align-text-top" id="logo">
                 </a>
 
                 <!-- 右側 toggle 按鈕 -->
@@ -1120,7 +1130,9 @@
                         <input v-model="keyWords" @keyup.enter="searchItem()" class="form-control me-2" type="search"
                                placeholder="今天你想來點..." aria-label="Search"
                                id="search_bar">
-                        <button class="btn btn-outline-success" type="submit" id="search_btn" @click="searchItem">Search</button>
+                        <button class="btn btn-outline-success" type="submit" id="search_btn" @click="searchItem">
+                            Search
+                        </button>
                     </div>
                 </div>
                 <div>
@@ -1140,56 +1152,56 @@
         </nav>
 
     </header>
-        <div id="outerSliders">
+    <div id="outerSliders">
         <div id="outerSlider">
-        <div class='slider'>
-            <input name="input-slider" id='input-slide-0' type="radio" class='input-slide input-slide-num'>
-            <input name="input-slider" id='input-slide-1' type="radio" class='input-slide input-slide-num'>
-            <input name="input-slider" id='input-slide-2' type="radio" class='input-slide input-slide-num'>
-            <input name="input-slider" id='input-slide-3' type="radio" class='input-slide input-slide-num'>
-            <input name="input-slider" id='input-slide-autoplay' type="radio" class='input-slide' checked>
-            <ul>
-                <li class='slide-0'></li>
-                <li class='slide-1'></li>
-                <li class='slide-2'></li>
-                <li class='slide-3'></li>
-            </ul>
-            <div class='slide-description'>
-                <label class='slide-0'>
-                    <img src="../../resources/static/image/coverPhoto/cover5.png">
-                </label>
-                <label class='slide-1'>
-                    <img src="../../resources/static/image/coverPhoto/cover1.png">
-                </label>
-                <label class='slide-2'>
-                    <img src="../../resources/static/image/coverPhoto/cover2.png">
-                </label>
-                <label class='slide-3'>
-                    <img src="../../resources/static/image/coverPhoto/cover4.png">
-                </label>
+            <div class='slider'>
+                <input name="input-slider" id='input-slide-0' type="radio" class='input-slide input-slide-num'>
+                <input name="input-slider" id='input-slide-1' type="radio" class='input-slide input-slide-num'>
+                <input name="input-slider" id='input-slide-2' type="radio" class='input-slide input-slide-num'>
+                <input name="input-slider" id='input-slide-3' type="radio" class='input-slide input-slide-num'>
+                <input name="input-slider" id='input-slide-autoplay' type="radio" class='input-slide' checked>
+                <ul>
+                    <li class='slide-0'></li>
+                    <li class='slide-1'></li>
+                    <li class='slide-2'></li>
+                    <li class='slide-3'></li>
+                </ul>
+                <div class='slide-description'>
+                    <label class='slide-0'>
+                        <img src="../../resources/static/image/coverPhoto/cover5.png">
+                    </label>
+                    <label class='slide-1'>
+                        <img src="../../resources/static/image/coverPhoto/cover1.png">
+                    </label>
+                    <label class='slide-2'>
+                        <img src="../../resources/static/image/coverPhoto/cover2.png">
+                    </label>
+                    <label class='slide-3'>
+                        <img src="../../resources/static/image/coverPhoto/cover4.png">
+                    </label>
 
-            </div>
-            <div class='slider-arrow-prev'>
-                <label class='slide-0' for='input-slide-0'></label>
-                <label class='slide-1' for='input-slide-1'></label>
-                <label class='slide-2' for='input-slide-2'></label>
-                <label class='slide-3' for='input-slide-3'></label>
-            </div>
-            <div class='slider-arrow-next'>
-                <label class='slide-0' for='input-slide-0'></label>
-                <label class='slide-1' for='input-slide-1'></label>
-                <label class='slide-2' for='input-slide-2'></label>
-                <label class='slide-3' for='input-slide-3'></label>
-            </div>
-            <div class='slider-dot'>
-                <label class='slide-0' for='input-slide-0'></label>
-                <label class='slide-1' for='input-slide-1'></label>
-                <label class='slide-2' for='input-slide-2'></label>
-                <label class='slide-3' for='input-slide-3'></label>
+                </div>
+                <div class='slider-arrow-prev'>
+                    <label class='slide-0' for='input-slide-0'></label>
+                    <label class='slide-1' for='input-slide-1'></label>
+                    <label class='slide-2' for='input-slide-2'></label>
+                    <label class='slide-3' for='input-slide-3'></label>
+                </div>
+                <div class='slider-arrow-next'>
+                    <label class='slide-0' for='input-slide-0'></label>
+                    <label class='slide-1' for='input-slide-1'></label>
+                    <label class='slide-2' for='input-slide-2'></label>
+                    <label class='slide-3' for='input-slide-3'></label>
+                </div>
+                <div class='slider-dot'>
+                    <label class='slide-0' for='input-slide-0'></label>
+                    <label class='slide-1' for='input-slide-1'></label>
+                    <label class='slide-2' for='input-slide-2'></label>
+                    <label class='slide-3' for='input-slide-3'></label>
+                </div>
             </div>
         </div>
-        </div>
-        </div>
+    </div>
     <div class="banner-parent">
         <div class="banner-text-banner">
             <div class="banner-text-banner__item">按分類幫毛孩找好東西</div>
@@ -1199,52 +1211,52 @@
 
             <div class="banner-circle-icon">
                 <div class="banner-circle-icon__wrapper">
-                    <div class="banner-circle-icon__row"><a href="/category/theme">
+                    <div class="banner-circle-icon__row">
                         <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
                                 src="../../resources/static/image/typeIcon/water.png"
                                 alt="專題推薦" style="width: 90px; height: 90px;">
                                     <p>飲食/飲水</p>
                                 </span></div>
-                    </a><a href="/category/Category_hot_dog_dryfood">
+
                         <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
                                 src="../../resources/static/image/typeIcon/dog-food.png"
                                 alt="狗狗飼料" style="width: 90px; height: 90px;">
                                     <p>狗狗飼料</p>
                                 </span></div>
-                    </a><a href="/category/hot_cat_dryfood">
-<!--                        src="https://cdn-v4.petpetgo.com/195/public/55bc97de-d89d-4c3b-84f7-2e3620ca5edf.png"-->
+
+                        <!--                        src="https://cdn-v4.petpetgo.com/195/public/55bc97de-d89d-4c3b-84f7-2e3620ca5edf.png"-->
                         <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
                                 src="../../resources/static/image/typeIcon/cat-food.png"
 
                                 alt="貓咪飼料" style="width: 90px; height: 90px;">
                                     <p>貓咪飼料</p>
                                 </span></div>
-                    </a><a href="/category/hotcatcans">
+
                         <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
                                 src="../../resources/static/image/typeIcon/food.png"
                                 alt="貓狗罐罐" style="width: 90px; height: 90px;">
                                     <p>貓狗罐罐</p>
                                 </span></div>
-                    </a><a href="/category/treats_mix">
+
                         <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
-                                src="../../resources/static/image/typeIcon/snack.png"
+                                src="../../resources/static/image/typeIcon/snack.png" @click="searchItemType(8)"
                                 alt="貓狗零食" style="width: 90px; height: 90px;">
                                     <p>貓狗零食</p>
                                 </span></div>
-                    </a><a href="/category/supplement_PET">
+
                         <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
                                 src="../../resources/static/image/typeIcon/pills.png"
                                 alt="寵物保健" style="width: 90px; height: 90px;">
                                     <p>寵物保健</p>
                                 </span></div>
-                    </a></div>
-                    <div class="banner-circle-icon__row"><a href="/category/catlitter_clean_mix">
+                    </div>
+                    <div class="banner-circle-icon__row">
                         <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
-                                src="../../resources/static/image/typeIcon/cat.png"
+                                src="../../resources/static/image/typeIcon/cat.png" @click="searchItemType(11)"
                                 alt="貓砂尿布" style="width: 90px; height: 90px;">
                                     <p>貓砂尿布</p>
                                 </span></div>
-                    </a>
+
 
                         <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
                                 @click="searchItemType(10)"
@@ -1255,30 +1267,31 @@
 
 
                         <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
-
                                 src="../../resources/static/image/typeIcon/nail-polish.png"
+                                @click="searchItemType(20)"
                                 alt="美容護理" style="width: 90px; height: 90px;">
                                     <p>美容護理</p>
                                 </span></div>
 
-                        <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img @click="searchItemType(19)"
-                                  src="../../resources/static/image/typeIcon/pet-shampoo.png"
+                        <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
+                                @click="searchItemType(19)"
+                                src="../../resources/static/image/typeIcon/pet-shampoo.png"
                                 alt="環境清潔" style="width: 90px; height: 90px;">
                                     <p>清潔用品</p>
                                 </span></div>
-                        <a href="/category/supplies_tableware_PET">
-                            <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
-                                    src="../../resources/static/image/typeIcon/dog-house.png"
-                                    alt="居家用品" style="width: 90px; height: 90px;">
+
+                        <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
+                                src="../../resources/static/image/typeIcon/dog-house.png" @click="searchItemType(17)"
+                                alt="居家用品" style="width: 90px; height: 90px;">
                                     <p>居家用品</p>
                                 </span></div>
-                        </a><a href="/category/outdoor_PET">
-                            <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
-                                    src="../../resources/static/image/typeIcon/cage.png"
-                                    alt="外出用品" style="width: 90px; height: 90px;">
+
+                        <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
+                                src="../../resources/static/image/typeIcon/cage.png" @click="searchItemType(18)"
+                                alt="外出用品" style="width: 90px; height: 90px;">
                                     <p>外出用品</p>
                                 </span></div>
-                        </a></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1333,7 +1346,6 @@
 </div>
 
 
-
 <!--  NavBar  -->
 <!--<script src="../../resources/static/js/navbar.js"></script>-->
 <!--footer-->
@@ -1365,12 +1377,12 @@
             }
         },
         computed: {
-            cartNum(){
+            cartNum() {
                 //購物車小數字
 
                 let part = sessionStorage.getItem("part");
 
-                if(part!=null){
+                if (part != null) {
                     let cartNum = JSON.parse(part).length;
                     return cartNum;
                     // document.getElementById("lblCartCount").append(partNum);
@@ -1401,7 +1413,7 @@
                         })
                 }
             }
-                ,
+            ,
             searchItemType(type) {
                 this.selectedType = type;
                 // alert(this.selectedType);
@@ -1438,8 +1450,7 @@
             }, getAll() {
                 let pjName = getProjectName();
                 axios.get(pjName + '/item/items?action=GetAll_For_Display_JS&pageNumber=' + pageNumber)
-            }
-
+            },
 
         },
 
@@ -1451,6 +1462,7 @@
                     this.items = resp.data;
 
                 })
+
 
             axios.get(pjName + "/item/items?action=GetCount")
                 .then((resp) => {

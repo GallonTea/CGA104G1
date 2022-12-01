@@ -2,6 +2,7 @@ package com.group_join.controller;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.emp_effect.model.Emp_effectService;
-import com.emp_effect.model.Emp_effectVO;
+import com.emp.model.EmpService;
+import com.emp.model.EmpVO;
+import com.group_buy.model.Group_BuyService;
+import com.group_buy.model.Group_BuyVO;
 import com.group_join.model.Group_JoinService;
 import com.group_join.model.Group_JoinVO;
 
@@ -34,6 +37,7 @@ public class group_JoinServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		HttpSession session = req.getSession();
+		System.out.println("進入servlet查詢");
 
 		if ("go_join".equals(action)) { // 來自addEmp.jsp的請求
 
@@ -42,6 +46,7 @@ public class group_JoinServlet extends HttpServlet {
 
 			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 			String gbitem_name = req.getParameter("gbitem_name");
+			String gb_name = req.getParameter("gb_name");
 
 			/*********************** 抓登入ID ,未測試 ************************/
 			Integer mem_id = Integer.valueOf(req.getParameter("mem_id").trim());
@@ -52,11 +57,7 @@ public class group_JoinServlet extends HttpServlet {
 			Integer gb_min = Integer.valueOf(req.getParameter("gb_min").trim());
 			Integer gb_amount = Integer.valueOf(req.getParameter("gb_amount").trim());
 
-			System.out.println(req.getParameter("gbstart_date"));
-			Timestamp gbstart_date = java.sql.Timestamp.valueOf(req.getParameter("gbstart_date").trim());
 
-			System.out.println(req.getParameter("gbend_date"));
-			Timestamp gbend_date = java.sql.Timestamp.valueOf(req.getParameter("gbend_date").trim());
 
 			Integer gb_status = Integer.valueOf(req.getParameter("gb_status").trim());
 			Integer gb_price = Integer.valueOf(req.getParameter("gb_price").trim());
@@ -64,14 +65,12 @@ public class group_JoinServlet extends HttpServlet {
 			session.setAttribute("mem_id", mem_id);
 
 			session.setAttribute("gb_price", gb_price);
-
+			session.setAttribute("gb_name", gb_name);
 			session.setAttribute("gbitem_name", gbitem_name);
 			session.setAttribute("gb_id", gb_id);
 			session.setAttribute("gbitem_id", gbitem_id);
 			session.setAttribute("gb_min", gb_min);
 			session.setAttribute("gb_amount", gb_amount);
-			session.setAttribute("gbstart_date", gbstart_date);
-			session.setAttribute("gbend_date", gbend_date);
 			session.setAttribute("gb_status", gb_status);
 
 			String url = "/frontend/group_join/addgroupjoin.jsp";
@@ -190,13 +189,14 @@ public class group_JoinServlet extends HttpServlet {
 			session.setAttribute("gb_id", gb_id);
 			session.setAttribute("gb_amount", gb_amount);
 			
-//			團購團Service 團購團_joinSvc = new 團購團Service();
-//			團購團VO = 團購團Svc.update團購團n(gb_id, gb_amount);
+			
+			Group_BuyService group_buySvc = new Group_BuyService();
+			Group_BuyVO group_buyVO = group_buySvc.updateGroup_Buy_GBAmount( gb_id, gb_amount);
 			
 			
 			/*****************將總數量上傳到團購團更改(進入JDBC)***************/
 			System.out.println("總共數量"+gb_amount);
-			String url = "團購團首頁";
+			String url = "/CGA104G1/frontend/groupBuy/listallgroupbuuy.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
@@ -249,10 +249,20 @@ public class group_JoinServlet extends HttpServlet {
 			
 
 			/*************************** 3.查詢完成,準備轉交(Send the Success view) *************/
+			boolean verify = true;
 			
 			req.setAttribute("gb_id", gb_id);
 			session.setAttribute("group_joinVO", group_joinVO);
+			for(Group_JoinVO a: group_joinVO)
+			{
+				if(a.getGbpay_status() != 1 || a.getPickup_status() != 1 || a.getDeliver_status() != 3) {
+					verify = false;
+				}
+				
+			}
+			session.setAttribute("verify", verify);
 			
+			System.out.println(verify);
 			
 			String url = "/frontend/group_join/listAllGroupJoin.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); 
@@ -315,10 +325,24 @@ public class group_JoinServlet extends HttpServlet {
 			/*************************** 2.開始修改資料 *****************************************/
 			Group_JoinService group_joinSvc = new Group_JoinService();
 			 group_joinVO = group_joinSvc.updatePay(gb_id, mem_id, gbpay_status);
-			
+			 List<Group_JoinVO> group_joinVO1 = group_joinSvc.getOneGb(gb_id);
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("gb_id", gb_id);
-			req.setAttribute("group_joinVO", group_joinVO); // 資料庫update成功後,正確的的empVO物件,存入req
+			req.setAttribute("group_joinVO", group_joinVO1); // 資料庫update成功後,正確的的empVO物件,存入req
+			
+			boolean verify = true;
+			for(Group_JoinVO a: group_joinVO1)
+			{
+				if(a.getGbpay_status() != 1 || a.getPickup_status() != 1 || a.getDeliver_status() != 3) {
+					verify = false;
+				}
+				
+			}
+			session.setAttribute("verify", verify);
+			
+			
+			
+			
 			String url = "/frontend/group_join/listAllGroupJoin.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 			successView.forward(req, res);
@@ -344,9 +368,20 @@ public class group_JoinServlet extends HttpServlet {
 			Group_JoinService group_joinSvc = new Group_JoinService();
 			 group_joinVO = group_joinSvc.updatePickup(gb_id, mem_id, pickup_status);
 			
+			 List<Group_JoinVO> group_joinVO1 = group_joinSvc.getOneGb(gb_id);
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("gb_id", gb_id);
-			req.setAttribute("group_joinVO", group_joinVO); // 資料庫update成功後,正確的的empVO物件,存入req
+			req.setAttribute("group_joinVO", group_joinVO1); // 資料庫update成功後,正確的的empVO物件,存入req
+			
+			boolean verify = true;
+			for(Group_JoinVO a: group_joinVO1)
+			{
+				if(a.getGbpay_status() != 1 || a.getPickup_status() != 1 || a.getDeliver_status() != 3) {
+					verify = false;
+				}
+				
+			}
+			session.setAttribute("verify", verify);
 			String url = "/frontend/group_join/listAllGroupJoin.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 			successView.forward(req, res);
@@ -372,13 +407,57 @@ public class group_JoinServlet extends HttpServlet {
 			Group_JoinService group_joinSvc = new Group_JoinService();
 			 group_joinVO = group_joinSvc.updateDeliver(gb_id, mem_id, deliver_status);
 			
+			 List<Group_JoinVO> group_joinVO1 = group_joinSvc.getOneGb(gb_id);
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 			req.setAttribute("gb_id", gb_id);
-			req.setAttribute("group_joinVO", group_joinVO); // 資料庫update成功後,正確的的empVO物件,存入req
+			req.setAttribute("group_joinVO", group_joinVO1); // 資料庫update成功後,正確的的empVO物件,存入req
+			
+			boolean verify = true;
+			for(Group_JoinVO a: group_joinVO1)
+			{
+				if(a.getGbpay_status() != 1 || a.getPickup_status() != 1 || a.getDeliver_status() != 3) {
+					verify = false;
+				}
+				
+			}
+			session.setAttribute("verify", verify);
 			String url = "/frontend/group_join/listAllGroupJoin.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 			successView.forward(req, res);
 		}
+		
+		
+		
+		if ("update_gb_status".equals(action)) {
+
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
+			Integer gb_id = Integer.valueOf(req.getParameter("gb_id").trim());
+			Integer gb_status = 9;
+
+//			Group_JoinVO group_joinVO = new Group_JoinVO();
+//			 
+//			group_joinVO.setGb_id(gb_id);
+//			group_joinVO.setGb_id(gb_status);
+//			
+		
+			/*************************** 2.開始修改資料 *****************************************/
+			Group_BuyVO group_buyVO = new Group_BuyVO();
+			Group_BuyService group_buySvc = new Group_BuyService();
+			group_buyVO = group_buySvc.updateGroup_Buy_GBStatus(gb_id, gb_status);
+			
+//			group_buyVO = group_buySvc.getOneGroup_Buy(gb_id);
+			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
+			req.setAttribute("group_buyVO", group_buyVO); 
+			
+			String url = "/CGA104G1/frontend/groupBuy/listallgroupbuuy.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); 
+			successView.forward(req, res);
+		}
+		
+		
 //		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 //
 //			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();

@@ -1,16 +1,21 @@
 package com.group_join.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
+
+import com.emp.model.EmpNoEffect;
+import com.emp.model.EmpVO;
 
 public class Group_JoinDAO implements Group_JoinDAO_interface {
 
@@ -28,8 +33,8 @@ public class Group_JoinDAO implements Group_JoinDAO_interface {
 	private static final String GET_ALL_STMT = "SELECT GB_ID, MEM_ID, GBPAY_STATUS, PICKUP_STATUS, DELIVER_STATUS  ,GBBUY_AMOUNT ,GBBUY_PRICE FROM  GROUP_JOIN order by GB_ID ";
 	private static final String GET_ONE_STMT = "SELECT GB_ID, MEM_ID, GBPAY_STATUS, PICKUP_STATUS, DELIVER_STATUS  ,GBBUY_AMOUNT ,GBBUY_PRICE FROM GROUP_JOIN where GB_ID = ? and MEM_ID =?";
 	private static final String GET_ALL_GB = "SELECT GB_ID, MEM_ID, GBPAY_STATUS, PICKUP_STATUS, DELIVER_STATUS  ,GBBUY_AMOUNT ,GBBUY_PRICE FROM GROUP_JOIN where GB_ID = ?";
-	private static final String DELETE = "DELETE FROM GROUP_JOIN where GB_ID = ?";
-	private static final String UPDATE = "UPDATE GROUP_JOIN set  GBPAY_STATUS=?, PICKUP_STATUS=?, DELIVER_STATUS=? GBBUY_AMOUNT=? GBBUY_PRICE=? where (GB_ID = ?) and (MEM_ID = ?)";
+	private static final String DELETE = "DELETE FROM GROUP_JOIN where GB_ID = ? and MEM_ID = ? ";
+	private static final String UPDATE = "UPDATE GROUP_JOIN set  GBPAY_STATUS=?, PICKUP_STATUS=?, DELIVER_STATUS=?, GBBUY_AMOUNT=?, GBBUY_PRICE=? where (GB_ID = ?) and (MEM_ID = ?)";
 	private static final String UPDATEPAY = "UPDATE GROUP_JOIN set  GBPAY_STATUS=? where (GB_ID = ?) and (MEM_ID = ?)";
 	private static final String UPDATEPICKUP = "UPDATE GROUP_JOIN set  PICKUP_STATUS=? where (GB_ID = ?) and (MEM_ID = ?)";
 	private static final String UPDATEDELIVER = "UPDATE GROUP_JOIN set  DELIVER_STATUS=? where (GB_ID = ?) and (MEM_ID = ?)";
@@ -49,10 +54,10 @@ public class Group_JoinDAO implements Group_JoinDAO_interface {
 			pstmt.setInt(3, Group_JoinVO.getGbpay_status());
 			pstmt.setInt(4, Group_JoinVO.getPickup_status());
 			pstmt.setInt(5, Group_JoinVO.getDeliver_status());
-			
+
 			System.out.println("數量");
 			System.out.println(Group_JoinVO.getGbbuy_amount());
-			
+
 			System.out.println("數量");
 			pstmt.setInt(6, Group_JoinVO.getGbbuy_amount());
 			pstmt.setInt(7, Group_JoinVO.getGbbuy_price());
@@ -123,6 +128,7 @@ public class Group_JoinDAO implements Group_JoinDAO_interface {
 			}
 		}
 	}
+
 	public void updatePay(Group_JoinVO Group_JoinVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -138,12 +144,13 @@ public class Group_JoinDAO implements Group_JoinDAO_interface {
 
 			pstmt.executeUpdate();
 
-		
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (pstmt != null || con != null) {
-				try {pstmt.close(); con.close();
+				try {
+					pstmt.close();
+					con.close();
 				} catch (SQLException se) {
 					se.printStackTrace(System.err);
 				} catch (Exception e) {
@@ -153,7 +160,6 @@ public class Group_JoinDAO implements Group_JoinDAO_interface {
 		}
 	}
 
-	
 	public void updatePickup(Group_JoinVO Group_JoinVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -169,12 +175,13 @@ public class Group_JoinDAO implements Group_JoinDAO_interface {
 
 			pstmt.executeUpdate();
 
-		
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (pstmt != null || con != null) {
-				try {pstmt.close(); con.close();
+				try {
+					pstmt.close();
+					con.close();
 				} catch (SQLException se) {
 					se.printStackTrace(System.err);
 				} catch (Exception e) {
@@ -183,7 +190,7 @@ public class Group_JoinDAO implements Group_JoinDAO_interface {
 			}
 		}
 	}
-	
+
 	public void updateDeliver(Group_JoinVO Group_JoinVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -199,12 +206,13 @@ public class Group_JoinDAO implements Group_JoinDAO_interface {
 
 			pstmt.executeUpdate();
 
-		
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
 			if (pstmt != null || con != null) {
-				try {pstmt.close(); con.close();
+				try {
+					pstmt.close();
+					con.close();
 				} catch (SQLException se) {
 					se.printStackTrace(System.err);
 				} catch (Exception e) {
@@ -213,8 +221,9 @@ public class Group_JoinDAO implements Group_JoinDAO_interface {
 			}
 		}
 	}
+
 	@Override
-	public void delete(Integer gb_id) {
+	public void deleteGj(Integer gb_id, Integer mem_id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 
@@ -224,24 +233,19 @@ public class Group_JoinDAO implements Group_JoinDAO_interface {
 			pstmt = con.prepareStatement(DELETE);
 
 			pstmt.setInt(1, gb_id);
+			pstmt.setInt(2, mem_id);
 
 			pstmt.executeUpdate();
 
-			// Handle any driver errors
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
+
 		} finally {
-			if (pstmt != null) {
+			if (pstmt != null || con != null) {
 				try {
 					pstmt.close();
 				} catch (SQLException se) {
 					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
 				} catch (Exception e) {
 					e.printStackTrace(System.err);
 				}
@@ -343,18 +347,19 @@ public class Group_JoinDAO implements Group_JoinDAO_interface {
 
 		return list;
 	}
-public List<Group_JoinVO> findBygbid(Integer gb_id) {
-		
+
+	public List<Group_JoinVO> findBygbid(Integer gb_id) {
+
 		List<Group_JoinVO> list = new ArrayList<Group_JoinVO>();
 		Group_JoinVO group_joinVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ALL_GB);
-			pstmt.setInt(1,gb_id);
+			pstmt.setInt(1, gb_id);
 
 			rs = pstmt.executeQuery();
 
@@ -373,7 +378,7 @@ public List<Group_JoinVO> findBygbid(Integer gb_id) {
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (rs != null || con!= null) {
+			if (rs != null || con != null) {
 				try {
 					rs.close();
 				} catch (SQLException se) {
@@ -383,6 +388,47 @@ public List<Group_JoinVO> findBygbid(Integer gb_id) {
 		}
 		return list;
 	}
-	
 
+	public List<Group_JoinVO> getAll(Map<String, String[]> map) {
+		List<Group_JoinVO> list = new ArrayList<Group_JoinVO>();
+		Group_JoinVO group_joinVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			String MySql = "select *  from group_join  " + Group_JoinGetAll.getWhereCondition(map) + "order by gb_id";
+			pstmt = con.prepareStatement(MySql);
+			rs = pstmt.executeQuery();
+
+			System.out.println(MySql);
+			while (rs.next()) {
+				group_joinVO = new Group_JoinVO();
+				group_joinVO.setGb_id(rs.getInt("gb_id"));
+				group_joinVO.setMem_id(rs.getInt("mem_id"));
+				group_joinVO.setGbpay_status(rs.getInt("gbpay_status"));
+				group_joinVO.setPickup_status(rs.getInt("pickup_status"));
+				group_joinVO.setDeliver_status(rs.getInt("deliver_status"));
+				group_joinVO.setGbbuy_amount(rs.getInt("gbbuy_amount"));
+				group_joinVO.setGbbuy_price(rs.getInt("gbbuy_price"));
+				list.add(group_joinVO);
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null || pstmt != null || con != null) {
+				try {
+					rs.close();
+					pstmt.close();
+					con.close();
+
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 }

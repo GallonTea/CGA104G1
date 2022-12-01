@@ -14,9 +14,6 @@ Group_Buy_OrderVO group_buy_orderVO = (Group_Buy_OrderVO) request.getAttribute("
 <head>
 
 <title>團購訂單資料</title>
-<!-- ===============================來自團購團編號查詢和一般參團會員============================================= -->
-<!-- ===============================抓取團購團會員編號和登入帳號不編號<未執行>============================================= -->
-
 <style>
 table#table-1 {
 	background-color: #CCCCFF;
@@ -75,7 +72,6 @@ th, td {
 			<th>團購團編號</th>
 			<th>商品數量</th>
 			<th>團購訂單原始金額</th>
-			<th>折扣</th>
 			<th>團購價</th>
 			<th>開啟訂單時間</th>
 			<th>付款方式</th>
@@ -94,7 +90,6 @@ th, td {
 			<td>${group_buy_orderVO.gb_id}</td>
 			<td>${group_buy_orderVO.gbitem_amount}</td>
 			<td>${group_buy_orderVO.gboriginal_price}</td>
-			<td>${group_buy_orderVO.discountVO.discount_nar}</td>
 			<td>${group_buy_orderVO.gb_endprice}</td>
 			<td>${group_buy_orderVO.gborder_date}</td>
 			<c:if test="${group_buy_orderVO.gborder_paying==0}">

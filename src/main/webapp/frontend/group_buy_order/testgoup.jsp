@@ -9,6 +9,7 @@
 <body>
 	<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet"
 		name="form1">
+		<input type="hidden" name="gb_name" value="小佩智能感應式除臭貓砂盆"> 
 		<input type="hidden" name="gb_price" value="200"> 
 		<input type="hidden" name="gbitem_name" value="Petkit 小佩智能感應式除臭貓砂盆"> 
 		<input type="hidden" name="gb_id" value="1">
@@ -27,6 +28,7 @@
 		name="form1">
 <!-- 		<input type="hidden" name="gb_price" value="200">  -->
 <!-- 		<input type="hidden" name="gbitem_name" value="Petkit 小佩智能感應式除臭貓砂盆">  -->
+<input type="hidden" name="gb_name" value="Petkit 小佩智能感應式除臭貓砂盆">
 		<input type="hidden" name="gb_id" value="1">
 <!-- 		<input type="hidden" name="discount_price" value="9">  -->
 <!-- 		<input type="hidden" name="mem_id" value="1"><br>  -->

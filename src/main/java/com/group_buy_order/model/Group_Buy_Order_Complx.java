@@ -12,7 +12,7 @@ public class Group_Buy_Order_Complx {
 		
 		String Condition = null;
 		
-		if ("gborder_id".equals(columnName) || "gbitem_id".equals(columnName)||"gb_id".equals(columnName)||"gbitem_amount".equals(columnName)||"gboriginal_price".equals(columnName)||"discount_id".equals(columnName)||"gb_endprice".equals(columnName)||"gborder_paying".equals(columnName)||"gborder_send".equals(columnName)||"gborder_status".equals(columnName)||"gborder_other".equals(columnName))
+		if ("gborder_id".equals(columnName) || "gbitem_id".equals(columnName)||"gb_id".equals(columnName)||"gbitem_amount".equals(columnName)||"gboriginal_price".equals(columnName)||"gb_endprice".equals(columnName)||"gborder_paying".equals(columnName)||"gborder_send".equals(columnName)||"gborder_status".equals(columnName)||"gborder_other".equals(columnName))
 			Condition = columnName + "=" + value;
 		else if ("gborder_other".equals(columnName)||"tracking_num".equals(columnName)||"receiver_name".equals(columnName)||"receiver_address".equals(columnName)||"receiver_phone".equals(columnName))
 			Condition = columnName + " like '%" + value + "%'";

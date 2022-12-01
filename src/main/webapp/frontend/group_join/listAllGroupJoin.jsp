@@ -4,6 +4,8 @@
 <%@ page import="com.group_join.model.*"%>
 <%@ page import="java.util.*"%>
 <%
+Boolean verify = (boolean)session.getAttribute("verify");
+
 Integer gb_id = (Integer) request.getAttribute("gb_id");
 Group_JoinService group_joinSvc = new Group_JoinService();
 List<Group_JoinVO> group_joinVO = group_joinSvc.getOneGb(gb_id);
@@ -52,6 +54,14 @@ width: 830px;
 .styled-table tbody tr.active-row {
 	font-weight: bold;
 	color: #212529;
+}
+
+.ok{
+float:right;
+margin-right:162px;
+margin-top: 13px; 
+
+
 }
 
 /* <!-- ===========================================樣式欄位================================================================== --> */
@@ -113,7 +123,7 @@ th, td {
 /*   border-bottom-right-radius: 10px; */
 /* } */
 </style>
-</style>
+
 </head>
 <body>
 	<table class="styled-table">
@@ -189,7 +199,7 @@ th, td {
 					</td>
 					<td>
 						<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" style="margin-bottom: 0px;">
-							<input type="submit" value="已取貨" ${group_joinVO.deliver_status>0 ? 'disabled=" "' :' '}> 
+							<input type="submit" value="已取貨" ${group_joinVO.pickup_status>0 ? 'disabled=" "' :' '}> 
 							<input type="hidden" name="pickup_status" value="1">
 							<input type="hidden" name="gb_id" value="${group_joinVO.gb_id}"> 
 							<input type="hidden" name="mem_id" value="${group_joinVO.mem_id}">
@@ -201,8 +211,13 @@ th, td {
 				</tr>
 			</c:forEach>
 		</tbody>
-
 	</table>
-
+<%-- 	<c:forEach var="group_joinVO" items="${group_joinVO}"> --%>
+						<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" style=" " class = "ok">
+							<input type= "${verify==true ? 'submit' : 'hidden'}" value="已取貨" >
+							<input type="hidden" name="gb_id" value="${gb_id}">  
+							<input type="hidden" name="action" value="update_gb_status">
+						</FORM>
+<%-- 						</c:forEach> --%>
 </body>
 </html>

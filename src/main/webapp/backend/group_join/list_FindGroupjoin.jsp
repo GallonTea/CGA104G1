@@ -1,17 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.emp.model.*"%>
-
-<%-- 萬用複合查詢-可由客戶端select_page.jsp隨意增減任何想查詢的欄位 --%>
-<%-- 此頁只作為複合查詢時之結果練習，可視需要再增加分頁、送出修改、刪除之功能--%>
-
-<%-- <jsp:useBean id="listEmps_ByCompositeQuery" scope="request" type="java.util.List<EmpVO>" /> <!-- 於EL此行可省略 --> --%>
-
+<%@ page import="com.group_join.model.*"%>
 <%@include file="/backend/backNavbar.jsp"%>
+<jsp:useBean id="group_buySvc" scope="page" class="com.group_buy.model.Group_BuyService" />
 <html>
 <head>
-<title>複合查詢 - listAllEmpNoEffect.jsp</title>
+<title>參團查詢後資料</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -23,15 +18,7 @@
 	crossorigin="anonymous"></script>
 
 <style>
-/* <!-- ===========================================樣式欄位================================================================== --> */
 
-/* tr:nth-child(odd){ */
-/*   background:white; */
-/* } */
-
-/* tr:nth-child(even){ */
-/*   background:#a4a9ad; */
-/* } */
 .styled-table {
 	margin-left: auto;
 	margin-right: auto;
@@ -70,7 +57,6 @@
 	color: #212529;
 }
 
-/* <!-- ===========================================樣式欄位================================================================== --> */
 table#table-1 {
 	background-color: #212529;
 	border: 2px solid black;
@@ -96,14 +82,6 @@ h4 {
 	color: blue;
 	display: inline;
 }
-
-/*   a{ */
-/*     color: white; */
-/*     display: inline; */
-/*   } */
-</style>
-
-<style>
 table {
 	margin-left: auto;
 	margin-right: auto;
@@ -111,22 +89,11 @@ table {
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
-/*    table, th, td {  */
-/*      border: 1px solid #212529;  */
-/*    }  */
 th, td {
 	padding: 5px;
 	text-align: center;
 }
-/*   td:first-child{ */
-/*   border-top-left-radius: 10px; */
-/*   border-bottom-left-radius: 10px; */
-/* } */
 
-/* td:last-child{ */
-/*   border-top-right-radius: 10px; */
-/*   border-bottom-right-radius: 10px; */
-/* } */
 </style>
 
 </head>
@@ -134,9 +101,9 @@ th, td {
 
 	<table id="table-1">
 		<tr>
-			<th><h3>所有員工資料</h3>
+			<th><h3>參團資料</h3>
 				<h4>
-					<a class="btn btn-light" href="select_page.jsp">員工資料查詢首頁</a>
+					<a class="btn btn-light" href="backend/group_join/select_page.jsp">參團資料查詢首頁</a>
 				</h4></th>
 		</tr>
 	</table>
@@ -146,44 +113,57 @@ th, td {
 	<table class="styled-table">
 		<thead>
 			<tr>
-				<th>員工編號</th>
-				<th>員工姓名</th>
-				<th>雇用日期</th>
-				<th>員工狀態</th>
+				<th>團購團名稱</th>
+				<th>團購團編號</th>
+				<th>會員編號</th>
+				<th>團購付款狀態</th>
+				<th>取貨狀態</th>
+				<th>物流狀態</th>
+				<th>購買數量</th>
+				<th>價格</th>
 				<th colspan="2">變更資料</th>
-				<th>查詢權限</th>
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="empVO" items="${listemp_and_effect}">
+			<c:forEach var="group_joinVO" items="${list_group_join}">
 				<tr class="active-row" align='center' valign='middle'>
-					<td>${empVO.emp_id}</td>
-					<td>${empVO.emp_name}</td>
-					<td>${empVO.onjob_date}</td>
-					<td>${empVO.emp_status}</td>
+					<td>${group_joinVO.group_BuyVO.gb_name}</td>
+					<td>${group_joinVO.gb_id}</td>
+					<td>${group_joinVO.mem_id}</td>
+					<td>${group_joinVO.gbpay_status==0 ? '未付款':'已付款'}</td>
+					<td>${group_joinVO.pickup_status==0 ? '未取貨':'已取貨'}</td>
+					<c:if test="${group_joinVO.deliver_status==0}">
+				<td><c:out value="未出貨"></c:out></td>
+					</c:if>
+					<c:if test="${group_joinVO.deliver_status==1}">
+				<td><c:out value="已出貨"></c:out></td>
+					</c:if>
+					<c:if test="${group_joinVO.deliver_status==2}">
+				<td><c:out value="配送中"></c:out></td>
+					</c:if>
+					<c:if test="${group_joinVO.deliver_status==3}">
+				<td><c:out value="已送達"></c:out></td>
+					</c:if>
+					<td>${group_joinVO.gbbuy_amount}</td>
+					<td>${group_joinVO.gbbuy_price}</td>
 					<td>
-						<FORM METHOD="post" ACTION="EmpServlet"
+						<FORM METHOD="post" ACTION="/CGA104G1/Group_Join_backServlet"
 							style="margin-bottom: 0px;">
 							<input type="submit" value="修改"> <input type="hidden"
-								name="emp_id" value="${empVO.emp_id}"> <input
+								name="gb_id" value="${group_joinVO.gb_id}"> 
+								<input type="hidden"
+								name="mem_id" value="${group_joinVO.mem_id}"><input
 								type="hidden" name="action" value="getOne_For_Update">
 						</FORM>
 					</td>
 					<td>
-						<FORM METHOD="post" ACTION="EmpServlet"
+						<FORM METHOD="post" ACTION="/CGA104G1/Group_Join_backServlet"
 							style="margin-bottom: 0px;">
 							<input type="submit" value="刪除"> <input type="hidden"
-								name="emp_id" value="${empVO.emp_id}"> <input
+								name="gb_id" value="${group_joinVO.gb_id}"> 
+								<input type="hidden"
+								name="mem_id" value="${group_joinVO.mem_id}"> <input
 								type="hidden" name="action" value="delete">
-						</FORM>
-					</td>
-					<td>
-						<FORM METHOD="post"
-							ACTION="../../backend/emp_effect/Emp_effectServlet"
-							style="margin-bottom: 0px;">
-							<input type="submit" id="listBtn" value="查詢"> <input
-								type="hidden" name="emp_id" value="${empVO.emp_id}"> <input
-								type="hidden" name="action" value="getOne_For_Display">
 						</FORM>
 					</td>
 				</tr>

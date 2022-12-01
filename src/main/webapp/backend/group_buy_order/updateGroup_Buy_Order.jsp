@@ -78,34 +78,16 @@
 				<td><input type="TEXT" name="gb_id" size="45"
 					value="${group_buy_orderVO.gb_id}" /></td>
 			</tr>
-			<!-- 			<tr> -->
-			<!-- 				<td>團購商品編號:</td> -->
-			<!-- 				<td><input type="TEXT" name="gbitem_name" size="45" -->
-			<%-- 					value="${gbitem_name}" />假資料</td> --%>
-			<!-- 			</tr> -->
-			<!-- 			<tr> -->
-			<!-- 				<td>團購商品內容:</td> -->
-			<!-- 				 ==============================團購主確認================================== -->
-			<!-- 				<td><input type="TEXT" name="gbitem_content" size="45" -->
-			<%-- 					value="${gbitem_content}" />假資料</td> --%>
-			<!-- 			</tr> -->
 			<tr>
 				<td>團購數量:</td>
 				<td><input type="TEXT" name="gbitem_amount" size="45"
 					value="${group_buy_orderVO.gbitem_amount}" readonly="readonly" /></td>
 			</tr>
-
 			<tr>
 				<td>原價:</td>
 				<td><input type="TEXT" name="gboriginal_price" size="45"
 					value="${group_buy_orderVO.gboriginal_price}" readonly="readonly" /></td>
 			</tr>
-			<tr>
-				<td>折扣:</td>
-				<td><input type="hidden" name="discount_id" size="45"
-					value="${group_buy_orderVO.discount_id}" />${group_buy_orderVO.discountVO.discount_nar}</td>
-			</tr>
-
 			<tr>
 				<td>團購價:</td>
 				<td><input type="TEXT" name="gb_endprice" size="45"

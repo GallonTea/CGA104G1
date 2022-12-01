@@ -10,11 +10,11 @@ Group_Buy_ItemService group_Buy_ItemService = new Group_Buy_ItemService();
 List<Group_Buy_ItemVO> list = group_Buy_ItemService.getAll();
 pageContext.setAttribute("list", list);
 %>
-<%@include file="/backend/backNavbar.jsp"%>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>所有團購商品</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <style>
 table#table-1 {
 	background-color: #CCCCFF;
@@ -31,6 +31,10 @@ table#table-1 h4 {
 h4 {
 	color: blue;
 	display: inline;
+}
+
+th, td{
+	color: black;
 }
 </style>
 
@@ -53,6 +57,13 @@ th, td {
 </style>
 </head>
 <body>
+
+<!-- 複製起點 -->
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+<!-- 		把原本body的東西貼到這邊 -->
 <table id="table-1">
 		<tr>
 			<td>
@@ -109,6 +120,12 @@ th, td {
 		</c:forEach>
 		</table>
 		<%@ include file="page2.file" %>
+		</section>
+	</main>
+<!-- 複製終點 -->
+
+
+
 </body>
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <!-- <script type="text/javascript"> -->

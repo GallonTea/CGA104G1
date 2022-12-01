@@ -7,16 +7,11 @@
 Group_Buy_ItemVO group_Buy_ItemVO = (Group_Buy_ItemVO) request.getAttribute("Group_Buy_ItemVO");
 %>
 
-
-
-<%@include file="/backend/backNavbar.jsp"%>
 <html>
 <head>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title>團購商品資料修改 - update_groupBuyItem_input.jsp</title>
-
-
-
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 
 <style>
 table#table-1 {
@@ -39,7 +34,7 @@ h4 {
 
 <style>
 table {
-	width: 450px;
+	width: 400px;
 	background-color: white;
 	margin-top: 1px;
 	margin-bottom: 1px;
@@ -51,13 +46,19 @@ table, th, td {
 
 th, td {
 	padding: 1px;
+	color: black;
 }
 </style>
 
 </head>
 <body bgcolor='white'>
-
-	<table id="table-1">
+<!-- 複製起點 -->
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+<!-- 		把原本body的東西貼到這邊 -->
+<table id="table-1">
 		<tr>
 			<td>
 				<h3>團購商品資料修改 - update_groupBuyItem_input.jsp</h3>
@@ -211,6 +212,9 @@ th, td {
 		</form>
 		<div id="picPreview" style="position: absolute; top: 80px; display: flex; flex-wrap: wrap; width: 450px"></div>
 	</div>
+		</section>
+	</main>
+	
 </body>
 
 

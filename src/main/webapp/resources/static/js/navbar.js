@@ -37,7 +37,7 @@ const navbar = `
                         <a class="nav-link" href="/CGA104G1/frontend/item/shop.html">毛孩の商城</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">團購底加啦</a>
+                        <a class="nav-link" href="/CGA104G1/frontend/groupBuy/listallgroupbuy.html">團購底加啦</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/CGA104G1/frontend/article/select_page.jsp">家長討論區</a>
@@ -49,16 +49,16 @@ const navbar = `
                             會員中心
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="/CGA104G1/frontend/loginMem/login.jsp">成為會員 / 登入會員</a></li>
+                            <li><a class="dropdown-item" href="/CGA104G1/frontend/memLogin/login.jsp">成為會員 / 登入會員</a></li>
                             <li><a class="dropdown-item" href="/CGA104G1/frontend/commodityDetails/OrderDetail.html">追蹤訂單</a></li>
-                            <li><a class="dropdown-item" href="#">團購訂單</a></li>
+                            <li><a class="dropdown-item" href="/CGA104G1/frontend/group_buy_order/select_page.jsp">團購訂單</a></li>
                             <li><a class="dropdown-item" href="/CGA104G1/frontend/coupon/Coupon.html">查看折價券</a></li>
                             <li><a class="dropdown-item" href="/CGA104G1/frontend/coupon/GetCoupon.html">領取折價券</a></li>
                              <li><a class="dropdown-item" href="/CGA104G1/frontend/item/favoriteList.html">我的最愛</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="#">會員中心首頁</a></li>
+                            <li><a class="dropdown-item" href="/CGA104G1/frontend/mem/mem_index.jsp">會員中心首頁</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">

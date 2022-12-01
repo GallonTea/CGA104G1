@@ -1,19 +1,20 @@
-//package com.group_buy_order.model;
-//
-//import java.sql.Connection;
-//import java.sql.DriverManager;
-//import java.sql.PreparedStatement;
-//import java.sql.ResultSet;
-//import java.sql.SQLException;
-//import java.sql.Timestamp;
-//import java.time.LocalDateTime;
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//import com.group_buy_item.model.Group_Buy_ItemVO;
-//
-//public class Group_Buy_OrderJDBCDAO implements Group_Buy_OrderDAO_interface {
-//
+package com.group_buy_order.model;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.group_buy_item.model.Group_Buy_ItemVO;
+
+public class Group_Buy_OrderJDBCDAO  {
+
+
 //	String driver = "com.mysql.cj.jdbc.Driver";
 //	String url = "jdbc:mysql://localhost:3306/ba_rei?serverTimezone=Asia/Taipei";
 //	String userid = "root";
@@ -25,7 +26,7 @@
 //	private static final String DELETE = "DELETE FROM GROUP_BUY_ORDER where GBORDER_ID = ?";
 //	private static final String UPDATE = "UPDATE GROUP_BUY_ORDER set GBITEM_ID=?, GB_ID=?, GBITEM_AMOUNT=?, GBORIGINAL_PRICE=?, DISCOUNT_ID=?, GB_ENDPRICE=?, GBORDER_DATE=?, GBORDER_PAYING=?, GBORDER_SEND=?, GBORDER_STATUS=?, GBORDER_OTHER=?, TRACKING_NUM=?, RECEIVER_NAME=?, RECEIVER_ADDRESS=?, RECEIVER_PHONE=?, PICKUP_TIME=? where GBORDER_ID = ?";
 //
-//	@Override
+
 //	public void insert(Group_Buy_OrderVO Group_Buy_OrderVO) {
 //		Connection con = null;
 //		PreparedStatement pstmt = null;
@@ -78,7 +79,7 @@
 //		}
 //	}
 //
-//	@Override
+
 //	public void update(Group_Buy_OrderVO Group_Buy_OrderVO) {
 //		Connection con = null;
 //		PreparedStatement pstmt = null;
@@ -134,7 +135,7 @@
 //		}
 //	}
 //
-//	@Override
+
 //	public void delete(Integer gborder_id) {
 //		Connection con = null;
 //		PreparedStatement pstmt = null;
@@ -171,7 +172,7 @@
 //		}
 //	}
 //
-//	@Override
+
 //	public Group_Buy_OrderVO findByPrimaryKey(Integer gborder_id) {
 //		Group_Buy_OrderVO Group_Buy_OrderVO = null;
 //		Connection con = null;
@@ -243,7 +244,7 @@
 //		return Group_Buy_OrderVO;
 //	}
 //
-//	@Override
+
 //	public List<Group_Buy_OrderVO> getAll() {
 //		List<Group_Buy_OrderVO> list = new ArrayList<Group_Buy_OrderVO>();
 //		Group_Buy_OrderVO Group_Buy_OrderVO = null;
@@ -416,5 +417,3 @@
 //			System.out.println();
 //		}
 //	}
-//
-//}

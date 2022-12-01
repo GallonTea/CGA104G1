@@ -43,7 +43,7 @@ public class ListAllCouponServlet extends HttpServlet {
         res.setContentType("text/html;charset=utf-8");
 
         HttpSession session = req.getSession();
-        final Integer memId = (Integer) session.getAttribute("memId");
+        final Integer memId = (Integer) session.getAttribute("mem_id");
 
         PrintWriter pw = res.getWriter();
 

@@ -8,13 +8,12 @@
 Group_BuyVO group_BuyVO = (Group_BuyVO) request.getAttribute("Group_BuyVO");
 %>
 
-<%@include file="/backend/backNavbar.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>單一團購團資料 - listOneGroupBuy.jsp</title>
-
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <style>
 table#table-1 {
 	background-color: #CCCCFF;
@@ -53,6 +52,13 @@ th, td {
 </style>
 </head>
 <body>
+
+<!-- 複製起點 -->
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+<!-- 		把原本body的東西貼到這邊 -->
 <h3>單一團購團資料 - listOneGroupBuy.jsp</h3>
 				<h4>
 					<a href="<%=request.getContextPath()%>/backend/group_buy/select_page.jsp">回首頁</a>
@@ -111,5 +117,9 @@ th, td {
 				<td>${Group_BuyVO.gb_price}</td>
 				<td>${Group_BuyVO.gb_name}</td>
 				</table>
+		</section>
+	</main>
+
+
 </body>
 </html>

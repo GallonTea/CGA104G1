@@ -10,7 +10,6 @@
 --%>
 <%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
 
-<%@include file="/backend/backNavbar.jsp" %>
 <%
     CouponServiceImpl couponService = new CouponServiceImpl();
     List<Coupon> list = couponService.listAllCoupon();
@@ -36,20 +35,13 @@
 
     <!-- import icon -->
     <script src="https://kit.fontawesome.com/b5ef6b60f3.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="../../resources/static/css/orderDetails.css"/>
 
+    <link rel="stylesheet" href="../../resources/static/css/backend.css">
+    <link rel="stylesheet" type="text/css" href="../../resources/static/css/orderDetails.css"/>
     <link rel="stylesheet" type="text/css" href="../../resources/static/css/backendDetail.css"/>
     <style>
 
-        body {
-            background-image: url('../asset/img/share_icon/bg.jpg');
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-position: center;
-            background-size: cover;
-            background-color: rgba(29, 29, 29, 0.8);
-            background-blend-mode: multiply;
-        }
+
 
         #add_coupon {
             position: relative;
@@ -64,85 +56,92 @@
     </style>
 </head>
 <body id="body">
-<div class="container">
-
-
-    <div class="container row justify-content-md-end" style="height: auto">
-        <%-- 錯誤表列 --%>
-        <c:if test="${not empty errorMsgs}">
-            <div class="col-md-6" style="padding: 10px; border-radius: 10px; background-color: rgba(245,245,245,0.63)">
-                <h1 style="color:red; ">警告:</h1>
-                <ul>
-                    <c:forEach var="message" items="${errorMsgs}">
-                        <li style="color:red"><h5>${message}</h5></li>
-                    </c:forEach>
-                </ul>
+<nav>
+    <%@include file="/backend/topNavbar.jsp" %>
+</nav>
+<main>
+    <%@include file="/backend/leftside.jsp" %>
+    <section>
+        <div class="container">
+            <div class="container row justify-content-md-end" style="height: auto">
+                <%-- 錯誤表列 --%>
+                <c:if test="${not empty errorMsgs}">
+                    <div class="col-md-6"
+                         style="padding: 10px; border-radius: 10px; background-color: rgba(245,245,245,0.63)">
+                        <h1 style="color:red; ">警告:</h1>
+                        <ul>
+                            <c:forEach var="message" items="${errorMsgs}">
+                                <li style="color:red"><h5>${message}</h5></li>
+                            </c:forEach>
+                        </ul>
+                    </div>
+                </c:if>
             </div>
-        </c:if>
-    </div>
 
-    <div class="container-xl">
-        <div class="table-responsive">
-            <div class="table-wrapper">
-                <div class="table-title">
-                    <div class="row">
-                        <div class="col-sm-4">
-                            <h2>後台 <b>折價券管理</b></h2>
+            <div class="container-xl">
+                <div class="table-responsive">
+                    <div class="table-wrapper">
+                        <div class="table-title">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h2>後台 <b>折價券管理</b></h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <table class="table table-striped table-hover">
+                            <tr>
+                                <th>#</th>
+                                <th>折價券面額</th>
+                                <th>折價券說明</th>
+                                <th>開始領取日</th>
+                                <th>結束領取日</th>
+                                <th>開始使用日</th>
+                                <th>結束使用日</th>
+                                <th>最低消費金額</th>
+                                <th>ACTION</th>
+                            </tr>
+                            <%@ include file="page1.file" %>
+                            <c:forEach var="coupon" items="${list}" begin="<%=pageIndex%>"
+                                       end="<%=pageIndex+rowsPerPage-1%>">
+
+                                <tr>
+                                    <th>${coupon.couponId}</th>
+                                    <td>${coupon.couponVal}</td>
+                                    <td>${coupon.couponNar}</td>
+                                    <td>${coupon.receiveStart}</td>
+                                    <td>${coupon.receiveOver}</td>
+                                    <td>${coupon.useStart}</td>
+                                    <td>${coupon.useOver}</td>
+                                    <td>${coupon.minimum}</td>
+                                    <td class="gap-2">
+                                        <form method="post" action="updateCoupon.do" style="margin-bottom: 0px;">
+                                            <input class="btn btn-primary" type="submit" value="修改">
+                                            <input type="hidden" name="coupon_id" value="${coupon.couponId}">
+                                            <input type="hidden" name="action" value="getOne_For_Update"></form>
+                                        <form method="post" action="removeCoupon.do" style="margin-bottom: 0px;">
+                                            <input class="btn btn-primary" type="submit" value="刪除">
+                                            <input type="hidden" name="coupon_id" value="${coupon.couponId}">
+                                            <input type="hidden" name="action" value="delete"></form>
+                                    </td>
+
+                                </tr>
+                            </c:forEach>
+
+                        </table>
+
+                        <%@ include file="page2.file" %>
+
+                        <div id="add_coupon">
+                            <a href="addCoupon.jsp">
+                                <i class="fa-solid fa-plus fa-2xl"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
-
-                <table class="table table-striped table-hover">
-                    <tr>
-                        <th>#</th>
-                        <th>折價券面額</th>
-                        <th>折價券說明</th>
-                        <th>開始領取日</th>
-                        <th>結束領取日</th>
-                        <th>開始使用日</th>
-                        <th>結束使用日</th>
-                        <th>最低消費金額</th>
-                        <th>ACTION</th>
-                    </tr>
-                    <%@ include file="page1.file" %>
-                    <c:forEach var="coupon" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-
-                        <tr>
-                            <th>${coupon.couponId}</th>
-                            <td>${coupon.couponVal}</td>
-                            <td>${coupon.couponNar}</td>
-                            <td>${coupon.receiveStart}</td>
-                            <td>${coupon.receiveOver}</td>
-                            <td>${coupon.useStart}</td>
-                            <td>${coupon.useOver}</td>
-                            <td>${coupon.minimum}</td>
-                            <td>
-                                <form method="post" action="updateCoupon.do" style="margin-bottom: 0px;">
-                                    <input class="btn btn-warning" type="submit" value="修改">
-                                    <input type="hidden" name="coupon_id" value="${coupon.couponId}">
-                                    <input type="hidden" name="action" value="getOne_For_Update"></form>
-                                <form method="post" action="removeCoupon.do" style="margin-bottom: 0px;">
-                                    <input class="btn btn-danger" type="submit" value="刪除">
-                                    <input type="hidden" name="coupon_id" value="${coupon.couponId}">
-                                    <input type="hidden" name="action" value="delete"></form>
-                            </td>
-
-                        </tr>
-                    </c:forEach>
-
-                </table>
-
-                <%@ include file="page2.file" %>
-
-                <div id="add_coupon">
-                    <a href="addCoupon.jsp">
-                        <i class="fa-solid fa-plus fa-2xl"></i>
-                    </a>
-                </div>
             </div>
         </div>
-    </div>
-</div>
-
+    </section>
+</main>
 </body>
 </html>

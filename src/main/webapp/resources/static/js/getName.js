@@ -14,7 +14,8 @@ $.ajax({
     data: '',
     async: true,
     success: res => {
-        console.log(res)
+        $('#memberImg').html(res.memberImg).css("margin-left", "20px")
+        $('#profileImg').html(res.memberImg)
         $('#memberName').text(res.memberName)
         if (res.memberName === '你好 訪客') {
             $('#myDropdown').append('<li><a class="dropdown-item" href="/CGA104G1/frontend/memLogin/login.jsp">登入會員</a></li>')
@@ -57,7 +58,7 @@ function logOut() {
                     title: '已成功登出'
                 })
                 setTimeout(function () {
-                    window.location.reload()
+                    window.location.assign('/CGA104G1/frontend/index.html')
                 }, 1001)
             }
         },

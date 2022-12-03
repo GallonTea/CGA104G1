@@ -77,7 +77,6 @@ public class OrderBuyServiceImpl implements OrderBuyService {
         obj.setOrderResultURL(returnUrl);
         obj.setCustomField1(couponId.toString());
         obj.setNeedExtraPaidInfo("N");
-        System.out.println(obj);
 
         return allInOne.aioCheckOut(obj, null);
     }

@@ -58,6 +58,7 @@ const navbar = `
                     </li>
                 </ul>
                 <div id="memberName"></div>
+                <div id="memberImg"></div>
                 <li class="dropstart">
                 <ul class="mb-2 mb-lg-0">
                  <a href="/CGA104G1/frontend/memLogin/login.jsp" style="text-decoration: none; color: #484747" 

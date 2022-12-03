@@ -584,6 +584,7 @@ public class MemServlet extends HttpServlet {
                 Integer mem_id = (memVO.getMem_id());
                 Integer mem_status = (memVO.getMem_status());
                 String mem_email = (memVO.getMem_email());
+                session.setAttribute("memVO", memVO); // 資料庫取出的物件,存入session
                 session.setAttribute("mem_id", mem_id); // 資料庫取出的物件,存入session
                 session.setAttribute("mem_email", mem_email); // 資料庫取出的物件,存入session
                 session.setAttribute("mem_status", mem_status); // 資料庫取出的物件,存入session

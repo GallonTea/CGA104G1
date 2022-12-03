@@ -60,14 +60,14 @@ pageContext.setAttribute("list", list);
 	</c:if>
 <div class= "container">
 	<FORM METHOD="post" ACTION="EmpServlet" name="form1">
-	
+
 		<table>
 			<tr>
 				<td>員工名稱:</td>
 				<td><input type="TEXT" name="emp_name" size="45"
 					value="<%=(empVO == null) ? "無名氏" : empVO.getEmp_name()%>" /></td>
 			</tr>
-			
+
 			<tr>
 				<td>員工帳號:</td>
 				<td><input type="TEXT" name="account" size="45"
@@ -78,7 +78,7 @@ pageContext.setAttribute("list", list);
 				<td><input type="password" name="password" size="45"
 					value="<%=(empVO == null) ? "123456" : empVO.getPassword()%>" /></td>
 			</tr>
-		
+
 			<tr>
 				<td>員工到職時間:</td>
 				<td><input name="onjob_date" id="f_date1" type="TEXT"  /></td>
@@ -88,32 +88,32 @@ pageContext.setAttribute("list", list);
 				<td>員工狀態:</td>
 				<input type=hidden name="emp_status"  id ="status">
 				<td><select class="status" >
-						<option value=" "selected></option> 
- 						<option value="0">離職</option> 
-						<option value="1" >在職</option>			
+						<option value=" "selected></option>
+ 						<option value="0">離職</option>
+						<option value="1" >在職</option>
 				</select></td></tr></table>
 				<jsp:useBean id="effectSvc" scope="page" class="com.effect.model.EffectService"/>
 				<div  id = effectstert>
 				<table>
 				<tr>
 					<td>員工權限:</td>
-					
+
 						<td>
 <!-- 							<select   class="effect"  onchange="selectCreate(selectedIndex)"> -->
 							<select   class="effect" name="effect_id" >
-							<c:forEach var="effectVO" items="${effectSvc.all}" >										
- 								<option  id ="effectop" value="${effectVO.effect_id}">${effectVO.effect_name}</option> 
-							</c:forEach>			
+							<c:forEach var="effectVO" items="${effectSvc.all}" >
+ 								<option  id ="effectop" value="${effectVO.effect_id}">${effectVO.effect_name}</option>
+							</c:forEach>
 							</select>
 						</td>
-								
+
 					</tr>
-				
+
 
 			<%-- 			<jsp:useBean id="emp_effectSvc" scope="page" --%>
-			<%-- 				class="com.emp_effect.model.Emp_effectService" /> --%>
+			<%-- 				class="com.emp_effect.service.Emp_effectService" /> --%>
 			<%-- 			<jsp:useBean id="effectSvc" scope="page" --%>
-			<%-- 				class="com.effect.model.EffectService" /> --%>
+			<%-- 				class="com.effect.service.EffectService" /> --%>
 			<!-- 			<tr> -->
 			<!-- 				<td>權限編號:<font color=red><b>*</b></font></td> -->
 			<!-- 				<td><select size="1" name="emp_effect"> -->
@@ -135,15 +135,15 @@ pageContext.setAttribute("list", list);
 
 
 		</table>
-		</div>	
+		</div>
 		<br> <input type="hidden" name="action" value="insert"> <input
 			type="submit" value="送出新增"class="btn btn-warning">
-			
+
 	</FORM>
 	</div>
 	<script type="text/javascript">
 $(document).ready(function() {
-	
+
 	switch($('#status').val()){
 		case '0':
 			$('.status').val(0)
@@ -175,13 +175,13 @@ $(document).ready(function() {
 // let count = 1;
 // function selectCreate(value) {
 // 	console.log(value);
- 
+
 //     if (count < 4) {
-    	
+
 //         const select = document.querySelector('.effect:last-child')
 //         || document.querySelector('.effect')
 //         console.log(select)
-        
+
 //         NewSelect = select.cloneNode(true);
 //         document.querySelector("#effectstert").insertAdjacentElement('beforeend', NewSelect);
 //         const option = document.querySelector('.effect').querySelectorAll('#effectop')[value];
@@ -195,7 +195,7 @@ $(document).ready(function() {
 <!-- // ===============================下拉選單新增========================================== -->
 
 
- 
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 

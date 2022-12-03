@@ -25,7 +25,106 @@
 
     <link rel="stylesheet" type="text/css" href="../resources/static/css/main.css"/>
     <link rel="stylesheet" type="text/css" href="../resources/static/css/home.css"/>
+    <style>
 
+        #memberImg img {
+            max-width: 60px !important;
+        }
+
+        @media screen and (max-width: 740px) {
+
+            .test02 {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-flow: column wrap;
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                padding: 160% 0 0 10% !important;
+                color: #fff;
+                transform: skewX(18deg);
+                transition: transform 1s, opacity 1s;
+                background-size: cover;
+            }
+
+            .test01 {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-flow: column wrap;
+                position: absolute;
+                right: 0;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                padding: 0 20% 100% 0 !important;
+                color: #fff;
+                transform: skewX(18deg);
+                transition: transform 1s, opacity 1s;
+                background-size: cover;
+            }
+
+            .skw-page__heading {
+                font-size: 24px;
+            }
+
+            .btn-outline-success, .btn-outline-primary {
+                margin: 10px;
+            }
+
+
+            .skw-page-1 .skw-page__half--left .skw-page__content {
+                background-image: url('../resources/static/image/pexels-tranmautritam-2194261 - 複製.jpg');
+            }
+
+            .skw-page-1 .skw-page__half--right .skw-page__content {
+                background: #292929;
+            }
+
+            .skw-page-2 .skw-page__half--left .skw-page__content {
+                background: #292929;
+            }
+
+            .skw-page-2 .skw-page__half--right .skw-page__content {
+                background-image: url("../resources/static/image/pexels-hana-brannigan-3981763 - 複製.jpg");
+            }
+
+            .skw-page-3 .skw-page__half--left .skw-page__content {
+                background-image: url("../resources/static/image/pexels-anna-shvets-5257345 - 複製.jpg");
+            }
+
+            .skw-page-3 .skw-page__half--right .skw-page__content {
+                background: #292929;
+            }
+
+            .skw-page-4 .skw-page__half--left .skw-page__content {
+                background: #292929;
+            }
+
+            .skw-page-4 .skw-page__half--right .skw-page__content {
+                background-image: url("../resources/static/image/pexels-tima-miroshnichenko-8376193 - 複製.jpg");
+            }
+
+            .skw-page-5 .skw-page__half--left .skw-page__content {
+                background-image: url("../resources/static/image/1145460 - 複製.jpg");
+            }
+        }
+
+        @media screen and (max-width: 990px) {
+            #dropdownMenuLink {
+                display: none;
+            }
+            #memberName {
+                display: none;
+            }
+            #memberImg {
+                display: none;
+            }
+        }
+    </style>
 
 </head>
 
@@ -40,7 +139,7 @@
         </div>
         <div class="skw-page__half skw-page__half--right">
             <div class="skw-page__skewed">
-                <div class="skw-page__content">
+                <div class="skw-page__content test02">
                     <h2 class="skw-page__heading">想要為你家寶貝來點不一樣的嗎 ?</h2>
                     <p class="skw-page__description">下滑看看我們為你準備了些什麼 . . .</p>
                 </div>
@@ -50,10 +149,10 @@
     <div class="skw-page skw-page-2">
         <div class="skw-page__half skw-page__half--left">
             <div class="skw-page__skewed">
-                <div class="skw-page__content">
+                <div class="skw-page__content test01">
                     <h2 class="skw-page__heading">來商城 種類俱全 應有盡有
                         <a class="btn btn-outline-success btn-lg"
-                           href="/CGA104G1/frontend/coupon/GetCoupon.html">前往商城</a>
+                           href="/CGA104G1/frontend/item/shop.html">前往商城</a>
                     </h2>
                     <p class="skw-page__description">還是想看看 . . .</p>
                 </div>
@@ -73,7 +172,7 @@
         </div>
         <div class="skw-page__half skw-page__half--right">
             <div class="skw-page__skewed">
-                <div class="skw-page__content">
+                <div class="skw-page__content test02">
                     <h2 class="skw-page__heading">還是來看看專家都買了些什麼吧 !
                         <a class="btn btn-outline-success btn-lg"
                            href="/CGA104G1/frontend/groupBuy/listallgroupbuy.html">前往團購</a>
@@ -86,7 +185,7 @@
     <div class="skw-page skw-page-4">
         <div class="skw-page__half skw-page__half--left">
             <div class="skw-page__skewed">
-                <div class="skw-page__content">
+                <div class="skw-page__content test01">
                     <h2 class="skw-page__heading">在線上獲得專業醫生的答覆 !
                         <a class="btn btn-outline-primary btn-lg"
                            href="/CGA104G1/frontend/article/select_page.jsp">前往討論區</a>
@@ -109,8 +208,9 @@
         </div>
         <div class="skw-page__half skw-page__half--right">
             <div class="skw-page__skewed">
-                <div class="skw-page__content">
-                    <h2 class="skw-page__heading">既然你還是來到這了不要忘了先領取折價券喔 ! 以獲得更優惠的價格 !</h2>
+                <div class="skw-page__content test02">
+                    <h2 class="skw-page__heading">既然你來到這了提醒你先領取折價券</h2>
+                    <p class="skw-page__description">以獲得更優惠的價格 !</p>
                     <a class="btn btn-outline-secondary btn-lg"
                        href="/CGA104G1/frontend/coupon/GetCoupon.html">領取折價券</a>
                 </div>

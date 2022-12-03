@@ -12,7 +12,7 @@ Favorite_listVO favorite_listVO = (Favorite_listVO) request.getAttribute("favori
 <%=favorite_listVO == null%>
 <%
    Date dNow = new Date( );
-   SimpleDateFormat ft = 
+   SimpleDateFormat ft =
    new SimpleDateFormat ("yyyy-MM-dd hh:mm:ss ");
    String time = ft.format(dNow);
 %>
@@ -64,7 +64,7 @@ Favorite_listVO favorite_listVO = (Favorite_listVO) request.getAttribute("favori
 <input type="submit" value="送出新增">
 	</FORM>
 <%-- <jsp:useBean id="favorite_listSvc" scope="page" --%>
-<%-- 		class="com.favorite_list.model.Favorite_listService"></jsp:useBean> --%>
+<%-- 		class="com.favorite_list.service.Favorite_listService"></jsp:useBean> --%>
 <!-- <FORM METHOD="post" ACTION="fav.do"> -->
 <!-- 				<b>選擇會員編號:</b>  -->
 <!-- 				<select size="1" name="mem_id"> -->

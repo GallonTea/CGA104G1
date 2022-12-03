@@ -109,12 +109,12 @@
 
                     <!--                    <h4 class="mb-4"> 請選擇寄件方式 </h4>-->
                     <!--                    <div class="form-check">-->
-                    <!--                        <input type="radio" class="form-check-input" id="store" v-model="orderSend" value="1"-->
+                    <!--                        <input type="radio" class="form-check-input" id="store" v-service="orderSend" value="1"-->
                     <!--                               name="orderSend" checked required>-->
                     <!--                        <label for="store" class="form-check-label"> 超商取貨 </label>-->
                     <!--                    </div>-->
                     <!--                    <div class="form-check">-->
-                    <!--                        <input type="radio" class="form-check-input" id="express" v-model="orderSend" value="0"-->
+                    <!--                        <input type="radio" class="form-check-input" id="express" v-service="orderSend" value="0"-->
                     <!--                               name="orderSend" required>-->
                     <!--                        <label for="express" class="form-check-label"> 宅配到家 </label>-->
                     <!--                    </div>-->
@@ -191,19 +191,19 @@
 
                     <!--                    <label>其他備註</label>-->
                     <!--                    <div class="input-group">-->
-                    <!--                        <textarea class="form-control" id="other" v-model="orderOther" name="orderOther"></textarea>-->
+                    <!--                        <textarea class="form-control" id="other" v-service="orderOther" name="orderOther"></textarea>-->
                     <!--                    </div>-->
 
 
                     <hr>
                     <!--                    <h4 class="mb-4"> 付款方式 </h4>-->
                     <!--                    <div class="form-check">-->
-                    <!--                        <input type="radio" class="form-check-input" id="credit" v-model="orderPaying" value="2"-->
+                    <!--                        <input type="radio" class="form-check-input" id="credit" v-service="orderPaying" value="2"-->
                     <!--                               name="payment-method" checked required>-->
                     <!--                        <label for="credit" class="form-check-label"> 信用卡支付 </label>-->
                     <!--                    </div>-->
                     <!--                    <div class="form-check">-->
-                    <!--                        <input type="radio" class="form-check-input" id="ATM" v-model="orderPaying" value="1"-->
+                    <!--                        <input type="radio" class="form-check-input" id="ATM" v-service="orderPaying" value="1"-->
                     <!--                               name="payment-method" required>-->
                     <!--                        <label for="ATM" class="form-check-label"> ATM 轉帳 </label>-->
                     <!--                    </div>-->
@@ -237,6 +237,10 @@
 <!--  Footer  -->
 <script src="../../resources/static/js/footer.js"></script>
 
+
+<script type="text/javascript" src="../../resources/static/js/getName.js"></script>
+<!--  Cart -->
+<script type="text/javascript" src="../../resources/static/js/cart.js"></script>
 
 <script>
     let vm = Vue.createApp({
@@ -273,7 +277,8 @@
         },
         mounted() {
             let cart = sessionStorage.getItem('part')
-            if (!cart) {
+            this.orderItems = JSON.parse(cart)
+            if (!cart || this.orderItems.length === 0 ) {
                 Swal.fire({
                     icon: 'error',
                     title: '你的購物車還沒有東西喔!',
@@ -283,7 +288,6 @@
                     window.location.assign('/CGA104G1/frontend/item/shop.html')
                 }, 2000)
             }
-            this.orderItems = JSON.parse(cart)
         },
         computed: {
             finalPrice: function () {
@@ -320,7 +324,7 @@
                     if (result.isConfirmed) {
                         var qs = Qs;
                         axios.post('/CGA104G1/NewOrderServlet', qs.stringify({
-                            couponId: this. couponSelected,
+                            couponId: this.couponSelected,
                             orderPaying: this.orderPaying,
                             orderSend: this.orderSend,
                             receiverName: this.orderName,
@@ -376,10 +380,6 @@
     });
     vm.mount('#app');
 </script>
-
-<script type="text/javascript" src="../../resources/static/js/getName.js"></script>
-<!--  Cart -->
-<script type="text/javascript" src="../../resources/static/js/cart.js"></script>
 
 
 </body>

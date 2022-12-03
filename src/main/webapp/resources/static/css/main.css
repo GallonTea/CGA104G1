@@ -1,11 +1,30 @@
-html {
-    /*font-size: 20px;*/
-}
-
 nav {
     background-color: #ffffff17;
     font-size: 20px;
     position: fixed;
+}
+
+.jumbotron {
+    padding: 4rem 2rem;
+    margin-bottom: 2rem;
+    background-color: var(--bs-light);
+    border-radius: .3rem;
+}
+
+header {
+    margin-bottom: 10%;
+}
+
+.dropdown-menu li:hover .sub-menu {
+    visibility: visible;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown-item {
+    font-size: 20px;
 }
 
 .badge {
@@ -77,20 +96,23 @@ footer img {
     }
 }
 
-#myCart {
-    bottom: 35px;
-    right: 20px;
-    padding-left: 10px;
-    float: right;
-}
-
-@media (min-width: 1000px) {
-    #myCart {
-        position: absolute;
-    }
-}
-
 [v-clock] {
     display: none;
+}
+
+.card-img-top {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+}
+
+@media screen and (min-width: 768px) {
+    #outerSlider {
+        display: none;
+    }
+
+    header {
+        margin-bottom: 60%;
+    }
 }
 

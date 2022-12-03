@@ -246,15 +246,12 @@
                 zipcode: '',
                 city: '',
                 dist: '',
-                couponSelected: '',
+                couponSelected: '0',
                 couponVal: {couponVal: '0'},
-                couponId: '0',
-                memberId: '',
                 coupon: [],
                 orderItems: [],
                 orderPaying: 2,
                 orderSend: 0,
-                orderOther: '',
                 orderName: '',
                 orderStatus: '',
                 phone: '',
@@ -294,7 +291,7 @@
                 let finalPrice = 0;
                 for (let i in this.orderItems) {
                     var attr = this.orderItems[i];
-                    total += parseInt((attr.price * attr.quantity));
+                    total += parseInt((attr.itemPrice * attr.quantity));
                 }
                 finalPrice = total - this.couponVal.couponVal;
                 return finalPrice;
@@ -322,12 +319,11 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         var qs = Qs;
-                        axios.post('/CGA104G1/orderBuy/newOrder.do', qs.stringify({
-                            couponId: this.couponId,
+                        axios.post('/CGA104G1/NewOrderServlet', qs.stringify({
+                            couponId: this. couponSelected,
                             orderPaying: this.orderPaying,
                             orderSend: this.orderSend,
                             receiverName: this.orderName,
-                            // orderOther: this.orderOther,
                             dist: this.dist,
                             city: this.city,
                             receiverAddress: this.address,
@@ -344,7 +340,7 @@
                                 })
                                 this.result = res.data
                                 $("#orderForm").html(res.data)
-                                if ("#orderForm") {
+                                if (!"#orderForm") {
                                     sessionStorage.removeItem('part')
                                 }
                             })
@@ -381,6 +377,7 @@
     vm.mount('#app');
 </script>
 
+<script type="text/javascript" src="../../resources/static/js/getName.js"></script>
 <!--  Cart -->
 <script type="text/javascript" src="../../resources/static/js/cart.js"></script>
 

@@ -26,8 +26,7 @@ import java.util.*;
 
 import static java.lang.System.out;
 
-@WebServlet(name = "NewOrderServlet", urlPatterns = {"/NewOrderServlet", "/orderBuy/newOrder.do"})
-@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
+@WebServlet(name = "NewOrderServlet", value = "/NewOrderServlet")
 public class NewOrderServlet extends HttpServlet {
 
 

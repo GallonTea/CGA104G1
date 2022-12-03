@@ -33,49 +33,47 @@
     <!-- import icon -->
     <script src="https://kit.fontawesome.com/b5ef6b60f3.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" type="text/css" href="../../resources/static/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/static/css/main.css"/>
+    <style type="text/css">
+         body {
+            background: rgba(0, 0, 0, .6) url('<%=request.getContextPath()%>/resources/static/image/pexels-wkn-1933464.jpg') no-repeat fixed center center;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            background-size: cover;
+            -o-background-size: cover;
+            z-index: -999999;
+            /*opacity: 30%;*/
+        }
+    </style>
 </head>
 <body>
-<%-- <% System.out.print(mem_email); %> --%>
 <%int memID = memVO.getMem_id(); %>
 <%String memEmail = memVO.getMem_email(); %>
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-            <div class="card border-0 shadow rounded-3 my-5">
+        <div class="col-sm-9 col-md-8 col-lg-5 mx-auto">
+            <div class="card border-0 shadow rounded-3 my-5" style="background-color: #0ab4a2">
                 <div class="card-body p-4 p-sm-5">
+                    <h4 style="color:white">您的帳號尚未驗證成功，請重新至信箱查收驗證碼：</h4>
+                    <br>
                     <form method="post" action="<%=request.getContextPath()%>/MemServlet">
-                        <table style="height: 300px">
-                            <tr bgcolor='skyblue' align='center' valign='middle' height='20'>
-                                <th>
-                                    <div style="color:white">您的帳號尚未驗證成功，請重新至信箱查收驗證碼：</div>
-                                    <br>
-                                    <!-- 			系統將在<span style="color: red">120</span>秒後跳轉回首頁!<br> -->
-
-                                    請輸入驗證碼: <input type="text" name="regpasschk"> <br>
-
-
-                                    <input type="hidden" name="action" value="regconfirm">
-
-                                    <input type="hidden" name="mem_id" value="<%= memID %>">
-                                    <input id="1" type="submit" value="確認送出" style="margin-left: 100px">
+                        <!-- 			系統將在<span style="color: red">120</span>秒後跳轉回首頁!<br> -->
+                        請輸入驗證碼: <input class="form-control" type="text" name="regpasschk"> <br>
+                        <br>
+                        <input type="hidden" name="action" value="regconfirm">
+                        <input type="hidden" name="mem_id" value="<%= memID %>">
+                        <button id="1" class="btn btn-light" type="submit" style="float: right">確認並送出</button>
                     </form>
-
+                    <button style="float: right; visibility: hidden">T</button>
                     <form method="post" action="<%=request.getContextPath()%>/MemServlet">
                         <input type="hidden" name="action" value="resend">
                         <input type="hidden" name="mem_email" value="<%= memEmail %>">
                         <input type="hidden" name="mem_id" value="<%= memID %>">
-                        <input id="2" type="submit" value="重寄驗證信" style="margin-left: 100px"></form>
+                        <button id="2" class="btn btn-light" type="submit" style="float: right">重寄驗證信</button>
+                    </form>
 
                     <div style="color:red">${msg}</div>
-
-
-                    </th>
-
-                    </tr>
-
-                    </table>
 
                 </div>
             </div>

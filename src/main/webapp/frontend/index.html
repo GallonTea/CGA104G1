@@ -17,63 +17,177 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
 
     <!-- import jquery-3.6.0 -->
-    <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../resources/static/js/jquery-3.6.0.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- import icon -->
     <script src="https://kit.fontawesome.com/b5ef6b60f3.js" crossorigin="anonymous"></script>
 
-
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.11.0/qs.min.js"></script>
-    <script src="https://unpkg.com/vue-router@4"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
     <link rel="stylesheet" type="text/css" href="../resources/static/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="../resources/static/css/home.css"/>
 
-
-    <style>
-        body {
-            background: rgba(0, 0, 0, .6) url('../resources/static/image/andrew-s-ouo1hbizWwo-unsplash.jpg') no-repeat fixed center center;
-            -webkit-background-size: cover;
-            -moz-background-size: cover;
-            background-size: cover;
-            -o-background-size: cover;
-            z-index: -999999;
-            /*opacity: 30%;*/
-        }
-    </style>
 
 </head>
 
 <body>
-
-
-<main>
-
-    <div id="app" style="height: 700px">
+<!-- 首頁內容開始 -->
+<div class="skw-pages">
+    <div class="skw-page skw-page-1 active">
+        <div class="skw-page__half skw-page__half--left">
+            <div class="skw-page__skewed">
+                <div class="skw-page__content"></div>
+            </div>
+        </div>
+        <div class="skw-page__half skw-page__half--right">
+            <div class="skw-page__skewed">
+                <div class="skw-page__content">
+                    <h2 class="skw-page__heading">想要為你家寶貝來點不一樣的嗎 ?</h2>
+                    <p class="skw-page__description">下滑看看我們為你準備了些什麼 . . .</p>
+                </div>
+            </div>
+        </div>
     </div>
-
-</main>
-
+    <div class="skw-page skw-page-2">
+        <div class="skw-page__half skw-page__half--left">
+            <div class="skw-page__skewed">
+                <div class="skw-page__content">
+                    <h2 class="skw-page__heading">來商城 種類俱全 應有盡有
+                        <a class="btn btn-outline-success btn-lg"
+                           href="/CGA104G1/frontend/coupon/GetCoupon.html">前往商城</a>
+                    </h2>
+                    <p class="skw-page__description">還是想看看 . . .</p>
+                </div>
+            </div>
+        </div>
+        <div class="skw-page__half skw-page__half--right">
+            <div class="skw-page__skewed">
+                <div class="skw-page__content"></div>
+            </div>
+        </div>
+    </div>
+    <div class="skw-page skw-page-3">
+        <div class="skw-page__half skw-page__half--left">
+            <div class="skw-page__skewed">
+                <div class="skw-page__content"></div>
+            </div>
+        </div>
+        <div class="skw-page__half skw-page__half--right">
+            <div class="skw-page__skewed">
+                <div class="skw-page__content">
+                    <h2 class="skw-page__heading">還是來看看專家都買了些什麼吧 !
+                        <a class="btn btn-outline-success btn-lg"
+                           href="/CGA104G1/frontend/groupBuy/listallgroupbuy.html">前往團購</a>
+                    </h2>
+                    <p class="skw-page__description">或是來點不一樣的話題 . . .</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="skw-page skw-page-4">
+        <div class="skw-page__half skw-page__half--left">
+            <div class="skw-page__skewed">
+                <div class="skw-page__content">
+                    <h2 class="skw-page__heading">在線上獲得專業醫生的答覆 !
+                        <a class="btn btn-outline-primary btn-lg"
+                           href="/CGA104G1/frontend/article/select_page.jsp">前往討論區</a>
+                    </h2>
+                    <p class="skw-page__description">下滑沒東西囉 . . .</p>
+                </div>
+            </div>
+        </div>
+        <div class="skw-page__half skw-page__half--right">
+            <div class="skw-page__skewed">
+                <div class="skw-page__content"></div>
+            </div>
+        </div>
+    </div>
+    <div class="skw-page skw-page-5">
+        <div class="skw-page__half skw-page__half--left">
+            <div class="skw-page__skewed">
+                <div class="skw-page__content"></div>
+            </div>
+        </div>
+        <div class="skw-page__half skw-page__half--right">
+            <div class="skw-page__skewed">
+                <div class="skw-page__content">
+                    <h2 class="skw-page__heading">既然你還是來到這了不要忘了先領取折價券喔 ! 以獲得更優惠的價格 !</h2>
+                    <a class="btn btn-outline-secondary btn-lg"
+                       href="/CGA104G1/frontend/coupon/GetCoupon.html">領取折價券</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 首頁內容結束 -->
 
 <!-- import bootstrap 5.2.1 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
         crossorigin="anonymous"></script>
 
-<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="https://unpkg.com/vue-router@4"></script>
 <!--  NavBar  -->
 <script src="../resources/static/js/navbar.js"></script>
-<!--  Footer  -->
-<script src="../resources/static/js/footer.js"></script>
-
-
-<script type="text/javascript" src="../resources/static/js/home.js"></script>
+<!-- 導覽列登入狀態 -->
+<script type="text/javascript" src="../resources/static/js/getName.js"></script>
 <!--  Cart -->
 <script type="text/javascript" src="../resources/static/js/cart.js"></script>
 
-</body>
+<script>
+    $(document).ready(function () {
 
+        $('header').css('margin-bottom', 0)
+
+        var curPage = 1;
+        var numOfPages = $(".skw-page").length;
+        var animTime = 1000;
+        var scrolling = false;
+        var pgPrefix = ".skw-page-";
+
+        function pagination() {
+            scrolling = true;
+
+            $(pgPrefix + curPage).removeClass("inactive").addClass("active");
+            $(pgPrefix + (curPage - 1)).addClass("inactive");
+            $(pgPrefix + (curPage + 1)).removeClass("active");
+
+            setTimeout(function () {
+                scrolling = false;
+            }, animTime);
+        };
+
+        function navigateUp() {
+            if (curPage === 1) return;
+            curPage--;
+            pagination();
+        }
+
+        function navigateDown() {
+            if (curPage === numOfPages) return;
+            curPage++;
+            pagination();
+        }
+
+        $(document).on("mousewheel DOMMouseScroll", function (e) {
+            if (scrolling) return;
+            if (e.originalEvent.wheelDelta > 0 || e.originalEvent.detail < 0) {
+                navigateUp();
+            } else {
+                navigateDown();
+            }
+        });
+
+        $(document).on("keydown", function (e) {
+            if (scrolling) return;
+            if (e.which === 38) {
+                navigateUp();
+            } else if (e.which === 40) {
+                navigateDown();
+            }
+        });
+
+    });
+</script>
+
+</body>
 
 </html>

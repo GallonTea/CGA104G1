@@ -587,11 +587,19 @@ public class MemServlet extends HttpServlet {
                 session.setAttribute("mem_id", mem_id); // 資料庫取出的物件,存入session
                 session.setAttribute("mem_email", mem_email); // 資料庫取出的物件,存入session
                 session.setAttribute("mem_status", mem_status); // 資料庫取出的物件,存入session
+                try {
+                    String location = (String) session.getAttribute("location");
+                    if (location != null) {
+                        session.removeAttribute("location"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
+                        res.sendRedirect(location);
+                        return;
+                    }
+                } catch (IllegalStateException e) {
+                    e.printStackTrace();
+                }
 
-
-                String url = "/frontend/mem/mem_index.jsp";
-                RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交select_page.jsp
-                successView.forward(req, res);
+                String url = "/CGA104G1/frontend/index.html";
+                res.sendRedirect(url);
             }
         }
 

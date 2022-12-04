@@ -147,6 +147,7 @@ select:focus, input:focus {
 		<section>
 
 <div class= "container">
+
 <table id="table-1">
 	<tr><td>
 		 <h3>員工資料新增 </h3>
@@ -154,14 +155,14 @@ select:focus, input:focus {
 	</td></tr>
 </table>
 	<FORM METHOD="post" ACTION="/backend/emp/EmpServlet" name="form1">
-	
+
 		<table>
 			<tr>
 				<td>員工名稱:</td>
 				<td><input type="TEXT" name="emp_name" size="45"
 					value="<%=(empVO == null) ? "無名氏" : empVO.getEmp_name()%>" /></td>
 			</tr>
-			
+
 			<tr>
 				<td>員工帳號:</td>
 				<td><input type="TEXT" name="account" size="45"
@@ -172,7 +173,7 @@ select:focus, input:focus {
 				<td><input type="password" name="password" size="45"
 					value="<%=(empVO == null) ? "123456" : empVO.getPassword()%>" /></td>
 			</tr>
-		
+
 			<tr>
 				<td>員工到職時間:</td>
 				<td><input name="onjob_date" id="f_date1" type="TEXT"  /></td>
@@ -182,32 +183,33 @@ select:focus, input:focus {
 				<td>員工狀態:</td>
 				<input type=hidden name="emp_status"  id ="status">
 				<td><select class="status" >
-						<option value=" "selected></option> 
- 						<option value="0">離職</option> 
-						<option value="1" >在職</option>			
+						<option value=" "selected></option>
+ 						<option value="0">離職</option>
+						<option value="1" >在職</option>
 				</select></td></tr></table>
 				<jsp:useBean id="effectSvc" scope="page" class="com.effect.model.EffectService"/>
 				<div  id = effectstert>
 				<table>
 				<tr>
+
 					<td>員工權限:&ensp;&ensp;&ensp;&ensp;</td>
-					
+
 						<td>
 <!-- 							<select   class="effect"  onchange="selectCreate(selectedIndex)"> -->
 							<select   class="effect" name="effect_id" >
-							<c:forEach var="effectVO" items="${effectSvc.all}" >										
- 								<option  id ="effectop" value="${effectVO.effect_id}">${effectVO.effect_name}</option> 
-							</c:forEach>			
+							<c:forEach var="effectVO" items="${effectSvc.all}" >
+ 								<option  id ="effectop" value="${effectVO.effect_id}">${effectVO.effect_name}</option>
+							</c:forEach>
 							</select>
 						</td>
-								
+
 					</tr>
-				
+
 
 			<%-- 			<jsp:useBean id="emp_effectSvc" scope="page" --%>
-			<%-- 				class="com.emp_effect.model.Emp_effectService" /> --%>
+			<%-- 				class="com.emp_effect.service.Emp_effectService" /> --%>
 			<%-- 			<jsp:useBean id="effectSvc" scope="page" --%>
-			<%-- 				class="com.effect.model.EffectService" /> --%>
+			<%-- 				class="com.effect.service.EffectService" /> --%>
 			<!-- 			<tr> -->
 			<!-- 				<td>權限編號:<font color=red><b>*</b></font></td> -->
 			<!-- 				<td><select size="1" name="emp_effect"> -->
@@ -241,7 +243,7 @@ select:focus, input:focus {
 
 <script type="text/javascript">
 $(document).ready(function() {
-	
+
 	switch($('#status').val()){
 		case '0':
 			$('.status').val(0)
@@ -253,6 +255,7 @@ $(document).ready(function() {
 		$('#status').val($('.status option:selected').val());
 	});
 });
+
 </script>
 
 
@@ -283,6 +286,7 @@ try {
 	});
         
 </script>
+
 </body>
 
 

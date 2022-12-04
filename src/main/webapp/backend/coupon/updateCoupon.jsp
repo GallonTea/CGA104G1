@@ -10,7 +10,6 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="com.coupon.model.entity.Coupon" %>
 
-<%@include file="/backend/backNavbar.jsp" %>
 <%
     String path = request.getContextPath();
     Coupon coupon = (Coupon) request.getAttribute("coupon");

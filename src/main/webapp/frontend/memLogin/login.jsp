@@ -15,7 +15,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
-
+    <!-- import icon -->
+    <script src="https://kit.fontawesome.com/b5ef6b60f3.js" crossorigin="anonymous"></script>
 
     <!-- import jquery-3.6.0 -->
     <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -34,6 +35,7 @@
             z-index: -999999;
             /*opacity: 30%;*/
         }
+
     </style>
 </head>
 
@@ -74,22 +76,22 @@
                         </div>
 
                     </form>
-                                <div class="gap-2">
-                            
-                                <FORM ACTION="<%=request.getContextPath()%>/frontend/memLogin/register.jsp"
-                                     style="margin-bottom: 0px;">
-                                    <span style="color:blue">沒有會員?點此</span>
-                                    <input class="btn" type="submit" value="註冊會員">
-                                    <input type="hidden" name="action" value="register">
-                                </FORM>
+                    <div class="gap-2">
 
-                                <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/memLogin/forgot.jsp"
-                                      style="margin-bottom: 0px;">
-                                    <span style="color:blue">忘記帳號或密碼?點擊</span>
-                                    <input class="btn" type="submit" value="忘記帳號/密碼">
-                                    <input type="hidden" name="action" value="forget">
-                                </FORM>
-                            </div>
+                        <FORM ACTION="<%=request.getContextPath()%>/frontend/memLogin/register.jsp"
+                              style="margin-bottom: 0px;">
+                            <span style="color:blue">沒有會員?點此</span>
+                            <input class="btn" type="submit" value="註冊會員">
+                            <input type="hidden" name="action" value="register">
+                        </FORM>
+
+                        <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/frontend/memLogin/forgot.jsp"
+                              style="margin-bottom: 0px;">
+                            <span style="color:blue">忘記帳號或密碼?點擊</span>
+                            <input class="btn" type="submit" value="忘記帳號/密碼">
+                            <input type="hidden" name="action" value="forget">
+                        </FORM>
+                    </div>
                 </div>
             </div>
         </div>
@@ -102,8 +104,11 @@
 <script src="<%=request.getContextPath()%>/resources/static/js/navbar.js"></script>
 <!--  Footer  -->
 <script src="<%=request.getContextPath()%>/resources/static/js/footer.js"></script>
+
+<script type="text/javascript" src="<%=request.getContextPath()%>/resources/static/js/getName.js"></script>
 <!--  Cart -->
 <script type="text/javascript" src="<%=request.getContextPath()%>/resources/static/js/cart.js"></script>
+
 
 </body>
 </html>

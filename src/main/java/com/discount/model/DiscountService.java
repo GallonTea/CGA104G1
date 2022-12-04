@@ -48,6 +48,10 @@ public class DiscountService {
 		return dao.findByPrimaryKey(discount_id);
 	}
 	
+	public DiscountVO CheckByGBitemID(Integer gbitem_id) {
+		return dao.CheckByGBitemID(gbitem_id);
+	}
+	
 	public List<DiscountVO> getoneGbitem_id(Integer gbitem_id) {
 		return dao.findDiscountByPrimaryKey(gbitem_id);
 	}

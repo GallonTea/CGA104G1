@@ -157,17 +157,19 @@ footer img {
 
 			<form action="/CGA104G1/GroupBuyStartNewApplyListServlet">
 				<!-- 		<input type="hidden" name="gbitem_id"  value="${Group_Buy_ItemVO.gbitem_id}">  -->
-				<input type="hidden" name="gbitem_id" value="2"> <input
-					type="hidden" name="mem_id" value="1"> <input type="hidden"
-					name="action" value="insert">
+				<input type="hidden" name="gbitem_id" value="2"> 
+ 				<input type="hidden" name="action" value="insert">
 				<button class="btn btn-primary" type="submit">開新團購</button>
 			</form>
 			<form action="/CGA104G1/GroupBuyMasterApplyListServlet">
 				<!-- 		<input type="hidden" name="gbitem_id"  value="${Group_Buy_ItemVO.gbitem_id}">  -->
-				<input type="hidden" name="mem_id" value="1"> <input
-					type="hidden" name="action" value="listAllMyGroupBuy">
+				 <input type="hidden" name="action" value="listAllMyGroupBuy">
 				<button class="btn btn-primary" type="submit">我的團購團</button>
 			</form>
+			<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" name="form1">
+						<input type="hidden" name="action" value="getOne_Display_ByMem">
+						<button class="btn btn-primary" type="submit">查詢參團資料查詢</button>
+			</FORM>
 			<!-- 新增團購團申請測試區 -->
 
 			<div class="card-columns">
@@ -278,10 +280,9 @@ let jsonUrl = "/CGA104G1/GroupBuyGetAllJSONServlet";
         str += `
         <div class="card">
         <div class="grid-products">
-					<div class="row">
 						<div class="item col-lg-4 col-md-4 col-6">
 							<div class="product-image">
-								<a href="/CGA104G1/frontend/groupBuy/NewFile.html?gb_id=${groupBuy.gb_id}&gbitem_id=${groupBuy.gbitem_id}" class="product-img">
+								<a href="/CGA104G1/frontend/groupBuy/OneGroupBuyItem.html?gb_id=${groupBuy.gb_id}&gbitem_id=${groupBuy.gbitem_id}" class="product-img">
 									<img
 									class=""
 									data-src="/CGA104G1/groupBuyItemPicture/groupBuyItemPictureGetOne.do?gbitem_id=${groupBuy.gbitem_id}"
@@ -330,7 +331,6 @@ let jsonUrl = "/CGA104G1/GroupBuyGetAllJSONServlet";
 							</div>
 						</div>
 					</div>
-				</div>	
 				</div>`;
                 });
                 content.innerHTML = str;

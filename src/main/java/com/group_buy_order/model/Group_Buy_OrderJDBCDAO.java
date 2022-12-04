@@ -1,6 +1,20 @@
 package com.group_buy_order.model;
 
-public class Group_Buy_OrderJDBCDAO  {
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.group_buy_item.model.Group_Buy_ItemVO;
+
+//public class Group_Buy_OrderJDBCDAO  {
+
 
 
 //	String driver = "com.mysql.cj.jdbc.Driver";

@@ -251,6 +251,11 @@ public class ItemJDBCDAO implements ItemDAO_interface {
 	}
 
 	@Override
+	public JSONArray frontEndSearch(String keyWords, Integer type) {
+		return null;
+	}
+
+	@Override
 	public JSONArray getAllList() {
 		return null;
 	}

@@ -15,6 +15,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.group_buy.model.Group_BuyService;
 import com.group_buy.model.Group_BuyVO;
+import com.group_buy_item.model.Group_Buy_ItemService;
+import com.group_buy_item.model.Group_Buy_ItemVO;
 
 @WebServlet("/GroupBuyServlet")
 public class GroupBuyServlet extends HttpServlet {
@@ -466,11 +468,19 @@ public class GroupBuyServlet extends HttpServlet {
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer gb_id = Integer.valueOf(req.getParameter("gb_id"));
+				Integer gbitem_id = Integer.valueOf(req.getParameter("gbitem_id"));
+				
 				/*************************** 2.開始查詢資料 ****************************************/
 				Group_BuyService group_BuyService = new Group_BuyService();
 				Group_BuyVO group_BuyVO = group_BuyService.getOneGroup_Buy(gb_id);
+				
+				Group_Buy_ItemService group_Buy_ItemService = new Group_Buy_ItemService();
+				Group_Buy_ItemVO group_Buy_ItemVO = group_Buy_ItemService.getOneGbi(gbitem_id);
+				
+				
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("Group_BuyVO", group_BuyVO);
+				req.setAttribute("Group_Buy_ItemVO", group_Buy_ItemVO);
 				
 				
 				// 成功轉交 update_groupBuyItem_input.jsp

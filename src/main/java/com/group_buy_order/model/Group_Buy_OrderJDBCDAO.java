@@ -12,7 +12,7 @@ import java.util.List;
 
 import com.group_buy_item.model.Group_Buy_ItemVO;
 
-public class Group_Buy_OrderJDBCDAO  {
+//public class Group_Buy_OrderJDBCDAO  {
 
 
 //	String driver = "com.mysql.cj.jdbc.Driver";

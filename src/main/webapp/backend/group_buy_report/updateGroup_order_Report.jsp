@@ -7,6 +7,7 @@
 
 <%
 Group_Buy_ReportVO Group_Buy_ReportVO = (Group_Buy_ReportVO) request.getAttribute("Group_Buy_ReportVO");
+
 %>
 
 <%= Group_Buy_ReportVO==null %>
@@ -133,7 +134,7 @@ th, td {
 		<section>
 <table id="table-1">
 	<tr><td>
-		 <h3>團購檢舉資料修改 </h3>
+		 <h3>團購檢舉資料修改</h3>
 		 <button onclick="location.href='<%=request.getContextPath()%>/backend/index.jsp'">回到後台首頁</button>
 	</td></tr>
 </table>

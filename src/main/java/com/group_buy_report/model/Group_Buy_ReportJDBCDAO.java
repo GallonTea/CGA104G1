@@ -19,7 +19,7 @@ public class Group_Buy_ReportJDBCDAO implements Group_Buy_ReportDAO_interface{
 	
 	
 	private static final String INSERT_STMT = 
-			"INSERT INTO GROUP_BUY_REPORT (GBORDER_ID,MEM_ID, FREP_CONTENT, FREP_STATUS, FREP_RESULT, EMP_ID) VALUES (?, ?, ?, ?, ?, ?)";
+			"INSERT INTO GROUP_BUY_REPORT (GBORDER_ID, MEM_ID, FREP_CONTENT, EMP_ID) VALUES (?, ?, ?, ?)";
 	private static final String GET_ALL_STMT = 
 			"SELECT GBFREP_ID,GBORDER_ID,MEM_ID, FREP_CONTENT, FREP_TIME, FREP_STATUS, FREP_RESULT, EMP_ID FROM GROUP_BUY_REPORT order by GBFREP_ID";
 	private static final String GET_ONE_STMT = 
@@ -50,9 +50,7 @@ public class Group_Buy_ReportJDBCDAO implements Group_Buy_ReportDAO_interface{
 			pstmt.setInt(1, Group_Buy_ReportVO.getGborder_id());
 			pstmt.setInt(2, Group_Buy_ReportVO.getMem_id());
 			pstmt.setString(3, Group_Buy_ReportVO.getFrep_content());
-			pstmt.setInt(4, Group_Buy_ReportVO.getFrep_status());
-			pstmt.setInt(5, Group_Buy_ReportVO.getFrep_result());
-			pstmt.setInt(6, Group_Buy_ReportVO.getEmp_id());
+			pstmt.setInt(4, Group_Buy_ReportVO.getEmp_id());
 			pstmt.executeUpdate();
 
 			// Handle any driver errors

@@ -5,6 +5,7 @@
 
 <%
 MemVO memVO = (MemVO) session.getAttribute("memVO");
+Integer mem_id = (Integer)session.getAttribute("mem_id");
 %>
 
 <html>

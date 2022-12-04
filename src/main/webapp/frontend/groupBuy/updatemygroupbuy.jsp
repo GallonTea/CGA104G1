@@ -1,4 +1,3 @@
-<%@page import="com.group_buy_item.model.Group_Buy_ItemVO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -6,9 +5,6 @@
 <%@ page import="com.group_buy.model.*"%>
 <%
 Group_BuyVO group_BuyVO = (Group_BuyVO) request.getAttribute("Group_BuyVO");
-%>
-<%
-Group_Buy_ItemVO group_Buy_ItemVO = (Group_Buy_ItemVO) request.getAttribute("Group_Buy_ItemVO");
 %>
 <!DOCTYPE html>
 <html>
@@ -42,89 +38,70 @@ Group_Buy_ItemVO group_Buy_ItemVO = (Group_Buy_ItemVO) request.getAttribute("Gro
 	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/GroupBuyServlet" name="form1">
 		<table>
 			<tr>
-				<td>團購名稱:</td>
-				<td><input type="TEXT" name="gb_name" size="45"
-					value="<%=group_BuyVO.getGb_name()%>" /></td>
-			</tr>
-			<tr>
 				<td>團購團編號:</td>
 				<td><%=group_BuyVO.getGb_id()%></td>
 			</tr>
 			<tr>
-				<td>團購主編號:</td>
-				<td><%=group_BuyVO.getMem_id()%>
-				<input type="hidden" name="mem_id" size="45"
+				<td>團購主編號:<font color=red><b>*</b></font></td>
+				<td><input type="TEXT" name="mem_id" size="45"
 					value="<%=group_BuyVO.getMem_id()%>" /></td>
 			</tr>
 			<tr>
-				<td>團購商品名稱:</td>
-				<td><%=group_Buy_ItemVO.getGbitem_name()%>
-				<input type="hidden" name="gbitem_id" size="45"
+				<td>團購商品編號:</td>
+				<td><input type="TEXT" name="gbitem_id" size="45"
 					value="<%=group_BuyVO.getGbitem_id()%>" /></td>
 			</tr>
 			<tr>
 				<td>團購商品數量低標</td>
-				<td><%=group_BuyVO.getGb_min()%>
-				<input type="hidden" name="gb_min" size="45"
+				<td><input type="TEXT" name="gb_min" size="45"
 					value="<%=group_BuyVO.getGb_min()%>"></td>
 			</tr>
 			<tr>
 				<td>目前團購商品下訂總數</td>
-				<td><%=group_BuyVO.getGb_amount()%>
-				<input type="hidden" name="gb_amount" size="45"
+				<td><input type="TEXT" name="gb_amount" size="45"
 					value="<%=group_BuyVO.getGb_amount()%>"></td>
 			</tr>
 			
 			<tr>
 				<td>團購開始日期:</td>
-				<td>${Group_BuyVO.gbstart_date}
-				<input type="hidden" name="gbstart_date" id="f_date1" type="text"></td>
+				<td><input name="gbstart_date" id="f_date1" type="text"></td>
 			</tr>
 			<tr>
 				<td>團購結束下檔日期:</td>
-				<td><input name="gbend_date" id="f_date2" type="text" value="">團購結束下檔日期修改前為${Group_BuyVO.gbend_date}</td>
+				<td><input name="gbend_date" id="f_date2" type="text"></td>
 			</tr>
 			
 			<!-- 	//selected disabled hidden -->
 			<c:if test="value=0">超出團購期限下架</c:if>
 			<tr>
 				<td>團購商品狀態:</td>
-					<c:if test="${Group_BuyVO.gb_status == '0'}">
-						<td><c:out value="尚未達到開團時間"></td>
-						</c:out>
-					</c:if>
-					<c:if test="${Group_BuyVO.gb_status == '1'}">
-						<td><c:out value="團購進行中，目前團購商品下訂總數不足"></td>
-						</c:out>
-					</c:if>
-					<c:if test="${Group_BuyVO.gb_status == '2'}">
-						<td><c:out value="團購進行中，目前團購商品下訂總數已達標"></td>
-						</c:out>
-					</c:if>
-					<c:if test="${Group_BuyVO.gb_status == '3'}">
-						<td><c:out value="團購關閉，出貨處理中"></td>
-						</c:out>
-					</c:if>
-					<c:if test="${Group_BuyVO.gb_status == '4'}">
-						<td><c:out value="團購關閉，已出貨"></td>
-						</c:out>
-					</c:if>
-					<c:if test="${Group_BuyVO.gb_status == '8'}">
-						<td><c:out value="團購結束。團購時間逾期且團購商品下訂總數不足"></td>
-						</c:out>
-					</c:if>
-					<c:if test="${Group_BuyVO.gb_status == '9'}">
-						<td><c:out value="團購結束。訂單已完成"></td>
-						</c:out>
-					</c:if>
+				<td><select size="1" name="gb_status">
+						<%-- 				<option value="${Group_Buy_ItemVO.gbitem_status}" id = "gbitemStatus">${Group_Buy_ItemVO.gbitem_status}</option> --%>
+						<c:if test="${group_BuyVO.gbitem_status == '0'}">
+							<option value="${group_BuyVO.gbitem_status}"><c:out
+									value="(now)參團人數不足"></option>
+							</c:out>
+						</c:if>
+						<c:if test="${group_BuyVO.gbitem_status == '1'}">
+							<option value="${group_BuyVO.gbitem_status}"><c:out
+									value="(now)參團人數已達標"></option>
+							</c:out>
+						</c:if>
+						
+						<option value="0">參團人數不足</option>
+						<option value="1">參團人數已達標</option>
+				</select></td>
 			</tr>
 			<tr>
 				<td>團購價格</td>
-				<td><%=group_BuyVO.getGb_price()%>
-				<input type="hidden" name="gb_price" size="45"
+				<td><input type="TEXT" name="gb_price" size="45"
 					value="<%=group_BuyVO.getGb_price()%>"></td>
 			</tr>
-		
+				<tr>
+				<td>團購名稱:<font color=red><b>*</b></font></td>
+				<td><input type="TEXT" name="gb_name" size="45"
+					value="<%=group_BuyVO.getGb_name()%>" /></td>
+			</tr>
 		</table>
 		<br> 
 		

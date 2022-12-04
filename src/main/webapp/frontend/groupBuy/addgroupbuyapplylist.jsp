@@ -44,35 +44,21 @@ pageContext.setAttribute("Group_Buy_Item", Group_Buy_Item);
 	<main>
 
 		<div class="container">
-				<%-- 錯誤表列 --%>
-				<c:if test="${not empty errorMsgs}">
-					<font style="color: red">請修正以下錯誤:</font>
-					<ul>
-						<c:forEach var="message" items="${errorMsgs}">
-							<li style="color: red">${message}</li>
-						</c:forEach>
-					</ul>
-				</c:if>
+
 			<form
 				action="<%=request.getContextPath()%>/GroupBuyApplyListInsertServlet">
-				
-				
-				
-				
-				
-				
 				<div class="form-group">
 					<label for="formGroupExampleInput2">團購主帳號</label> 
-					<div><h6>[${Group_BuyVO.mem_id}]-${Group_BuyVO.memVO.mem_name}</h6></div>
+					<div><h6>${Group_BuyVO.mem_id}</h6></div>
 					<input type="hidden" name="mem_id" value="${Group_BuyVO.mem_id}"> 
 <!-- 					<input type="hidden" name="mem_id" value="1">  -->
 				</div>
-					<b>團購名稱設定:<b>
+					<b>團購名稱:<b>
 					<div><input type="TEXT" name="gb_name" size="45" placeholder = "請輸入文字"
-					value="<%=(group_BuyVO == null) ? "" : group_BuyVO.getGb_name()%>"  required /></div>
+					value="<%=(group_BuyVO == null) ? "" : group_BuyVO.getGb_name()%>" /></div>
 				<tr>
 				
-					<b>請選擇可開團商品:</b><br> <select size="1" name="gbitem_id">
+					<b>選擇開團商品:</b><br> <select size="1" name="gbitem_id">
 						<c:forEach var="Group_Buy_ItemVO" items="${Group_Buy_Item}">
 							<option value="${Group_Buy_ItemVO.gbitem_id}">${Group_Buy_ItemVO.gbitem_name}
 						</c:forEach>
@@ -83,9 +69,9 @@ pageContext.setAttribute("Group_Buy_Item", Group_Buy_Item);
 				<tr>
 				<td>
 				<div class="form-group">
-					<label for="formGroupExampleInput2">團購商品結單數量</label> <input
+					<label for="formGroupExampleInput2">團購商品結單數量[數量達標系統自動結單]</label> <input
 						name="gb_min" type="text" class="form-control"
-						id="formGroupExampleInput2" placeholder="Another input" required>
+						id="formGroupExampleInput2" placeholder="Another input">
 				</div>
 				</td>
 				</tr>
@@ -98,11 +84,11 @@ pageContext.setAttribute("Group_Buy_Item", Group_Buy_Item);
 				
 				<tr>
 					<td>團購開始日期:</td>
-					<td><input name="gbstart_date" id="f_date1" type="text" required></td>
+					<td><input name="gbstart_date" id="f_date1" type="text"></td>
 				</tr>
 				<tr>
 					<td>團購結束下檔日期:</td>
-					<td><input name="gbend_date" id="f_date2" type="text" required></td>
+					<td><input name="gbend_date" id="f_date2" type="text"></td>
 				</tr>
 
 <!-- 				<div class="form-group col-md-4"> -->
@@ -121,7 +107,7 @@ pageContext.setAttribute("Group_Buy_Item", Group_Buy_Item);
 			<br>
 			<br>
 			<form
-				action="<%=request.getContextPath()%>/frontend/groupBuy/listallgroupbuy.html">
+				action="<%=request.getContextPath()%>/frontend/groupBuy/listallgroupbuuy.jsp">
 				<button class="btn btn-primary" type="submit">返回團購首頁</button>
 			</form>
 		</div>

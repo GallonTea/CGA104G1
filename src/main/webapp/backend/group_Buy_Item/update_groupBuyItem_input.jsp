@@ -14,7 +14,6 @@ Group_Buy_ItemVO group_Buy_ItemVO = (Group_Buy_ItemVO) request.getAttribute("Gro
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 
 <style>
-
 table#table-1 {
 	background-color: #CCCCFF;
 	border: 2px solid black;

@@ -23,12 +23,6 @@ public class Group_BuyVO implements java.io.Serializable{
 	private Date gbitem_enddate;
 	private Integer gbitem_type;
 	
-	 public com.mem.model.MemVO getMemVO() {
-		 com.mem.model.MemService memService = new com.mem.model.MemService();
-		 com.mem.model.MemVO memVO = memService.getOneMem(mem_id);
-		    return memVO;
-	  }
-	
 	
 	public Integer getGb_id() {
 		return gb_id;

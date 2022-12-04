@@ -32,6 +32,4 @@ public interface Group_BuyDAO_interface {
 
 	public List<Group_BuyVO> joinGBIGetAllWhereMemID(Integer mem_id);
 
-	public Group_BuyVO CheckByMemID(Integer mem_id);
-
 }

@@ -145,13 +145,10 @@ footer img {
 				</c:forEach>
 			</ul>
 		</c:if>
-		<a href="<%=request.getContextPath()%>/frontend/groupBuy/listallgroupbuy.html">返回團購首頁</a>
-		<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" name="form1">
-						<input type="submit" value="查詢參團資料查詢"> <input
-							type="hidden" name="action" value="getOne_Display_ByMem">
-					</FORM>
-		<h1>這是[團購主]團購狀態頁</h1>
-		<table class="table table-hover thead-light table-bordered table-sm .table-responsive">
+		<a
+			href="<%=request.getContextPath()%>/frontend/groupBuy/listallgroupbuy.html">返回團購首頁</a>
+		<table
+			class="table table-hover thead-light table-bordered table-sm .table-responsive">
 			<tr>
 				<th>團購編號</th>
 				<th>團購團名稱</th>
@@ -213,8 +210,29 @@ footer img {
 					</c:if>
 
 
+
+
+
+
 					<td>${Group_BuyVO.gbitem_price}</td>
 					<td>${Group_BuyVO.gb_price}</td>
+
+
+					<!-- 						<td> -->
+					<!-- 						<FORM METHOD="post" -->
+					<%-- 							ACTION="<%=request.getContextPath()%>/GroupBuyServlet" --%>
+					<!-- 							style="margin-bottom: 0px;"> -->
+					<%-- 							<c:if test="${Group_BuyVO.gb_mstatus != '9'}"> --%>
+					<!-- 							<input type="submit" value="取消團購">  -->
+					<%-- 							</c:if> --%>
+					<%-- 							<c:if test="${Group_BuyVO.gb_mstatus == '9'}"> --%>
+					<!-- 							<input type="submit" value="取消團購">  -->
+					<%-- 							</c:if> --%>
+					<%-- 							<input type="hidden" name="gb_id" value="${Group_BuyVO.gb_id}">  --%>
+					<%-- 							<input type="hidden" name="mem_id" value="${Group_BuyVO.mem_id}"> --%>
+					<!-- 							<input type="hidden" name="action" value="deleteByGroupBuyMaster"> -->
+					<!-- 						</FORM> -->
+					<!-- 						</td> -->
 
 
 					<td><FORM METHOD="post"
@@ -232,7 +250,6 @@ footer img {
 
 							<input type="hidden" name="gb_id" value="${Group_BuyVO.gb_id}">
 							<input type="hidden" name="mem_id" value="${Group_BuyVO.mem_id}">
-							<input type="hidden" name="gbitem_id" value="${Group_BuyVO.gbitem_id}">
 							<input type="hidden" name="action"
 								value="getOneMyGroupBuy_For_Update">
 						</FORM></td>
@@ -251,7 +268,7 @@ footer img {
 
 							<input type="hidden" name="gb_price"
 								value="${Group_BuyVO.gb_price}"> <input type="hidden"
-								name="gbitem_name" value="${Group_BuyVO.gbitem_name}"> <input
+								name="gbitem_name" value="${Group_BuyVO.gbitem_id}"> <input
 								type="hidden" name="gb_id" value="${Group_BuyVO.gb_id}">
 							<input type="hidden" name="mem_id" value="${Group_BuyVO.mem_id}"><br>
 							<input type="hidden" name="gbitem_id"
@@ -278,8 +295,8 @@ footer img {
 					<td><FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" name="form1">
 						<!-- 		<input type="hidden" name="gb_price" value="200">  -->
 						<!-- 		<input type="hidden" name="gbitem_name" value="Petkit 小佩智能感應式除臭貓砂盆">  -->
-<%-- 						<input type="hidden" name="gb_name" value="${Group_BuyVO.gb_name}"> --%>
-<%-- 						<input type="hidden" name="gb_id" value="${Group_BuyVO.gb_id}"> --%>
+						<input type="hidden" name="gb_name" value="${Group_BuyVO.gb_name}">
+						<input type="hidden" name="gb_id" value="${Group_BuyVO.gb_id}">
 						<!-- 		<input type="hidden" name="discount_price" value="9">  -->
 						<!-- 		<input type="hidden" name="mem_id" value="1"><br>  -->
 						<!-- 		<input type="hidden" name="gbitem_id" value="1">  -->
@@ -289,7 +306,7 @@ footer img {
 						<!-- 		<input type="hidden" name="gbend_date" value="2022-10-11 09:10:40">  -->
 						<!-- 		<input type="hidden" name="gb_status" value="1">  -->
 						<input type="submit" value="查詢參團資料查詢"> <input
-							type="hidden" name="action" value="getOne_Display_ByMem">
+							type="hidden" name="action" value="getOneGB_For_Display">
 					</FORM></td>
 
 

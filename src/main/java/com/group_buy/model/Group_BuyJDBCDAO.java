@@ -43,14 +43,11 @@ public class Group_BuyJDBCDAO implements Group_BuyDAO_interface{
 	
 	//查詢團購狀態等於0的(團購尚未開始)，而且團購開始時間大於現在時間(為了要更改狀態為團購進行中)
 	private static final String GET_ALL_STMT_GB_STATUS_NEED_CHANGE_TO_IN_PROGRESS = 
-			"SELECT GB_ID, MEM_ID, GBITEM_ID, GB_MIN, GB_AMOUNT, GBSTART_DATE, GBEND_DATE,GB_STATUS,GB_PRICE,GB_NAME FROM ba_rei.GROUP_BUY WHERE GB_STATUS = 0 AND GBSTART_DATE < NOW();";
+			"SELECT GB_ID, MEM_ID, GBITEM_ID, GB_MIN, GB_AMOUNT, GBSTART_DATE, GBEND_DATE,GB_STATUS,GB_PRICE,GB_NAME FROM GROUP_BUY WHERE GB_STATUS = 0 AND GBSTART_DATE > NOW()";
 	
 	//查詢團購狀態等於1的(團購進行中)，而且現在時間>=團購結束時間(為了要更改狀態為團購關閉OR結束)
 	private static final String GET_ALL_STMT_GB_STATUS_NEED_CHANGE_TO_END = 
-			"SELECT GB_ID, MEM_ID, GBITEM_ID, GB_MIN, GB_AMOUNT, GBSTART_DATE, GBEND_DATE,GB_STATUS,GB_PRICE,GB_NAME FROM ba_rei.GROUP_BUY WHERE GB_STATUS = 1 AND GBEND_DATE < NOW()";
-	//
-	private static final String SEARCH_MEM_ID_EXIST_IN_GROUP_BUY = 
-			"SELECT MEM_ID FROM GROUP_BUY WHERE MEM_ID = ?";
+			"SELECT GB_ID, MEM_ID, GBITEM_ID, GB_MIN, GB_AMOUNT, GBSTART_DATE, GBEND_DATE,GB_STATUS,GB_PRICE,GB_NAME FROM GROUP_BUY WHERE GB_STATUS = 1 AND GBEND_DATE < NOW()";
 	
 	
 	@Override
@@ -194,76 +191,22 @@ public class Group_BuyJDBCDAO implements Group_BuyDAO_interface{
 	}
 
 	@Override
-	public Group_BuyVO CheckByMemID(Integer mem_id) {
-		Group_BuyVO Group_BuyVO = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-
-		try {
-
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(SEARCH_MEM_ID_EXIST_IN_GROUP_BUY);
-
-			pstmt.setInt(1, mem_id);
-
-			rs = pstmt.executeQuery();
-
-			while (rs.next()) {
-				Group_BuyVO = new Group_BuyVO();
-				Group_BuyVO.setMem_id(rs.getInt("mem_id"));
-			}
-
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		return Group_BuyVO;
-	}
-	
-	@Override
 	public Group_BuyVO findByPrimaryKey(Integer gb_id) {
 		Group_BuyVO Group_BuyVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		
+
 		try {
-			
+
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, userid, passwd);
 			pstmt = con.prepareStatement(GET_ONE_STMT);
-			
+
 			pstmt.setInt(1, gb_id);
-			
+
 			rs = pstmt.executeQuery();
-			
+
 			while (rs.next()) {
 				Group_BuyVO = new Group_BuyVO();
 				Group_BuyVO.setGb_id(rs.getInt("gb_id"));
@@ -277,7 +220,7 @@ public class Group_BuyJDBCDAO implements Group_BuyDAO_interface{
 				Group_BuyVO.setGb_price(rs.getInt("gb_price"));
 				Group_BuyVO.setGb_name(rs.getString("gb_name"));
 			}
-			
+
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. "
 					+ e.getMessage());
@@ -894,9 +837,9 @@ public class Group_BuyJDBCDAO implements Group_BuyDAO_interface{
 
 	
 //	
-	public static void main(String[] args) {
-
-		Group_BuyJDBCDAO dao = new Group_BuyJDBCDAO();
+//	public static void main(String[] args) {
+//
+//		Group_BuyJDBCDAO dao = new Group_BuyJDBCDAO();
 
 		// 新增
 //		Group_BuyVO gbVO1 = new Group_BuyVO();
@@ -949,10 +892,6 @@ public class Group_BuyJDBCDAO implements Group_BuyDAO_interface{
 //		System.out.println(gbVO3.getGb_status() + ",");
 //		System.out.println(gbVO3.getGb_price()+ ",");
 //		System.out.println(gbVO3.getGb_name());
-//		System.out.println("---------------------");
-//	 以MEM_ID查詢
-//		Group_BuyVO gbVO4 = dao.CheckByMemID(9);
-//		System.out.print(gbVO3.getMem_id());
 //		System.out.println("---------------------");
 
 		// 查詢
@@ -1104,6 +1043,6 @@ public class Group_BuyJDBCDAO implements Group_BuyDAO_interface{
 //	System.out.println("---------------------");
 //	
 //	
-	}
+//	}
 
 }

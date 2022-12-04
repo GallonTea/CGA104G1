@@ -10,7 +10,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.group_buy.model.Group_BuyVO;
 import com.mem.model.MemVO;
@@ -34,7 +33,7 @@ public class GroupBuyStartNewApplyListServlet extends HttpServlet {
 		
 		Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 		req.setAttribute("errorMsgs", errorMsgs);
-		HttpSession session = req.getSession();
+		
 		// 取得會員編號
 //					MemVO memVO = (MemVO)req.getSession().getAttribute("memVO");
 //					Integer mem_id = memVO.getMem_id();
@@ -42,8 +41,9 @@ public class GroupBuyStartNewApplyListServlet extends HttpServlet {
 //					System.out.println(mem_id);
 					
 					Integer mem_id = null;
+					
 					try {
-						mem_id = (Integer) session.getAttribute("mem_id");
+						mem_id = Integer.valueOf(req.getParameter("mem_id").trim());
 //						System.out.println(mem_id);
 						if (mem_id == null) {
 							errorMsgs.put("gbitem_id","團購主會員編號': 請勿空白");

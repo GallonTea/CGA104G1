@@ -55,9 +55,6 @@ public class Group_BuyService {
 	public Group_BuyVO getOneGroup_Buy(Integer gb_id) {
 		return dao.findByPrimaryKey(gb_id);
 	}
-	public Group_BuyVO CheckByMemID(Integer mem_id) {
-		return dao.CheckByMemID(mem_id);
-	}
 
 	public List<Group_BuyVO> getAll() {
 		return dao.getAll();
@@ -98,7 +95,7 @@ public class Group_BuyService {
 		Group_BuyVO gbVO = new Group_BuyVO();
 		gbVO.setGb_id(gb_id);
 		gbVO.setGb_amount(gb_amount);
-		dao.updateGbAmount(gbVO);
+		dao.updateGbprice(gbVO);
 		
 		return gbVO;
 	}

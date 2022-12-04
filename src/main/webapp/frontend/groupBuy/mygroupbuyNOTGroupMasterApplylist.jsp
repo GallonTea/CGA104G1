@@ -143,7 +143,7 @@ footer img {
 			</c:if>
 			<a
 				href="<%=request.getContextPath()%>/frontend/groupBuy/listallgroupbuy.html">返回團購首頁</a>
-				<h1>這是[一般會員]團購狀態頁</h1>
+				<h1>這是一班會員團購狀態頁</h1>
 			<table class="table table-hover thead-light table-bordered table-sm .table-responsive">
 				<tr>
 					<th>團購編號</th>

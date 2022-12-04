@@ -16,8 +16,6 @@ pageContext.setAttribute("list", list);
 <title>所有團購商品</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <style>
-section {
-
 table#table-1 {
 	background-color: #CCCCFF;
 	border: 2px solid black;

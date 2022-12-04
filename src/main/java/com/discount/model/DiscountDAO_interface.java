@@ -16,6 +16,4 @@ public interface DiscountDAO_interface {
 
 	public List<DiscountVO> getAll();
 
-	public DiscountVO CheckByGBitemID(Integer gbitem_id);
-
 }

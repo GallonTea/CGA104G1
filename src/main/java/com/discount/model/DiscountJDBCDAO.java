@@ -23,7 +23,7 @@ public class DiscountJDBCDAO implements DiscountDAO_interface {
 	private static final String GET_ONE_DISCOUNT_STMT = "SELECT `DISCOUNT_ID`,`GBITEM_ID`, `DISCOUNT_MINAMOUNT`, `DISCOUNT_MAXAMOUNT`, `DISCOUNT_PRICE`, `DISCOUNT_NAR` FROM `ba_rei`.`DISCOUNT` where `GBITEM_ID` = ?";
 	private static final String DELETE = "DELETE FROM `ba_rei`.`DISCOUNT` where `DISCOUNT_ID` = ?";
 	private static final String UPDATE = "UPDATE `ba_rei`.`DISCOUNT` set `GBITEM_ID`=?, `DISCOUNT_MINAMOUNT`=?, `DISCOUNT_MAXAMOUNT`=?, `DISCOUNT_PRICE`=?, `DISCOUNT_NAR`=? where `DISCOUNT_ID` = ?";
-	private static final String SEARCH_GBITEM_ID_EXIST_IN_DISCOUNT = "SELECT GBITEM_ID FROM ba_rei.DISCOUNT WHERE GBITEM_ID = ?";
+
 	@Override
 	public void insert(DiscountVO DiscountVO) {
 		Connection con = null;
@@ -256,57 +256,6 @@ public class DiscountJDBCDAO implements DiscountDAO_interface {
 		}
 		return DiscountVO;
 	}
-	@Override
-	public DiscountVO CheckByGBitemID(Integer gbitem_id) {
-		DiscountVO DiscountVO = null;
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		
-		try {
-			
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(SEARCH_GBITEM_ID_EXIST_IN_DISCOUNT);
-			
-			pstmt.setInt(1, gbitem_id);
-			
-			rs = pstmt.executeQuery();
-			
-			while (rs.next()) {
-				DiscountVO = new DiscountVO();
-				DiscountVO.setGbitem_id(rs.getInt("gbitem_id"));
-			}
-			
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. " + se.getMessage());
-		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (Exception e) {
-					e.printStackTrace(System.err);
-				}
-			}
-		}
-		return DiscountVO;
-	}
 
 	@Override
 	public List<DiscountVO> getAll() {
@@ -367,10 +316,10 @@ public class DiscountJDBCDAO implements DiscountDAO_interface {
 		}
 		return list;
 	}
-//
-//	public static void main(String[] args) {
-//
-//		DiscountJDBCDAO dao = new DiscountJDBCDAO();
+
+	public static void main(String[] args) {
+
+		DiscountJDBCDAO dao = new DiscountJDBCDAO();
 
 		// 新增
 //		DiscountVO discVO1 = new DiscountVO();
@@ -403,21 +352,17 @@ public class DiscountJDBCDAO implements DiscountDAO_interface {
 //		System.out.print(discVO3.getDiscount_price() + ",");
 //		System.out.println(discVO3.getDiscount_nar());
 //		System.out.println("---------------------");
-		// 以gnitem_id查詢是否有團購商品已經設定折扣
-//		DiscountVO discVO3 = dao.CheckByGBitemID(6);
-//		System.out.print(discVO3);
-//		System.out.println("---------------------");
 		
-//		List<DiscountVO> list = dao.findDiscountByPrimaryKey(1);
-//		for (DiscountVO aDisc : list) {
-//			System.out.print(aDisc.getDiscount_id() + ",");
-//			System.out.print(aDisc.getGbitem_id() + ",");
-//			System.out.print(aDisc.getDiscount_minamount() + ",");
-//			System.out.print(aDisc.getDiscount_maxamount() + ",");
-//			System.out.print(aDisc.getDiscount_price() + ",");
-//			System.out.print(aDisc.getDiscount_nar());
-//			System.out.println();
-//		}
+		List<DiscountVO> list = dao.findDiscountByPrimaryKey(1);
+		for (DiscountVO aDisc : list) {
+			System.out.print(aDisc.getDiscount_id() + ",");
+			System.out.print(aDisc.getGbitem_id() + ",");
+			System.out.print(aDisc.getDiscount_minamount() + ",");
+			System.out.print(aDisc.getDiscount_maxamount() + ",");
+			System.out.print(aDisc.getDiscount_price() + ",");
+			System.out.print(aDisc.getDiscount_nar());
+			System.out.println();
+		}
 
 //		 查詢
 //		List<DiscountVO> list = dao.getAll();
@@ -430,5 +375,5 @@ public class DiscountJDBCDAO implements DiscountDAO_interface {
 //			System.out.print(aDisc.getDiscount_nar());
 //			System.out.println();
 //		}
-//	}
+	}
 }

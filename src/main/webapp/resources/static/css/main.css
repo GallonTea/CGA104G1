@@ -30,9 +30,9 @@ header {
 }
 
 @media screen and( max-width: 576px) {
-   #dropdownMenuLink {
-       display: none;
-   }
+    #dropdownMenuLink {
+        display: none;
+    }
 }
 
 .dropdown-item {
@@ -108,7 +108,7 @@ footer img {
     }
 }
 
-[v-clock] {
+[v-cloak] {
     display: none;
 }
 
@@ -141,6 +141,24 @@ footer img {
     border-radius: 50% !important;
 }
 
-@media (max-width: 1250px) {
+@media screen and (max-width: 990px) {
+    #dropdownMenuLink {
+        display: none;
+    }
+
+    #memberName {
+        margin-top: 2%;
+        display: inline-block;
+        float: right;
+    }
+
+    #memberImg {
+        float: right;
+    }
+
+    .bi-cart3, #lblCartCount {
+        margin-top: 2%;
+    }
 
 }
+

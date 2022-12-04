@@ -83,7 +83,6 @@ const navbar = `
     </nav>
 
 </header>
-
 `
 
 

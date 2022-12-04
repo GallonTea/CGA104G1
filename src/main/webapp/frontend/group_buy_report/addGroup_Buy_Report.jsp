@@ -1,15 +1,16 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.group_buy_report.model.*"%>
-<%-- <%@ page import="java.util.*"%> --%>
+<%@ page import="com.mem.model.*"%>
+
 <%
 Group_Buy_ReportVO Group_Buy_ReportVO = (Group_Buy_ReportVO) request.getAttribute("Group_Buy_ReportVO");
 %>
 
-<%@include file="/backend/backNavbar.jsp"%>
 <html>
 <head>
 <title>團購檢舉</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -78,6 +79,9 @@ table#table-1 h4 {
 	display: block;
 	margin-bottom: 1px;
 }
+b{
+color: black;
+}
 
 h3 {
 	color: #6c757d;
@@ -115,10 +119,14 @@ th, td {
 </head>
 <body bgcolor='white'>
 
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
 <table id="table-1">
 	<tr><td> 
 	<h3>團購檢舉新增 </h3>
-			<button onclick="location.href='<%=request.getContextPath()%>/question/index.jsp'">回到首頁</button>
+			<button onclick="location.href='<%=request.getContextPath()%>/index.html'">回到首頁</button>
 	</td></tr>
 </table>
 
@@ -146,21 +154,21 @@ th, td {
 <!-- 	</tr> -->
 	<tr>
 		<td><b>團購訂單編號:</b></td>
-		<td><input type="TEXT" name="gborder_id" size="45" 
+		<td><input type="TEXT"  name="gborder_id" size="35" 
 			 value="<%= (Group_Buy_ReportVO==null)? " " : Group_Buy_ReportVO.getGborder_id()%>" /></td>
 			 <td style="color:red">${errorMsgs.gborder_id}</td>
 	</tr>
 	<tr>
 		<td><b>會員編號:</b></td>
-		<td><input type="TEXT" name="mem_id" size="45" 
-			 value="<%= (Group_Buy_ReportVO==null)? " " : Group_Buy_ReportVO.getMem_id()%>" /></td>
+		<td><input type="TEXT"  name="mem_id" size="35" 
+			 value="<%= (Group_Buy_ReportVO==null)? "": Group_Buy_ReportVO.getMem_id()%>" /></td>
 			 <td style="color:red">${errorMsgs.mem_id}</td>
 			 
 	</tr>
 	
 		<tr>
 		<td><b>團購檢舉內容:</b></td>
-		<td><input type="TEXT" name="frep_content" size="45" 
+		<td><input type="TEXT" name="frep_content" size="35" 
 			 value="<%= (Group_Buy_ReportVO==null)? "" : Group_Buy_ReportVO.getFrep_content()%>" /></td>
 			 <td style="color:red">${errorMsgs.frep_content}</td>
 	</tr>
@@ -180,12 +188,12 @@ th, td {
 <!-- 		</tr> -->
 <!-- 			</td> -->
 
-		<tr>
-		<td><b>團購檢舉狀態:</b></td>
-		<td><input type="TEXT" name="frep_status" size="45" 
-			 value="<%= (Group_Buy_ReportVO==null)? "" : Group_Buy_ReportVO.getFrep_status()%>" /></td>
-			 <td style="color:red">${errorMsgs.frep_status}</td>
-		</tr>
+<!-- 		<tr> -->
+<!-- 		<td><b>團購檢舉狀態:</b></td> -->
+<!-- 		<td><input type="TEXT" name="frep_status" size="45"  -->
+<%-- 			 value="<%= (Group_Buy_ReportVO==null)? "" : Group_Buy_ReportVO.getFrep_status()%>" /></td> --%>
+<%-- 			 <td style="color:red">${errorMsgs.frep_status}</td> --%>
+<!-- 		</tr> -->
 
 <!-- 		<tr> -->
 <!-- 		<td> -->
@@ -208,12 +216,12 @@ th, td {
 <!-- 		</tr> -->
 
 		
-				<tr>
-		<td><b>團購檢舉審核結果:</b></td>
-		<td><input type="TEXT" name="frep_result" size="45" 
-			 value="<%= (Group_Buy_ReportVO==null)? "" : Group_Buy_ReportVO.getFrep_result()%>" /></td>
-			 <td style="color:red">${errorMsgs.frep_result}</td>
-	</tr>
+<!-- 				<tr> -->
+<!-- 		<td><b>團購檢舉審核結果:</b></td> -->
+<!-- 		<td><input type="TEXT" name="frep_result" size="45"  -->
+<%-- 			 value="<%= (Group_Buy_ReportVO==null)? "" : Group_Buy_ReportVO.getFrep_result()%>" /></td> --%>
+<%-- 			 <td style="color:red">${errorMsgs.frep_result}</td> --%>
+<!-- 	</tr> -->
 		
 <!-- 			<tr> -->
 <!-- 		<td>員工編號:</td> -->
@@ -229,6 +237,10 @@ th, td {
 <input type="hidden" name="action" value="insert" >
 <input type="hidden" name="emp_id" value="3">
 <input type="submit" style="margin-left:38%" value="送出"></FORM>
+		</section>
+	</main>
+
+
 </body>
 
 

@@ -10,35 +10,18 @@ Emp_effectService emp_effectSvc = new Emp_effectService();
 List<Emp_effectVO> list = emp_effectSvc.getOneEmp(emp_id);
 pageContext.setAttribute("list", list);
 %>
-<%@include file="/backend/backNavbar.jsp"%>
 
 <html>
 <head>
 <title>權限單查</title>
-
-<style>
-  table#table-1 {
-	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
-</style>
-
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
 <style>
   table {
-	width: 600px;
-	background-color: white;
+	width: 800px;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	margin-left: 10%;
   }
   table, th, td {
     border: 1px solid #CCCCFF;
@@ -47,30 +30,24 @@ pageContext.setAttribute("list", list);
     padding: 5px;
     text-align: center;
   }
+  
+  tr:nth-child(even) {
+	background-color: rgba(255,255,255,0.4);
+}
 </style>
 
 </head>
-<body bgcolor='white'>
+<body>
 
-<table id="table-1">
-	<tr>
-	<td>
-		 <h3>權限資料</h3> 
-	</td>
-	<td>
-	</td></tr>
-</table>
-<div>
-
-<FORM METHOD="post" ACTION="../../backend/emp/EmpServlet" style="margin-bottom: 0px;">
-			     <input type="submit" value="回員工查詢">
-<%-- 			     <input type="hidden" name="effect_id"  value="${effect_id}"> --%>
-			     <input type="hidden" name="action" value="listemp_and_effect"></FORM>
-			   
-</div>
- 
-
-<table>
+<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+				<div class="btnTitle">
+			<button onclick="location.href='<%=request.getContextPath()%>/backend/emp_effect/select_page.jsp'" class="btn btn-primary btnIn">回員工權限管理首頁</button>
+		</div>
+		<div class="titleBlock">單一員工權限列表</div>
+			<table>
 	<tr>
 		<th>員工姓名</th>
 		<th>權限</th>
@@ -83,19 +60,23 @@ pageContext.setAttribute("list", list);
 		<td>${emp_effectVO.effectVO.effect_name}</td>
 		<td>
 		  <FORM METHOD="post" ACTION="Emp_effectServlet" style="margin-bottom: 0px;">
-			     <input type="submit" value="新增">
+			     <input type="submit" value="新增" class="btn btn-warning btnIn btnSmall">
 			     <input type="hidden" name="emp_id"  value="${emp_effectVO.emp_id}">
 			     <input type="hidden" name="action"	value="go_Insert"></FORM>
 			</td>
 			<td>
 			  <FORM METHOD="post" ACTION="Emp_effectServlet" style="margin-bottom: 0px;">
-			     <input type="submit" value="刪除">
+			     <input type="submit" value="刪除" class="btn btn-danger btnIn btnSmall">
 			     <input type="hidden" name="effect_id"  value="${emp_effectVO.effect_id}">
 			     <input type="hidden" name="action" value="delete"></FORM>
 			</td>
 	</tr>
 	</c:forEach>
 </table>
+		</section>
+	</main>
+
+
 
 </body>
 </html>

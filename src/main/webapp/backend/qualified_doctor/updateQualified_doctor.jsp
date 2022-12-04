@@ -15,9 +15,14 @@ Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribut
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 
 <style>
+	section {
+ 			height: 100%; 
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+            background-color: #FFDEE9;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
   table#table-1 {
-	background-color: gray;
-    border: 2px solid black;
     text-align: center;
   }
   table#table-1 h4 {
@@ -32,14 +37,11 @@ Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribut
     color: blue;
     display: inline;
   }
-  .password{
-  }
 </style>
 
 <style>
   table {
 	width: 450px;
-	background-color: white;
 	margin-top: 1px;
 	margin-bottom: 1px;
   }
@@ -49,18 +51,55 @@ Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribut
   th, td {
     padding: 1px;
   }
+  
+  h3 {
+  	text-align: center;
+  	color: black;
+  	font-weight: 700 !important;
+  }
+  
+  .container {
+  	text-align: center;
+  }
+  
+  .block{
+  	texe-align: center;
+  	margin-top: 15px;
+  }
+  
+  table{
+  	width: 100%;
+  }
+  
+  .btnIn{
+  	border-radius: 20px !important;
+  	width: 200px;
+  	margin-bottom: 20px;
+  }
+  
+  .formIn{
+  	margin-left: 25%;
+  }
+  
+  .btn-warning{
+  	margin-top: 15px;
+  }
+
 </style>
 </head>
-<body bgcolor='white'>
+<body>
 
 	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
 	<main>
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
+		<div class="container">
 <table id="table-1">
 	<tr><td>
-		 <h3><b>醫師認證狀態</b> </h3>
-			<button onclick="location.href='<%=request.getContextPath()%>/backend/index.jsp'">回到後台首頁</button>
+	<div class="block">
+		 <h3>醫師認證狀態</h3>
+			<button class="btn btn-dark btnIn" onclick="location.href='<%=request.getContextPath()%>/backend/index.jsp'">回到後台首頁</button>
+	</div>
 	</td></tr>
 </table>
 
@@ -75,6 +114,7 @@ Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribut
 	</ul>
 </c:if>
 
+<div class="formIn">
 <FORM METHOD="post" ACTION="/CGA104G1/Qualified_doctorServlet" name="form1">
 <table>
 
@@ -121,10 +161,13 @@ Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribut
 
 	
 </table>
+</div>
 <br>
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="doc_id" value="<%=qualified_doctorVO.getDoc_id()%>">
-<input type="submit" value="送出修改"></FORM>
+<input type="submit" value="送出修改" class="btn btn-success btnIn"></FORM>
+
+</div>
 		</section>
 	</main>
 

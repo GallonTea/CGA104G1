@@ -183,7 +183,23 @@ public class Group_Buy_ReportServlet extends HttpServlet{
 				successView.forward(req, res);
 		}
 
-	
+		if ("getOne_For_Insert".equals(action)) { 
+			Map<String,String> errorMsgs = new LinkedHashMap<String,String>();
+		
+			req.setAttribute("errorMsgs", errorMsgs);
+
+				/***************************1.接收請求參數****************************************/
+			Integer mem_id = Integer.valueOf(req.getParameter("mem_id"));
+				
+				/***************************2.開始查詢資料****************************************/
+				Group_Buy_ReportService GBRSvc = new Group_Buy_ReportService();
+				Group_Buy_ReportVO Group_Buy_ReportVO = GBRSvc.getOneGroup_Buy_Report(mem_id);
+				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+				req.setAttribute("Group_Buy_ReportVO", Group_Buy_ReportVO);       
+				String url = "/backend/group_buy_report/updateGroup_order_Report.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+		}
 		if ("insert".equals(action)) { // 來自addGroupBuyItem.jsp的請求
 
 
@@ -222,34 +238,6 @@ public class Group_Buy_ReportServlet extends HttpServlet{
 			}
 			
 					
-
-			Integer frep_status = null;
-
-			try {
-				frep_status = Integer.valueOf(req.getParameter("frep_status").trim());
-				if (frep_status == null) {
-					errorMsgs.add("團購檢舉狀態: 請勿空白");
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				errorMsgs.add("團購檢舉狀態 請填數字");
-
-			}
-
-			Integer frep_result = null;
-
-			try {
-				frep_result = Integer.valueOf(req.getParameter("frep_result"));
-				if (frep_result == null) {
-					errorMsgs.add("團購檢舉審核結果: 請勿空白");
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				errorMsgs.add("團購檢舉審核結果 請填數字");
-
-			}
-			
-			
 			Integer emp_id = null;
 
 			try {
@@ -267,8 +255,6 @@ public class Group_Buy_ReportServlet extends HttpServlet{
 			Group_Buy_ReportVO.setGborder_id(gborder_id);
 			Group_Buy_ReportVO.setMem_id(mem_id);
 			Group_Buy_ReportVO.setFrep_content(frep_content);
-			Group_Buy_ReportVO.setFrep_status(frep_status);
-			Group_Buy_ReportVO.setFrep_result(frep_result);
 			Group_Buy_ReportVO.setEmp_id(emp_id);
 
 
@@ -281,7 +267,7 @@ public class Group_Buy_ReportServlet extends HttpServlet{
 			/*************************** 2.開始修改資料 *****************************************/
 			Group_Buy_ReportService GBRSvc = new Group_Buy_ReportService();
 			Group_Buy_ReportVO = GBRSvc.addGroup_Buy_Report(gborder_id, mem_id, frep_content,
-					frep_status, frep_result,emp_id);
+					emp_id);
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
 //			req.setAttribute("Group_Buy_ReportVO", Group_Buy_ReportVO);
 			String url = "/backend/group_buy_report/listAllGroup_buy_Report.jsp";

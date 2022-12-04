@@ -12,31 +12,15 @@ Group_Buy_ItemVO group_Buy_ItemVO = (Group_Buy_ItemVO) request.getAttribute("Gro
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title>團購商品資料修改 - update_groupBuyItem_input.jsp</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
 
 <style>
 
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
-h4 {
-	color: blue;
-	display: inline;
-}
-</style>
 
 <style>
 table {
-	width: 400px;
-	background-color: white;
+	width: 800px;
+	min-height: 600px;
 	margin-top: 1px;
 	margin-bottom: 1px;
 }
@@ -49,6 +33,26 @@ th, td {
 	padding: 1px;
 	color: black;
 }
+
+form {
+	margin-left: 28% !important;
+}
+
+.fileInput{
+	border-radius: 0;
+}
+
+.btnSmall{
+	width: 100px;
+}
+
+.file{
+	text-decoration: none;
+}
+
+#picPreview{
+	text-align: center;
+}
 </style>
 
 </head>
@@ -58,22 +62,6 @@ th, td {
 	<main>
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
-<!-- 		把原本body的東西貼到這邊 -->
-<table id="table-1">
-		<tr>
-			<td>
-				<h3>團購商品資料修改 - update_groupBuyItem_input.jsp</h3>
-				<h4>
-					<a href="<%=request.getContextPath()%>/backend/group_Buy_Item/select_page.jsp">回首頁</a>
-				</h4>
-				<h4>
-					<a href="<%=request.getContextPath()%>/backend/group_Buy_Item/listAllGroupBuyItem.jsp">所有團購商品</a>
-				</h4>
-			</td>
-		</tr>
-	</table>
-
-	<h3>團購商品資料修改:</h3>
 
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
@@ -85,6 +73,10 @@ th, td {
 		</ul>
 	</c:if>
 
+	<div class="btnTitle">
+<button onclick="location.href='<%=request.getContextPath()%>/backend/group_Buy_Item/select_page.jsp'" class="btn btn-primary btnIn">回團購商品首頁</button>
+</div>
+<div class="titleBlock">修改團購商品資料</div>
 	<FORM METHOD="post" ACTION="groupBuyItem.do" name="form1">
 		<table>
 			<tr>
@@ -154,20 +146,15 @@ th, td {
 			</tr>
 			
 		</table>
-		<br> <input type="hidden" name="action" value="update">
-			 <input type="hidden" name="gbitem_id" value="<%=group_Buy_ItemVO.getGbitem_id()%>"> 
-			 <input type="submit" value="送出修改">
-	</FORM>
+		<br> 
 
 
 	
-	圖片顯示區及刪除 -->
-	<div id="delete-form" 
-		style="position: relative; left: 480px; bottom: 500px">
+<!-- 	圖片顯示區及刪除 -->
+	<div id="delete-form">
 		<form method="post"
 			action="<%=request.getContextPath()%>/groupBuyItemPicture/groupBuyItemPictureDelete.do"
-			onsubmit="return checkConfirm();"
-			style="display: flex; align-items: center">
+			onsubmit="return checkConfirm();">
 			<br>
 			<c:if test="${list2 != null}">
 
@@ -176,7 +163,7 @@ th, td {
 						src="<%=request.getContextPath()%>/groupBuyItemPicture/groupBuyItemPictureGetOneByGBItemID.do?gbip_id=${gbipVO.gbip_id}"
 						height="128px" width="128px" class="uploadedImg">
 					<input type="hidden" name="gbip_id" value="${gbipVO.gbip_id}">
-					<input class="form-check-input" style="width: 15px; height: 15px;"
+					<input class="form-check-input"
 						type="checkbox" name="gbip_ids" value="${gbipVO.gbip_id}"
 						class="delete_checkbox">
 				</c:forEach>
@@ -188,18 +175,18 @@ th, td {
 				<input type="hidden" name="gbitem_startdate"value="${Group_Buy_ItemVO.gbitem_startdate}">
 				<input type="hidden" name="gbitem_enddate"value="${Group_Buy_ItemVO.gbitem_enddate}">
 				<input type="hidden" name="gbitem_type"value="${Group_Buy_ItemVO.gbitem_type}">
-				<input class="btn btn-primary" type="submit"style="margin-left: 10px;" value="刪除圖片">
+				<input class="btn btn-danger btnIn btnSmall" type="submit"" value="刪除圖片">
 
 			</c:if>
 		</form>
 	</div>
 	<!-- 	上傳圖片區 -->
-	<div style="position: relative; left: 490px; bottom: 300px">
+	<div>
 		<form id="upload"
 			action="<%=request.getContextPath()%>/groupBuyItemPicture/groupBuyItemPictureInsertMulti.do"
 			method="POST" enctype="multipart/form-data" name="form2" onsubmit="return">
-			<a href="javascript:;" class="file">選擇圖片 
-			<input type="file" name="upfile1" multiple id="upfile">
+			<a href="javascript:;" class="file"> 
+			<input type="file" name="upfile1" multiple id="upfile" class="fileInput">
 			</a> 
 			<input type="hidden" name="gbitem_id" value="${Group_Buy_ItemVO.gbitem_id}">
 			<input type="hidden" name="gbitem_name"value="${Group_Buy_ItemVO.gbitem_name}"> 
@@ -209,10 +196,16 @@ th, td {
 			<input type="hidden" name="gbitem_startdate"value="${Group_Buy_ItemVO.gbitem_startdate}"> 
 			<input type="hidden" name="gbitem_enddate"value="${Group_Buy_ItemVO.gbitem_enddate}"> 
 			<input type="hidden" name="gbitem_type"value="${Group_Buy_ItemVO.gbitem_type}">
-			<input class="button btn btn-primary" type="submit" value="上傳圖片"style="margin: 0 0 27px 10px">
+			<input class="button btn btn-dark btnIn btnSmall" type="submit" value="上傳圖片">
 		</form>
-		<div id="picPreview" style="position: absolute; top: 80px; display: flex; flex-wrap: wrap; width: 450px"></div>
+		<div id="picPreview"></div>
 	</div>
+	<div class="subBlock">
+	<input type="hidden" name="action" value="update">
+			 <input type="hidden" name="gbitem_id" value="<%=group_Buy_ItemVO.getGbitem_id()%>"> 
+			 <input type="submit" value="送出修改" class="btn btn-success btnIn">
+	</div>
+	</FORM>
 		</section>
 	</main>
 	

@@ -4,7 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
-MemVO memVO = (MemVO) session.getAttribute("memVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
+MemVO memVO = (MemVO) session.getAttribute("memVO"); 
+Integer mem_id = (Integer)session.getAttribute("mem_id");
 %>
 <%= memVO==null %>
 <!DOCTYPE html>

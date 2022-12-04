@@ -15,6 +15,15 @@ Group_BuyVO group_BuyVO = (Group_BuyVO) request.getAttribute("Group_BuyVO");
 <title>單一團購團資料 - listOneGroupBuy.jsp</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <style>
+section {
+ 			height: 100%; 
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+            background-color: #FFDEE9;
+            background-repeat: no-repeat;
+            background-size: cover;
+            justify-content: center;
+        }
+        
 table#table-1 {
 	background-color: #CCCCFF;
 	border: 2px solid black;
@@ -35,10 +44,9 @@ h4 {
 
 <style>
 table {
-	width: 600px;
-	background-color: white;
+	width: 800px;
 	margin-top: 5px;
-	margin-bottom: 5px;
+	margin-left:10% !important;
 }
 
 table, th, td {
@@ -47,7 +55,29 @@ table, th, td {
 
 th, td {
 	padding: 5px;
+	text-align: center !important;
+}
+
+.titleBlock{
+	text-align:center;
+	font-size: 24px;
+	font-weight: 700;
+}
+
+.btnTitle {
+	width: 1000px;
 	text-align: center;
+}
+
+.btn-info {
+	width: 200px;
+	border-radius: 20px !important;
+	margin-top: 15px;
+}
+
+.tableTitle {
+	background-color: black;
+	color: white;
 }
 </style>
 </head>
@@ -59,13 +89,13 @@ th, td {
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
 <!-- 		把原本body的東西貼到這邊 -->
-<h3>單一團購團資料 - listOneGroupBuy.jsp</h3>
-				<h4>
-					<a href="<%=request.getContextPath()%>/backend/group_buy/select_page.jsp">回首頁</a>
-				</h4>
+<div class="btnTitle">
+<button onclick="location.href='<%=request.getContextPath()%>/backend/group_buy/select_page.jsp'" class="btn btn-info">回首頁</button>
+</div>
+<div class="titleBlock">單一團購團資料</div>
 				
 				<table>
-		<tr>
+		<tr class="tableTitle">
 			<th>團購團編號</th>
 			<th>團購主編號</th>
 			<th>團購商品編號</th>

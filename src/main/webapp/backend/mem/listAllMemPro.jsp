@@ -70,12 +70,11 @@
 /* <!-- ===========================================樣式欄位================================================================== --> */
 table#table-1 {
 	background-color: #212529;
-	border: 2px solid black;
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
 	width: 1000px;
-	margin-top: 5px;
+	margin-top: 20px;
 	margin-bottom: 5px;
 }
 
@@ -86,7 +85,8 @@ table#table-1 h4 {
 }
 
 h3 {
-	color: #6c757d;
+	color: black;
+	font-weight: 700 !important;
 }
 
 h4 {
@@ -116,6 +116,28 @@ th, td {
 	text-align: center;
 }
 
+.btnIn{
+	border-radius: 20px !important;
+}
+
+.thTitle {
+ background-color: #B5FFFC !important;
+ border: none;
+}
+
+.btnBlock{
+		margin-top: 30px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+section {
+ 			height: 100%; 
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+            background-color: #FFDEE9;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
 </style>
 
 </head>
@@ -128,9 +150,9 @@ th, td {
 
 	<table id="table-1">
 		<tr>
-			<th><h3>會員資料</h3>
+			<th class="thTitle"><h3>會員資料</h3>
 				<h4>
-					<a class="btn btn-light" href="<%=request.getContextPath()%>/backend/mem/select_page.jsp">回到會員資料查詢</a>
+					
 				</h4></th>
 		</tr>
 	</table>
@@ -174,7 +196,7 @@ th, td {
 					<td>
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/MemServlet"
 							style="margin-bottom: 0px;">
-							<input type="submit" onclick="return up_confirm()" value="修改"> 
+							<input type="submit" onclick="return up_confirm()" value="修改" class="btn btn-warning btnIn"> 
 							<input type="hidden" name="mem_id" value="${memVO.mem_id}"> 
 							<input type="hidden" name="action" value="getOne_For_Update">
 						</FORM>
@@ -182,7 +204,7 @@ th, td {
 					<td>
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/MemServlet"
 							style="margin-bottom: 0px;">
-							<input type="submit" onclick="return de_confirm()" value="刪除"> 
+							<input type="submit" onclick="return de_confirm()" value="刪除" class="btn btn-danger btnIn"> 
 							<input type="hidden" name="mem_id" value="${memVO.mem_id}"> 
 							<input type="hidden" name="action" value="delete">
 						</FORM>
@@ -193,7 +215,10 @@ th, td {
 		</tbody>
 
 	</table>
-	
+	<div class="btnBlock">
+	<a class="btn btn-success" href="<%=request.getContextPath()%>/backend/mem/select_page.jsp">回到會員資料查詢</a>
+	</div>
+	</section>
 
 <script>
 

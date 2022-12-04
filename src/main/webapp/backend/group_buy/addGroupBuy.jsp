@@ -14,6 +14,14 @@ Group_BuyVO group_BuyVO = (Group_BuyVO) request.getAttribute("Group_BuyVO");
 <title>團購團資料新增 - addGroupBuy.jsp</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <style>
+section {
+ 			height: 100%; 
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+            background-color: #FFDEE9;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
 table#table-1 {
 	background-color: #CCCCFF;
 	border: 2px solid black;
@@ -33,13 +41,6 @@ h4 {
 </style>
 
 <style>
-table {
-	width: 800px;
-	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
-}
-
 table, th, td {
 	border: 0px solid #CCCCFF;
 }
@@ -47,6 +48,59 @@ table, th, td {
 th, td {
 	padding: 1px;
 }
+
+.btnTitle {
+	width: 1000px;
+	text-align: center;
+}
+
+.btn-info {
+	width: 200px;
+	border-radius: 20px !important;
+	margin-top: 15px;
+}
+
+#tableIn{
+	width: 650px !important;
+	margin-top: 1px;
+	margin-left: 15% !important;
+}
+
+.titleBlock{
+	text-align:center;
+	font-size: 24px;
+	font-weight: 700;
+}
+
+.thTitle {
+	float: left;
+}
+
+.btnIn {
+	width: 200px;
+	border-radius: 20px !important;
+}
+
+.btnBlock {
+	text-align: center;
+}
+
+select, input {
+    	width: 450px;
+    	height: 30px;
+    	border-radius: 20px;
+    	border: none;
+    	text-align: center;
+    }
+    
+select:focus, input:focus {
+	border: 2px solid pink !important;
+}
+
+td {
+	margin-bottom: 10px !important;
+}
+
 </style>
 </head>
 <body>
@@ -55,11 +109,11 @@ th, td {
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
 <!-- 		把原本body的東西貼到這邊 -->
-<h4>
-	<a href="<%=request.getContextPath()%>/backend/group_buy/select_page.jsp">回首頁</a>
-</h4>
+<div class="btnTitle">
+<button onclick="location.href='<%=request.getContextPath()%>/backend/group_buy/select_page.jsp'" class="btn btn-info">回首頁</button>
+</div>
 				
-<h3>資料新增:</h3>
+<div class="titleBlock">新增團購團</div>
 				
 <%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
@@ -71,62 +125,63 @@ th, td {
 		</ul>
 	</c:if>
 				<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/GroupBuyServlet" name="form1">
-		<table>
+		<table id="tableIn">
 			
 			<tr>
-				<td>團購主的會員編號:<font color=red><b>*</b></font></td>
+				<td class="thTitle">團購主的會員編號:<font color=red><b>*</b></font></td>
 				<td><input type="TEXT" name="mem_id" size="45" placeholder = "請輸入數字"
 					value="<%=group_BuyVO == null ? "" : group_BuyVO.getMem_id()%>" /></td>
 			</tr>
 			<tr>
-				<td>團購商品編號:</td>
+				<td class="thTitle">團購商品編號:</td>
 				<td><input type="TEXT" name="gbitem_id" size="45" placeholder = "請輸入數字"
 					value="<%=group_BuyVO == null ? "" : group_BuyVO.getGbitem_id()%>" /></td>
 			</tr>
 			<tr>
-				<td>團購商品數量低標</td>
+				<td class="thTitle">團購商品數量低標</td>
 				<td><input type="TEXT" name="gb_min" size="45" placeholder = "請輸入數字"
 					value="<%=group_BuyVO == null ? "" : group_BuyVO.getGb_min()%>" /></td>
 			</tr>
 			<tr>
-				<td>目前團購商品下訂總數</td>
+				<td class="thTitle">目前團購商品下訂總數</td>
 				<td><input type="TEXT" name="gb_amount" size="45" placeholder = "請輸入數字"
 					value="<%=group_BuyVO == null ? "" : group_BuyVO.getGb_amount()%>" /></td>
 			</tr>
 			
 			<tr>
-				<td>團購開始日期:</td>
+				<td class="thTitle">團購開始日期:</td>
 				<td><input name="gbstart_date" id="f_date1" type="text"></td>
 			</tr>
 			<tr>
-				<td>團購結束下檔日期:</td>
+				<td class="thTitle">團購結束下檔日期:</td>
 				<td><input name="gbend_date" id="f_date2" type="text"></td>
 			</tr>
 			
 			<!-- 	//selected disabled hidden -->
 			<c:if test="value=0">超出團購期限下架</c:if>
 			<tr>
-				<td>團購團狀態:<font color=red><b>*</b></font></td>
+				<td class="thTitle">團購團狀態:<font color=red><b>*</b></font></td>
 				<td><select size="1" name="gb_status">
 						<option value="0">參團人數不足</option>
 						<option value="1">參團人數已達標</option>
 				</select></td>
 			</tr>
 			<tr>
-				<td>團購價格</td>
+				<td class="thTitle">團購價格</td>
 				<td><input type="TEXT" name="gb_price" size="45" placeholder = "請輸入數字"
 					value="<%=group_BuyVO == null ? "" : group_BuyVO.getGb_price()%>" /></td>
 			</tr>
 			<tr>
-				<td>團購名稱:<font color=red><b>*</b></font></td>
+				<td class="thTitle">團購名稱:<font color=red><b>*</b></font></td>
 				<td><input type="TEXT" name="gb_name" size="45" placeholder = "請輸入文字"
 					value="<%=(group_BuyVO == null) ? "" : group_BuyVO.getGb_name()%>" /></td>
 			</tr>
 		</table>
 		<br> 
-		
+		<div class="btnBlock">
 		<input type="hidden" name="action" value="insert"> 
-		<input type="submit" value="送出新增">
+		<input type="submit" value="送出新增" class="btn btn-success btnIn">
+		</div>
 	</FORM>
 				
 		</section>
@@ -161,7 +216,7 @@ try {
 
 <style>
 .xdsoft_datetimepicker .xdsoft_datepicker {
-	width: 300px; /* width:  300px; */
+	width: 700px; /* width:  300px; */
 }
 
 .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {

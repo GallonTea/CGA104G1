@@ -8,6 +8,7 @@ String mem_email=(String)session.getAttribute("mem_email");
 MemService memSvc = new MemService();
 MemVO memVO= memSvc.findByMemId(mem_id);
 session.setAttribute("memVO", memVO);
+session.invalidate();
 %>
 <%= memVO==null %>
 

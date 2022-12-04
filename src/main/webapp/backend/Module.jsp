@@ -5,8 +5,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<!-- 第9行一定要記得複製!!! -->
+<!-- 第9、10行一定要記得複製!!! -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
 <!-- 原本的STYLE放這邊(可能需要調一下) -->
 </head> 
 <body>

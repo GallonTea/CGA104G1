@@ -21,6 +21,14 @@
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/news.css">
 	<style>
+/* 		設定背景顏色 */
+		section {
+ 			height: 100%; 
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+            background-color: #FFDEE9;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
 /* 		設定上方滾動公告 */
 		.iconfont {
             font-size: 16px;

@@ -7,6 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+import com.mem.model.MemUtil;
+import com.mem.model.MemVO;
+
 public class ArticleJDBCDAO implements ArticleDAO_interface{
 	String driver = "com.mysql.cj.jdbc.Driver";
 	String url = "jdbc:mysql://localhost:3306/ba_rei?serverTimezone=Asia/Taipei";
@@ -336,6 +339,57 @@ public class ArticleJDBCDAO implements ArticleDAO_interface{
 		return list;
 	}
 	
+	public List<ArticleVO> getAllArt(Map<String, String[]> map) {
+		List<ArticleVO> list = new ArrayList<ArticleVO>();
+		ArticleVO articleVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			String MySql = "select * from article "
+					+ArticleUtil.getWhereCondition(map)
+					+"order by article_id";
+			pstmt = con.prepareStatement(MySql);
+			rs = pstmt.executeQuery();
+		
+			System.out.println(MySql);
+			while (rs.next()) {
+				articleVO = new ArticleVO();
+				articleVO.setArticle_id(rs.getInt("article_id"));
+				articleVO.setMem_id(rs.getInt("mem_id"));
+				articleVO.setSort_id(rs.getInt("sort_id"));
+				articleVO.setArticle_title(rs.getString("article_title"));
+				articleVO.setArticle_content(rs.getString("article_content"));
+				articleVO.setArticle_status(rs.getInt("article_status"));
+				articleVO.setArticle_like(rs.getInt("article_like"));
+				articleVO.setArticle_dislike(rs.getInt("article_dislike"));
+				articleVO.setArticle_publish(rs.getDate("article_publish"));
+				articleVO.setArticle_update(rs.getDate("article_update"));
+				list.add(articleVO);
+			}
+
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null || pstmt != null || con != null) {
+				try {
+					rs.close();
+					pstmt.close();
+					con.close();
+					
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
 	public static void main(String[] args) {
 		ArticleJDBCDAO dao = new ArticleJDBCDAO();
 		
@@ -392,5 +446,7 @@ public class ArticleJDBCDAO implements ArticleDAO_interface{
 					System.out.println();
 				}
 	}
+	
+
 
 }

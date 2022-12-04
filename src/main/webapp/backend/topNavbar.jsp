@@ -21,6 +21,11 @@ session.setAttribute("empList", empList);
 		.card-body{
 			padding: 0 32px !important;
 		}
+		
+		.identity{
+			display:flex;
+			align-items: center;
+		}
 	</style>
 </head>
 

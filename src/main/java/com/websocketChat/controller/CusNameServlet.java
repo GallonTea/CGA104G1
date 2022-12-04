@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import redis.clients.jedis.Jedis;
+
 @WebServlet("/CusNameServlet")
 public class CusNameServlet extends HttpServlet{
 
@@ -20,6 +22,7 @@ public class CusNameServlet extends HttpServlet{
 		String userName = req.getParameter("userName");
 
 		req.setAttribute("userName", userName);
+		
 		
 		RequestDispatcher dispatcher = req.getRequestDispatcher("/frontend/chat/privateChat.jsp");
 		dispatcher.forward(req, res);

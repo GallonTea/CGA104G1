@@ -11,17 +11,14 @@ Group_Buy_ItemVO group_Buy_ItemVO = (Group_Buy_ItemVO) request.getAttribute("Gro
 <title>團購商品資料新增 - addGroupBuyItem.jsp</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <style>
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
+section {
+ 			height: 100%; 
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+            background-color: #FFDEE9;
+            background-repeat: no-repeat;
+            background-size: cover;
+            justify-content: center;
+        }
 
 h4 {
 	color: blue;
@@ -31,10 +28,10 @@ h4 {
 
 <style>
 table {
-	width: 8--px;
-	background-color: white;
+	width: 700px;
 	margin-top: 1px;
 	margin-bottom: 1px;
+	margin-left: 25%;
 }
 
 table, th, td {
@@ -44,30 +41,67 @@ table, th, td {
 th, td {
 	padding: 1px;
 }
+
+td{
+	color: black;
+	font-weight: 700;
+	margin-bottom: 10px !important;
+}
+
+tr {
+	margin-bottom: 10px !important;
+}
+
+.titleBlock{
+	text-align:center;
+	font-size: 24px;
+	font-weight: 700;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.btnTitle {
+	width: 1000px;
+	text-align: center;
+	margin-top: 10px;
+}
+
+select, input {
+    	width: 450px;
+    	height: 30px;
+    	border-radius: 20px;
+    	border: none;
+    	text-align: center;
+    }
+    
+select:focus, input:focus {
+	border: 2px solid pink !important;
+}
+
+.subBlock {
+	text-align: center;
+}
+
+.btnSub {
+	width: 200px;
+	border-radius: 20px !important;
+}
 </style>
 
 </head>
-<body bgcolor='white'>
+<body>
 <!-- 複製起點 -->
 	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
 	<main>
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
 <!-- 		把原本body的東西貼到這邊 -->
-<table id="table-1">
-		<tr>
-			<td>
-				<h3>團購商品資料新增 - addGroupBuyItem.jsp</h3>
-			</td>
-			<td>
-				<h4>
-					<a href="<%=request.getContextPath()%>/backend/group_Buy_Item/select_page.jsp">回首頁</a>
-				</h4>
-			</td>
-		</tr>
-	</table>
+<div class="btnTitle">
+<button onclick="location.href='<%=request.getContextPath()%>/backend/group_Buy_Item/select_page.jsp'" class="btn btn-info">回首頁</button>
+</div>
+				
+<div class="titleBlock">新增團購商品</div>
 
-	<h3>資料新增:</h3>
 
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
@@ -126,8 +160,11 @@ th, td {
 					value="<%=(group_Buy_ItemVO == null) ? "" : group_Buy_ItemVO.getGbitem_type()%>" /></td>
 			</tr>
 		</table>
-		<br> <input type="hidden" name="action" value="insert"> <input
-			type="submit" value="送出新增">
+		<br> 
+		<div class="subBlock">
+		<input type="hidden" name="action" value="insert"> 
+		<input type="submit" value="送出新增" class="btn btn-success btnSub">
+		</div>
 	</FORM>
 		</section>
 	</main>

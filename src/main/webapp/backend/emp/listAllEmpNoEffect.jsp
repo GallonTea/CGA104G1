@@ -8,30 +8,13 @@
 
 <%-- <jsp:useBean id="listEmps_ByCompositeQuery" scope="request" type="java.util.List<EmpVO>" /> <!-- 於EL此行可省略 --> --%>
 
-<%@include file="/backend/backNavbar.jsp"%>
 <html>
+
+
 <head>
-<title>複合查詢 - listAllEmpNoEffect.jsp</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
-	crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-	crossorigin="anonymous"></script>
-
+<title>所有員工資料</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <style>
-/* <!-- ===========================================樣式欄位================================================================== --> */
-
-/* tr:nth-child(odd){ */
-/*   background:white; */
-/* } */
-
-/* tr:nth-child(even){ */
-/*   background:#a4a9ad; */
-/* } */
 .styled-table {
 	margin-left: auto;
 	margin-right: auto;
@@ -70,40 +53,6 @@
 	color: #212529;
 }
 
-/* <!-- ===========================================樣式欄位================================================================== --> */
-table#table-1 {
-	background-color: #212529;
-	border: 2px solid black;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-	width: 800px;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
-h3 {
-	color: #6c757d;
-}
-
-h4 {
-	color: blue;
-	display: inline;
-}
-
-/*   a{ */
-/*     color: white; */
-/*     display: inline; */
-/*   } */
-</style>
-
-<style>
 table {
 	margin-left: auto;
 	margin-right: auto;
@@ -111,39 +60,83 @@ table {
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
-/*    table, th, td {  */
-/*      border: 1px solid #212529;  */
-/*    }  */
 th, td {
 	padding: 5px;
 	text-align: center;
 }
-/*   td:first-child{ */
-/*   border-top-left-radius: 10px; */
-/*   border-bottom-left-radius: 10px; */
-/* } */
 
-/* td:last-child{ */
-/*   border-top-right-radius: 10px; */
-/*   border-bottom-right-radius: 10px; */
-/* } */
+section {
+ 			height: 100%; 
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+            background-color: #FFDEE9;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+.box-a{width:789px;height:100px; float:left}
+.box-b{width:px;height:100px; float:left}
+</style>
+
+<style>
+  table {
+    height:90px;
+	width: 800px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 10%;
+  }
+  table, th, td {
+    border: 1px solid #CCCCFF;
+  }
+  th, td {
+  	height:50px;
+    padding: 5px;
+    text-align: center;
+    color: black;
+  }
+  
+  th{
+  	background-color: black;
+  	color: white;
+  }
+  
+  tr{
+  text-align: center !important;
+  }
+  
+  .btnTitle {
+	margin-top: 2% !important;
+	margin-bottom: 2% !important;
+	text-align :center;
+}
+  
+  .titleIn {
+	font-size: 24px;
+	color: black;
+	font-weight: 700;
+	text-align :center;
+}
+
+.btnIn {
+	border-radius: 20px !important;
+}
+
+tr:nth-child(even) {
+	background-color: rgba(255,255,255,0.4);
+}
 </style>
 
 </head>
-<body bgcolor='white'>
-
-	<table id="table-1">
-		<tr>
-			<th><h3>所有員工資料</h3>
-				<h4>
-					<a class="btn btn-light" href="select_page.jsp">員工資料查詢首頁</a>
-				</h4></th>
-		</tr>
-	</table>
-
-	<!-- ===========================================樣式欄位================================================================== -->
-
-	<table class="styled-table">
+<body>
+<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+			<div class="btnTitle">
+			<div class="titleIn">查詢員工資料</div><br>
+			<button onclick="location.href='<%=request.getContextPath()%>/backend/emp/select_page.jsp'" class="btn btn-primary btnIn">回員工管理首頁</button>
+			</div>
+<table class="styled-table">
 		<thead>
 			<tr>
 				<th>員工編號</th>
@@ -164,7 +157,7 @@ th, td {
 					<td>
 						<FORM METHOD="post" ACTION="EmpServlet"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="修改"> <input type="hidden"
+							<input type="submit" value="修改" class="btn btn-warning btnIn"> <input type="hidden"
 								name="emp_id" value="${empVO.emp_id}"> <input
 								type="hidden" name="action" value="getOne_For_Update">
 						</FORM>
@@ -172,7 +165,7 @@ th, td {
 					<td>
 						<FORM METHOD="post" ACTION="EmpServlet"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="刪除"> <input type="hidden"
+							<input type="submit" value="刪除" class="btn btn-danger btnIn"> <input type="hidden"
 								name="emp_id" value="${empVO.emp_id}"> <input
 								type="hidden" name="action" value="delete">
 						</FORM>
@@ -181,7 +174,7 @@ th, td {
 						<FORM METHOD="post"
 							ACTION="../../backend/emp_effect/Emp_effectServlet"
 							style="margin-bottom: 0px;">
-							<input type="submit" id="listBtn" value="查詢"> <input
+							<input type="submit" id="listBtn" value="查詢" class="btn btn-info btnIn"> <input
 								type="hidden" name="emp_id" value="${empVO.emp_id}"> <input
 								type="hidden" name="action" value="getOne_For_Display">
 						</FORM>
@@ -191,5 +184,9 @@ th, td {
 		</tbody>
 
 	</table>
+</div>
+		</section>
+	</main>
+
 </body>
 </html>

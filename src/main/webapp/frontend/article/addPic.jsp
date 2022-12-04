@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@include file="/frontend/frontNavbar.jsp"%>
 <!doctype html>
 <html lang="en">
 
@@ -95,12 +95,11 @@
     <div id="newImgInfo"></div>
     <form method="post" class="form1" action="/CGA104G1/Article_identityServlet">
         <input type="hidden" name="action" value="insert">
-        <input type="hidden" name="mem_id" value=3>
+        <input type="hidden" name="mem_id" value="${memVO.mem_id}">
         <textarea class="picHtml" name="article_pic" style="display: none;"></textarea>
         <button type="submit" class="btn btn-success">確認送出</button>
     </form>
 
-	<script src="<%=request.getContextPath() %>/resources/static/js/navbar.js"></script>
     <script>
         (function ($) {
             var width_crop = 100, // 圖片裁切寬度 px 值

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.article.model.*"%>
+<%@include file="/frontend/frontNavbar.jsp"%>
 <%
   ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO"); 
 %>
@@ -21,7 +22,7 @@
         .title {
             /* width: 75%; */
             height: 40px;
-            background-color: #33b5e5;
+            background-color: black;
             position: relative;
             left: 50%;
             transform: translate(-50%);
@@ -125,9 +126,8 @@
                     <span id="tcontent">文章內容</span>
                     <textarea name="article_content" class="editor" value="${param.article_content}">${param.article_content}</textarea>
                 </div>
-<%--                 <input type="text" name="sort_id" value="${param.sort_id}"> --%>
                 <input type="hidden" name="article_id" value="${param.article_id}">
-                <input type="hidden" name="mem_id" value="1">
+                <input type="hidden" name="mem_id" value="${memVO.mem_id}">
                 <input type="hidden" name="action" value="update">
                 <div style="width:100%; display:flex;">
                 <div style="width:89%;"></div>
@@ -139,7 +139,6 @@
     </div>
 
     <script src="<%=request.getContextPath() %>/ckeditor5/build/ckeditor.js"></script>
-    <script src="<%=request.getContextPath() %>/resources/static/js/navbar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.7/dist/sweetalert2.all.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.1.js"
             integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>

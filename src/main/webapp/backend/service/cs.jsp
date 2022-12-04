@@ -31,6 +31,7 @@
 		
 		#row {
 			width: 25%;
+			max-height: 450px;
 			overflow-x:hidden;
 			overflow-y:auto;
 			margin-left: 50px;
@@ -265,6 +266,7 @@
 				"message" : message
 			};
 			webSocket.send(JSON.stringify(jsonObj));
+			showaMessage();
 			inputMessage.value = "";
 			inputMessage.focus();
 		}
@@ -315,6 +317,21 @@
 			webSocket.send(JSON.stringify(jsonObj));
 		}, 50)
 	}
+	
+	function showaMessage() {
+		var friend = statusOutput.textContent;
+		updateFriendName(friend);
+		var jsonObj = {
+				"type" : "history",
+				"sender" : self,
+				"receiver" : friend,
+				"message" : ""
+			};
+		setTimeout(function(){
+			webSocket.send(JSON.stringify(jsonObj));
+		}, 50)
+	}
+	
 	
 	function disconnect() {
 		webSocket.close();

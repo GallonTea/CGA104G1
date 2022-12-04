@@ -37,7 +37,9 @@
             padding: 16px;
             background: #F7F7F7;
         }
-
+        [v-cloak] {
+            display: none;
+        }
         div.half {
             display: inline-block;
             width: 50%;
@@ -203,7 +205,7 @@
     </style>
 </head>
 <body>
-<div class="contact-us" id="app">
+<div class="contact-us" id="app" v-cloak>
     <h1>商品詳細資訊</h1>
     <v-form v-slot="{ errors,onSubmit }" enctype="multipart/form-data" @submit="onSubmit(submitForm)">
         <div  class="one">

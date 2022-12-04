@@ -7,32 +7,18 @@
 %>
 <html>
 <head>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
-<title>權限新增資料 </title>
 
-<style>
-  table#table-1 {
-	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
-</style>
+<title>新增權限</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
 
 <style>
   table {
 	width: 450px;
-	background-color: white;
+	height: 200px;
 	margin-top: 1px;
 	margin-bottom: 1px;
+	margin-left: 25%;
   }
   table, th, td {
     border: 0px solid #CCCCFF;
@@ -40,25 +26,25 @@
   th, td {
     padding: 1px;
   }
+    .btn-warning{
+  	margin-top: 15px;
+  }
+  
+  .btnTitle{
+  	margin-top: 25px;
+  }
 </style>
 
 </head>
-<body bgcolor='white'>
+
+<body>
+
+
 <nav><%@include file="/backend/topNavbar.jsp"%></nav>
 	<main>
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
-<table id="table-1">
-	<tr><td>
-		 <h3>權限資料新增 - addEmp.jsp</h3></td><td>
-		 <h4><a href="select_page.jsp">首頁</a></h4>
-	</td></tr>
-</table>
-
-<h3>資料新增:</h3>
-
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
+			<c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
@@ -66,7 +52,10 @@
 		</c:forEach>
 	</ul>
 </c:if>
-
+<div class="btnTitle">
+			<button onclick="location.href='<%=request.getContextPath()%>/backend/effect/select_page.jsp'" class="btn btn-primary btnIn">回權限管理首頁</button>
+		</div>
+		<div class="titleBlock">新增權限</div>
 <FORM METHOD="post" ACTION="EffectServlet" name="form1">
 <table>
 	<tr>
@@ -88,8 +77,11 @@
 
 </table>
 <br>
+<div class="subBlock">
 <input type="hidden" name="action" value="insert">
-<input type="submit" value="送出新增"></FORM>
+
+<input type="submit" value="送出新增" class="btn btn-success btnIn"></FORM>
+</div>
 		</section>
 	</main>
 

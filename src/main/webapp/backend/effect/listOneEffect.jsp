@@ -8,7 +8,8 @@ EffectVO effectVO = (EffectVO) request.getAttribute("effectVO");
 <head>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <title>權限資料</title>
-
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
 <style>
   table#table-1 {
 	background-color: #CCCCFF;
@@ -29,9 +30,9 @@ EffectVO effectVO = (EffectVO) request.getAttribute("effectVO");
 <style>
   table {
 	width: 600px;
-	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	margin-left: 20%;
   }
   table, th, td {
     border: 1px solid #CCCCFF;
@@ -43,19 +44,19 @@ EffectVO effectVO = (EffectVO) request.getAttribute("effectVO");
 </style>
 
 </head>
-<body bgcolor='white'>
+
+<body>
+
+
 <nav><%@include file="/backend/topNavbar.jsp"%></nav>
 	<main>
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
-<table id="table-1">
-	<tr><td>
-		 <h3>權限資料</h3>
-		 <h4><a href="select_page.jsp">回首頁</a></h4>
-	</td></tr>
-</table>
-
-<table>
+		<div class="btnTitle">
+			&ensp;<button onclick="location.href='<%=request.getContextPath()%>/backend/effect/select_page.jsp'" class="btn btn-primary btnIn">回權限管理首頁</button>
+		</div>
+		<div class="titleBlock">單一權限查詢</div>
+			<table>
 	<tr>
 		<th>權限編號</th>
 		<th>權限名稱</th>
@@ -71,6 +72,7 @@ EffectVO effectVO = (EffectVO) request.getAttribute("effectVO");
 </table>
 		</section>
 	</main>
+
 
 
 </body>

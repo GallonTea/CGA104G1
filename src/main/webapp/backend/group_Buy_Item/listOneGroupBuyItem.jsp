@@ -11,17 +11,14 @@ Group_Buy_ItemVO group_Buy_ItemVO = (Group_Buy_ItemVO) request.getAttribute("Gro
 <title>單一團購商品資料 - listOneGroupBuyItem.jsp</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <style>
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
+section {
+ 			height: 100%; 
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+            background-color: #FFDEE9;
+            background-repeat: no-repeat;
+            background-size: cover;
+            justify-content: center;
+        }
 
 h4 {
 	color: blue;
@@ -31,10 +28,10 @@ h4 {
 
 <style>
 table {
-	width: 600px;
-	background-color: white;
+	width: 800px;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	margin-left: 10%;
 }
 
 table, th, td {
@@ -46,6 +43,28 @@ th, td {
 	text-align: center;
 	color: black;
 }
+
+th {
+	color: white;
+	text-align: center;
+}
+
+.titleBlock{
+	text-align:center;
+	font-size: 24px;
+	font-weight: 700;
+	margin-bottom: 20px;
+}
+
+.btnTitle {
+	width: 1000px;
+	text-align: center;
+	margin-top: 20px;
+}
+
+.tableTitle {
+	background-color: black;
+	text-align: center;
 }
 </style>
 
@@ -57,20 +76,15 @@ th, td {
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
 <!-- 		把原本body的東西貼到這邊 -->
-<table id="table-1">
-		<tr>
-			<td>
-				<h3>單一團購商品資料 - listOneGroupBuyItem.jsp</h3>
-				<h4>
-					<a
-						href="<%=request.getContextPath()%>/backend/group_Buy_Item/select_page.jsp">回首頁</a>
-				</h4>
-			</td>
-		</tr>
-	</table>
+
+<div class="btnTitle">
+<button onclick="location.href='<%=request.getContextPath()%>/backend/group_Buy_Item/select_page.jsp'" class="btn btn-info">回首頁</button>
+</div>
+<div class="titleBlock">單一團購商品資料</div>
+
 
 	<table>
-		<tr>
+		<tr class="tableTitle">
 			<th>團購商品編號</th>
 			<th>團購商品名稱</th>
 			<th>團購商品內容</th>

@@ -18,72 +18,80 @@ pageContext.setAttribute("list2", list2);
 <head>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <title>所有員工資料</title>
-
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <style>
+section {
+ 			height: 100%; 
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+            background-color: #FFDEE9;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
 
-  table#table-1 {
-  
-	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
 .box-a{width:789px;height:100px; float:left}
 .box-b{width:px;height:100px; float:left}
-.box-a{ border:1px solid #00F}
-.box-b{ border:1px solid #F00}
 </style>
 
 <style>
   table {
     height:90px;
-	width: 780px;
-	background-color: white;
+	width: 800px;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	margin-left: 10%;
   }
   table, th, td {
-   
     border: 1px solid #CCCCFF;
   }
   th, td {
- 
   	height:50px;
     padding: 5px;
     text-align: center;
+    color: black;
   }
+  
+  th{
+  	background-color: black;
+  	color: white;
+  }
+  
+  tr{
+  text-align: center;
+  }
+  
+  .btnTitle {
+	margin-top: 2% !important;
+	margin-bottom: 2% !important;
+	text-align :center;
+}
+  
+  .titleIn {
+	font-size: 24px;
+	color: black;
+	font-weight: 700;
+	text-align :center;
+}
+
+.btnIn {
+	border-radius: 20px !important;
+}
+
+tr:nth-child(even) {
+	background-color: rgba(255,255,255,0.4);
+}
 </style>
 
 </head>
-<body bgcolor='white'>
-
 <nav><%@include file="/backend/topNavbar.jsp"%></nav>
 	<main>
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
-<div class="box-a">
-<table id="table-1">
-	<tr><td>
-		 <h3>所有員工資料</h3>
-		 <h4><a href="select_page.jsp">回首頁</a></h4>
-	</td></tr>
-</table>
-<!-- <div class="box-b"> -->
-<!-- <table id="table-1"> -->
-<!-- 	<tr><td> -->
-<!-- 		 <h3>權限表</h3> -->
-<!-- 	</td></tr> -->
-<!-- </table> -->
-<!-- </div> -->
-<table  >
+
+			<div class="btnTitle">
+			<div class="titleIn">所有員工資料</div><br>
+			<button onclick="location.href='<%=request.getContextPath()%>/backend/emp/select_page.jsp'" class="btn btn-primary btnIn">回員工管理首頁</button>
+			</div>
+<table>
 	<tr >
 		<th>員工姓名</th>
 		<th>員工帳號</th>
@@ -110,19 +118,19 @@ pageContext.setAttribute("list2", list2);
 		
 		
 			  <FORM METHOD="post" ACTION="EmpServlet" style="margin-bottom: 0px;">
-			     <input type="submit" value="修改">
+			     <input type="submit" value="修改" class="btn btn-warning btnIn">
 			     <input type="hidden" name="emp_id"  value="${empVO.emp_id}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
 			  <FORM METHOD="post" ACTION="EmpServlet" style="margin-bottom: 0px;">
-			     <input type="submit" value="刪除">
+			     <input type="submit" value="刪除" class="btn btn-danger btnIn">
 			     <input type="hidden" name="emp_id"  value="${empVO.emp_id}">
 			     <input type="hidden" name="action" value="delete"></FORM>
 			</td>
 			<td>
 			  <FORM METHOD="post" ACTION="../../backend/emp_effect/Emp_effectServlet" style="margin-bottom: 0px;">
-			     <input type="submit" id="listBtn" value="查詢">
+			     <input type="submit" id="listBtn" value="查詢" class="btn btn-info btnIn">
 			     <input type="hidden" name="emp_id"  value="${empVO.emp_id}">
 			     <input type="hidden" name="action" value="getOne_For_Display"></FORM>
 			</td>

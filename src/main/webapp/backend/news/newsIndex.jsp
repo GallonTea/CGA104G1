@@ -17,6 +17,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>最新公告管理</title>
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
+	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
 	<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/news.css">
 </head>
 
@@ -57,7 +58,6 @@
                 <div id="flush-collapse${newsVO.newsId}" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
                     data-bs-parent="#accordionFlushExample">
                     <div class="btnArea">
-                    	<button class="btn btn-outline-dark text-nowrap updateNews" type="button" onclick="update()">修改公告</button>
                         <form method="post" action="/CGA104G1/newsServlet">
                         	<input type="hidden" name="newsId" value="${newsVO.newsId}">
                         	<input type="hidden" name="action" value="delete">
@@ -124,11 +124,6 @@
                 });
             $('.addNews').hide();
         })
-        
-        //點擊修改觸發動作
-        function update() {
-        	
-        }
     </script>
 </body>
 

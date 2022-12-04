@@ -6,14 +6,64 @@ EmpVO empVO = (EmpVO) request.getAttribute("empVO");
 %>
 <html>
 <head>
-<script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
 <title>員工資料修改</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 
 <style>
+section {
+ 			height: 100%; 
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+            background-color: #FFDEE9;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+.styled-table {
+	margin-left: auto;
+	margin-right: auto;
+	border-collapse: collapse;
+	margin: auto;
+	font-size: 0.9em;
+	font-family: sans-serif;
+	min-width: 400px;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+.styled-table thead tr {
+	background-color: #212529;
+	color: #ffffff;
+	text-align: left;
+}
+
+.styled-table th, .styled-table td {
+	padding: 12px 15px;
+}
+
+.styled-table tbody tr {
+	border-bottom: 1px solid #dddddd;
+}
+
+.styled-table tbody tr:nth-of-type(even) {
+	background-color: #f3f3f3;
+}
+
+.styled-table tbody tr:last-of-type {
+	border-bottom: 2px solid #212529;
+}
+
+.styled-table tbody tr.active-row {
+	font-weight: bold;
+	color: #212529;
+}
+
+/* <!-- ===========================================樣式欄位================================================================== --> */
 table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
+	display: flex;
+	justify-content: center;
+	margin-left: auto;
+	margin-right: auto;
+	width: 1000px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 
 table#table-1 h4 {
@@ -22,53 +72,91 @@ table#table-1 h4 {
 	margin-bottom: 1px;
 }
 
+h3 {
+	color: black;
+	font-weight: 700 !important;
+	text-align: center;
+}
+
 h4 {
 	color: blue;
 	display: inline;
+	text-align: center;
 }
 
-form#aa {
-	width: 50%;
-	margin: 20px auto;
-}
 </style>
 
 <style>
 table {
-	width:820px;
-	background-color: white;
-	margin-top: 1px;
-	margin-bottom: 1px;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
-
-table, th, td {
-	border: 0px solid #CCCCFF;
-}
-
 th, td {
-	padding: 1px;
+	padding: 5px;
+	text-align: left;
+}
+
+td {
+	color: black;
+	font-weight: 700;
+}
+
+.btnSub{
+	width: 200px;
+	border-radius: 20px !important;
+}
+
+select, input {
+    	width: 350px;
+    	height: 30px;
+    	border-radius: 20px;
+    	border: none;
+    	text-align: center;
+    }
+    
+select:focus, input:focus {
+	border: 2px solid pink !important;
+}
+
+.btnBlock{
+	text-align: center;
+}
+
+.btnIn {
+	border-radius: 20px !important;
 }
 </style>
 
 </head>
-<body bgcolor='white'>
+<body>
 
-	<table id="table-1">
-		<tr>
-			<td>
-				<h3>員工資料修改</h3>
-				<h4>
-					<a href="select_page.jsp">回首頁</a>
-				</h4>
-			</td>
-		</tr>
-	</table>
-
-	<h3>資料修改:</h3>
-
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+<div class="container">
+<table id="table-1">
+	<tr><td>
+		 <h3>員工資料修改 </h3>
+		 <h4><a href="<%=request.getContextPath()%>/backend/emp/select_page.jsp" class="btn btn-primary">回員工管理首頁</a></h4>
+	</td></tr>
+</table>
 
 
-	<FORM METHOD="post" ACTION="EmpServlet" name="form1">
+<%-- 錯誤表列 --%>
+<c:if test="${not empty errorMsgs}">
+	<font style="color:red">請修正以下錯誤:</font>
+	<ul>
+		<c:forEach var="message" items="${errorMsgs}">
+			<li style="color:red">${message}</li>
+		</c:forEach>
+	</ul>
+</c:if>
+
+<FORM METHOD="post" ACTION="/backend/emp/EmpServlet" name="form1">
 		<table>
 		
 			<tr>
@@ -101,26 +189,16 @@ th, td {
 				</select></td>
 		</table>
 
-		<br> <input type="hidden" name="action" value="update"> <input
+		<br> 
+		<div class="btnBlock">
+		<input type="hidden" name="action" value="update"> <input
 			type="hidden" name="emp_id" value="<%=empVO.getEmp_id()%>"> 
-			<input type="submit" value="送出修改">
+			<input type="submit" value="送出修改" class="btn btn-success btnIn">
+			</div>
 	</FORM>
-<script type="text/javascript">
-// $(document).ready(function() {
-	
-// 	switch($('#status').val()){
-// 		case '0':
-// 			$('.status').val(0)
-// 			break;
-// 		case '1':
-// 			$('.status').val(1)
-// 	}
-// 	$('.status').change(function () {
-// 		$('#status').val($('.status option:selected').val());
-// 	});
-// })
-
-</script>
+	</div>
+		</section>
+	</main>
 
 
 
@@ -138,7 +216,6 @@ th, td {
 	height: 151px; /* height:  151px; */
 }
 </style>
-
 <script>
         $.datetimepicker.setLocale('zh');
         $('#f_date1').datetimepicker({

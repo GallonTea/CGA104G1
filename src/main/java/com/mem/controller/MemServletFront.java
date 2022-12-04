@@ -143,13 +143,14 @@ public class MemServletFront extends HttpServlet {
 
 			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				session.setAttribute("memVO", memVO); // 含有輸入格式錯誤的empVO物件,也存入req
+				session.setAttribute("memVO", memVO); 
 				RequestDispatcher failureView = req.getRequestDispatcher("/frontend/mem/updateMem.jsp");
 				failureView.forward(req, res);
 				return; // 程式中斷
 			}
-
+			session.setAttribute("memVO", memVO);
 			/*************************** 2.開始新增資料 ***************************************/
+			
 			MemService memSvc = new MemService();
 			memSvc.updateMem(mem_id, mem_password, mem_name, mem_address, mem_phone, mem_uid, mem_email,
 					mem_sex, mem_dob);

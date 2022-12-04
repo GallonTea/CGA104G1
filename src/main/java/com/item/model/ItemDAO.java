@@ -134,6 +134,52 @@ public class ItemDAO implements ItemDAO_interface {
         return jsonArray;
     }
 
+    public JSONArray frontEndSearch(String keyWords, Integer type) {
+
+        final StringBuilder sql = new StringBuilder().append("From ItemVO  where ");
+        List<ItemVO> list=null;
+        if (keyWords.trim().length() != 0 && !(keyWords == null)) {
+            sql.append(" " + "itemName like :keyWords");
+//            sql.append(" " + "itemName" + " " + "like" + " "  + "'%" + keyWords + "%'" + " ");
+            if (type != 0) {
+                sql.append(" "+"and"+" " + "itemtId" + " " + "=" + " " + type + " ");
+
+            }
+            sql.append("and"+" "+"itemStatus=1");
+            list = getSession().createQuery(sql.toString(), ItemVO.class).setParameter("keyWords","%"+keyWords+"%").list();
+        }
+        if (!(type == 0)&&(keyWords.isEmpty())) {
+
+            sql.append(" " + "itemtId" + " " + "=" + " " + type + " " +"and"+" "+"itemStatus=1");
+            list=getSession().createQuery(sql.toString(), ItemVO.class).list();
+        }
+
+        // sql.append(" "+"ITEM_STATUS"+" "+"="+" "+"0 or ITEM_STATUS=1");
+        JSONArray jsonArray = new JSONArray();
+
+        for (ItemVO itemVO : list) {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("itemId", itemVO.getItemId());
+            jsonObject.put("itemtId", itemVO.getItemtId());
+            jsonObject.put("itemName", itemVO.getItemName());
+            jsonObject.put("itemContent", itemVO.getItemContent());
+            jsonObject.put("itemPrice", itemVO.getItemPrice());
+            jsonObject.put("itemAmount", itemVO.getItemAmount());
+            jsonObject.put("itemStatus", itemVO.getItemStatus());
+            jsonObject.put("itemDate", itemVO.getItemDate());
+            jsonObject.put("itemEndDate", itemVO.getItemEnddate());
+            jsonObject.put("itemtName",itemVO.getItemTypeVO().getItemtName());
+            Encoder encoder = Base64.getEncoder();
+
+            if (itemVO.getPhotos().size() != 0) {
+                String photo64 = encoder.encodeToString(itemVO.getPhotos().get(0).getIpPhoto());
+                jsonObject.put("itemPhoto", photo64);
+            }
+
+            jsonArray.put(jsonObject);
+        }
+        return jsonArray;
+    }
 
     //listAllItems.html
     @Override

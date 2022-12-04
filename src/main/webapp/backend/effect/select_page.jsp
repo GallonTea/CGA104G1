@@ -5,38 +5,28 @@
 <html>
 <head>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
-<title>首頁</title>
+
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
+<title>權限管理首頁</title>
+
 <style>
-  table#table-1 {
-	width: 450px;
-	background-color: #CCCCFF;
-	margin-top: 5px;
-	margin-bottom: 10px;
-    border: 3px ridge Gray;
-    height: 80px;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
+section{
+	text-align: center;
+}
+
 </style>
 
 </head>
-<body bgcolor='white'>
+
+<body>
+
 <nav><%@include file="/backend/topNavbar.jsp"%></nav>
 	<main>
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
-<h3>資料查詢:</h3>
-<table id="table-1">
-   <tr><td><h3>權限首頁</h3></td></tr>
-</table>
+
+			<div class="titleBlock">權限管理首頁</div>
+
 
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
@@ -46,21 +36,16 @@
 		</c:forEach>
 	</ul>
 </c:if>
-<ul>
-  <li><a href='listAllEffect.jsp'>List</a> all Effect.  <br><br></li>
   
-  
-  <li>
     <FORM METHOD="post" ACTION="EffectServlet" >
+    	<b>輸入權限編號:</b>
         <input type="text" name="effect_id">
         <input type="hidden" name="action" value="getOne_For_Display">
-        <input type="submit" value="送出">
-    </FORM>
-  </li>
+        <input type="submit" value="送出" class="btn btn-info btnIn btnSmall">
+    </FORM><br>
 
   <jsp:useBean id="effectSvc" scope="page" class="com.effect.model.EffectService" />
    
-  <li>
      <FORM METHOD="post" ACTION="EffectServlet" >
        <b>選擇權限編號:</b>
        <select size="1" name="effect_id">
@@ -69,11 +54,9 @@
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="送出">
-    </FORM>
-  </li>
+       <input type="submit" value="送出" class="btn btn-info btnIn btnSmall">
+    </FORM><br>
   
-  <li>
      <FORM METHOD="post" ACTION="EffectServlet" >
        <b>選擇權限名稱:</b>
        <select size="1" name="effect_id">
@@ -82,13 +65,13 @@
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="送出">
-     </FORM>
-  </li>
-</ul>
-<ul>
-  <li><a href='addEffect.jsp'>Add</a> a new Effect.</li>
-</ul>
+       <input type="submit" value="送出" class="btn btn-info btnIn btnSmall">
+     </FORM><br>
+		<button onclick="location.href='<%=request.getContextPath()%>/backend/effect/addEffect.jsp'" class="btn btn-success btnL">新增權限</button>
+					&ensp;&ensp;
+		<button onclick="location.href='<%=request.getContextPath()%>/backend/effect/listAllEffect.jsp'" class="btn btn-dark btnL">查詢所有權限</button>	
+		</section>
+	</main>
 
 
 		</section>

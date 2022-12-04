@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@include file="/frontend/frontNavbar.jsp"%>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -96,11 +97,15 @@
 
         .input {
             position: relative;
-            /* background-image: linear-gradient(to top, #a8edea 0%, #fed6e3 100%); */
-            /* padding: 3px; */
             display: inline-block;
-            border-radius: 5px;
+            border-radius: 20px;
         }
+        
+        input, input:focus {
+	    	border-radius: 20px;
+	    	border: 2px solid pink !important;
+	    	text-align: center;
+    	}
     </style>
 </head>
 
@@ -131,7 +136,6 @@
 
 </body>
 
-<script src="<%=request.getContextPath() %>/resources/static/js/navbar.js"></script>
 <script>
 	var MyPoint = "/GroupChat/gallon";
 	var host = window.location.host;

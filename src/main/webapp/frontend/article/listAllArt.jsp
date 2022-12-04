@@ -1,21 +1,14 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="java.util.*"%>
+<%@ page import="com.article.model.*"%>
 <%@ page import="com.article.model.*"%>
 <%@include file="/frontend/frontNavbar.jsp"%>
 
-<%
-    ArticleService articleSvc = new ArticleService();
-    List<ArticleVO> list = articleSvc.getAll();
-    pageContext.setAttribute("list",list);
-%>
-
 <!DOCTYPE html>
 <html>
-
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Barei論壇首頁</title>
+<meta charset="UTF-8">
+<title>文章查詢結果</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -25,14 +18,9 @@
 <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI="
     crossorigin="anonymous"></script>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/article.css">
-<style>
-
-		
-		
-</style>
 </head>
-
 <body>
+	
 	<div class="searchBlock">
 		<form  method="post" action="/CGA104G1/ArticleServlet" name="form2">
 			<img src="<%=request.getContextPath() %>/frontend/article/img/search.png" style="width:30px; height:30px;">
@@ -67,10 +55,7 @@
             <div class="ptime titlesty">發文時間</div>
         </div>
     <jsp:useBean id="article_sorttypeSvc" scope="page" class="com.article_sorttype.model.Article_sorttypeService" />
-	<div style="display:none">
-	<%@ include file="page1.file" %>
-	</div>
-	<c:forEach var="articleVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+	<c:forEach var="articleVO" items="${ArtSearch}">
 		<div class="evenarticle">
             <div class="push">${articleVO.getArtLike()}</div>
             <div class="sort">【${articleVO.article_sorttypeVO.sort_content}】</div>
@@ -86,9 +71,6 @@
             <div class="ptime">${articleVO.article_publish}</div>
         </div>
 	</c:forEach>
-	<div class="page">
-	<%@ include file="page2.file" %>
-	</div>
     </div>
     </div>
     
@@ -105,11 +87,10 @@
 		    </form>
 	    </div>
 	    <div class="ad">
-		    <a href="<%=request.getContextPath() %>/frontend/item/shop.html">
+			<a href="<%=request.getContextPath() %>/frontend/item/shop.html">
 			<img src="<%=request.getContextPath() %>/frontend/article/img/ad.PNG" style="width:320px; height: 320px;">
-		    </a>
+	    	</a>
 	    </div>
     </div>
 </body>
-
 </html>

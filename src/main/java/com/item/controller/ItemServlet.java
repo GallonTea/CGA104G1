@@ -99,8 +99,21 @@ public class ItemServlet extends HttpServlet {
 			String keyWords=req.getParameter("keyWords");
 			Integer typeId=Integer.valueOf(req.getParameter("type"));
 
-			ItemService itemService=new ItemService();
-			JSONArray jsonArray=itemService.search(keyWords,typeId);
+
+        }else if ("frontEndSearch".equals(action)) {
+
+            String keyWords = req.getParameter("keyWords");
+            Integer typeId = Integer.valueOf(req.getParameter("type"));
+
+            ItemService itemService = new ItemService();
+            JSONArray jsonArray = itemService.frontEndSearch(keyWords, typeId);
+
+            Writer out = res.getWriter();
+            out.write(jsonArray.toString());
+
+        } else if ("getFavList".equals(action)) {
+            HttpSession httpSession = req.getSession();
+            String memId =((Integer)  httpSession.getAttribute("mem_id")).toString();
 
 			Writer out=res.getWriter();
 			out.write(jsonArray.toString());

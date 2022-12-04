@@ -7,6 +7,7 @@
 
 <%
 Group_Buy_ReportVO Group_Buy_ReportVO = (Group_Buy_ReportVO) request.getAttribute("Group_Buy_ReportVO");
+
 %>
 
 <%= Group_Buy_ReportVO==null %>
@@ -14,6 +15,10 @@ Group_Buy_ReportVO Group_Buy_ReportVO = (Group_Buy_ReportVO) request.getAttribut
 <html>
 <head>
 <title>團購檢舉修改</title>
+
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
+
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -73,27 +78,6 @@ Group_Buy_ReportVO Group_Buy_ReportVO = (Group_Buy_ReportVO) request.getAttribut
 }
 
 /* <!-- ===========================================樣式欄位================================================================== --> */
-table#table-1 {
-	background-color: #212529;
-	border: 2px solid black;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-	width: 1000px;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
-h3 {
-	color: #6c757d;
-}
-
 h4 {
 	color: blue;
 	display: inline;
@@ -121,17 +105,29 @@ th, td {
 	text-align: left;
 }
 
+.btn-warning{
+  	margin-top: 15px;
+  }
+  
+  .btnTitle{
+  	margin-top: 25px;
+  }
+
 </style>
 
 </head>
 <body bgcolor='white'>
 
-<table id="table-1">
-	<tr><td>
-		 <h3>團購檢舉資料修改 </h3>
-		 <button onclick="location.href='<%=request.getContextPath()%>/backend/index.jsp'">回到後台首頁</button>
-	</td></tr>
-</table>
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+
+<div class="btnTitle">
+<button onclick="location.href='<%=request.getContextPath()%>/backend/group_buy_report/listAllGroup_buy_Report.jsp'" class="btn btn-primary btnIn">回團購檢舉首頁</button>
+</div>
+<div class="titleBlock">修改團購檢舉</div>
+
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -210,7 +206,11 @@ th, td {
 <br>
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="gbfrep_id" value="<%=Group_Buy_ReportVO.getGbfrep_id()%>">
-<input type="submit" style="margin-left:39%" value="送出修改"></FORM>
+<input type="submit" style="margin-left:39%" value="送出修改" class="btn btn-success btnIn">
+</FORM>
+		</section>
+	</main>
+
 </body>
 
 </html>

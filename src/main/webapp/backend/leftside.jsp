@@ -76,6 +76,7 @@
                             <li class="nav-item"> <a class="nav-link" href="<%=request.getContextPath()%>/backend/group_buy_order/select_page.jsp"> 團購訂單管理 </a></li>
                             <li class="nav-item"> <a class="nav-link" href="<%=request.getContextPath()%>/backend/group_buy/select_page.jsp"> 團購團管理 </a></li>
                             <li class="nav-item"> <a class="nav-link" href="<%=request.getContextPath()%>/backend/group_buy_report/listAllGroup_buy_Report.jsp"> 團購檢舉 </a></li>
+                            <li class="nav-item"> <a class="nav-link" href="<%=request.getContextPath()%>/backend/group_join/select_page.jsp"> 參團修改 </a></li>
                         </ul>
                     </div>
                 </li>

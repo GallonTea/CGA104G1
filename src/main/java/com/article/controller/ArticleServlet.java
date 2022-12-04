@@ -1,6 +1,10 @@
 package com.article.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,6 +16,8 @@ import javax.servlet.http.HttpSession;
 
 import com.article.model.ArticleService;
 import com.article.model.ArticleVO;
+import com.mem.model.MemService;
+import com.mem.model.MemVO;
 
 @WebServlet("/ArticleServlet")
 public class ArticleServlet extends HttpServlet {
@@ -24,6 +30,7 @@ public class ArticleServlet extends HttpServlet {
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		HttpSession session = req.getSession();
 
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
@@ -61,7 +68,6 @@ public class ArticleServlet extends HttpServlet {
 			ArticleService articleSvc = new ArticleService();
 			ArticleVO articleVO = articleSvc.addArticle(mem_id, sort_id, article_title, article_content);
 			
-	        HttpSession session = req.getSession();
 	        session.setAttribute("mem_id", mem_id);
 	        session.setAttribute("sort_id", sort_id);
 	        session.setAttribute("article_content", article_content);
@@ -127,6 +133,27 @@ public class ArticleServlet extends HttpServlet {
 			RequestDispatcher successview = req.getRequestDispatcher(url);
 			successview.forward(req, res);
 		}
+		
+		if ("ArtSearch".equals(action)) {
+            Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
+            req.setAttribute("errorMsgs", errorMsgs);
+            Map<String, String[]> map = (Map<String, String[]>) session.getAttribute("map");
+            if (req.getParameter("whichPage") == null) {
+                Map<String, String[]> map1 = new HashMap<String, String[]>(req.getParameterMap());
+                session.setAttribute("map", map1);
+                map = map1;
+            }
+            ArticleService articleSvc = new ArticleService();
+            List<ArticleVO> list = articleSvc.getAllArt(map);
+            for (ArticleVO a : list) {
+                System.out.println(a);
+            }
+
+            req.setAttribute("ArtSearch", list);
+            RequestDispatcher successView = req.getRequestDispatcher("/frontend/article/listAllArt.jsp");
+            successView.forward(req, res);
+
+        }
 	}
 
 }

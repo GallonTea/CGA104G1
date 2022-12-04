@@ -28,7 +28,13 @@
 
 <style>
 /* <!-- ===========================================樣式欄位================================================================== --> */
-
+section {
+ 			height: 100%; 
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+            background-color: #FFDEE9;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
 .styled-table {
 	margin-left: auto;
 	margin-right: auto;
@@ -72,8 +78,6 @@ b {
 	color: black;
 }
 table#table-1 {
-	background-color: #212529;
-	border: 2px solid black;
 	text-align: left;
 	margin-left: auto;
 	margin-right: auto;
@@ -88,8 +92,16 @@ table#table-1 h4 {
 	margin-bottom: 1px;
 }
 
-h3 {
-	color: #6c757d;
+.h3 {
+	color: black;
+	font-weight: 700 !important;
+	display: flex;
+	justify-content: center;
+}
+
+.btnBlock{
+	display: flex;
+	justify-content: center;
 }
 
 h4 {
@@ -119,11 +131,23 @@ th, td {
 	text-align: left;
 }
 
-
+td{
+	color: black;
+	font-weight: 600;
+}
 
 thead {
 	color: white !important;
 }
+
+.btnIn{
+	border-radius: 20px !important;
+}
+
+.tdForm{
+	text-align: center !important;
+}
+
 
 </style>
 
@@ -138,22 +162,23 @@ thead {
 <table id="table-1">
 	<tr>
 		<td>
-		 	<h3>認證醫師總覽</h3>
-			<button onclick="location.href='<%=request.getContextPath()%>/backend/index.jsp'">回到後台首頁</button>
-			<button onclick="location.href='<%=request.getContextPath()%>/backend/qualified_doctor/addQualified_doctor.jsp'">認證醫師開通</button>
-
+		 	<div class="h3">認證醫師總覽</div>
+		 	<div class="btnBlock">
+			<button class="btn btn-dark" onclick="location.href='<%=request.getContextPath()%>/backend/index.jsp'">回到後台首頁</button>&ensp;
+			<button class="btn btn-success" onclick="location.href='<%=request.getContextPath()%>/backend/qualified_doctor/addQualified_doctor.jsp'">認證醫師開通</button>
+			</div>
 		</td>
 	</tr>
 </table>
 
 	<table class="styled-table">
 		<thead>
-			<tr>
-		<th><b>醫師編號</b></th>
-		<th><b>會員編號</b></th>
-		<th><b>認證醫師狀態</b></th>
-		<th><b>修改</b></th>
-		<th><b>刪除</b></th>
+			<tr style="background-color: black;">
+		<th> 醫師編號 </th>
+		<th> 會員編號 </th>
+		<th> 認證醫師狀態 </th>
+		<th class="tdForm"> 修改 </th>
+		<th class="tdForm"> 刪除 </th>
 	</tr>
 		</thead>
 		<tbody>
@@ -161,16 +186,16 @@ thead {
 		
 </tr>
 
-			<td><b>${qualified_doctorVO.doc_id}</b></td>
+			<td> ${qualified_doctorVO.doc_id} </td>
 
 				<td>
 
 				<div>
 
 				<c:forEach var="memVO" items="${memSvc.all}">
-                <c:if test="${qualified_doctorVO.mem_id==memVO.mem_id}"><b>
+                <c:if test="${qualified_doctorVO.mem_id==memVO.mem_id}"> 
 	            	${memVO.mem_id}-【${memVO.mem_name} 醫師】
-	            	</b>
+	            	 
                 </c:if>
                 </c:forEach>
 
@@ -184,21 +209,21 @@ thead {
 <!-- 		</select></td> -->
 			
 				<c:if test="${qualified_doctorVO.doc_status==0}" >
-					<td><b><c:out value="關閉中" ></c:out></b></td>
+					<td> <c:out value="關閉中" ></c:out> </td>
 				</c:if>
 				<c:if test="${qualified_doctorVO.doc_status==1}">
-					<td><b><c:out value="已啟用"></c:out></b></td>
+					<td> <c:out value="已啟用"></c:out> </td>
 				</c:if>
 
-			<td>
+			<td class="tdForm">
 			  <FORM METHOD="post" ACTION="/CGA104G1/Qualified_doctorServlet" style="margin-bottom: 0px;">
-			     <input type="submit" onclick="return up_confirm()" value="修改">
+			     <input type="submit" class="btn btn-warning btnIn" onclick="return up_confirm()" value="修改">
 			     <input type="hidden" name="doc_id"  value="${qualified_doctorVO.doc_id}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
-			<td>
+			<td class="tdForm">
 			  <FORM METHOD="post" ACTION="/CGA104G1/Qualified_doctorServlet" style="margin-bottom: 0px;">
-			     <input type="submit" onclick="return de_confirm()" value="刪除">
+			     <input type="submit" class="btn btn-danger btnIn" onclick="return de_confirm()" value="刪除">
 			     <input type="hidden" name="doc_id"  value="${qualified_doctorVO.doc_id}">
 			     <input type="hidden" name="action" value="delete">
 			  </FORM>

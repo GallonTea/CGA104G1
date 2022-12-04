@@ -10,61 +10,79 @@ EmpVO empVO = (EmpVO) request.getAttribute("empVO");
 <title>員工資料</title>
 
 <style>
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
-}
+section {
+ 			height: 100%; 
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+            background-color: #FFDEE9;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
 
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
-h4 {
-	color: blue;
-	display: inline;
-}
+.box-a{width:789px;height:100px; float:left}
+.box-b{width:px;height:100px; float:left}
 </style>
 
 <style>
-table {
-	width: 600px;
-	background-color: white;
+  table {
+    height:90px;
+	width: 800px;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	margin-left: 10%;
+  }
+  table, th, td {
+    border: 1px solid #CCCCFF;
+  }
+  th, td {
+  	height:50px;
+    padding: 5px;
+    text-align: center;
+    color: black;
+  }
+  
+  th{
+  	background-color: black;
+  	color: white;
+  }
+  
+  tr{
+  text-align: center;
+  }
+  
+  .btnTitle {
+	margin-top: 2% !important;
+	margin-bottom: 2% !important;
+	text-align :center;
+}
+  
+  .titleIn {
+	font-size: 24px;
+	color: black;
+	font-weight: 700;
+	text-align :center;
 }
 
-table, th, td {
-	border: 1px solid #CCCCFF;
+.btnIn {
+	border-radius: 20px !important;
 }
 
-th, td {
-	padding: 5px;
-	text-align: center;
+tr:nth-child(even) {
+	background-color: rgba(255,255,255,0.4);
 }
 </style>
 
 </head>
-<body bgcolor='white'>
 
-	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+<body>
+<nav><%@include file="/backend/topNavbar.jsp"%></nav>
 	<main>
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
-<table id="table-1">
-		<tr>
-			<td>
-				<h3>員工資料</h3>
-				<h4>
-					<a href="select_page.jsp">回首頁</a>
-				</h4>
-			</td>
-		</tr>
-	</table>
-
-	<table>
+			<div class="btnTitle">
+			<div class="titleIn">所有員工資料</div><br>
+			<button onclick="location.href='<%=request.getContextPath()%>/backend/emp/select_page.jsp'" class="btn btn-primary btnIn">回員工管理首頁</button>
+			</div>
+<table>
 		<tr>
 			<th>員工編號</th>
 			<th>員工姓名</th>
@@ -89,6 +107,9 @@ th, td {
 
 		</tr>
 	</table>
+</div>
+		</section>
+	</main>
 
 		</section>
 	</main>

@@ -15,35 +15,14 @@ pageContext.setAttribute("list", list);
 <meta charset="UTF-8">
 <title>所有團購商品</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
-<style>
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
-h4 {
-	color: blue;
-	display: inline;
-}
-
-th, td{
-	color: black;
-}
-</style>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
 
 <style>
 table {
-	width: 800px;
-	background-color: white;
+	width: 950px;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	margin-left: 3%;
 }
 
 table, th, td {
@@ -53,6 +32,10 @@ table, th, td {
 th, td {
 	padding: 5px;
 	text-align: center;
+}
+
+tr:nth-child(even) {
+	background-color: rgba(255,255,255,0.4);
 }
 </style>
 </head>
@@ -64,18 +47,10 @@ th, td {
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
 <!-- 		把原本body的東西貼到這邊 -->
-<table id="table-1">
-		<tr>
-			<td>
-				<h3>所有團購商品 - listAllGroupBuyItem.jsp</h3>
-			</td>
-			<td>
-				<h4>
-					<a href="<%=request.getContextPath()%>/backend/group_Buy_Item/select_page.jsp">回首頁</a>
-				</h4>
-			</td>
-		</tr>
-	</table>
+<div class="btnTitle">
+<button onclick="location.href='<%=request.getContextPath()%>/backend/group_Buy_Item/select_page.jsp'" class="btn btn-primary btnIn">回團購商品首頁</button>
+</div>
+<div class="titleBlock">所有團購商品資料</div>
 	<table>
 		<tr>
 			<th>團購商品編號</th>
@@ -86,6 +61,8 @@ th, td {
 			<th>團購商品上檔日期</th>
 			<th>團購商品下檔日期</th>
 			<th>團購商品類別</th>
+			<th></th>
+			<th></th>
 		</tr>
 		<%@ include file="page1.file" %> 
 		<c:forEach var="Group_Buy_ItemVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -106,13 +83,13 @@ th, td {
 				
 				<td>
 				  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Group_Buy_Item/groupBuyItem.do" style="margin-bottom: 0px;">
-				     <input type="submit" value="修改">
+				     <input type="submit" value="修改" class="btn btn-warning btnIn btnSmall">
 				     <input type="hidden" name="gbitem_id"  value="${Group_Buy_ItemVO.gbitem_id}">
 				     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 				</td>
 				<td>
 				  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Group_Buy_Item/groupBuyItem.do" style="margin-bottom: 0px;">
-				     <input type="submit" value="刪除">
+				     <input type="submit" value="刪除" class="btn btn-danger btnIn btnSmall">
 				     <input type="hidden" name="gbitem_id"  value="${Group_Buy_ItemVO.gbitem_id}">
 				     <input type="hidden" name="action" value="delete"></FORM>
 				</td>

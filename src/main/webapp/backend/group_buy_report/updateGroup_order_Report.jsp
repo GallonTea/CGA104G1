@@ -7,6 +7,7 @@
 
 <%
 Group_Buy_ReportVO Group_Buy_ReportVO = (Group_Buy_ReportVO) request.getAttribute("Group_Buy_ReportVO");
+
 %>
 
 <%= Group_Buy_ReportVO==null %>
@@ -119,10 +120,12 @@ th, td {
 	<main>
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
+
 <div class="btnTitle">
 <button onclick="location.href='<%=request.getContextPath()%>/backend/group_buy_report/listAllGroup_buy_Report.jsp'" class="btn btn-primary btnIn">回團購檢舉首頁</button>
 </div>
 <div class="titleBlock">修改團購檢舉</div>
+
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">

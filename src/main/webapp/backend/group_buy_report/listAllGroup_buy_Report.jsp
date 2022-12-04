@@ -160,25 +160,25 @@ tr:nth-child(even) {
 
 	
 			<c:if test="${Group_Buy_ReportVO.frep_status==0}" >
-					<td><c:out value="待審核" ></c:out></td>
+					<td><b><c:out value="待審核" ></b></c:out></td>
 			</c:if>
 			<c:if test="${Group_Buy_ReportVO.frep_status==1}">
-					<td><c:out value="已審核"></c:out></td>
+					<td><b><c:out value="已審核"></b></c:out></td>
 			</c:if>
 
 			
 			
 			<c:if test="${Group_Buy_ReportVO.frep_result==0}" >
-					<td><c:out value="尚未審核完畢" ></c:out></td>
+					<td><b><c:out value="尚未審核完畢" ></b></c:out></td>
 			</c:if>
 			<c:if test="${Group_Buy_ReportVO.frep_result==1}">
-					<td><c:out value="檢舉屬實"></c:out></td>
+					<td><b><c:out value="檢舉屬實"></b></c:out></td>
 			</c:if>
 			<c:if test="${Group_Buy_ReportVO.frep_result==2}">
-					<td><c:out value="檢舉不屬實"></c:out></td>
+					<td><b><c:out value="檢舉不屬實"></b></c:out></td>
 			</c:if>
 
-			<td>${Group_Buy_ReportVO.emp_id}</td> 
+			<td><b>${Group_Buy_ReportVO.emp_id}</b></td> 
 
 
 			<td>

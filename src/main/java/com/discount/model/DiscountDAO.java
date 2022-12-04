@@ -13,7 +13,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 
-public class DiscountDAO implements DiscountDAO_interface{
+public class DiscountDAO {
 
 	private static DataSource ds = null;
 //	static {
@@ -39,7 +39,6 @@ public class DiscountDAO implements DiscountDAO_interface{
 			"SELECT `DISCOUNT_ID`,`GBITEM_ID`, `DISCOUNT_MINAMOUNT`, `DISCOUNT_MAXAMOUNT`, `DISCOUNT_PRICE`, `DISCOUNT_NAR` FROM `ba_rei`.`DISCOUNT` where `GBITEM_ID` = ?";
 	
 	
-	@Override
 	public void insert(DiscountVO discountVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -80,7 +79,6 @@ public class DiscountDAO implements DiscountDAO_interface{
 		}
 	}
 
-	@Override
 	public void update(DiscountVO discountVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -121,7 +119,6 @@ public class DiscountDAO implements DiscountDAO_interface{
 		}
 	}
 
-	@Override
 	public void delete(Integer discount_id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -158,7 +155,6 @@ public class DiscountDAO implements DiscountDAO_interface{
 		}
 	}
 
-	@Override
 	public DiscountVO findByPrimaryKey(Integer discount_id) {
 		DiscountVO discountVO = null;
 		Connection con = null;
@@ -214,7 +210,6 @@ public class DiscountDAO implements DiscountDAO_interface{
 	}
 	
 
-	@Override
 	public List<DiscountVO> getAll() {
 		List<DiscountVO> list = new ArrayList<DiscountVO>();
 		DiscountVO discountVO = null;
@@ -267,6 +262,11 @@ public class DiscountDAO implements DiscountDAO_interface{
 			}
 		}
 		return list;
+	}
+
+	public List<DiscountVO> findDiscountByPrimaryKey(Integer gbitem_id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

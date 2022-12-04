@@ -272,4 +272,64 @@ public class Group_BuyDAO implements Group_BuyDAO_interface{
 		return list;
 	}
 
+	@Override
+	public List<Group_BuyVO> findByMemID(Integer mem_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateGbprice(Group_BuyVO Group_BuyVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Group_BuyVO findLast() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateGbAmount(Group_BuyVO Group_BuyVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateGbStatus(Group_BuyVO Group_BuyVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List<Group_BuyVO> joinGBIGetAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Group_BuyVO> getAll2InProgress() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Group_BuyVO> getAll2End() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Group_BuyVO> joinGBIGetAllWhereMemID(Integer mem_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Group_BuyVO CheckByMemID(Integer mem_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

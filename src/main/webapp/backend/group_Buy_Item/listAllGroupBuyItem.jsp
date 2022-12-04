@@ -17,6 +17,7 @@ pageContext.setAttribute("list", list);
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
 
+
 <style>
 table {
 	width: 950px;

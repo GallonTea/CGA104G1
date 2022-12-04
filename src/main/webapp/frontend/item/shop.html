@@ -53,6 +53,10 @@
     <link rel="stylesheet" type="text/css" href="../../resources/static/css/main.css"/>
 
     <style>
+        [v-cloak] {
+            display: none;
+        }
+
         .btn {
             background: #f05f5c;
             color: white;
@@ -1034,7 +1038,7 @@
         .banner-parent {
             position: relative;
             width: 100%;
-            margin: 70px auto;
+            margin: 70px auto 0px auto;
         }
 
         #logo {
@@ -1052,7 +1056,7 @@
 </head>
 <body>
 
-<div id="app">
+<div id="app" v-cloak>
     <header style="margin-bottom: 10%">
 
         <nav class="navbar navbar-expand-lg navbar-light bg-light static-top mb-5 shadow fixed-top">
@@ -1213,13 +1217,14 @@
                 <div class="banner-circle-icon__wrapper">
                     <div class="banner-circle-icon__row">
                         <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
-                                src="../../resources/static/image/typeIcon/water.png"
+                                src="../../resources/static/image/typeIcon/water.png" @click="searchItemType(1)"
                                 alt="專題推薦" style="width: 90px; height: 90px;">
                                     <p>飲食/飲水</p>
                                 </span></div>
 
                         <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
                                 src="../../resources/static/image/typeIcon/dog-food.png"
+                                @click="searchItemType(2)"
                                 alt="狗狗飼料" style="width: 90px; height: 90px;">
                                     <p>狗狗飼料</p>
                                 </span></div>
@@ -1227,40 +1232,43 @@
                         <!--                        src="https://cdn-v4.petpetgo.com/195/public/55bc97de-d89d-4c3b-84f7-2e3620ca5edf.png"-->
                         <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
                                 src="../../resources/static/image/typeIcon/cat-food.png"
-
+                                @click="searchItemType(3)"
                                 alt="貓咪飼料" style="width: 90px; height: 90px;">
                                     <p>貓咪飼料</p>
                                 </span></div>
 
                         <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
                                 src="../../resources/static/image/typeIcon/food.png"
+                                @click="searchItemType(4)"
                                 alt="貓狗罐罐" style="width: 90px; height: 90px;">
                                     <p>貓狗罐罐</p>
                                 </span></div>
 
                         <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
-                                src="../../resources/static/image/typeIcon/snack.png" @click="searchItemType(8)"
+                                src="../../resources/static/image/typeIcon/snack.png" @click="searchItemType(5)"
                                 alt="貓狗零食" style="width: 90px; height: 90px;">
                                     <p>貓狗零食</p>
                                 </span></div>
 
                         <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
                                 src="../../resources/static/image/typeIcon/pills.png"
+                                @click="searchItemType(6)"
                                 alt="寵物保健" style="width: 90px; height: 90px;">
                                     <p>寵物保健</p>
                                 </span></div>
                     </div>
                     <div class="banner-circle-icon__row">
                         <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
-                                src="../../resources/static/image/typeIcon/cat.png" @click="searchItemType(11)"
+                                src="../../resources/static/image/typeIcon/cat.png" @click="searchItemType(7)"
                                 alt="貓砂尿布" style="width: 90px; height: 90px;">
                                     <p>貓砂尿布</p>
                                 </span></div>
 
 
                         <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
-                                @click="searchItemType(10)"
+                                @click="searchItemType(8)"
                                 src="../../resources/static/image/typeIcon/mouse.png"
+
                                 alt="抓板玩具" style="width: 90px; height: 90px;">
                                     <p>抓板玩具</p>
                                 </span></div>
@@ -1268,26 +1276,26 @@
 
                         <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
                                 src="../../resources/static/image/typeIcon/nail-polish.png"
-                                @click="searchItemType(20)"
+                                @click="searchItemType(9)"
                                 alt="美容護理" style="width: 90px; height: 90px;">
                                     <p>美容護理</p>
                                 </span></div>
 
                         <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
-                                @click="searchItemType(19)"
+                                @click="searchItemType(10)"
                                 src="../../resources/static/image/typeIcon/pet-shampoo.png"
                                 alt="環境清潔" style="width: 90px; height: 90px;">
                                     <p>清潔用品</p>
                                 </span></div>
 
                         <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
-                                src="../../resources/static/image/typeIcon/dog-house.png" @click="searchItemType(17)"
+                                src="../../resources/static/image/typeIcon/dog-house.png" @click="searchItemType(11)"
                                 alt="居家用品" style="width: 90px; height: 90px;">
                                     <p>居家用品</p>
                                 </span></div>
 
                         <div class="lazyload-wrapper "><span class="banner-circle-icon__item"><img
-                                src="../../resources/static/image/typeIcon/cage.png" @click="searchItemType(18)"
+                                src="../../resources/static/image/typeIcon/cage.png" @click="searchItemType(12)"
                                 alt="外出用品" style="width: 90px; height: 90px;">
                                     <p>外出用品</p>
                                 </span></div>
@@ -1383,12 +1391,13 @@
                 let part = sessionStorage.getItem("part");
 
                 if (part != null) {
+
                     let cartNum = JSON.parse(part).length;
                     return cartNum;
                     // document.getElementById("lblCartCount").append(partNum);
                 }
-
-
+            //
+            //
             }
 
         },
@@ -1412,8 +1421,8 @@
 
                         })
                 }
-            }
-            ,
+            },
+
             searchItemType(type) {
                 this.selectedType = type;
                 // alert(this.selectedType);
@@ -1424,7 +1433,7 @@
                     location.reload();
                 } else {
                     let pjName = getProjectName();
-                    axios.get(pjName + "/item/items?action=search&keyWords=" + this.keyWords + "&type=" + this.selectedType)
+                    axios.get(pjName + "/item/items?action=frontEndSearch&keyWords=" + this.keyWords + "&type=" + this.selectedType)
                         .then((resp) => {
                             this.searchAll = resp.data;
                             this.newItems = this.items;

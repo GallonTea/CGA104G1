@@ -23,6 +23,7 @@ public interface ItemDAO_interface extends ItemCommon{
 
      JSONArray search(String keyWords, Integer type);
 
+     public JSONArray frontEndSearch(String keyWords, Integer type);
      //listAllItems.html
      public JSONArray getAllList();
      public JSONObject getCount();

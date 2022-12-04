@@ -1,6 +1,7 @@
 package com.article.model;
 
 import java.util.List;
+import java.util.Map;
 
 public class ArticleService {
 	
@@ -51,6 +52,10 @@ public class ArticleService {
 	
 	public List<ArticleVO> getAll() {
 		return dao.getAll();
+	}
+	
+	public List<ArticleVO> getAllArt(Map<String, String[]> map){
+		return dao.getAllArt(map);
 	}
 
 }

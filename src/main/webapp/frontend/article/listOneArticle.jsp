@@ -1,11 +1,11 @@
 <%@page import="com.artLikeHate.model.ArtLikeHateVO"%>
 <%@page import="com.artLikeHate.model.ArtLikeHateService"%>
-<%-- <%@page import="org.apache.jasper.tagplugins.jstl.core.Param"%> --%>
 <%@page import="java.util.List"%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.article.model.*"%>
 <%@ page import="com.article_comment.model.*"%>
+<%@include file="/frontend/frontNavbar.jsp"%>
 
 <%
 ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
@@ -32,7 +32,7 @@ pageContext.setAttribute("list", list);
         .title {
             width: 100%;
             height: 40px;
-            background-color: #33b5e5;
+            background-color: black;
             position: relative;
             left: 50%;
             transform: translate(-50%);
@@ -148,6 +148,7 @@ pageContext.setAttribute("list", list);
             white-space: nowrap;
             display: flex;
             padding: 0 20px;
+            margin-top: 10px;
         }
 
         div.comments {
@@ -246,7 +247,7 @@ pageContext.setAttribute("list", list);
         }
         
         .block {
-        	width: 160px;
+        	width: 260px;
         }
         
         .container{
@@ -259,25 +260,40 @@ pageContext.setAttribute("list", list);
 		    box-shadow:-3px -3px 9px gray;
 		    margin-bottom: 20px;
         }
+        
+        .photo{
+        	width: 50px;
+        	height: 50px;
+        }
+        
+        .img{
+		margin-top: 5px;
+		width: 400px;
+	}
     </style>
 </head>
 
 <body>
-<!--     <nav class="navbar navbar-expand-lg bg-light fixed-top"> -->
-<!--         <div class="container-fluid"> -->
-<%--             <a class="navbar-brand" href="<%=request.getContextPath() %>/frontend/article/select_page.jsp"><img --%>
-<%--                     id="logo" src="<%=request.getContextPath() %>/frontend/article/img/logo.png"></a> --%>
-<!--             <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
-<!--                 <ul class="navbar-nav me-auto mb-2 mb-lg-0"> -->
-<!--                 </ul> -->
-<!--                 <form class="d-flex" role="search"> -->
-<!--                     <input class="form-control me-2" type="search" placeholder="請輸入文章編號"> -->
-<!--                     <button class="btn btn-outline-info text-nowrap" type="submit">查詢</button> -->
-<!--                 </form> -->
-<!--             </div> -->
-<!--         </div> -->
-<!--     </nav> -->
-<!--     <div class="none"></div> -->
+	<c:if test="${articleVO.article_status==2}">
+    <div class="text-center">
+        <p class="fs-3"><span class="text-danger">本文已被禁評</span> </p>
+        <p class="lead">
+            要怪就怪管理員跟吃瓜群眾吧!
+        </p>
+        
+
+		<a href="<%=request.getContextPath() %>/frontend/article/select_page.jsp" class="btn btn-warning">回討論區</a>
+
+
+        
+        
+        <div class="imgBlock">
+        	<img alt="禁評圖片" src="<%=request.getContextPath() %>/frontend/article/img/pool.jpg" class="img">
+        </div>
+        
+</div>
+	</c:if>
+	<c:if test="${articleVO.article_status==1}">
     <div class="container">
     <div class="displayBox">
         <div class="title">
@@ -289,7 +305,12 @@ pageContext.setAttribute("list", list);
         </div>
         <div class="author_block row">
             <div class="author col-9">
+            	<c:if test="${articleVO.article_identityVO.article_pic!=null}">
                 ${articleVO.article_identityVO.article_pic}&ensp;<span id="autBlock">作者</span>&ensp;<span class="author">${articleVO.memVO.mem_account}</span>
+                </c:if>
+            	<c:if test="${articleVO.article_identityVO.article_pic==null}">
+                <img class="photo" src="<%=request.getContextPath() %>/frontend/article/img/photo.png">&ensp;<span id="autBlock">作者</span>&ensp;<span class="author">${articleVO.memVO.mem_account}</span>
+                </c:if>
             </div>
             <div class="popular col-3">
             
@@ -304,7 +325,7 @@ pageContext.setAttribute("list", list);
         <div class="row edit_block">
             <div class="like_button col-3">
             	<form method=post id="set" class="lhbtn">
-                    <input type="hidden" name="mem_id" value=1>
+                    <input type="hidden" name="mem_id" value="${memVO.mem_id}">
                     <input type="hidden" name="article_id" value="${param.article_id}">
                     <input type="hidden" name="like_status" value=3>
                     <input type="hidden" name="action" value="insert">
@@ -312,7 +333,7 @@ pageContext.setAttribute("list", list);
                 <form method=post id="likeForm" class="lhbtn">
                     <img src="<%=request.getContextPath() %>/frontend/article/img/good.png" width="50px" height="50px"
                         class="good" id="like">
-                    <input type="hidden" name="mem_id" value=3>
+                    <input type="hidden" name="mem_id" value="${memVO.mem_id}">
                     <input type="hidden" name="article_id" value="${param.article_id}">
                     <input type="hidden" name="like_status" value=1>
                     <input type="hidden" name="action" value="insert">
@@ -321,7 +342,7 @@ pageContext.setAttribute("list", list);
                 <form method=post id="hateForm" class="lhbtn">
                     <img src="<%=request.getContextPath() %>/frontend/article/img/bad.png" width="50px" height="50px"
                         class="bad" id="hate">
-                    <input type="hidden" name="mem_id" value=3>
+                    <input type="hidden" name="mem_id" value="${memVO.mem_id}">
                     <input type="hidden" name="article_id" value="${param.article_id}">
                     <input type="hidden" name="like_status" value=2>
                     <input type="hidden" name="action" value="insert">
@@ -329,28 +350,37 @@ pageContext.setAttribute("list", list);
             </div>
             <div class="col-3"></div>
             <div class="edit col-6">
+				
+				<c:if test="${articleVO.mem_id==memVO.mem_id}">
 				<div class="block"></div>
                 <form method="post" action="/CGA104G1/ArticleServlet" id="delete">
                     <button type="submit" class="btn btn-outline-danger" value="刪除">刪除文章</button>
                     <input type="hidden" name="article_id" value="${articleVO.article_id}"> 
                     <input type="hidden" name="action" value="delete">
                 </form>
+                </c:if>
+                
+                <c:if test="${articleVO.mem_id==memVO.mem_id}">
                 <form method="post" action="/CGA104G1/ArticleServlet" id="aedit">
                     <button type="submit" class="btn btn-outline-warning" value="修改">編輯文章</button>
                     <input type="hidden" name="article_id" value="${articleVO.article_id}"> 
                     <input type="hidden" name="action" value="getOne_For_Update">
                 </form>
+                </c:if>
+                
+                <c:if test="${articleVO.mem_id!=memVO.mem_id}">
+                <div style="width:340px;"></div>
                 <button type="button" class="btn btn-outline-dark" id="reportBTN" value="檢舉">檢舉文章</button>
-                                
+                </c:if>            
             </div>
             <div class="report">
                 	<form method='post' action='/CGA104G1/Article_reportServlet'>
                         <input type='hidden' name='article_id' value='${param.article_id}'>
-                        <input type='hidden' name='mem_id' value=2>
+                        <input type='hidden' name='mem_id' value="${memVO.mem_id}">
                         <input type='hidden' name='action' value='insert'>
                         <input type='hidden' name='afrep_status' value=0>
                         <input type='hidden' class='form-control insert' id="reportReason" name='afrep_content' value='${param.com_content}'
-                            placeholder='請輸入檢舉原因'>&ensp;&ensp;&ensp;
+                            placeholder='請輸入檢舉原因' required>&ensp;&ensp;&ensp;
                         <button type='submit' class='btn btn-danger' id="reportSubmit" style="visibility: hidden">送出檢舉</button>
                     </form>
                 </div>
@@ -361,7 +391,14 @@ pageContext.setAttribute("list", list);
             <c:forEach var="article_commentVO" items="${list}">
 
                 <div class="comments">
-                    <div class="cimg">${article_commentVO.article_identityVO.article_pic}</div>
+                    <div class="cimg">
+                    <c:if test="${article_commentVO.article_identityVO.article_pic==null}">
+                	<img class="photo" src="<%=request.getContextPath() %>/frontend/article/img/photo.png">
+                	</c:if>
+                	<c:if test="${article_commentVO.article_identityVO.article_pic!=null}">
+                    ${article_commentVO.article_identityVO.article_pic}
+                    </c:if>
+                    </div>
                     <div class="cname">&ensp;${article_commentVO.memVO.mem_account}</div>
                     <div class="ccontent">${article_commentVO.com_content}</div>
                     <div class="ctime">&ensp;${article_commentVO.com_publish}</div>
@@ -373,17 +410,17 @@ pageContext.setAttribute("list", list);
             <div class="addComment">
                 <form method="post" action="/CGA104G1/Article_commentServlet">
                     <input type="hidden" name="article_id" value="${param.article_id}">
-                    <input type="hidden" name="mem_id" value=4>
+                    <input type="hidden" name="mem_id" value="${memVO.mem_id}">
                     <input type="hidden" name="action" value="insert">
                     <input type="text" class="form-control insert" name="com_content" value="${param.com_content}"
-                        placeholder="跟樓主說點話吧!">&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                        placeholder="跟樓主說點話吧!" required>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
                     <button type="submit" class="btn btn-info">發表留言</button>
                 </form>
 			</div>
             </div>
             </div>
 </div>
-		<script src="<%=request.getContextPath() %>/resources/static/js/navbar.js"></script>
+</c:if>
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.7/dist/sweetalert2.all.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.1.js"
             integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
@@ -451,30 +488,30 @@ pageContext.setAttribute("list", list);
             	$('#reportSubmit').attr('style', '');
             });
             
-            $('#reportSubmit').click(function(e){
-        		e.preventDefault();
-        		var form = $(this).parents('form');
-        		Swal.fire({
-        			  title: '確認要檢舉文章嗎？',
-        			  showCancelButton: true,
-        			  cancelButtonText: "取消",
-        			  confirmButtonText: '確定',
-        			  confirmButtonColor: 'green',
-        			}).then((result) => {
-        			  if (result.isConfirmed) {
-        			    Swal.fire('檢舉成功，自動轉跳回首頁', '', 'success'),
-        			    setTimeout(function(){
-        			    	form.submit();
-        				},1000);
-        			  } 
-        			})
-        	})
+//             $('#reportSubmit').click(function(e){
+//         		e.preventDefault();
+//         		var form = $(this).parents('form');
+//         		Swal.fire({
+//         			  title: '確認要檢舉文章嗎？',
+//         			  showCancelButton: true,
+//         			  cancelButtonText: "取消",
+//         			  confirmButtonText: '確定',
+//         			  confirmButtonColor: 'green',
+//         			}).then((result) => {
+//         			  if (result.isConfirmed) {
+//         			    Swal.fire('檢舉成功，自動轉跳回首頁', '', 'success'),
+//         			    setTimeout(function(){
+//         			    	form.submit();
+//         				},1000);
+//         			  } 
+//         			})
+//         	})
         	
         	$('.btn-outline-danger').click(function(e){
         		e.preventDefault();
         		var form = $(this).parents('form');
         		Swal.fire({
-        			  title: '確定要文章嗎？',
+        			  title: '確定要刪除文章嗎？',
         			  showCancelButton: true,
         			  cancelButtonText: "取消",
         			  confirmButtonText: '確定',

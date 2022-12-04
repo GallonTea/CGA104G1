@@ -29,6 +29,7 @@ import com.mem.model.MemVO;
 							"/ArtLikeHateServlet",
 							"/frontend/group_join/*",
 							"/frontend/groupBuy/*",
+							"/frontend/mem/*",
 							} )
 
 public class MemLoginFilter implements Filter {
@@ -62,18 +63,28 @@ public class MemLoginFilter implements Filter {
 		// 【從 session 判斷此user是否登入過】
 
 //		 Object account = session.getAttribute("account");
-			MemService memSvc = new MemService();
-			MemVO memVO = memSvc.login((String)(session.getAttribute("account")), (String)(session.getAttribute("password")));
-			Integer mem_id=(Integer) session.getAttribute("mem_id");
-			
-		 if(mem_id == null){
-			req.setAttribute("errorMsgs", "請登入會員");
+//			MemService memSvc = new MemService();
+//			MemVO memVO = memSvc.login((String)(session.getAttribute("account")), (String)(session.getAttribute("password")));
+//			Integer mem_id=(Integer) session.getAttribute("mem_id");
+//			
+//		 if(mem_id == null){
+//			req.setAttribute("errorMsgs", "請登入會員");
+//		 	session.setAttribute("location", req.getRequestURI());
+////		 	session.invalidate();
+//		 	res.sendRedirect(req.getContextPath() + "/frontend/memLogin/login.jsp");		 	
+//		 	return; 
+//		   }else {
+//				chain.doFilter(request, response);
+//		 }
+		 Object account = session.getAttribute("account");
+		 System.out.println(account);
+		 if(account == null){
+			 System.out.println(req.getRequestURI());
 		 	session.setAttribute("location", req.getRequestURI());
-		 	session.invalidate();
-		 	res.sendRedirect(req.getContextPath() + "/frontend/memLogin/login.jsp");		 	
+		 	res.sendRedirect(req.getContextPath()+"/frontend/memLogin/login.jsp");		 	
 		 	return; 
 		   }else {
 				chain.doFilter(request, response);
-		 }
+			}
 	}
 }

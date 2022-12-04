@@ -17,26 +17,9 @@
 <head>
 <title>團購檢舉</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
-	crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-	crossorigin="anonymous"></script>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
 
 <style>
-/* <!-- ===========================================樣式欄位================================================================== --> */
-
-/* tr:nth-child(odd){ */
-/*   background:white; */
-/* } */
-
-/* tr:nth-child(even){ */
-/*   background:#a4a9ad; */
-/* } */
 .styled-table {
 	margin-left: auto;
 	margin-right: auto;
@@ -49,7 +32,6 @@
 }
 
 .styled-table thead tr {
-	background-color: #212529;
 	color: #ffffff;
 	text-align: left;
 }
@@ -76,23 +58,6 @@
 }
 
 /* <!-- ===========================================樣式欄位================================================================== --> */
-table#table-1 {
-	background-color: #212529;
-	border: 2px solid black;
-	text-align: center;
-	margin-left: auto;
-	margin-right: auto;
-	width: 1000px;
-	margin-top: 5px;
-	margin-bottom: 5px;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
 b{
 	color: black;
 }
@@ -128,24 +93,36 @@ th, td {
 	text-align: center;
 }
 
+tr {
+	text-align: center !important;
+}
+
+tr:nth-child(even) {
+	background-color: rgba(255,255,255,0.4) !important;
+}
+
+.btn-warning{
+  	margin-top: 15px;
+  }
+  
+  .btnTitle{
+  	margin-top: 25px;
+  }
+  
+.btnSmall {
+	margin-top: 0;
+}
+
 </style>
 
 </head>
-<body bgcolor='white'>
+<body>
 
 	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
 	<main>
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
-<table id="table-1" >
-
-		<td>
-		 <h3>團購檢舉管理 </h3>
-		 	<button onclick="location.href='<%=request.getContextPath()%>/backend/index.jsp'">回到後台首頁</button>
-			<button onclick="location.href='<%=request.getContextPath()%>/frontend/group_buy_report/addGroup_Buy_Report.jsp'">我要檢舉</button>
-		</td>
-	</tr>
-</table>
+	<div class="titleBlock">團購檢舉管理</div>
 
 	<table class="styled-table">
 		<thead>
@@ -207,14 +184,14 @@ th, td {
 			<td>
 			  <FORM METHOD="post" ACTION="/CGA104G1/Group_Buy_ReportServlet" style="margin-bottom: 0px;">
 <!-- 			     <input type="submit" onclick="return up_confirm()" value="修改"> -->
-			     <button type="submit" onclick="return up_confirm()">修改</button>
+			     <button type="submit" onclick="return up_confirm()"  class="btn btn-warning btnIn btnSmall">修改</button>
 			     <input type="hidden" name="gbfrep_id"  value="${Group_Buy_ReportVO.gbfrep_id}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
 			  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Group_Buy_ReportServlet" style="margin-bottom: 0px;">
 <!-- 			     <input type="submit" onclick="return de_confirm()" value="刪除"> -->
-			     <button type="submit" onclick="return up_confirm()">刪除</button>
+			     <button type="submit" onclick="return up_confirm()"  class="btn btn-danger btnIn btnSmall">刪除</button>
 			     <input type="hidden" name="gbfrep_id"  value="${Group_Buy_ReportVO.gbfrep_id}">
 			     <input type="hidden" name="action" value="delete">
 			   </FORM>

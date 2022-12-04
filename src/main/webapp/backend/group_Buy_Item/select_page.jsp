@@ -10,31 +10,64 @@ pageContext.setAttribute("list", list);
 %>
 <html>
 <head>
-<title>GroupBuyItem: Home</title>
+<title>團購商品管理</title>
 <!-- 第9行一定要記得複製!!! -->
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <!-- 原本的STYLE放這邊(可能需要調一下) -->
 <style>
-table#table-1 {
-	width: 450px;
-	background-color: #CCCCFF;
-	margin-top: 5px;
-	margin-bottom: 10px;
-	border: 3px ridge Gray;
-	height: 80px;
-	text-align: center;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
+section {
+ 			height: 100%; 
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+            background-color: #FFDEE9;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+#main-content {
+    	display: flex;
+    	margin-left: 10%;
+    	text-align: center !important;
+    	justify-content: center;
+    }
+        
 h4 {
 	color: blue;
 	display: inline;
 }
+
+.btnTitle {
+	margin-top: 2% !important;
+	margin-bottom: 10% !important;
+}
+
+select, input {
+    	width: 300px;
+    	height: 30px;
+    	border-radius: 20px;
+    	border: none;
+    	text-align: center;
+    }
+    
+select:focus, input:focus {
+	border: 2px solid pink !important;
+}
+
+.btnSmall{
+	width: 60px;
+	border-radius: 20px !important;
+}
+
+.btnIn {
+	width: 200px;
+	border-radius: 20px !important;
+}
+
+.titleIn {
+	font-size: 24px;
+	color: black;
+	font-weight: 700;
+}
+
 </style>
 
 </head>
@@ -63,25 +96,22 @@ h4 {
 							</ul>
 						</c:if>
 
-						<ul>
-							<li><a
-								href='<%=request.getContextPath()%>/backend/group_Buy_Item/listAllGroupBuyItem.jsp'>List</a>
-								all groupBuyItem. <br> <br></li>
 
+								<div class="btnTitle">
+								<div class="titleIn">團購商品管理</div><br>
+								<button onclick="location.href='<%=request.getContextPath()%>/backend/group_Buy_Item/listAllGroupBuyItem.jsp'" class="btn btn-dark btnIn">檢視所有團購商品</button>
+								</div>
 
-							<li>
 								<FORM METHOD="post"
 									ACTION="<%=request.getContextPath()%>/Group_Buy_Item/groupBuyItem.do">
 									<b>輸入團購商品編號:</b> <input type="text" name="gbitem_id"> <input
 										type="hidden" name="action" value="getOne_For_Display">
-									<input type="submit" value="送出">
+									<input type="submit" value="送出" class="btn btn-info btnSmall">
 								</FORM>
-							</li>
 
 							<jsp:useBean id="gbiSvc" scope="page"
 								class="com.group_buy_item.model.Group_Buy_ItemService" />
 
-							<li>
 								<FORM METHOD="post"
 									ACTION="<%=request.getContextPath()%>/Group_Buy_Item/groupBuyItem.do">
 									<b>選擇團購商品編號:</b> <select size="1" name="gbitem_id">
@@ -89,22 +119,18 @@ h4 {
 											<option value="${Group_Buy_ItemVO.gbitem_id}">${Group_Buy_ItemVO.gbitem_id}
 										</c:forEach>
 									</select> <input type="hidden" name="action" value="getOne_For_Display">
-									<input type="submit" value="送出">
+									<input type="submit" value="送出" class="btn btn-info btnSmall">
 								</FORM>
-							</li>
 
-							<li>
 								<FORM METHOD="post"
 									ACTION="<%=request.getContextPath()%>/Group_Buy_Item/groupBuyItem.do">
-									<b>團購商品選擇:</b> <select size="1" name="gbitem_id">
+									<b>團購商品選擇:</b>&ensp;&ensp;&ensp;&ensp; <select size="1" name="gbitem_id">
 										<c:forEach var="Group_Buy_ItemVO" items="${list}">
 											<option value="${Group_Buy_ItemVO.gbitem_id}">${Group_Buy_ItemVO.gbitem_name}
 										</c:forEach>
 									</select> <input type="hidden" name="action" value="getOne_For_Display">
-									<input type="submit" value="送出">
+									<input type="submit" value="送出" class="btn btn-info btnSmall">
 								</FORM>
-							</li>
-							<li>
 								<FORM METHOD="post"
 									ACTION="<%=request.getContextPath()%>/Group_Buy_Item/groupBuyItem.do">
 									<b>團購商品類別選擇:</b> <select size="1" name="gbitem_id">
@@ -201,20 +227,14 @@ h4 {
 												</c:if>
 										</c:forEach>
 									</select> <input type="hidden" name="action" value="getOne_For_Display">
-									<input type="submit" value="送出">
+									<input type="submit" value="送出" class="btn btn-info btnSmall">
 								</FORM>
-							</li>
-
-						</ul>
 
 
-						<h3>團購商品管理</h3>
+						<div class="btnTitle">
+								<button onclick="location.href='<%=request.getContextPath()%>/backend/group_Buy_Item/addGroupBuyItem.jsp'" class="btn btn-success btnIn">新增團購商品</button>
+						</div>
 
-						<ul>
-							<li><a
-								href='<%=request.getContextPath()%>/backend/group_Buy_Item/addGroupBuyItem.jsp'>Add</a>
-								a new groupBuyItem.</li>
-						</ul>
 
 					</div>
 				</section>

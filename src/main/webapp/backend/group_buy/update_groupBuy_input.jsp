@@ -8,34 +8,21 @@
 Group_BuyVO group_BuyVO = (Group_BuyVO) request.getAttribute("Group_BuyVO");
 %>
 
-<%@include file="/backend/backNavbar.jsp"%>
 <!DOCTYPE html>
 <html>
-<style>
-table#table-1 {
-	background-color: #CCCCFF;
-	border: 2px solid black;
-	text-align: center;
-}
-
-table#table-1 h4 {
-	color: red;
-	display: block;
-	margin-bottom: 1px;
-}
-
-h4 {
-	color: blue;
-	display: inline;
-}
-</style>
+<head>
+<meta charset="UTF-8">
+<title>團購團資料修改 - update_groupBuy_input.jsp</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
 
 <style>
 table {
-	width: 450px;
-	background-color: white;
+	width: 500px;
+	height: 370px;
 	margin-top: 1px;
 	margin-bottom: 1px;
+	margin-left: 25%;
 }
 
 table, th, td {
@@ -46,26 +33,19 @@ th, td {
 	padding: 1px;
 }
 </style>
-<head>
-<meta charset="UTF-8">
-<title>團購團資料修改 - update_groupBuy_input.jsp</title>
 </head>
+
 <body>
 
-
-	<h4>
-		<a
-			href="<%=request.getContextPath()%>/backend/group_buy/select_page.jsp">回首頁</a>
-	</h4>
-	<h4>
-		<a
-			href="<%=request.getContextPath()%>/backend/group_buy/listAllGroupBuy.jsp">所有團購團</a>
-	</h4>
-
-
-<h3>團購團資料修改:</h3>
-
-	<%-- 錯誤表列 --%>
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+	<div class="btnTitle">
+<button onclick="location.href='<%=request.getContextPath()%>/backend/group_buy/select_page.jsp'" class="btn btn-primary btnIn">回團購團管理首頁</button>
+</div>
+<div class="titleBlock">修改團購團資料</div>
+			<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
 		<font style="color: red">請修正以下錯誤:</font>
 		<ul>
@@ -74,7 +54,7 @@ th, td {
 			</c:forEach>
 		</ul>
 	</c:if>
-
+	
 	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/GroupBuyServlet" name="form1">
 		<table>
 			<tr>
@@ -144,21 +124,14 @@ th, td {
 			</tr>
 		</table>
 		<br> 
-		
+		<div class="subBlock">
 		<input type="hidden" name="action" value="update"> 
 		<input type="hidden" name="gb_id" value="<%=group_BuyVO.getGb_id()%>"> 
-		<input type="submit" value="送出修改">
+		<input type="submit" value="送出修改" class="btn btn-success btnIn">
+		</div>
 	</FORM>
-
-
-
-
-
-
-
-
-
-
+		</section>
+	</main>
 
 </body>
 <!-- =========================================以下為 datetimepicker 之相關設定========================================== -->

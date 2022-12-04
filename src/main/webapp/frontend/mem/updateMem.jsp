@@ -4,7 +4,9 @@
 
 
 <%
+
     MemVO memVO = (MemVO) session.getAttribute("memVO");
+
 %>
 
 <html>

@@ -8,22 +8,13 @@ EffectService effectSvc = new EffectService();
 List<EffectVO> list = effectSvc.getAll();
 pageContext.setAttribute("list", list);
 %>
-<%@include file="/backend/backNavbar.jsp"%>
 <html>
 <head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
 <title>所有權限資料</title>
 
 <style>
-  table#table-1 {
-	background-color: #CCCCFF;
-    border: 2px solid black;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
   h4 {
     color: blue;
     display: inline;
@@ -33,9 +24,9 @@ pageContext.setAttribute("list", list);
 <style>
   table {
 	width: 800px;
-	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	margin-left: 10%;
   }
   table, th, td {
     border: 1px solid #CCCCFF;
@@ -44,18 +35,35 @@ pageContext.setAttribute("list", list);
     padding: 5px;
     text-align: center;
   }
+  
+  th{
+  	background-color: black;
+  }
+  
+  tr{
+  	text-align: center;
+  }
+  
+  td{
+  	color: black;
+  }
+  
+  tr:nth-child(even) {
+	background-color: rgba(255,255,255,0.4);
+}
 </style>
 
 </head>
-<body bgcolor='white'>
-<table id="table-1">
-	<tr><td>
-		 <h3>所有權限資料</h3>
-		 <h4><a href="select_page.jsp">回首頁</a></h4>
-	</td></tr>
-</table>
-
-<table>
+<body>
+<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+		<div class="btnTitle">
+			<button onclick="location.href='<%=request.getContextPath()%>/backend/effect/select_page.jsp'" class="btn btn-primary btnIn">回權限管理首頁</button>
+		</div>
+		<div class="titleBlock">所有權限列表</div>
+			<table>
 	<tr>
 		<th>權限編號</th>
 		<th>權限名稱</th>
@@ -75,19 +83,24 @@ pageContext.setAttribute("list", list);
 
 			<td>
 			  <FORM METHOD="post" ACTION="EffectServlet" style="margin-bottom: 0px;">
-			     <input type="submit" value="修改">
+			     <input type="submit" value="修改" class="btn btn-warning btnIn btnSmall">
 			     <input type="hidden" name="effect_id"  value="${effectVO.effect_id}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
 			  <FORM METHOD="post" ACTION="EffectServlet" style="margin-bottom: 0px;">
-			     <input type="submit" value="刪除">
+			     <input type="submit" value="刪除" class="btn btn-danger btnIn btnSmall">
 			     <input type="hidden" name="effect_id"  value="${effectVO.effect_id}">
 			     <input type="hidden" name="action" value="delete"></FORM>
 			</td>
 		</tr>
 	</c:forEach>
 </table>
+		</section>
+	</main>
+
+
+
 
 
 </body>

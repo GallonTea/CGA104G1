@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.article.model.*"%>
 <%@ page import="com.article_sorttype.model.*"%>
+<%@include file="/frontend/frontNavbar.jsp"%>
 
 <!DOCTYPE html>
 <html>
@@ -23,7 +24,7 @@
 .title {
 	/* width: 75%; */
 	height: 40px;
-	background-color: #33b5e5;
+	background-color: black;
 	position: relative;
 	left: 50%;
 	transform: translate(-50%);
@@ -128,7 +129,7 @@
 					<textarea name="article_content" class="editor" value="${param.article_content}"></textarea>
 				</div>
 				
-				<input type="text" name="mem_id" value="${param.mem_id}"> 
+				<input type="hidden" name="mem_id" value="${memVO.mem_id}"> 
 				<input type="hidden" name="action" value="insert">
 				<div style="width:100%; display:flex;">
                 <div style="width:89%;"></div>
@@ -140,7 +141,6 @@
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.6.7/dist/sweetalert2.all.min.js"></script>
 	<script src="<%=request.getContextPath() %>/ckeditor5/build/ckeditor.js"></script>
-	<script src="<%=request.getContextPath() %>/resources/static/js/navbar.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.1.js"
             integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 	

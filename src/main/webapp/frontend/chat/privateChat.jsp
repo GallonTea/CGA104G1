@@ -3,6 +3,7 @@
 <%@page import="com.mem.model.MemVO"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
+<%@include file="/frontend/frontNavbar.jsp"%>
 <%
 MemVO memVO = (MemVO) request.getAttribute("memVO");
 EmpService empSvc = new EmpService();
@@ -173,7 +174,6 @@ session.setAttribute("list", list);
 </div>
 </body>
 
-<script src="<%=request.getContextPath() %>/resources/static/js/navbar.js"></script>
 <script>
 	var MyPoint = "/FriendWS/${userName}";
 	var host = window.location.host;

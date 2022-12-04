@@ -11,26 +11,15 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 <head>
 <title>會員資料修改</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
-	crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-	crossorigin="anonymous"></script>
 
 <style>
-/* <!-- ===========================================樣式欄位================================================================== --> */
-
-/* tr:nth-child(odd){ */
-/*   background:white; */
-/* } */
-
-/* tr:nth-child(even){ */
-/*   background:#a4a9ad; */
-/* } */
+section {
+ 			height: 100%; 
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+            background-color: #FFDEE9;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
 .styled-table {
 	margin-left: auto;
 	margin-right: auto;
@@ -71,9 +60,8 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 
 /* <!-- ===========================================樣式欄位================================================================== --> */
 table#table-1 {
-	background-color: #212529;
-	border: 2px solid black;
-	text-align: center;
+	display: flex;
+	justify-content: center;
 	margin-left: auto;
 	margin-right: auto;
 	width: 1000px;
@@ -88,12 +76,15 @@ table#table-1 h4 {
 }
 
 h3 {
-	color: #6c757d;
+	color: black;
+	font-weight: 700 !important;
+	text-align: center;
 }
 
 h4 {
 	color: blue;
 	display: inline;
+	text-align: center;
 }
 
 /*   a{ */
@@ -118,6 +109,52 @@ th, td {
 	text-align: left;
 }
 
+.tdLeft{
+	color: black;
+	font-weight: 600;
+}
+
+.tdRight{
+	width: 300px;
+}
+
+.btnSub{
+	width: 200px;
+	border-radius: 20px !important;
+}
+
+input{
+	height: 25px;
+}
+
+.inputR{
+border: none;
+border-radius: 20px;
+}
+
+.inputR:focus{
+ border: 2px solid pink;
+}
+
+.select{
+	width: 300px;
+	border-radius: 20px;
+	height: 25px;
+	border: none;
+}
+
+.select:focus{
+	border: 2px solid pink;
+}
+
+.radio{
+	color: black;
+}
+
+.radioBlock {
+	display:flex;
+	align-items: center;
+}
 </style>
 
 </head>
@@ -127,10 +164,11 @@ th, td {
 	<main>
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
+<div class="container">
 <table id="table-1">
 	<tr><td>
 		 <h3>會員資料修改 </h3>
-		 <h4><a href="<%=request.getContextPath()%>/backend/mem/select_page.jsp">回首頁</a></h4>
+		 <h4><a href="<%=request.getContextPath()%>/backend/mem/select_page.jsp" class="btn btn-success">回首頁</a></h4>
 	</td></tr>
 </table>
 
@@ -149,46 +187,46 @@ th, td {
 <table>
 
 	<tr>
-		<td style="color: gray"><b>會員帳號:</b></td>
-		<td><input type="TEXT" name="mem_account" size="45" readonly style="color: gray" value="<%=memVO.getMem_account()%>" /></td>
+		<td class="tdLeft"> 會員帳號: </td>
+		<td><input class="tdRight inputR" type="TEXT" name="mem_account" size="45" readonly style="color: gray" value="<%=memVO.getMem_account()%>" /></td>
 	</tr>
 	<tr>
-		<td style="color: gray"><b>會員密碼:</b></td>
-		<td><input type="password" name="mem_password" size="45" readonly style="color: gray" value="<%=memVO.getMem_password()%>"/></td>
+		<td class="tdLeft"> 會員密碼: </td>
+		<td><input class="tdRight inputR" type="password" name="mem_password" size="45" readonly style="color: gray" value="<%=memVO.getMem_password()%>"/></td>
 	</tr>
 	<tr>
-		<td><b>會員姓名:</b></td>
-		<td><input type="TEXT" name="mem_name" size="45" value="<%=memVO.getMem_name()%>" /></td>
+		<td class="tdLeft"> 會員姓名: </td>
+		<td><input class="tdRight inputR" type="TEXT" name="mem_name" size="45" value="<%=memVO.getMem_name()%>" /></td>
 	</tr>
 	<tr>
-		<td><b>會員地址:</b></td>
-		<td><input type="TEXT" name="mem_address" size="45"	value="<%=memVO.getMem_address()%>" /></td>
+		<td class="tdLeft"> 會員地址: </td>
+		<td><input class="tdRight inputR" type="TEXT" name="mem_address" size="45"	value="<%=memVO.getMem_address()%>" /></td>
 	</tr>
 	<tr>
-		<td><b>會員電話:</b></td>
-		<td><input type="TEXT" name="mem_phone" size="45"	value="<%=memVO.getMem_phone()%>" /></td>
+		<td class="tdLeft"> 會員電話: </td>
+		<td><input class="tdRight inputR" type="TEXT" name="mem_phone" size="45"	value="<%=memVO.getMem_phone()%>" /></td>
 	</tr>
 	<tr>
-		<td><b>會員證號:</b></td>
-		<td><input type="TEXT" name="mem_uid" size="45" value="<%=memVO.getMem_uid()%>" /></td>
+		<td class="tdLeft"> 會員證號: </td>
+		<td><input class="tdRight inputR" type="TEXT" name="mem_uid" size="45" value="<%=memVO.getMem_uid()%>" /></td>
 	</tr>
 		<tr>
-		<td><b>會員Email:</b></td>
-		<td><input type="TEXT" name="mem_email" size="45" value="<%=memVO.getMem_email()%>" /></td>
+		<td class="tdLeft"> 會員Email: </td>
+		<td><input class="tdRight inputR" type="TEXT" name="mem_email" size="45" value="<%=memVO.getMem_email()%>" /></td>
 	</tr>
 
 		<tr>
-		<td><b>會員性別:</b></td>
-		<td>
-		<input type="radio" name="mem_sex" size="45" value="男" ${(memVO.mem_sex=="男")? 'checked':'' } ><b>男</b>
-		<input type="radio" name="mem_sex" size="45" value="女" ${(memVO.mem_sex=="女")? 'checked':'' }><b>女</b>
+		<td class="tdLeft"> 會員性別: </td>
+		<td class="radioBlock">
+		<input type="radio" name="mem_sex" size="45" value="男" ${(memVO.mem_sex=="男")? 'checked':'' } > <span class="radio">男</span> 
+		<input type="radio" name="mem_sex" size="45" value="女" ${(memVO.mem_sex=="女")? 'checked':'' }> <span class="radio">女</span> 
 		<input type="hidden" name="mem_sex" value="${memVO.mem_sex}">
 		</td>
 		</tr>
 
 		<tr>
-		<td><b>會員生日:</b></td>
-		<td><input type="TEXT" name="mem_dob" size="45" id="dob_date1" /></td>
+		<td class="tdLeft"> 會員生日: </td>
+		<td><input class="tdRight inputR" type="TEXT" name="mem_dob" size="45" id="dob_date1" /></td>
 	</tr>
 <!-- 	<tr> -->
 <!-- 		<td>會員狀態:</td> -->
@@ -198,8 +236,8 @@ th, td {
 		
 <%-- 		<jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" /> --%>
 	<tr>
-		<td><b>會員狀態:</b><font color=red><b>*</b></font></td>
-		<td><select size="1" name="mem_status">
+		<td class="tdLeft"> 會員狀態: <font color=red> * </font></td>
+		<td><select size="1" name="mem_status" class="select">
 				<option value="0" ${(memVO.mem_status==0)? 'selected':'' } >停權</option>
 				<option value="1" ${(memVO.mem_status==1)? 'selected':'' } >未驗證</option>
 				<option value="2" ${(memVO.mem_status==2)? 'selected':'' } >已驗證</option>
@@ -212,8 +250,8 @@ th, td {
 <br>
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="mem_id" value="<%=memVO.getMem_id()%>">
-<input type="submit" style="margin-left:38%" value="送出修改"></FORM>
-
+<input type="submit" style="margin-left:38%" value="送出修改" class="btn btn-warning btnSub"></FORM>
+</div>
 		</section>
 	</main>
 

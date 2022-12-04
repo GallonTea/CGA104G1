@@ -565,13 +565,10 @@ public class MemServlet extends HttpServlet {
 
 
         if ("login".equals(action)) { // 來自addEmp.jsp的請求
-
             MemService memSvc = new MemService();
-
 
             String account = req.getParameter("account");
             String password = req.getParameter("password");
-
 
             MemVO memVO = memSvc.login(account, password);
 
@@ -587,11 +584,32 @@ public class MemServlet extends HttpServlet {
                 session.setAttribute("mem_id", mem_id); // 資料庫取出的物件,存入session
                 session.setAttribute("mem_email", mem_email); // 資料庫取出的物件,存入session
                 session.setAttribute("mem_status", mem_status); // 資料庫取出的物件,存入session
+                session.setAttribute("account", account);
+				session.setAttribute("password", password);
+                session.setAttribute("memVO", memVO); // 資料庫取出的物件,存入session
+                
+                String location = (String) session.getAttribute("location");
+                try {
+					if (location != null) {
+						if(location.equals("/CGA104G1/Article_commentServlet") || location.equals("/CGA104G1/Article_reortServlet")) {
+							session.removeAttribute("location");
+							res.sendRedirect("frontend/article/select_page.jsp");
+							return;
+						} else {
+							session.removeAttribute("location");
+							res.sendRedirect(location);
+						return;
+						}
+					}
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				}
 
 
-                String url = "/frontend/mem/mem_index.jsp";
-                RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交select_page.jsp
-                successView.forward(req, res);
+                String url = "/CGA104G1/frontend/index.html";
+                res.sendRedirect(url);
+//                RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交select_page.jsp
+//                successView.forward(req, res);
             }
         }
 
@@ -652,6 +670,13 @@ public class MemServlet extends HttpServlet {
             failureViewpw.forward(req, res);
 
         }
+        
+        if ("logout".equals(action)) {
+			session.invalidate();
+			String url = "/frontend/memLogin/login.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);
+			successView.forward(req, res);
+		}
     }
 }
 

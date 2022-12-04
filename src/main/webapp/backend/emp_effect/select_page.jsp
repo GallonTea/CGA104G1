@@ -2,55 +2,35 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<%@include file="/backend/backNavbar.jsp"%>
 <html>
 <head>
-
-<title>首頁</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
+<title>員工權限首頁</title>
 <style>
-  table#table-1 {
-	width: 450px;
-	background-color: #CCCCFF;
-	margin-top: 5px;
-	margin-bottom: 10px;
-    border: 3px ridge Gray;
-    height: 80px;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: red;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
+section{
+	text-align: center;
+}
 </style>
 
 </head>
-<body bgcolor='white'>
-<h3>資料查詢:</h3>
-<table id="table-1">
-   <tr><td><h3>權限首頁</h3></td></tr>
-</table>
-
-
-<ul>
-  <li><a href='listAllEmp_Effect.jsp'>List</a> all Effect.  <br><br></li>
+<body>
+<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+	<div class="titleBlock">員工權限管理首頁</div>
   
   
-  <li>
     <FORM METHOD="post" ACTION="Emp_effectServlet" >
+    <b>輸入權限編號:</b>
         <input type="text" name="emp_id">
         <input type="hidden" name="action" value="getOne_For_Display">
-        <input type="submit" value="送出"><font color=red>${errorMsgs.emp_id}</font>
-    </FORM>
-  </li>
+        <input type="submit" value="送出" class="btn btn-info btnIn btnSmall"><font color=red>${errorMsgs.emp_id}</font>
+    </FORM><br>
 
   <jsp:useBean id="emp_effectSvc" scope="page" class="com.emp_effect.model.Emp_effectService" />
    
-  <li>
      <FORM METHOD="post" ACTION="Emp_effectServlet" >
        <b>選擇權限編號:</b>
        <select size="1" name="emp_id">
@@ -59,11 +39,9 @@
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="送出">
-    </FORM>
-  </li>
+       <input type="submit" value="送出" class="btn btn-info btnIn btnSmall">
+    </FORM><br>
   
-  <li>
      <FORM METHOD="post" ACTION="Emp_effectServlet" >
        <b>選擇權限名稱:</b>
        <select size="1" name="emp_id">
@@ -72,14 +50,13 @@
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="送出">
-     </FORM>
-  </li>
-</ul>
-<ul>
-  <li><a href='addEmp_Effect.jsp'>Add</a> a new Effect.</li>
-</ul>
-
+       <input type="submit" value="送出" class="btn btn-info btnIn btnSmall">
+     </FORM><br>
+		<button onclick="location.href='<%=request.getContextPath()%>/backend/emp_effect/addEmp_Effect.jsp'" class="btn btn-success btnL">新增員工權限</button>
+					&ensp;&ensp;
+		<button onclick="location.href='<%=request.getContextPath()%>/backend/emp_effect/listAllEmp_Effect.jsp'" class="btn btn-dark btnL">查詢所有員工權限</button>	
+		</section>
+	</main>
 
 </body>
 </html>

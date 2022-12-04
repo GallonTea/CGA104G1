@@ -14,15 +14,15 @@ Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribut
 <head>
 <title>認證醫師開通</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
-	crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-	crossorigin="anonymous"></script>
+<!-- <link -->
+<!-- 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" -->
+<!-- 	rel="stylesheet" -->
+<!-- 	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" -->
+<!-- 	crossorigin="anonymous"> -->
+<!-- <script -->
+<!-- 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" -->
+<!-- 	integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" -->
+<!-- 	crossorigin="anonymous"></script> -->
 
 <style>
 /* <!-- ===========================================樣式欄位================================================================== --> */
@@ -34,6 +34,13 @@ Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribut
 /* tr:nth-child(even){ */
 /*   background:#a4a9ad; */
 /* } */
+section {
+ 			height: 100%; 
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+            background-color: #FFDEE9;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
 .styled-table {
 	margin-left: auto;
 	margin-right: auto;
@@ -77,8 +84,6 @@ b {
 	color: black;
 }
 table#table-1 {
-	background-color: #212529;
-	border: 2px solid black;
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
@@ -124,6 +129,33 @@ th, td {
 	text-align: left;
 }
 
+.h3{
+	color: black;
+	font-weight: 700 !important;
+	text-align: center;
+}
+
+.btnBlock{
+	text-align: center;
+}
+
+.form{
+	text-align: center;
+}
+
+.btnSub{
+	width: 200px;
+	border-radius: 20px !important;
+	text-align: center;
+}
+
+.tdIn{
+	text-align: center;
+}
+
+.subBlock{
+	margin-right: 200px;
+}
 </style>
 
 </head>
@@ -134,9 +166,11 @@ th, td {
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
 <table id="table-1">
-	<tr><td> 
-	<h3>認證醫師開通 </h3>
-			<button onclick="location.href='<%=request.getContextPath()%>/backend/index.jsp'">回到後台首頁</button>
+	<tr><td>
+	<div class="h3">認證醫師開通 </div>
+	<div class="btnBlock">
+		<button class="btn btn-dark btnIn" onclick="location.href='<%=request.getContextPath()%>/backend/index.jsp'">回到後台首頁</button>
+	</div>
 	</td></tr>
 </table>
 <br>
@@ -151,12 +185,13 @@ th, td {
 	</ul>
 </c:if>
 
+<div class="form">
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Qualified_doctorServlet" name="form1">
 <table>
 
 	  <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
 		<tr>
-			<td>
+			<td class="tdIn">
        <b>選擇會員編號:</b>
        <select size="1" name=mem_id>
           <c:forEach var="memVO" items="${memSvc.all}" > 
@@ -168,7 +203,8 @@ th, td {
 			</td>
 		</tr>
 		<tr>
-			<td>
+			<td class="tdIn">
+			&ensp;&ensp;&ensp;&ensp;
 		<b>認證醫師狀態:</b>
 		<input type="radio" name="doc_status" size="45" value="0" ${(qualified_doctorVO.doc_status=="0")? 'checked':'' }><b>關閉中</b>
 		<input type="radio" name="doc_status" size="45" value="1" ${(qualified_doctorVO.doc_status=="1")? 'checked':'' }><b>已啟用</b>
@@ -180,10 +216,11 @@ th, td {
 
 </table>
 <br>
-
+<div class="subBlock">
 <input type="hidden" name="action" value="insert">
-<input type="submit" style="margin-left:25%" value="開通"/></FORM>
-
+<input type="submit" class="btn btn-success btnSub" style="margin-left:25%" value="開通"/></FORM>
+</div>
+</div>
 		</section>
 	</main>
 

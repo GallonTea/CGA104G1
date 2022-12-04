@@ -26,208 +26,351 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <link rel="stylesheet" href="../../resources/static/css/backend.css">
     <link rel="stylesheet" type="text/css" href="../../resources/static/css/orderDetails.css"/>
-
     <link rel="stylesheet" type="text/css" href="../../resources/static/css/backendDetail.css"/>
+    <link rel="stylesheet" href="../../resources/templates/assets/css/style.css">
+    <link rel="stylesheet" href="../../resources/templates/assets/vendors/mdi/css/materialdesignicons.min.css">
     <style>
+        ul.nav {
+            padding-top: 5px !important;
+        }
 
-        body {
-            background-image: url('../asset/img/share_icon/bg.jpg');
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            background-position: center;
-            background-size: cover;
-            background-color: rgba(29, 29, 29, 0.8);
-            background-blend-mode: multiply;
+        ul.nav a:hover {
+            color: #FFC107 !important;
+        }
+
+        [aria-expanded="true"] > .menu-title {
+            color: white !important;
+        }
+
+        .card-body {
+            padding: 0 32px !important;
+        }
+
+        [v-cloak] {
+            display: none;
+        }
+
+        .modal-content {
+            background-color: white;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid rgb(255, 255, 255);
         }
     </style>
 </head>
 <body>
-
-<div style="height: 50.6px"></div>
+<nav>
+    <div class="row p-0 m-0 proBanner" id="proBanner">
+        <div class="card-body card-body-padding d-flex align-items-center justify-content-between">
+            <a class="navbar-brand" href="/CGA104G1/backend/index.jsp">
+                <img src="/CGA104G1/backend/asset/img/share_icon/ba-rei 02.png" width="100px" height="40px">
+            </a>
+            <div id="myDropdown"></div>
+        </div>
+    </div>
+</nav>
 <main>
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            <li class="nav-item menu-items">
+                <a class="nav-link" data-bs-toggle="collapse" href="#member" aria-expanded="false"
+                   aria-controls="member">
+                        <span class="menu-icon">
+                            <i class="mdi mdi-account-circle"></i>
+                        </span>
+                    <span class="menu-title">會員管理</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="member">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="/CGA104G1/backend/mem/select_page.jsp">
+                            會員帳號管理 </a></li>
+                        <li class="nav-item"><a class="nav-link"
+                                                href="/CGA104G1/backend/qualified_doctor/listAllqualified_doctor.jsp">
+                            認證醫生管理 </a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item menu-items">
+                <a class="nav-link" data-bs-toggle="collapse" href="#store" aria-expanded="false"
+                   aria-controls="store">
+                        <span class="menu-icon">
+                            <i class="mdi mdi-cart"></i>
+                        </span>
+                    <span class="menu-title">商城管理</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="store">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="/CGA104G1/backend/item/listAllItems.html">
+                            商品管理 </a></li>
+                        <li class="nav-item"><a class="nav-link"
+                                                href="/CGA104G1/backend/commodityDetails/ListOrderBackend.html">
+                            商城訂單管理 </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/CGA104G1/backend/coupon/listAllCoupon.jsp">
+                            折價券管理 </a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item menu-items">
+                <a class="nav-link" data-bs-toggle="collapse" href="#groupbuy" aria-expanded="false"
+                   aria-controls="groupbuy">
+                        <span class="menu-icon">
+                            <i class="mdi mdi-cat"></i>
+                        </span>
+                    <span class="menu-title">團購管理</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="groupbuy">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="/CGA104G1/backend/discount/select_page.jsp">
+                            團購折扣管理 </a></li>
+                        <li class="nav-item"><a class="nav-link"
+                                                href="/CGA104G1/backend/group_Buy_Item/select_page.jsp">
+                            團購商品管理 </a></li>
+                        <li class="nav-item"><a class="nav-link"
+                                                href="/CGA104G1/backend/group_buy_order/select_page.jsp">
+                            團購訂單管理 </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/CGA104G1/backend/group_buy/select_page.jsp">
+                            團購團管理 </a></li>
+                        <li class="nav-item"><a class="nav-link"
+                                                href="/CGA104G1/backend/group_buy_report/listAllGroup_buy_Report.jsp">
+                            團購檢舉 </a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item menu-items">
+                <a class="nav-link" data-bs-toggle="collapse" href="#article" aria-expanded="false"
+                   aria-controls="article">
+                        <span class="menu-icon">
+                            <i class="mdi mdi-library"></i>
+                        </span>
+                    <span class="menu-title">文章管理</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="article">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="/CGA104G1/backend/article/selectPage.jsp">
+                            討論區管理 </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/CGA104G1/backend/news/newsIndex.jsp">
+                            最新消息 </a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item menu-items">
+                <a class="nav-link" data-bs-toggle="collapse" href="#emp" aria-expanded="false"
+                   aria-controls="emp">
+                        <span class="menu-icon">
+                            <i class="mdi mdi-face"></i>
+                        </span>
+                    <span class="menu-title">員工管理</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="emp">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item"><a class="nav-link" href="/CGA104G1/backend/emp/select_page.jsp">
+                            員工資料查詢與管理 </a></li>
+                        <li class="nav-item"><a class="nav-link" href="/CGA104G1/backend/effect/select_page.jsp">
+                            權限查詢與管理 </a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="nav-item menu-items">
+                <a class="nav-link"
+                   href="/CGA104G1/NameServlet?userName=admin">
+                        <span class="menu-icon">
+                            <i class="mdi mdi-comment-processing"></i>
+                        </span>
+                    <span class="menu-title">客服中心</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <section>
+        <div id="app" class="container" v-cloak>
 
-    <div id="app" class="container" v-cloak>
-
-        <div class="container-xl">
-            <div class="table-responsive">
-                <div class="table-wrapper">
-                    <div class="table-title">
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <h2>後台 <b>訂單詳情</b></h2>
-                            </div>
-                            <div class="col-sm-8">
-                                <button @click="refresh()" class="btn btn-primary"><i
-                                        class="fa-solid fa-arrows-rotate"></i> <span>Refresh List</span></button>
-                                <!--                                <button class="btn btn-secondary"><i class="fa-regular fa-file-excel"></i> <span>Export to Excel</span>-->
-                                <!--                                </button>-->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-filter">
-                        <div class="row">
-                            <div class="col-sm-3">
-                                <!--                                <div class="show-entries">-->
-                                <!--                                    <span>Show</span>-->
-                                <!--                                    <select class="form-control">-->
-                                <!--                                        <option>5</option>-->
-                                <!--                                        <option>10</option>-->
-                                <!--                                        <option>15</option>-->
-                                <!--                                        <option>20</option>-->
-                                <!--                                    </select>-->
-                                <!--                                    <span>entries</span>-->
-                                <!--                                </div>-->
-                            </div>
-                            <div class="col-sm-9">
-
-                                <div class="filter-group">
-                                    <label>訂單狀態</label>
-                                    <select class="form-select-sm" @change="filterStatus()"
-                                            aria-label="Default select example"
-                                            v-model="filterSta">
-                                        <option value="" disabled selected>請選擇</option>
-                                        <option value="0">待付款</option>
-                                        <option value="6">已完成</option>
-                                        <option value="3">運輸中</option>
-                                        <option value="2">準備出貨中</option>
-                                        <option value="4">取消審核中</option>
-                                        <option value="9">訂單已取消</option>
-                                        <option value="5">未取貨退回</option>
-                                        <option value="1">未付款取消</option>
-                                        <option value="7">退換貨申請中</option>
-                                        <option value="8">退換貨處理中</option>
-                                    </select>
+            <div class="container-xl">
+                <div class="table-responsive">
+                    <div class="table-wrapper">
+                        <div class="table-title">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <h2>後台 <b>訂單詳情</b></h2>
                                 </div>
-                                <span class="filter-icon"><i class="fa fa-filter"></i></span>
+                                <div class="col-sm-8">
+                                    <button @click="refresh()" class="btn btn-primary"><i
+                                            class="fa-solid fa-arrows-rotate"></i> <span>Refresh List</span></button>
+                                    <!--                                <button class="btn btn-secondary"><i class="fa-regular fa-file-excel"></i> <span>Export to Excel</span>-->
+                                    <!--                                </button>-->
+                                </div>
                             </div>
                         </div>
+                        <div class="table-filter">
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <!--                                <div class="show-entries">-->
+                                    <!--                                    <span>Show</span>-->
+                                    <!--                                    <select class="form-control">-->
+                                    <!--                                        <option>5</option>-->
+                                    <!--                                        <option>10</option>-->
+                                    <!--                                        <option>15</option>-->
+                                    <!--                                        <option>20</option>-->
+                                    <!--                                    </select>-->
+                                    <!--                                    <span>entries</span>-->
+                                    <!--                                </div>-->
+                                </div>
+                                <div class="col-sm-9">
+
+                                    <div class="filter-group">
+                                        <label>訂單狀態</label>
+                                        <select class="form-select-sm" @change="filterStatus()"
+                                                aria-label="Default select example"
+                                                v-model="filterSta">
+                                            <option value="" disabled selected>請選擇</option>
+                                            <option value="0">待付款</option>
+                                            <option value="6">已完成</option>
+                                            <option value="3">運輸中</option>
+                                            <option value="2">準備出貨中</option>
+                                            <option value="4">取消審核中</option>
+                                            <option value="9">訂單已取消</option>
+                                            <option value="5">未取貨退回</option>
+                                            <option value="1">未付款取消</option>
+                                            <option value="7">退換貨申請中</option>
+                                            <option value="8">退換貨處理中</option>
+                                        </select>
+                                    </div>
+                                    <span class="filter-icon"><i class="fa fa-filter"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>收件人姓名</th>
+                                <th>訂單成立時間</th>
+                                <th>訂單狀態</th>
+                                <th>訂單金額</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody v-for="(details, index) in filterStatus" :key="details.ITEM_ID"
+                            >
+                            <tr>
+                                <td>{{ details.ORDER_ID }}</td>
+                                <td>{{ details.RECEIVER_NAME }}</td>
+                                <!--                            <td>London</td>-->
+                                <td>{{ details.ORDER_DATE }}</td>
+                                <td>{{ statusFilter(details.ORDER_STATUS) }}</td>
+                                <td>NT$ {{ details.FINAL_PRICE }}</td>
+                                <td>
+                                    <button @click="viewDetail(details, index)" class="btn btn-outline-info view"
+                                            title="View Details"
+                                            data-bs-target="#myModal" data-bs-toggle="modal"
+                                            data-toggle="tooltip"><i
+                                            class="fa-solid fa-right-long"></i></button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!--                    <div class="clearfix">-->
+                        <!--                        <div class="hint-text">Showing <b>5</b> out of <b>?</b> entries</div>-->
+                        <!--                        <ul class="pagination">-->
+
+                        <!--                            <li class="page-item">-->
+                        <!--                                <button class="page-link">上一頁</button>-->
+                        <!--                            </li>-->
+                        <!--                            <li class="page-item active">-->
+                        <!--                                <button class="page-link">page1</button>-->
+                        <!--                            </li>-->
+
+                        <!--                            <li class="page-item">-->
+                        <!--                                <button class="page-link">下一頁</button>-->
+                        <!--                            </li>-->
+                        <!--                        </ul>-->
+                        <!--                    </div>-->
                     </div>
-                    <table class="table table-striped table-hover">
-                        <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>收件人姓名</th>
-                            <th>訂單成立時間</th>
-                            <th>訂單狀態</th>
-                            <th>訂單金額</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody v-for="(details, index) in filterStatus" :key="details.ITEM_ID"
-                        >
-                        <tr>
-                            <td>{{ details.ORDER_ID }}</td>
-                            <td>{{ details.RECEIVER_NAME }}</td>
-                            <!--                            <td>London</td>-->
-                            <td>{{ details.ORDER_DATE }}</td>
-                            <td>{{ statusFilter(details.ORDER_STATUS) }}</td>
-                            <td>NT$ {{ details.FINAL_PRICE }}</td>
-                            <td>
-                                <button @click="viewDetail(details, index)" class="btn btn-outline-info view"
-                                        title="View Details"
-                                        data-bs-target="#myModal" data-bs-toggle="modal"
-                                        data-toggle="tooltip"><i
-                                        class="fa-solid fa-right-long"></i></button>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <!--                    <div class="clearfix">-->
-                    <!--                        <div class="hint-text">Showing <b>5</b> out of <b>?</b> entries</div>-->
-                    <!--                        <ul class="pagination">-->
-
-                    <!--                            <li class="page-item">-->
-                    <!--                                <button class="page-link">上一頁</button>-->
-                    <!--                            </li>-->
-                    <!--                            <li class="page-item active">-->
-                    <!--                                <button class="page-link">page1</button>-->
-                    <!--                            </li>-->
-
-                    <!--                            <li class="page-item">-->
-                    <!--                                <button class="page-link">下一頁</button>-->
-                    <!--                            </li>-->
-                    <!--                        </ul>-->
-                    <!--                    </div>-->
                 </div>
             </div>
-        </div>
 
-        <!-- 針對個別訂單操作之彈出視窗 -->
-        <div class="py-2">
-            <div class="modal modal-lg fade" id="myModal">
-                <div class="modal-dialog">
-                    <div class="modal-content row d-flex justify-content-center">
-                        <div class="modal-header">
-                            <h5 class="modal-title">訂單詳情</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <br>
+            <!-- 針對個別訂單操作之彈出視窗 -->
+            <div class="py-2">
+                <div class="modal modal-lg fade" id="myModal">
+                    <div class="modal-dialog">
+                        <div class="modal-content row d-flex justify-content-center" style="margin-top: 110px; margin-left: 70px">
+                            <div class="modal-header">
+                                <h5 class="modal-title">訂單詳情</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <br>
 
-                        <h4>{{ statusFilter(tmpStatus) }}</h4>
-                        <!--  後台人員操作訂單  -->
-                        <div v-if="tmpStatus === '2'"
-                             class="d-flex justify-content-end gap-2">
-                            <button class="btn btn-outline-success" data-bs-dismiss="modal" aria-label="Close"
-                                    @click="startShip()">完成出貨
-                            </button>
-                        </div>
-                        <div v-else-if="tmpStatus === '3'"
-                             class="d-flex justify-content-end gap-2">
-                            <button class="btn btn-outline-success" data-bs-dismiss="modal" aria-label="Close"
-                                    @click="startShip()">修改物流編號
-                            </button>
-                        </div>
+                            <h4>{{ statusFilter(tmpStatus) }}</h4>
+                            <!--  後台人員操作訂單  -->
+                            <div v-if="tmpStatus === '2'"
+                                 class="d-flex justify-content-end gap-2">
+                                <button class="btn btn-outline-success" data-bs-dismiss="modal" aria-label="Close"
+                                        @click="startShip()">完成出貨
+                                </button>
+                            </div>
+                            <div v-else-if="tmpStatus === '3'"
+                                 class="d-flex justify-content-end gap-2">
+                                <button class="btn btn-outline-success" data-bs-dismiss="modal" aria-label="Close"
+                                        @click="startShip()">修改物流編號
+                                </button>
+                            </div>
 
-                        <div v-else-if="tmpStatus === '7'"
-                             class="d-flex justify-content-end gap-2">
-                            <button class="btn btn-outline-success" @click="acceptReturn()">接受申請</button>
-                            <button class="btn btn-outline-danger" @click="rejectReturn()">拒絕申請</button>
-                        </div>
-                        <div v-else-if="tmpStatus === '8'"
-                             class="d-flex justify-content-end gap-2">
-                            <button class="btn btn-outline-success" data-bs-dismiss="modal" aria-label="Close"
-                                    @click="startShip()">完成出貨
-                            </button>
-                        </div>
-                        <!-- END -->
+                            <div v-else-if="tmpStatus === '7'"
+                                 class="d-flex justify-content-end gap-2">
+                                <button class="btn btn-outline-success" @click="acceptReturn()">接受申請</button>
+                                <button class="btn btn-outline-danger" @click="rejectReturn()">拒絕申請</button>
+                            </div>
+                            <div v-else-if="tmpStatus === '8'"
+                                 class="d-flex justify-content-end gap-2">
+                                <button class="btn btn-outline-success" data-bs-dismiss="modal" aria-label="Close"
+                                        @click="startShip()">完成出貨
+                                </button>
+                            </div>
+                            <!-- END -->
 
-                        <strong>訂單日誌</strong>
-                        <div class="overflow-auto" style="max-height: 200px;">
-                            <p v-html="tmpOther"></p>
-                        </div>
-                        <hr>
-                        <div class="modal-body">
-                            <div class="media-body">
-                                <div class="container d-flex align-items-center justify-content-between mt-1"
-                                     v-for="(detail, index) in detail"
-                                     :key="detail.itemId">
-                                    <img :src="'data:image/jpeg;base64,' + detail.photo" alt="productImg"
-                                         class="img-sm border rounded">
-                                    <strong class="font-weight-bold mb-2">{{ detail.itemName }}</strong>
-                                    <div class="row">
-                                        <small class="font-weight-bold col-md-12 my-2">單價 NT$ {{
+                            <strong>訂單日誌</strong>
+                            <div class="overflow-auto" style="max-height: 200px;">
+                                <p v-html="tmpOther"></p>
+                            </div>
+                            <hr>
+                            <div class="modal-body">
+                                <div class="media-body">
+                                    <div class="container d-flex align-items-center justify-content-between mt-1"
+                                         v-for="(detail, index) in detail"
+                                         :key="detail.itemId">
+                                        <img :src="'data:image/jpeg;base64,' + detail.photo" alt="productImg"
+                                             class="img-sm border rounded">
+                                        <strong class="font-weight-bold mb-2">{{ detail.itemName }}</strong>
+                                        <div class="row">
+                                            <small class="font-weight-bold col-md-12 my-2">單價 NT$ {{
                                                 detail.itemPrice
-                                            }}</small>
-                                        <small class="font-weight-bold col-md-12 my-2">商品數量 {{
+                                                }}</small>
+                                            <small class="font-weight-bold col-md-12 my-2">商品數量 {{
                                                 detail.cdAmount
-                                            }}</small>
+                                                }}</small>
+                                        </div>
+                                    </div>
+                                    <div>
                                     </div>
                                 </div>
-                                <div>
-                                </div>
                             </div>
+
                         </div>
 
                     </div>
-
                 </div>
             </div>
         </div>
-
-    </div>
+    </section>
 </main>
-
 <!-- import bootstrap 5.2.1 -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
@@ -239,8 +382,7 @@
 <script src="https://unpkg.com/vue-router@4"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-
-<!--<script src="../../resources/static/js/listOrderBackend.js"></script>-->
+<script type="text/javascript" src="../../resources/static/js/getEmpName.js"></script>
 <script>
     let vm = Vue.createApp({
         data() {
@@ -461,9 +603,8 @@
     vm.mount('#app')
 
 </script>
+<script src="../../resources/templates/assets/vendors/js/vendor.bundle.base.js"></script>
 </body>
 
-<!--  NavBar  -->
-<script src="../../resources/static/js/backNavbar.js"></script>
 
 </html>

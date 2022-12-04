@@ -36,7 +36,9 @@
             padding: 16px;
             background: #F7F7F7;
         }
-
+        [v-cloak] {
+            display: none;
+        }
         div.half {
             display: inline-block;
             width: 50%;
@@ -202,7 +204,7 @@
     </style>
 </head>
 <body>
-<div class="contact-us" id="app">
+<div class="contact-us" id="app" v-cloak>
     <h1>商品詳細資訊</h1>
     <!--    @submit="onSubmit"-->
     <v-form v-slot="{ errors }" enctype="multipart/form-data" @submit.prevent>
@@ -375,8 +377,8 @@
                             .then((resp) => {
                                 if (resp.data.successful) {
                                     Swal.fire(
-                                        'Deleted!',
-                                        'Your file has been deleted.',
+                                        '刪除成功!',
+                                        '您的商品照片已被刪除！',
                                         'success'
                                     ).then(() => {
                                         location.reload();

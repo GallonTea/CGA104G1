@@ -63,6 +63,9 @@
         padding: 0;
         overflow-x: hidden;
     }
+    [v-cloak] {
+        display: none;
+    }
 
     .clearfix {
         content: "";
@@ -141,7 +144,7 @@
     }
 
     #cart h1 {
-        font-weight: 300;
+        font-weight: 360;
     }
 
     #cart a {
@@ -443,7 +446,7 @@
 
 
 
-<div id="app">
+<div id="app" v-cloak>
     <main>
         <div class="container">
 
@@ -452,18 +455,18 @@
 
                 <article class="product" v-for="(item,index) in cart" :key="item.itemId">
                     <header>
-                        <!--                        <button class="remove" @click="remove(index)">-->
+
                         <img :src="'data:image/jpeg;base64,'+item.photo" alt="" @click="remove(index)">
 
                         <h3>Remove product</h3>
-                        <!--                        </button>-->
+
                     </header>
 
                     <div class="content">
 
                         <h1 @click="showDetail(item.itemId)">{{item.itemName}}</h1>
 
-                        {{item.itemContent}}
+<!--                        {{item.itemContent}}-->
 
                     </div>
 
@@ -520,11 +523,14 @@
 <script src="../../resources/static/js/navbar.js"></script>
 <!--footer-->
 <script src="../../resources/static/js/footer.js"></script>
+
+
 <script>
     let vm = Vue.createApp({
         data() {
             return {
-                cart: []
+                cart: [],
+                cartNum:0
             }
 
 
@@ -532,9 +538,11 @@
         mounted() {
 
 
-            let cart = sessionStorage.getItem('part')
+            let cart = sessionStorage.getItem('part');
+
             this.cart = JSON.parse(cart);
-            if (!cart) {
+
+            if (!cart||this.cart.length===0) {
                 Swal.fire({
                     icon: 'error',
                     title: '你的購物車還沒有東西喔!',
@@ -543,7 +551,11 @@
                 setTimeout(function () {
                     window.location.assign('/CGA104G1/frontend/item/shop.html')
                 }, 2000)
+
+
             }
+            this.cartNum=this.cart.length;
+            document.getElementById("lblCartCount").append(this.cartNum);
 
         },
         computed: {
@@ -557,6 +569,7 @@
                 }
                 return price;
             }
+
         },
         methods: {
             minus(item) {
@@ -580,6 +593,18 @@
                 object.quantity++;
                 sessionStorage.setItem('part', JSON.stringify(partArr));
             },
+            refreshCartNum() {
+            this.cartNum=this.cart.length;
+            if (this.cartNum) {
+                document.getElementById("lblCartCount").append('');
+
+                document.getElementById("lblCartCount").append(this.cartNum);
+
+            }else{
+                document.getElementById("lblCartCount").append('');
+            }
+
+             },
             remove(index) {
                 this.cart.splice(index, 1);
                 let partStr=sessionStorage.getItem("part");
@@ -587,6 +612,16 @@
                 partArr.splice(index, 1);
                 sessionStorage.setItem('part',JSON.stringify(partArr));
 
+
+
+                if (partArr===0) {
+                    document.getElementById("lblCartCount").append('');
+
+                }else{
+                    document.getElementById("lblCartCount").innerHTML="";
+                    document.getElementById("lblCartCount").append(this.cart.length);
+                }
+                // refreshCartNum();
 
             },checkOut(){
                 location="/CGA104G1/frontend/orderBuy/Order.html"

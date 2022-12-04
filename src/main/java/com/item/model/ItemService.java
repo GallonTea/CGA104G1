@@ -268,6 +268,19 @@ public class ItemService implements ServiceCommon {
 		}
 	}
 
+	public JSONArray frontEndSearch(String keyWords, Integer typeId){
+		try{
+			beginTranscation();
+			JSONArray jsonArray=itemDao.frontEndSearch(keyWords,typeId);
+			commit();
+			return jsonArray;
+		}catch (Exception e){
+			e.printStackTrace();
+			rollback();
+			return null;
+		}
+	}
+
 	public String removeTraceList(String memId,String itemId){
 		try {
 			beginTranscation();

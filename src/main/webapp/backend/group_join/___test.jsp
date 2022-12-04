@@ -129,7 +129,7 @@ th, td {
 				<tr class="active-row" align='center' valign='middle'>
 					<td>${group_joinVO.group_BuyVO.gb_name}</td>
 					<td>${group_joinVO.gb_id}</td>
-					<td>${group_joinVO.mem_id}</td>
+					<td>[${group_joinVO.mem_id}]-${group_joinVO.memVO.mem_name}</td>
 					<td>${group_joinVO.gbpay_status==0 ? '未付款':'已付款'}</td>
 					<td>${group_joinVO.pickup_status==0 ? '未取貨':'已取貨'}</td>
 					<c:if test="${group_joinVO.deliver_status==0}">

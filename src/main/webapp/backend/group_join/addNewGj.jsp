@@ -6,14 +6,6 @@
 <jsp:useBean id="group_buySvc" scope="page" class="com.group_buy.model.Group_BuyService" />
 <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
 
-<%-- <% --%>
-<!-- // EmpVO empVO = (EmpVO) request.getAttribute("empVO"); -->
-<%-- %> --%>
-<%-- <% --%>
-<!-- // EmpService empSvc = new EmpService(); -->
-<!-- // List<EmpVO> list = empSvc.getAll(); -->
-<!-- // pageContext.setAttribute("list", list); -->
-<%-- %> --%>
 <%@include file="/backend/backNavbar.jsp"%>
 <html>
 <head>

@@ -92,10 +92,6 @@ h4 {
 	display: inline;
 }
 
-/*   a{ */
-/*     color: white; */
-/*     display: inline; */
-/*   } */
 </style>
 
 <style>
@@ -115,16 +111,6 @@ th, td {
 	text-align: center;
 }
 
-/* th, td { display: block; } */
-/*   td:first-child{ */
-/*   border-top-left-radius: 10px; */
-/*   border-bottom-left-radius: 10px; */
-/* } */
-
-/* td:last-child{ */
-/*   border-top-right-radius: 10px; */
-/*   border-bottom-right-radius: 10px; */
-/* } */
 </style>
 </head>
 <body>

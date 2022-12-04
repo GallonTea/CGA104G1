@@ -56,8 +56,6 @@ public class Group_JoinVO implements java.io.Serializable{
 	public void setGbitem_id(Integer gbitem_id) {
 		this.gbitem_id = gbitem_id;
 	}
-
-
 	
 	public Integer getGbbuy_amount() {
 		return gbbuy_amount;

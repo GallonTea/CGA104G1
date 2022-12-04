@@ -59,44 +59,44 @@
 	</table>
 
 	<h3>資料新增:</h3>
-	<FORM METHOD="post" ACTION="/CGA104G1/Group_Buy_OrderServlet"
+	<FORM METHOD="post" ACTION="/CGA104G1/Group_Buy_Order_BackServlet"
 		name="form1">
 		<table>
 
 			<tr>
 				<td>團購訂單編號:</td>
-				<td><input type="TEXT" name="gborder_id" size="45"
-					value="${group_buy_orderVO.gborder_id}" /></td>
+				<td><input type="hidden" name="gborder_id" size="45"
+					value="${group_buy_orderVO.gborder_id}" />[${group_buy_orderVO.gborder_id}]</td>
 			</tr>
 			<tr>
 				<td>團購商品:</td>
 				<td><input type="hidden" name="gbitem_id" size="45"
-					value="${group_buy_orderVO.gbitem_id}" /> ${group_buy_orderVO.group_buy_itemVO.gbitem_name}</td>
+					value="${group_buy_orderVO.gbitem_id}" />[${group_buy_orderVO.gbitem_id}]-${group_buy_orderVO.group_buy_itemVO.gbitem_name}</td>
 			</tr>
 			<tr>
 				<td>團購團編號:</td>
-				<td><input type="TEXT" name="gb_id" size="45"
-					value="${group_buy_orderVO.gb_id}" /></td>
+				<td><input type="hidden" name="gb_id" size="45"
+					value="${group_buy_orderVO.gb_id}" />[${group_buy_orderVO.gb_id}]-${group_buy_orderVO.group_BuyVO.gb_name}</td>
 			</tr>
 			<tr>
 				<td>團購數量:</td>
-				<td><input type="TEXT" name="gbitem_amount" size="45"
-					value="${group_buy_orderVO.gbitem_amount}" readonly="readonly" /></td>
+				<td><input type="hidden" name="gbitem_amount" size="45"
+					value="${group_buy_orderVO.gbitem_amount}" readonly="readonly" />${group_buy_orderVO.gbitem_amount}</td>
 			</tr>
 			<tr>
 				<td>原價:</td>
-				<td><input type="TEXT" name="gboriginal_price" size="45"
-					value="${group_buy_orderVO.gboriginal_price}" readonly="readonly" /></td>
+				<td><input type="hidden" name="gboriginal_price" size="45"
+					value="${group_buy_orderVO.gboriginal_price}" readonly="readonly" />${group_buy_orderVO.gboriginal_price}</td>
 			</tr>
 			<tr>
 				<td>團購價:</td>
-				<td><input type="TEXT" name="gb_endprice" size="45"
-					value="${group_buy_orderVO.gb_endprice}" /></td>
+				<td><input type="hidden" name="gb_endprice" size="45"
+					value="${group_buy_orderVO.gb_endprice}" />${group_buy_orderVO.gb_endprice}</td>
 			</tr>
 			<tr>
 				<td>團購訂單時間:</td>
-				<td><input type="TEXT" name="gborder_date" size="45"
-					value="${group_buy_orderVO.gborder_date}" /></td>
+				<td><input type="hidden" name="gborder_date" size="45"
+					value="${group_buy_orderVO.gborder_date}"  />${group_buy_orderVO.gborder_date}</td>
 			</tr>
 			<tr>
 				<td>團購付款方式:</td>
@@ -127,30 +127,31 @@
 			<tr>
 				<td>團購訂單狀態:</td>
 				<td><select class="status2" name="gborder_status" id="select">
-						<option value="0"
+							<option value="0"
 							${(group_buy_orderVO.gborder_status==0)? 'selected': ''}>等待付款中</option>
-						<option value="1"
+							<option value="1"
 							${(group_buy_orderVO.gborder_status==1)? 'selected': ''}>已取消</option>
-							<option value="1"
-							${(group_buy_orderVO.gborder_status==1)? 'selected': ''}>等待賣家確認中</option>
-							<option value="1"
-							${(group_buy_orderVO.gborder_status==1)? 'selected': ''}>準備出貨中</option>
-							<option value="1"
-							${(group_buy_orderVO.gborder_status==1)? 'selected': ''}>已出貨</option>
-							<option value="1"
-							${(group_buy_orderVO.gborder_status==1)? 'selected': ''}>未取貨，退回平台</option>
-							<option value="1"
-							${(group_buy_orderVO.gborder_status==1)? 'selected': ''}>已取貨</option>
-							<option value="1"
-							${(group_buy_orderVO.gborder_status==1)? 'selected': ''}>退貨</option>
-							<option value="1"
-							${(group_buy_orderVO.gborder_status==1)? 'selected': ''}>換貨</option>
+							<option value="2"
+							${(group_buy_orderVO.gborder_status==2)? 'selected': ''}>等待賣家確認中</option>
+							<option value="3"
+							${(group_buy_orderVO.gborder_status==3)? 'selected': ''}>準備出貨中</option>
+							<option value="4"
+							${(group_buy_orderVO.gborder_status==4)? 'selected': ''}>已出貨</option>
+							<option value="5"
+							${(group_buy_orderVO.gborder_status==5)? 'selected': ''}>未取貨，退回平台</option>
+							<option value="6"
+							${(group_buy_orderVO.gborder_status==6)? 'selected': ''}>已取貨</option>
+							<option value="7"
+							${(group_buy_orderVO.gborder_status==7)? 'selected': ''}>退貨</option>
+							<option value="8"
+							${(group_buy_orderVO.gborder_status==8)? 'selected': ''}>換貨</option>
 							</select></td>		
 				<td><font color=red>${errorMsgs.gborder_status}</font></td>
 			</tr>
 			<tr>
 				<td>團購訂單備註:</td>
 				<td><input type="TEXT" name="gborder_other" size="45"
+				
 					value="${group_buy_itemVO.gborder_other}" /></td>
 			</tr>
 			<tr>
@@ -160,23 +161,23 @@
 			</tr>
 			<tr>
 				<td>收件人姓名:</td>
-				<td><input type="TEXT" name="receiver_name" size="45"value="${group_buy_orderVO.receiver_name}" /></td>
+				<td><input type="TEXT" name="receiver_name" size="45"value="${group_buy_orderVO.receiver_name}"  pattern="^[\u4e00-\u9fa5]+$|^[a-zA-Z\s]+$" required/></td>
 				<td><font color=red>${errorMsgs.receiver_name}</font></td>
 			</tr>
 			<tr>
 				<td>收件人地址:</td>
-				<td><input type="TEXT" name="receiver_address" size="45" value="${group_buy_orderVO.receiver_address}" /></td>
+				<td><input type="TEXT" name="receiver_address" size="45" value="${group_buy_orderVO.receiver_address}" required/></td>
 				<td><font color=red>${errorMsgs.receiver_address}</font></td>
 			</tr>
 			<tr>
 				<td>收件人電話:</td>
-				<td><input type="TEXT" name="receiver_phone" size="45"  value="${group_buy_orderVO.receiver_phone}" /></td>
+				<td><input type="TEXT" name="receiver_phone" size="45"  value="${group_buy_orderVO.receiver_phone}"  pattern="[0][9][0-9]{2}[0-9]{3}[0-9]{3}"  required /></td>
 				<td><font color=red>${errorMsgs.receiver_phone}</font></td>
 			</tr>
 			<tr>
 				<td>領貨時間:</td>
-				<td><input type="TEXT" name="pickup_time" size="45"
-					value="${group_buy_orderVO.pickup_time}" />${group_buy_orderVO.pickup_time}</td>
+				<td><input type="hidden" name="pickup_time" size="45"
+					value="${group_buy_orderVO.pickup_time}"  />${group_buy_orderVO.pickup_time}</td>
 			</tr>
 		</table>
 		<br> <br> <input type="hidden" name="action"
@@ -191,13 +192,13 @@
 
 
 	<script type="text/javascript">
-	let type = $('#select option:selected') .val();
+// 	let type = $('#select option:selected') .val();
 	
 	
 	
-	$("#selector").on("change", function() {
-		  $("#selector option:selected")
-		  });
+// 	$("#selector").on("change", function() {
+// 		  $("#selector option:selected")
+// 		  });
 	
 // $(document).ready(function() {
 	

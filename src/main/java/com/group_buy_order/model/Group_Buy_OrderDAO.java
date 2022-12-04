@@ -31,8 +31,9 @@ public class Group_Buy_OrderDAO implements Group_Buy_OrderDAO_interface {
 		}
 	}
 
-	private static final String INSERT_STMT_FIRST = "insert into GROUP_BUY_ORDER (GBITEM_ID, GBITEM_AMOUNT, GBORIGINAL_PRICE, GB_ENDPRICE, GBORDER_PAYING,GBORDER_SEND, GBORDER_STATUS, GBORDER_OTHER, RECEIVER_NAME, RECEIVER_ADDRESS, RECEIVER_PHONE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+	private static final String INSERT_STMT_FIRST = "insert into GROUP_BUY_ORDER (GBITEM_ID, GB_ID, GBITEM_AMOUNT, GBORIGINAL_PRICE, GB_ENDPRICE, GBORDER_PAYING,GBORDER_SEND, GBORDER_STATUS, GBORDER_OTHER, RECEIVER_NAME, RECEIVER_ADDRESS, RECEIVER_PHONE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
 	private static final String INSERT_STMT = "insert into GROUP_BUY_ORDER (GBITEM_ID, GB_ID, GBITEM_AMOUNT, GBORIGINAL_PRICE,, GB_ENDPRICE, GBORDER_DATE, GBORDER_PAYING, GBORDER_SEND, GBORDER_STATUS, GBORDER_OTHER, TRACKING_NUM, RECEIVER_NAME, RECEIVER_ADDRESS, RECEIVER_PHONE, PICKUP_TIME) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+	/****************後臺用****************/
 	private static final String GET_ALL_STMT = "SELECT GBORDER_ID, GBITEM_ID, GB_ID, GBITEM_AMOUNT, GBORIGINAL_PRICE, GB_ENDPRICE, GBORDER_DATE, GBORDER_PAYING, GBORDER_SEND, GBORDER_STATUS, GBORDER_OTHER, TRACKING_NUM, RECEIVER_NAME, RECEIVER_ADDRESS, RECEIVER_PHONE, PICKUP_TIME FROM GROUP_BUY_ORDER order by GBORDER_ID";
 	private static final String GET_ONE_STMT = "SELECT GBORDER_ID, GBITEM_ID, GB_ID, GBITEM_AMOUNT, GBORIGINAL_PRICE, GB_ENDPRICE, GBORDER_DATE, GBORDER_PAYING, GBORDER_SEND, GBORDER_STATUS, GBORDER_OTHER, TRACKING_NUM, RECEIVER_NAME, RECEIVER_ADDRESS, RECEIVER_PHONE, PICKUP_TIME FROM GROUP_BUY_ORDER where GBORDER_ID = ?";
 	private static final String DELETE = "DELETE FROM GROUP_BUY_ORDER where GBORDER_ID = ?";
@@ -112,16 +113,17 @@ public class Group_Buy_OrderDAO implements Group_Buy_OrderDAO_interface {
 			pstmt = con.prepareStatement(INSERT_STMT_FIRST, pstmt.RETURN_GENERATED_KEYS);
 
 			pstmt.setInt(1, Group_Buy_OrderVO.getGbitem_id());
-			pstmt.setInt(2, Group_Buy_OrderVO.getGbitem_amount());
-			pstmt.setInt(3, Group_Buy_OrderVO.getGboriginal_price());
-			pstmt.setInt(4, Group_Buy_OrderVO.getGb_endprice());
-			pstmt.setInt(5, Group_Buy_OrderVO.getGborder_paying());
-			pstmt.setInt(6, Group_Buy_OrderVO.getGborder_send());
-			pstmt.setInt(7, Group_Buy_OrderVO.getGborder_status());
-			pstmt.setString(8, Group_Buy_OrderVO.getGborder_other());
-			pstmt.setString(9, Group_Buy_OrderVO.getReceiver_name());
-			pstmt.setString(10, Group_Buy_OrderVO.getReceiver_address());
-			pstmt.setString(11, Group_Buy_OrderVO.getReceiver_phone());
+			pstmt.setInt(2, Group_Buy_OrderVO.getGb_id());
+			pstmt.setInt(3, Group_Buy_OrderVO.getGbitem_amount());
+			pstmt.setInt(4, Group_Buy_OrderVO.getGboriginal_price());
+			pstmt.setInt(5, Group_Buy_OrderVO.getGb_endprice());
+			pstmt.setInt(6, Group_Buy_OrderVO.getGborder_paying());
+			pstmt.setInt(7, Group_Buy_OrderVO.getGborder_send());
+			pstmt.setInt(8, Group_Buy_OrderVO.getGborder_status());
+			pstmt.setString(9, Group_Buy_OrderVO.getGborder_other());
+			pstmt.setString(10, Group_Buy_OrderVO.getReceiver_name());
+			pstmt.setString(11, Group_Buy_OrderVO.getReceiver_address());
+			pstmt.setString(12, Group_Buy_OrderVO.getReceiver_phone());
 
 			pstmt.executeUpdate();
 

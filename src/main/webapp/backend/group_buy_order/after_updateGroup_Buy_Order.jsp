@@ -133,7 +133,7 @@ th, td {
 		<tr>
 			<th><h3>所有員工資料</h3>
 				<h4>
-					<a class="btn btn-light" href="<%=request.getContextPath()%>/backend/group_buy_order/select_page.jsp">員工資料查詢首頁</a>
+					<a class="btn btn-light" href="<%=request.getContextPath()%>/backend/group_buy_order/select_page.jsp">團購訂單資料查詢首頁</a>
 				</h4></th>
 		</tr>
 	</table>
@@ -220,8 +220,13 @@ th, td {
 					<td>${group_buy_orderVO.receiver_phone}</td>
 					<td>${group_buy_orderVO.pickup_time}</td>
 
-					<td>
-					
+						<td>
+						<FORM METHOD="post" ACTION="Group_Buy_OrderServlet"
+							style="margin-bottom: 0px;">
+							<input type="submit" value="修改"> <input type="hidden"
+								name="gborder_id" value="${group_buy_orderVO.gborder_id}"> <input
+								type="hidden" name="action" value="getOne_For_Backend_Display">
+						</FORM>
 					</td>
 				</tr>
 			

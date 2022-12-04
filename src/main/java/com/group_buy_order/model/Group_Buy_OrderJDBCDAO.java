@@ -1,17 +1,5 @@
 package com.group_buy_order.model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-
-import com.group_buy_item.model.Group_Buy_ItemVO;
-
 public class Group_Buy_OrderJDBCDAO  {
 
 
@@ -416,4 +404,4 @@ public class Group_Buy_OrderJDBCDAO  {
 //			System.out.print(aGbo.getPickup_time());
 //			System.out.println();
 //		}
-//	}
+	}

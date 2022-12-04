@@ -2,13 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.group_join.model.*"%>
+<%@ page import="com.group_buy.model.*"%>
 <%@ page import="java.util.*"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>參團查詢</title>
 <style type="text/css">
 .styled-table {
 	margin-left: auto;
@@ -53,11 +54,6 @@ width: 830px;
 float:right;
 margin-right:162px;
 margin-top: 13px; 
-}
-.back{
-float:left;
-margin-left:162px;
-margin-top: 13px; 
 
 
 }
@@ -89,10 +85,6 @@ h4 {
 	display: inline;
 }
 
-/*   a{ */
-/*     color: white; */
-/*     display: inline; */
-/*   } */
 </style>
 
 <style>
@@ -103,27 +95,18 @@ table {
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
-/*    table, th, td {  */
-/*      border: 1px solid #212529;  */
-/*    }  */
+
 th, td {
 	width:AUTO;
 	padding: 5px;
 	text-align: center;
 }
-/*   td:first-child{ */
-/*   border-top-left-radius: 10px; */
-/*   border-bottom-left-radius: 10px; */
-/* } */
 
-/* td:last-child{ */
-/*   border-top-right-radius: 10px; */
-/*   border-bottom-right-radius: 10px; */
-/* } */
 </style>
 
 </head>
 <body>
+<a class="btn btn-light" href="<%=request.getContextPath()%>/frontend/groupBuy/listallgroupbuy.html">回團購團首頁</a>
 	<table class="styled-table">
 		<thead>
 			<tr>
@@ -134,22 +117,16 @@ th, td {
 				<th>物流狀態</th>
 				<th>購買數量</th>
 				<th>價格</th>
-				<th>繳費確認</th>
-				<th>物流確認</th>
-				<th>取貨確認</th>
-
+				<th colspan="2">參團變更</th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach var="group_joinVO" items="${group_joinVO}">
 				<tr class="active-row" align='center' valign='middle'>
-					<%-- 					<td>${group_joinVO.emp_id}</td> --%>
 					<td>[${group_joinVO.gb_id}]-${group_joinVO.group_BuyVO.gb_name}</td>
 					<td>[${group_joinVO.mem_id}]-${group_joinVO.memVO.mem_name}</td>
 					<td>${group_joinVO.gbpay_status==0 ? '未付款':'已付款'}</td>
-					<td>${group_joinVO.pickup_status==0 ? '未取貨':'已取貨'}</td>
-					
-					
+					<td>${group_joinVO.pickup_status==0 ? '未取貨':'已取貨'}</td>		
 					<c:if test="${group_joinVO.deliver_status==0}">
 				<td><c:out value="未出貨"></c:out></td>
 					</c:if>
@@ -164,60 +141,33 @@ th, td {
 					</c:if>
 					<td>${group_joinVO.gbbuy_amount}</td>
 					<td>${group_joinVO.gbbuy_price}</td>
-
 					<td>
 						<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" style="margin-bottom: 0px;">
-							<input type="submit" value="已繳費" ${group_joinVO.gbpay_status>0 ? 'disabled=" "' :' '} > 
-							<input type="hidden"name="gbpay_status" value="1"> 
-							<input type="hidden" name="gb_id" value="${group_joinVO.gb_id}">
-							<input type="hidden" name="mem_id" value="${group_joinVO.mem_id}">
-							<input type="hidden" name="action" value="updatePay">
-						</FORM>
-					</td>
-					<td>
-						<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" style="margin-bottom: 0px;">
-							<select class="status" name="deliver_status" 
-							${(group_joinVO.deliver_status==3 || group_joinVO.gbpay_status==0) ? 'disabled=" "' :' '} 
-							>
-								<option value="0"
-									${(group_joinVO.deliver_status==0)? 'selected': ''}>未出貨</option>
-								<option value="1"
-									${(group_joinVO.deliver_status==1)? 'selected': ''}>已出貨</option>
-								<option value="2"
-									${(group_joinVO.deliver_status==2)? 'selected': ''}>配送中</option>
-								<option value="3"
-									${(group_joinVO.deliver_status==3)? 'selected': ''}>已送達</option>
-
-							</select> <input type="hidden" name="action" value="updateDeliver">
-									  <input type="hidden" name="gb_id" value="${group_joinVO.gb_id}">
-									  <input type="hidden" name="mem_id" value="${group_joinVO.mem_id}"> 
-									  <input type="submit" value="送出修改"${(group_joinVO.deliver_status==3 || group_joinVO.gbpay_status==0) ? 'disabled=" "' :' '}  >
-						</FORM>
-					</td>
-					<td>
-						<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" style="margin-bottom: 0px;">
-							<input type="submit" value="已取貨" ${(group_joinVO.pickup_status>0 || group_joinVO.deliver_status<3) ? 'disabled=" "' :' '}> 
-							<input type="hidden" name="pickup_status" value="1">
+							<input type="submit" value="${(group_joinVO.pickup_status>0)||(group_joinVO.deliver_status>0)||(group_joinVO.gbpay_status>0) ? '團購進行或結束中無法變更' :'修改購買數量'}"     
+							${(group_joinVO.pickup_status>0)||(group_joinVO.deliver_status>0)||(group_joinVO.gbpay_status>0) ? 'disabled=" "' :' '}> 
 							<input type="hidden" name="gb_id" value="${group_joinVO.gb_id}"> 
 							<input type="hidden" name="mem_id" value="${group_joinVO.mem_id}">
-							<input type="hidden" name="action" value="updatePickup">
+							<input type="hidden" name="action" value="goUpdateByMem">
 						</FORM>
 
 					</td>
-
+					<td>
+						<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" style="margin-bottom: 0px;">
+							<input type="submit" value="${(group_joinVO.pickup_status>0)||(group_joinVO.deliver_status>0)||(group_joinVO.gbpay_status>0) ? '團購進行或結束中無法取消' :'取消參加'}"     
+							${(group_joinVO.pickup_status>0)||(group_joinVO.deliver_status>0)||(group_joinVO.gbpay_status>0) ? 'disabled=" "' :' '}> 
+							<input type="hidden" name="gb_id" value="${group_joinVO.gb_id}"> 
+							<input type="hidden" name="mem_id" value="${group_joinVO.mem_id}">
+							<input type="hidden" name="action" value="delete">
+						</FORM>
+					</td>
+								
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
 						<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" >
-							<input type= submit value="回參團查詢" class = "back" > 
-							<input type="hidden" name="action" value="getOne_Display_ByMem">
+							<input type= "${Verify==true ? 'submit' : 'hidden'}" value="我的團員資料更改" class="ok">
+							<input type="hidden" name="action" value="getOneGB_For_Display">
 						</FORM>
-						<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" style=" " class = "ok">
-							<input type= "${verify==true ? 'submit' : 'hidden'}" value="去完成團購團" >
-							<input type="hidden" name="gb_id" value="${gb_id}">  
-							<input type="hidden" name="action" value="update_gb_status">
-						</FORM>
-
 </body>
 </html>

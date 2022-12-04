@@ -94,7 +94,7 @@ th, td {
 		<tr>
 			<td>${group_buy_orderVO.gborder_id}</td>
 			<td>${group_buy_orderVO.group_buy_itemVO.gbitem_name}</td>
-			<td>${group_buy_orderVO.gb_id}</td>
+			<td>[${group_buy_orderVO.gb_id}]-${group_buy_orderVO.group_BuyVO.gb_name}</td>
 			<td>${group_buy_orderVO.gbitem_amount}</td>
 			<td>${group_buy_orderVO.gboriginal_price}</td>
 			<td>${group_buy_orderVO.gb_endprice}</td>

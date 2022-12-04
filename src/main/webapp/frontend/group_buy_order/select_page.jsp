@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<%@include file="/backend/backNavbar.jsp"%>
 <html>
 <head>
 <!-- ===============================來自團購編號查詢============================================= -->
@@ -37,12 +36,12 @@
 </table>
 
 <ul>
-  <li><a href='#'>回會員主頁</a>  <br><br></li>
+  <li><a href='../index.html'>回會員主頁</a>  <br><br></li>
   
   
   <li>
     <FORM METHOD="post" ACTION="/CGA104G1/Group_Buy_OrderServlet" >
-        <input type="text" name="gborder_id">
+        <input type="text" name="gborder_id" placeholder="請輸入訂單編號">
         <input type="hidden" name="action" value="getOne_For_Display">
         <input type="submit" value="送出">
         <br>
@@ -51,8 +50,5 @@
   </li>
 
 </ul>
-
-
-
 </body>
 </html>

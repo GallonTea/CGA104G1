@@ -42,17 +42,18 @@ h4 {
 	</table>
 
 	<ul>
-		<li><a href='#'>員工首頁</a> <br> <br></li>
+		<li><a href='../index.jsp'>員工首頁</a> <br> <br></li>
 
 
 
 
 		<li>
-			<FORM METHOD="post" ACTION="/CGA104G1/Group_Buy_OrderServlet"
+			<FORM METHOD="post" ACTION="/CGA104G1/Group_Buy_Order_BackServlet"
 				name="form1">
 
-
-				<b><font color=blue>萬用複合查詢:</font></b> <br> <span>輸入團購訂單編號:</span>
+				<font color=red>${errorMsgs.gb_id}</font>
+				<br>
+				 <span>輸入團購訂單編號:</span>
 				<input type="text" name="gborder_id"><br> <span>輸入團購商品編號:</span>
 				<input type="text" name="gbitem_id"><br> <span>輸入團購團編號:</span>
 				<input type="text" name="gb_id"><br> <span>輸入購買數量:</span>

@@ -91,6 +91,10 @@ public class Group_JoinService {
 		return dao.findBygbid(gb_id);
 	}
 	
+	public List<Group_JoinVO> getOneByMem(Integer mem_id) {
+		return dao.findByMem(mem_id);
+	}
+	
 	public List<Group_JoinVO> getAll() {
 		return dao.getAll();
 	}

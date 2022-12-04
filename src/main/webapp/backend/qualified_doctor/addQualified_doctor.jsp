@@ -8,11 +8,12 @@ Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribut
 // MemVO memVO = (MemVO) session.getAttribute("memVO"); //EmpServlet.java(Concroller), 存入req的empVO物件
 
 %>
-<%@include file="/backend/backNavbar.jsp"%>
+
 
 <html>
 <head>
 <title>認證醫師開通</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -72,6 +73,9 @@ Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribut
 }
 
 /* <!-- ===========================================樣式欄位================================================================== --> */
+b {
+	color: black;
+}
 table#table-1 {
 	background-color: #212529;
 	border: 2px solid black;
@@ -125,6 +129,10 @@ th, td {
 </head>
 <body bgcolor='white'>
 
+	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
 <table id="table-1">
 	<tr><td> 
 	<h3>認證醫師開通 </h3>
@@ -175,6 +183,10 @@ th, td {
 
 <input type="hidden" name="action" value="insert">
 <input type="submit" style="margin-left:25%" value="開通"/></FORM>
+
+		</section>
+	</main>
+
 
 </body>
 

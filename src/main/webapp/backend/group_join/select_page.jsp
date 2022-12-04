@@ -49,18 +49,12 @@ h3{
 		</c:forEach>
 	</table>
 
-	<c:if test="${not empty errorMsgs}">
-		<font style="color: red">請修正以下錯誤:</font>
-		<ul>
-			<c:forEach var="message" items="${errorMsgs}">
-				<li style="color: red">${message}</li>
-			</c:forEach>
-		</ul>
-	</c:if>
 	<ul>
 	<li>
 		<FORM METHOD="post" ACTION="/CGA104G1/Group_Join_backServlet" name="form1">
 			<b>參團查詢:</b> <br> 
+			<font color=red>${errorMsgs.gb_id}</font><br>
+			<font color=red>${errorMsgs.fail}</font> <br>
 			<span class="label-desc">團購團編號:</span> 
 			<input type="text" name="gb_id" value=""><br> 
 			<span>參團會員編號:</span> 

@@ -6,17 +6,9 @@
 <jsp:useBean id="group_buySvc" scope="page" class="com.group_buy.model.Group_BuyService" />
 <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
 
-<%-- <% --%>
-<!-- // EmpVO empVO = (EmpVO) request.getAttribute("empVO"); -->
-<%-- %> --%>
-<%-- <% --%>
-<!-- // EmpService empSvc = new EmpService(); -->
-<!-- // List<EmpVO> list = empSvc.getAll(); -->
-<!-- // pageContext.setAttribute("list", list); -->
-<%-- %> --%>
+<%@include file="/backend/backNavbar.jsp"%>
 <html>
 <head>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
@@ -36,11 +28,8 @@
 
 </head>
 <body bgcolor='white'>
-<nav><%@include file="/backend/topNavbar.jsp"%></nav>
-	<main>
-		<%@include file="/backend/leftside.jsp"%>
-		<section>
-<table id="table-1">
+
+	<table id="table-1">
 		<tr>
 			<td>
 				<h3>參團資料新增</h3>
@@ -76,8 +65,5 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
 
-		</section>
-	</main>
-	
 </body>
 </html>

@@ -471,16 +471,11 @@
 
     function addToTrace() {
 
-        let mem = JSON.parse(sessionStorage.getItem("mem-info"));
+        // let mem = JSON.parse(sessionStorage.getItem("mem-info"));
         let pjName = getProjectName();
 
-        // if (!trace.some(item => item.itemId === traceObject.itemId)) {
-        //     trace.push(traceObject);
-        // }
 
-        // trace.push(traceObject);
-        //  sessionStorage.setItem("trace" + '', JSON.stringify(trace));
-        axios.post(pjName + "/item/items?action=trace", {"item": traceObject, "memId": mem.memberId})
+        axios.post(pjName + "/item/items?action=trace", {"item": traceObject})
             .then((resp) => {
                 Swal.fire({
                     icon: 'success',
@@ -489,7 +484,7 @@
                     timer: 1500
                 })
             })
-        console.log(mem.memberId)
+
     }
 
 

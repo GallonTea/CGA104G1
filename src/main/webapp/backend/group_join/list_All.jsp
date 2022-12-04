@@ -89,10 +89,6 @@ h4 {
 	display: inline;
 }
 
-/*   a{ */
-/*     color: white; */
-/*     display: inline; */
-/*   } */
 </style>
 
 <style>
@@ -103,28 +99,18 @@ table {
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
-/*    table, th, td {  */
-/*      border: 1px solid #212529;  */
-/*    }  */
 th, td {
 	width:AUTO;
 	padding: 5px;
 	text-align: center;
 }
-/*   td:first-child{ */
-/*   border-top-left-radius: 10px; */
-/*   border-bottom-left-radius: 10px; */
-/* } */
 
-/* td:last-child{ */
-/*   border-top-right-radius: 10px; */
-/*   border-bottom-right-radius: 10px; */
-/* } */
 </style>
 
 </head>
 <body>
-<table class="styled-table">
+<a class="btn btn-light" href="backend/group_join/select_page.jsp">參團資料查詢首頁</a>
+	<table class="styled-table">
 		<thead>
 			<tr>
 				<th>團購團編號</th>
@@ -137,19 +123,18 @@ th, td {
 				<th>繳費確認</th>
 				<th>物流確認</th>
 				<th>取貨確認</th>
+				<th colspan="2">數量更改或取消參團</th>
 
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="group_joinVO" items="${group_joinVO}">
+			<c:forEach var="group_joinVO" items="${list_group_join}">
 				<tr class="active-row" align='center' valign='middle'>
 					<%-- 					<td>${group_joinVO.emp_id}</td> --%>
 					<td>[${group_joinVO.gb_id}]-${group_joinVO.group_BuyVO.gb_name}</td>
 					<td>[${group_joinVO.mem_id}]-${group_joinVO.memVO.mem_name}</td>
 					<td>${group_joinVO.gbpay_status==0 ? '未付款':'已付款'}</td>
 					<td>${group_joinVO.pickup_status==0 ? '未取貨':'已取貨'}</td>
-					
-					
 					<c:if test="${group_joinVO.deliver_status==0}">
 				<td><c:out value="未出貨"></c:out></td>
 					</c:if>
@@ -164,21 +149,23 @@ th, td {
 					</c:if>
 					<td>${group_joinVO.gbbuy_amount}</td>
 					<td>${group_joinVO.gbbuy_price}</td>
-
 					<td>
-						<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" style="margin-bottom: 0px;">
-							<input type="submit" value="已繳費" ${group_joinVO.gbpay_status>0 ? 'disabled=" "' :' '} > 
-							<input type="hidden"name="gbpay_status" value="1"> 
+						<FORM METHOD="post" ACTION="/CGA104G1/Group_Join_backServlet" style="margin-bottom: 0px;">
+						<select class="status" name=gbpay_status >
+								<option value="0"
+									${(group_joinVO.gbpay_status==0)? 'selected': ''}>未付款</option>
+								<option value="1"
+									${(group_joinVO.gbpay_status==1)? 'selected': ''}>已付款</option>
+							</select> 
 							<input type="hidden" name="gb_id" value="${group_joinVO.gb_id}">
 							<input type="hidden" name="mem_id" value="${group_joinVO.mem_id}">
+							<input type="submit" value="送出修改">
 							<input type="hidden" name="action" value="updatePay">
 						</FORM>
 					</td>
 					<td>
-						<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" style="margin-bottom: 0px;">
-							<select class="status" name="deliver_status" 
-							${(group_joinVO.deliver_status==3 || group_joinVO.gbpay_status==0) ? 'disabled=" "' :' '} 
-							>
+						<FORM METHOD="post" ACTION="/CGA104G1/Group_Join_backServlet" style="margin-bottom: 0px;">
+							<select class="status" name="deliver_status">
 								<option value="0"
 									${(group_joinVO.deliver_status==0)? 'selected': ''}>未出貨</option>
 								<option value="1"
@@ -191,33 +178,47 @@ th, td {
 							</select> <input type="hidden" name="action" value="updateDeliver">
 									  <input type="hidden" name="gb_id" value="${group_joinVO.gb_id}">
 									  <input type="hidden" name="mem_id" value="${group_joinVO.mem_id}"> 
-									  <input type="submit" value="送出修改"${(group_joinVO.deliver_status==3 || group_joinVO.gbpay_status==0) ? 'disabled=" "' :' '}  >
+									  <input type="submit" value="送出修改" >
+						</FORM>
+					</td>					
+					<td>
+						<FORM METHOD="post" ACTION="/CGA104G1/Group_Join_backServlet" style="margin-bottom: 0px;">
+							<select class="status" name="pickup_status">
+								<option value="0"
+									${(group_joinVO.pickup_status==0)? 'selected': ''}>未取貨</option>
+								<option value="1"
+									${(group_joinVO.pickup_status==1)? 'selected': ''}>已取貨</option>
+							</select> <input type="hidden" name="action" value="updatePickup">
+									  <input type="hidden" name="gb_id" value="${group_joinVO.gb_id}">
+									  <input type="hidden" name="mem_id" value="${group_joinVO.mem_id}"> 
+									  <input type="submit" value="送出修改" >
+						</FORM>					
+					</td>
+					<td>
+						<FORM METHOD="post" ACTION="/CGA104G1/Group_Join_backServlet"
+							style="margin-bottom: 0px;">
+							<input type="submit" value="修改"> <input type="hidden"
+								name="gb_id" value="${group_joinVO.gb_id}"> 
+								<input type="hidden"
+								name="mem_id" value="${group_joinVO.mem_id}"><input
+								type="hidden" name="action" value="getOne_For_Update">
 						</FORM>
 					</td>
 					<td>
-						<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" style="margin-bottom: 0px;">
-							<input type="submit" value="已取貨" ${(group_joinVO.pickup_status>0 || group_joinVO.deliver_status<3) ? 'disabled=" "' :' '}> 
-							<input type="hidden" name="pickup_status" value="1">
-							<input type="hidden" name="gb_id" value="${group_joinVO.gb_id}"> 
-							<input type="hidden" name="mem_id" value="${group_joinVO.mem_id}">
-							<input type="hidden" name="action" value="updatePickup">
+						<FORM METHOD="post" ACTION="/CGA104G1/Group_Join_backServlet"
+							style="margin-bottom: 0px;">
+							<input type="submit" value="刪除" ${group_joinVO.deliver_status!=0||group_joinVO.pickup_status!=0||group_joinVO.deliver_status!=0? 'disabled':' '}> 
+							<input type="hidden"
+								name="gb_id" value="${group_joinVO.gb_id}"> 
+								<input type="hidden"
+								name="mem_id" value="${group_joinVO.mem_id}"> <input
+								type="hidden" name="action" value="delete">
 						</FORM>
-
 					</td>
-
+					
 				</tr>
 			</c:forEach>
 		</tbody>
 	</table>
-						<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" >
-							<input type= submit value="回參團查詢" class = "back" > 
-							<input type="hidden" name="action" value="getOne_Display_ByMem">
-						</FORM>
-						<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" style=" " class = "ok">
-							<input type= "${verify==true ? 'submit' : 'hidden'}" value="去完成團購團" >
-							<input type="hidden" name="gb_id" value="${gb_id}">  
-							<input type="hidden" name="action" value="update_gb_status">
-						</FORM>
-
 </body>
 </html>

@@ -9,6 +9,14 @@ public class Group_Buy_OrderVO implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 2560863359303762963L;
 	
+	private Integer mem_id;
+	public Integer getMem_id() {
+		return mem_id;
+	}
+
+	public void setMem_id(Integer mem_id) {
+		this.mem_id = mem_id;
+	}
 	private Integer gborder_id;
 	private Integer gbitem_id;
 	private Integer gb_id;
@@ -34,6 +42,17 @@ public class Group_Buy_OrderVO implements java.io.Serializable{
 	    return group_buy_itemVO;
     }
 
+	 public com.mem.model.MemVO getMemVO() {
+		 com.mem.model.MemService memService = new com.mem.model.MemService();
+		 com.mem.model.MemVO memVO = memService.getOneMem(mem_id);
+		    return memVO;
+	  }
+	
+	 public com.group_buy.model.Group_BuyVO getGroup_BuyVO() {
+		 com.group_buy.model.Group_BuyService group_buyService = new com.group_buy.model.Group_BuyService();
+		 com.group_buy.model.Group_BuyVO group_buyVO = group_buyService.getOneGroup_Buy(gb_id);
+		    return group_buyVO;
+	  }
 	public Integer getGborder_id() {
 		return gborder_id;
 	}

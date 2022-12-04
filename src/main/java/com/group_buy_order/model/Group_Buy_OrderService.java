@@ -12,7 +12,7 @@ public class Group_Buy_OrderService {
 		dao = new Group_Buy_OrderDAO();
 	}
 
-	public Group_Buy_OrderVO addGroup_Buy_Order_User(Integer gbitem_id, Integer gbitem_amount, Integer gboriginal_price,
+	public Group_Buy_OrderVO addGroup_Buy_Order_User(Integer gbitem_id, Integer gb_id,Integer gbitem_amount, Integer gboriginal_price,
 			Integer gb_endprice, Integer gborder_paying, Integer gborder_send, Integer gborder_status,
 			String gborder_other, String receiver_name, String receiver_address, String receiver_phone,
 			Timestamp gborder_date, Integer gborder_id) {
@@ -20,6 +20,7 @@ public class Group_Buy_OrderService {
 		Group_Buy_OrderVO gboVO = new Group_Buy_OrderVO();
 
 		gboVO.setGbitem_id(gbitem_id);
+		gboVO.setGb_id(gb_id);
 		gboVO.setGbitem_amount(gbitem_amount);
 		gboVO.setGboriginal_price(gboriginal_price);
 		gboVO.setGb_endprice(gb_endprice);

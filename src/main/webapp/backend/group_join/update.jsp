@@ -10,7 +10,7 @@
 <script src="https://code.jquery.com/jquery-3.6.1.min.js"
 	integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
 	crossorigin="anonymous"></script>
-<title>參加團購</title>
+<title>員工資料修改</title>
 
 <style>
 
@@ -21,10 +21,15 @@
 <body bgcolor='white'>
 
 
-	<h3>參團資料確認
-	<a href="<%=request.getContextPath()%>/frontend/groupBuy/listallgroupbuy.html">取消</a> </h3>
-<font color=red>${errorMsgs.fail}</font><br>
+	<h3>參團資料修改:<font color=red>${errorMsgs.gb_id}</font> </h3>
+	<FORM METHOD="post" ACTION="/CGA104G1/Group_Join_backServlet" >
+				<input type= submit value="取消" class = "back"  > 
+				<input type="hidden" name="action" value="getOne_Display_ByEmp">
+	</FORM>
+
+
 	<FORM METHOD="post" name="form1">
+<!-- 	ACTION="/CGA104G1/Group_JoinServlet" -->	
 		<table>
 			<tr>
 				<td>團購團編號</td>
@@ -39,32 +44,41 @@
 			<tr>
 				<td>團購付款狀態:</td>
 				<td><input type="hidden" name="gbpay_status" size="45"
-					value="0" /> 未付款</td>
+					value="${group_joinVO.gbpay_status}" readonly />${group_joinVO.gbpay_status==0 ? '未付款':'已付款'}</td>
 			</tr>
 			
-				<tr>
+			<tr>
 				<td>取貨狀態:</td>
 				<td><input type="hidden" name="pickup_status" size="45"
-					value="0" />未取貨</td>
+					value="${group_joinVO.pickup_status}" readonly />${group_joinVO.pickup_status==0 ? '未取貨':'已取貨'}</td>
 			</tr>
-		<tr>
+			<tr>
 				<td>物流狀態:</td>
-				<td><input type="hidden" name="deliver_status" size="45"
-					value="0" />未出貨</td>
+				
+				<c:if test="${group_joinVO.deliver_status==0}">
+				<td><c:out value="未出貨"></c:out></td>
+					</c:if>
+					<c:if test="${group_joinVO.deliver_status==1}">
+				<td><c:out value="已出貨"></c:out></td>
+					</c:if>
+					<c:if test="${group_joinVO.deliver_status==2}">
+				<td><c:out value="配送中"></c:out></td>
+					</c:if>
+					<c:if test="${group_joinVO.deliver_status==3}">
+				<td><c:out value="已送達"></c:out></td>
+					</c:if>
 			</tr>
 			<tr>
 				<td>購買數量:<font color=red><b>*</b></font></td>
-				<td><input class="field" type="number" name="gbbuy_amount" min="1" max="${group_joinVO.group_BuyVO.gb_min - nowamount}"
-				 size="45" required
-					value="${group_joinVO.gbbuy_amount}" />
-					<input  class="field2" type="button"  value="計算價格" onclick="price()"  ${(errorMsgs.fail=="數量已滿,不可增加") ? 'disabled' : ' '}>
-					<font color="red">${errorMsgs.gbbuy_amount}</font>
+				<td><input  class="field" type="number" name="gbbuy_amount" min="1" max="${group_joinVO.group_BuyVO.gb_min - nowamount}" required
+				 size="45" value="${group_joinVO.gbbuy_amount}" />
+					<input   type="button"  class="field2" value="計算價格" onclick="price()"><font color=red>${errorMsgs.gbbuy_amount}</font>
 			</tr>
 			
 			<tr>
 				<td>總價格:<font color=red><b>*</b></font></td>
 				<td><input type="TEXT" name="gbbuy_price" size="4"
-					value="${group_joinVO.gbbuy_price}" readonly /><font color=red>${errorMsgs.gbbuy_price}</td>
+					value="${group_joinVO.gbbuy_price}" readonly /><font color=red>${errorMsgs.gbbuy_price}</font></td>
 			</tr>
 		</table>
 
@@ -73,7 +87,7 @@
 					value="${group_joinVO.deliver_status}" readonly /><input
 			type="hidden" name="gb_id" value="${group_joinVO.gb_id}">
 			<input type="hidden" name="mem_id" value="${group_joinVO.mem_id}"> 
-			<div id ="yesboss"><input  class="btn btn-warning" type="button"  value="確認參加"  onclick="update()"  ${(errorMsgs.fail=="數量已滿,不可增加") ? 'disabled' : ' '}></div>
+			<div id ="yesboss"><input  class="btn btn-warning" type="button"  value="確認更改"  onclick="update()"></div>
 	</FORM>
 
 	
@@ -100,14 +114,13 @@
 	    })
 	 });
 	
-	
 	function price() {
-		document.form1.action="/CGA104G1/Group_JoinServlet?action=inser_Newprice";
+		document.form1.action="/CGA104G1/Group_Join_backServlet?action=update_Newprice";
 		document.form1.submit();	
 	}
 
 	function update() {
-		document.form1.action="/CGA104G1/Group_JoinServlet?action=insert";
+		document.form1.action="/CGA104G1/Group_Join_backServlet?action=UpdateByEmp";
 		document.form1.submit();	
 	}
 	

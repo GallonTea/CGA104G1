@@ -538,9 +538,9 @@
         },
         mounted() {
             let pjName=getProjectName();
-            let mem=JSON.parse(sessionStorage.getItem("mem-info"));
-            let memId=mem.memberId;
-            axios.get(pjName+"/item/items?action=getFavList&memId="+memId)
+            // let mem=JSON.parse(sessionStorage.getItem("mem-info"));
+            // let memId=mem.memberId;
+            axios.get(pjName+"/item/items?action=getFavList")
                 .then((resp)=>{
                     this.favList=resp.data;
                     console.log(resp.data)

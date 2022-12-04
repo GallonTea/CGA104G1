@@ -6,12 +6,6 @@
 <%@ page import="com.group_buy_item.model.*"%>
 <jsp:useBean id="discountSvc" scope="page"
 	class="com.discount.model.DiscountService" />
-<%-- <jsp:useBean id="discountSvc" scope="page" class="com.discount.model.DiscountService" /> --%>
-<%
-// EmpService empSvc = new EmpService();
-// List<EmpVO> list = empSvc.getAll();             未改
-// pageContext.setAttribute("list", list);
-%>
 <html>
 <head>
 <link
@@ -27,9 +21,6 @@
 	integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
 	crossorigin="anonymous"></script>
 <title>團購訂單新增資料</title>
-<!-- ===============================地址============================================= -->
-   <script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://demeter.5fpro.com/tw/zipcode-selector.js"></script>
 <!-- ===============================來自團購團資料============================================= -->
 
 <style>
@@ -61,34 +52,34 @@
 		<table>
 			<tr>
 				<td>團購團名稱:</td>
-				<td><input type="TEXT" name="gb_name" size="45" value="${gb_name}" /></td>			
+				<td><input type="hidden" name="gb_id" size="45" value="${group_buy_orderVO.group_BuyVO.gb_id }" readonly />${group_buy_orderVO.group_BuyVO.gb_name }</td>			
 			</tr>
 			<tr>
 				<td>團購商品名稱:</td>
-				<td><input type="TEXT" name="gbitem_name" size="45"
-					value="${gbitem_name}" /></td>
+				<td><input type="hidden" name="gbitem_id" size="45"
+					value="${group_buy_orderVO.gbitem_id}"readonly />${group_buy_orderVO.group_buy_itemVO.gbitem_name}</td>
 			</tr>
 			<tr>
 				<td>團購商品內容:</td>
-				<td><input type="TEXT" name="gbitem_content" size="45"
-					value="${gbitem_content}" /></td>
+				<td><input type="hidden" name="gbitem_content" size="45"
+					value="${group_buy_orderVO.group_buy_itemVO.gbitem_content}" readonly/>${group_buy_orderVO.group_buy_itemVO.gbitem_content}</td>
 			</tr>
 			<tr>
 				<td>團購數量:</td>
-				<td><input type="TEXT" name="gbitem_amount" size="45"
-					value="${gb_min}" readonly="readonly" /></td>
+				<td><input type="hidden" name="gbitem_amount" size="45"
+					value="${group_buy_orderVO.group_BuyVO.gb_min}" readonly="readonly" />${group_buy_orderVO.group_BuyVO.gb_min}</td>
 			</tr>
 
 			<tr>
 				<td>原價:</td>
-				<td><input type="TEXT" name="gboriginal_price" size="45"
-					value="${gbitem_price*gb_min}"
-					readonly="readonly" />假資料</td>
+				<td><input type="hidden" name="gboriginal_price" size="45"
+					value="${group_buy_orderVO.group_buy_itemVO.gbitem_price*group_buy_orderVO.group_BuyVO.gb_min}"
+					readonly  />${group_buy_orderVO.group_buy_itemVO.gbitem_price*group_buy_orderVO.group_BuyVO.gb_min}</td>
 			</tr>
 			<tr>
 				<td>團購價:</td>
-				<td><input type="TEXT" name="gb_endprice" size="45"
-					value="${gb_min*gb_price}" /></td>
+				<td><input type="hidden" name="gb_endprice" size="45"
+					value="${group_buy_orderVO.group_BuyVO.gb_min*group_buy_orderVO.group_BuyVO.gb_price}" readonly/>${group_buy_orderVO.group_BuyVO.gb_min*group_buy_orderVO.group_BuyVO.gb_price}</td>
 			</tr>
 			<tr>
 				<td>團購付款方式:</td>
@@ -122,7 +113,7 @@
 			</tr>
 			<tr>
 				<td>收件人姓名:</td>
-				<td><input type="TEXT" name="receiver_name" size="45" placeholder="請輸入姓名"  required/></td><td><font color=red>${errorMsgs.receiver_name}</font></td>
+				<td><input type="TEXT" name="receiver_name" size="45"  pattern="^[\u4e00-\u9fa5]+$|^[a-zA-Z\s]+$"  placeholder="請輸入姓名"  required/></td><td><font color=red>${errorMsgs.receiver_name}</font></td>
 			</tr>
 			
 			<tr>
@@ -130,56 +121,10 @@
 				<!--  ==============================團購主確認================================== -->
 				<td><input type="TEXT" name="receiver_address" size="45" placeholder="請輸入地址"  required/></td><td><font color=red>${errorMsgs.receiver_address}</font></td>
 			</tr>
-			<!--  ==============================地址================================== -->
-			 <div>收件地址</div>
-
-                    <div class="row mt-4">
-      
-                        <div class="form-group">
-
-                            <input class="js-demeter-tw-zipcode-selector form-control" data-city="#city"
-                                   data-dist="#dist"  name= "zipcode"
-                                   placeholder="請輸入郵遞區號" >
-                        </div>
-                        
-                        <div class="form-group col-md-6">
-
-                            <select class="form-select" id="city" name= "city" placeholder="請選擇縣市" >
-                                <option value="0" disabled selected>請選擇縣市</option>
-                            </select>
-                        </div>
-                        <div class="form-group col-md-6">
-
-                            <select class="form-select" id="dist"  name= "dist" placeholder="請選擇鄉鎮區" >
-                                <option value="0" disabled selected>請先選擇縣市</option>
-                            </select>
-                        </div>
-                    </div>
-                    <br>
-
-                    <div class="form-group">
-                     
-                        <input type="text" class="form-control" id="inputAddress"  name="address"
-                               placeholder="請輸入地址" required>
-                        <div class="invalid-feedback">
-                            寄件地址為必要項目
-                        </div>
-                    </div>
-			
-			
-			
-			
-			
-			
-			<!--  ==============================團購主確認================================== -->
-			
-			
-			
-			
 			<tr>
 				<td>收件人電話:</td>
 				<!--  ==============================團購主確認================================== -->
-				<td><input type="TEXT" name="receiver_phone" size="45" placeholder="請輸入電話"  required/></td><td><font color=red>${errorMsgs.receiver_phone}</font></td>
+				<td><input  type="TEXT" id="phone" name="receiver_phone" pattern="[0][9][0-9]{2}[0-9]{3}[0-9]{3}"  size="45" placeholder="請輸入電話"  required/></td><td><font color=red>${errorMsgs.receiver_phone}</font></td>
 			</tr>
 		</table>
 		<br>
@@ -195,36 +140,6 @@
 		  $("#selector option:selected")
 		  });
 	
-// $(document).ready(function() {
-	
-// 	switch($('#status').val()){
-// 		case '0':
-// 			$('.status').val(0)
-// 			break;
-// 		case '1':
-// 			$('.status').val(1)
-// 		case '2':
-// 			$('.status').val(2)
-// 	}
-// 	$('.status').change(function () {
-// 		$('#status').val($('.status option:selected').val());
-// 	});
-// });
-// $(document).ready(function() {
-	
-// 	switch($('#status2').val()){
-// 		case '0':
-// 			$('.status2').val(0)
-// 			break;
-// 		case '1':
-// 			$('.status2').val(1)
-// 		case '2':
-// 			$('.status2').val(2)
-// 	}
-// 	$('.status').change(function () {
-// 		$('#status2').val($('.status2 option:selected').val());
-// 	});
-// });
 <!-- // ===============================兩種 sumit ========================================== -->
 
 // function act1(){
@@ -248,31 +163,10 @@
 		crossorigin="anonymous"></script>
 </body>
 
-<%
-// java.sql.Date onjob_date = null;
-// try {
-// 	onjob_date = empVO.getOnjob_date();
-// } catch (Exception e) {
-// 	onjob_date = new java.sql.Date(System.currentTimeMillis());
-// }
-%>
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script
 	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-<script>
-//         $.datetimepicker.setLocale('zh');
-//         $('#f_date1').datetimepicker({
-// 	       theme: '',              //theme: 'dark',
-// 	       timepicker:false,       //timepicker:true,
-// 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-// 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-<%-- 		   value: '<%=onjob_date%>' , // value:   new Date(), --%>
-	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-	//startDate:	            '2017/07/10',  // 起始日
-	//minDate:               '-1970-01-01', // 去除今日(不含)之前
-	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-// 	});
-</script>
+
 </html>

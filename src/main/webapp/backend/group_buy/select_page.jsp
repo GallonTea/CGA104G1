@@ -15,6 +15,56 @@ pageContext.setAttribute("list", list);
 <meta charset="UTF-8">
 <title>GroupBuy: Home</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
+<style>
+	section {
+ 			height: 100%; 
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+            background-color: #FFDEE9;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+    #main-content {
+    	display: flex;
+    	margin-left: 10%;
+    	text-align: center !important;
+    	justify-content: center;
+    }
+    
+    .wrapper {
+    	margin-top: 40px;
+    }
+        
+    .btnIn {
+    	width: 60px;
+    	border-radius: 20px !important;
+    }
+    
+    h3 {
+    	font-weight: 700 !important;
+    }
+    
+    .search {
+    	margin-bottom:15px;
+    }
+    
+    select, input {
+    	width: 200px;
+    	height: 30px;
+    	border-radius: 20px;
+    	border: none;
+    }
+    
+    select:focus, input:focus {
+    	border: 2px solid pink !important;
+    }
+    
+    .btnL {
+    	width: 180px;
+    	height: 30px;
+    	border-radius: 20px !important;
+    }
+</style>
 </head>
 <body>
 <nav><%@include file="/backend/topNavbar.jsp"%></nav>
@@ -35,23 +85,22 @@ pageContext.setAttribute("list", list);
 					</ul>
 				</c:if>
 			<table>
-				<ul>
-					<li><a href='listAllGroupBuy.jsp' action="">List</a> all Discount. <br>
-					<br></li>
-
-
-					<li>
+<!-- 					<li><a href='listAllGroupBuy.jsp' action="">List</a> all Discount. <br> -->
+<!-- 					<br></li> -->
+					
+						<h3>團購團管理</h3>
+						<div class="search">
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/GroupBuyServlet">
 							<b>輸入團購團編號:</b> 
 							<input type="text" name="gb_id"> 
 							<input type="hidden" name="action" value="getOne_For_Display">
-							<input type="submit" value="送出">
+							<input type="submit" value="送出" class="btn btn-info btnIn">
 						</FORM>
-					</li>
-
+						</div>
+	
 <%-- 					<jsp:useBean id="gbSvc" scope="page"class="com.group_buy.model.Group_BuyService" /> --%>
 
-					<li>
+						<div class="search">
 						<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/GroupBuyServlet">
 							<b>選擇團購團編號:</b> <select size="1" name="gb_id">
 								<c:forEach var="Group_BuyVO" items="${list}">
@@ -59,18 +108,17 @@ pageContext.setAttribute("list", list);
 								</c:forEach>
 							</select> 
 							<input type="hidden" name="action" value="getOne_For_Display">
-							<input type="submit" value="送出">
+							<input type="submit" value="送出" class="btn btn-info btnIn">
 						</FORM>
-					</li>
-
-				</ul>
+						</div>
 
 
-				<h3>團購團管理</h3>
 
-				<ul>
-					<li><a href='addGroupBuy.jsp'>Add</a> a new groupBuy.</li>
-				</ul>
+				
+
+					<button onclick="location.href='<%=request.getContextPath()%>/backend/group_buy/addGroupBuy.jsp'" class="btn btn-success btnL">新增團購團</button>
+					&ensp;&ensp;
+					<button onclick="location.href='<%=request.getContextPath()%>/backend/group_buy/listAllGroupBuy.jsp'" class="btn btn-dark btnL">查詢所有團購團</button>
 			</table>
 			</div>
 		</section>

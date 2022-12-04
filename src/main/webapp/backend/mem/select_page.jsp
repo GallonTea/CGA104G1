@@ -11,24 +11,78 @@ MemVO memVO = (MemVO) session.getAttribute("memVO"); //EmpServlet.java(Concrolle
 <title>會員查詢</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <style>
-  table#table-1 {
-	width: 450px;
-	background-color: gray;
-	margin-top: 5px;
-	margin-bottom: 10px;
-    border: 3px ridge black;
-    height: 80px;
-    text-align: center;
-  }
-  table#table-1 h4 {
-    color: yellow;
-    display: block;
-    margin-bottom: 1px;
-  }
-  h4 {
-    color: blue;
-    display: inline;
-  }
+
+	section {
+ 			height: 100%; 
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+            background-color: #FFDEE9;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+/* 	設定container */
+	.container{
+		min-height: 500px;
+	}
+/* 	設定表單、按鈕區塊 */
+	.buttonBlock{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	
+	.form{
+		margin-top: 50px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	
+/* 	設定表單樣式 */
+	#f_date1{
+		margin-bottom: 20px;
+	}
+	
+	.btnIn {
+		min-width: 200px;
+		border-radius: 20px !important;
+	}
+	
+	.line {
+		margin-bottom: 10px;
+	}
+	
+	h3 {
+		color: black;
+		font-weight: 700 !important;
+	}
+	
+	#table-1 {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-top: 20px;
+	}
+	
+	.select {
+		width: 195px;
+		height: 30px;
+		border-radius: 20px;
+		text-align: center;
+		border: none;
+	}
+	
+	select:focus{
+		border: 2px solid pink;
+	}
+	
+	input {
+		border: none;
+		border-radius: 20px;
+	}
+	
+	input:focus{
+		border: 2px solid pink !important;
+	}
 </style>
 
 </head>
@@ -37,10 +91,10 @@ MemVO memVO = (MemVO) session.getAttribute("memVO"); //EmpServlet.java(Concrolle
 	<main>
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
+		<div class="container">
 			<table id="table-1">
    <tr><td><h3>會員資料查詢 </h3>
-  <button onclick="location.href='<%=request.getContextPath()%>/backend/mem/listAllMem.jsp'">查詢所有會員</button>
-  <button onclick="location.href='<%=request.getContextPath()%>/backend/index.jsp'">回到後台首頁</button>
+
    </td></tr>
 </table>
 
@@ -63,51 +117,67 @@ MemVO memVO = (MemVO) session.getAttribute("memVO"); //EmpServlet.java(Concrolle
   <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
 
 
-  
+  	<div class="form">
     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/MemServlet" name="form2">
 
-
+	<div class="line">
         <b>查詢會員編號:</b>
-       <select size="1" name="mem_id" >
+       <select size="1" name="mem_id" class="select">
           <option value="">請選擇
          <c:forEach var="memVO" items="${memSvc.all}" > 
           <option value="${memVO.mem_id}">${memVO.mem_id}
          </c:forEach>   
        </select><br>
+    </div>
        
+    <div class="line">
        <b>查詢會員帳號:</b>
        <input type="text" name="mem_account" value=""><br>
-           
+    </div>
+    
+    <div class="line">
        <b>查詢會員姓名:</b>
        <input type="text" name="mem_name" value=""><br>
-              
-       <b>查詢性別:</b>
+    </div>
+    
+    <div class="line">
+       <b>查詢性別:</b>&ensp;&ensp;&ensp;&ensp;
        	<td>
 		<input type="radio" name="mem_sex" size="45" value="" ${(memVO.mem_sex=="")? '':'checked' } ><b>不拘</b>
 		<input type="radio" name="mem_sex" size="45" value="男" ${(memVO.mem_sex=="男")? 'check':'' } ><b>男</b>
 		<input type="radio" name="mem_sex" size="45" value="女" ${(memVO.mem_sex=="女")? 'check':'' }><b>女</b>
 		<input type="hidden" name="mem_sex" value="${memVO.mem_sex}">
 		</td><br>
+	</div>
        
-       
+    <div class="line">   
        <b>查詢會員狀態:</b>
         <td>
-       	<select  name="mem_status">
+       	<select  name="mem_status" class="select">
        	<option value="" ${(memVO.mem_status=="")? 'selected':'' } >請選擇</option>
 		<option value="0" ${(memVO.mem_status==0)? 'select':'' } >停權</option>
 		<option value="1" ${(memVO.mem_status==1)? 'select':'' } >未驗證</option>
 		<option value="2" ${(memVO.mem_status==2)? 'select':'' } >已驗證</option>
 		</select>
 		</td><br>
-
+	</div>
        
+    <div class="line">
        <b>查詢會員生日:</b>
-	   <input name="mem_dob" id="f_date1" type="text">
-	
+	   <input name="mem_dob" id="f_date1" type="text"><br>
+	</div>
         <input type="hidden" name="action" value="MemSerchPro">
-        <input type="submit" value="送出">
+        &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+        <input type="submit" class="btn btn-success btnIn" value="送出">
         
      </FORM>
+        
+     </div>
+     <div class="buttonBlock">
+  		<button onclick="location.href='<%=request.getContextPath()%>/backend/mem/listAllMem.jsp'" class="btn btn-dark btnIn">查詢所有會員</button>
+<%--   <button onclick="location.href='<%=request.getContextPath()%>/backend/index.jsp'">回到後台首頁</button> --%>
+	</div>
+     </div>
 		</section>
 	</main>
 

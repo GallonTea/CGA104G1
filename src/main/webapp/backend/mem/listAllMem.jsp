@@ -15,19 +15,16 @@
 <head>
 <title>會員帳號管理 </title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
-	crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-	crossorigin="anonymous"></script>
 
 <style>
 /* <!-- ===========================================樣式欄位================================================================== --> */
-
+section {
+ 			height: 100%; 
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+            background-color: #FFDEE9;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
 .styled-table {
 	margin-left: auto;
 	margin-right: auto;
@@ -37,6 +34,7 @@
 	font-family: sans-serif;
 	min-width: 400px;
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+	padding: 0 10px !important;
 }
 
 .styled-table thead tr {
@@ -54,7 +52,7 @@
 }
 
 .styled-table tbody tr:nth-of-type(even) {
-	background-color: #f3f3f3;
+	background-color: rgba(255,255,255,0.4);
 }
 
 .styled-table tbody tr:last-of-type {
@@ -68,13 +66,13 @@
 
 /* <!-- ===========================================樣式欄位================================================================== --> */
 table#table-1 {
-	background-color: #212529;
-	border: 2px solid black;
+/* 	background-color: #212529; */
+/* 	border: 2px solid black; */
 	text-align: center;
 	margin-left: auto;
 	margin-right: auto;
 	width: 1000px;
-	margin-top: 5px;
+	margin-top: 15px;
 	margin-bottom: 5px;
 }
 
@@ -85,7 +83,8 @@ table#table-1 h4 {
 }
 
 h3 {
-	color: #6c757d;
+	color: black;
+	font-weight: 700 !important;
 }
 
 h4 {
@@ -106,6 +105,15 @@ th, td {
 	padding: 5px;
 	text-align: center;
 }
+
+th{
+	text-align: center !important;
+}
+
+.btnIn{
+	border-radius: 20px !important;
+}
+
 </style>
 
 
@@ -121,7 +129,7 @@ th, td {
 	<tr>
 		<th>
 		 <h3>會員帳號管理 </h3>
-		 <h4><a class="btn btn-light" href="<%=request.getContextPath()%>/backend/mem/select_page.jsp">回到會員資料查詢</a></h4>
+		 <h4><a class="btn btn-success" href="<%=request.getContextPath()%>/backend/mem/select_page.jsp">回到會員資料查詢</a></h4>
 		</th>
 	</tr>
 </table>
@@ -179,13 +187,13 @@ th, td {
 
 			<td>
 			  <FORM METHOD="post" ACTION="/CGA104G1/MemServlet" style="margin-bottom: 0px;">
-			     <input type="submit" onclick="return up_confirm()" value="修改">
+			     <input type="submit" onclick="return up_confirm()" value="修改" class="btn btn-warning btnIn">
 			     <input type="hidden" name="mem_id"  value="${memVO.mem_id}">
 			     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 			</td>
 			<td>
 			  <FORM METHOD="post" ACTION="/CGA104G1/MemServlet" style="margin-bottom: 0px;">
-			     <input type="submit" onclick="return de_confirm()" value="刪除">
+			     <input type="submit" onclick="return de_confirm()" value="刪除" class="btn btn-danger btnIn">
 			     <input type="hidden" name="mem_id"  value="${memVO.mem_id}">
 			     <input type="hidden" name="action" value="delete">
 			   </FORM>

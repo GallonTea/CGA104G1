@@ -15,6 +15,16 @@ pageContext.setAttribute("list", list);
 <title>所有團購團</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <style>
+section {
+ 			height: 100%; 
+            background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+            background-color: #FFDEE9;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+        }
+        
 table#table-1 {
 	background-color: #CCCCFF;
 	border: 2px solid black;
@@ -36,7 +46,6 @@ h4 {
 <style>
 table {
 	width: 800px;
-	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
@@ -49,6 +58,40 @@ th, td {
 	padding: 5px;
 	text-align: center;
 }
+
+.btnTitle {
+	width: 1000px;
+	text-align: center;
+}
+
+.btn-info {
+	width: 200px;
+	border-radius: 20px !important;
+	margin-top: 15px;
+}
+
+table {
+	width: 90%;
+	text-align: center;
+	margin-left: 5%;
+}
+
+b {
+	margin-left: 5%;
+}
+
+.formTitle {
+	background-color: black;
+	color: white;
+}
+
+.btnIn {
+	border-radius: 20px !important;
+}
+
+tr:nth-child(even) {
+	background-color: rgba(255,255,255,0.4);
+}
 </style>
 </head>
 <body>
@@ -58,10 +101,12 @@ th, td {
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
 <!-- 		把原本body的東西貼到這邊 -->
-<a href="<%=request.getContextPath()%>/backend/group_buy/select_page.jsp">回首頁</a>
-
+<div class="container">
+<div class="btnTitle">
+<button onclick="location.href='<%=request.getContextPath()%>/backend/group_buy/select_page.jsp'" class="btn btn-info">回首頁</button>
+</div>
 <table>
-		<tr>
+		<tr class="formTitle">
 			<th>團購團編號</th>
 			<th>團購主編號</th>
 			<th>團購商品編號</th>
@@ -72,6 +117,8 @@ th, td {
 			<th>團購狀態</th>
 			<th>團購價格</th>
 			<th>團購名稱</th>
+			<th></th>
+			<th></th>
 		</tr>
 		<%@ include file="page1.file" %> 
 		<c:forEach var="Group_BuyVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
@@ -122,13 +169,13 @@ th, td {
 				
 				<td>
 				  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/GroupBuyServlet" style="margin-bottom: 0px;">
-				     <input type="submit" value="修改">
+				     <input type="submit" value="修改" class="btn btn-warning btnIn">
 				     <input type="hidden" name="gb_id"  value="${Group_BuyVO.gb_id}">
 				     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 				</td>
 				<td>
 				  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/GroupBuyServlet" style="margin-bottom: 0px;">
-				     <input type="submit" value="刪除">
+				     <input type="submit" value="刪除" class="btn btn-danger btnIn">
 				     <input type="hidden" name="gb_id"  value="${Group_BuyVO.gb_id}">
 				     <input type="hidden" name="action" value="delete"></FORM>
 				</td>
@@ -136,7 +183,7 @@ th, td {
 		</c:forEach>
 		</table>
 		<%@ include file="page2.file" %>
-
+		</div>
 		</section>
 	</main>
 <!-- 複製終點 -->

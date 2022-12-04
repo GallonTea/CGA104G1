@@ -13,14 +13,12 @@ public class Group_Buy_ReportService {
 	}
 	
 	public Group_Buy_ReportVO addGroup_Buy_Report(Integer gborder_id,Integer mem_id, String frep_content,
-			Integer frep_status, Integer frep_result, Integer emp_id) {
+			 Integer emp_id) {
 		
 		Group_Buy_ReportVO gbrVO = new Group_Buy_ReportVO();
 		gbrVO.setGborder_id(gborder_id);
 		gbrVO.setMem_id(mem_id);
 		gbrVO.setFrep_content(frep_content);
-		gbrVO.setFrep_status(frep_status);
-		gbrVO.setFrep_result(frep_result);
 		gbrVO.setEmp_id(emp_id);
 		dao.insert(gbrVO);
 		return gbrVO;
@@ -48,6 +46,10 @@ public class Group_Buy_ReportService {
 
 	public Group_Buy_ReportVO getOneGroup_Buy_Report(Integer gbfrep_id) {
 		return dao.findByPrimaryKey(gbfrep_id);
+	}
+	
+	public Group_Buy_ReportVO getOneGroup_Buy_Report_insert(Integer mem_id) {
+		return dao.findByPrimaryKey(mem_id);
 	}
 
 	public List<Group_Buy_ReportVO> getAll() {

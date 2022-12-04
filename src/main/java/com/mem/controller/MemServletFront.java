@@ -142,6 +142,7 @@ public class MemServletFront extends HttpServlet {
             memVO.setMem_sex(mem_sex);
             memVO.setMem_dob(mem_dob);
 //			memVO.setMem_status(mem_status);
+
             memVO.setMem_id(mem_id);
 
             // Send the use back to the form, if there were errors
@@ -166,4 +167,5 @@ public class MemServletFront extends HttpServlet {
 
     }
 }
+
 

@@ -22,7 +22,12 @@
 
  <!--item_detail.css	-->
  <link rel="stylesheet" type="text/css" href="../../resources/static/css/item_detail.css">
+<!-- import font-style -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
 
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- import css stylesheet -->
 <link rel="stylesheet" href="../../resources/static/css/plugins.css">
 <link rel="stylesheet" href="../../resources/static/css/style.css">
@@ -36,7 +41,7 @@
 
 <script src="https://cdn.bootcdn.net/ajax/libs/qs/6.11.0/qs.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
+<link rel="stylesheet" type="text/css" href="../../resources/static/css/main.css"/>
 <style>
 body * {
     z-index: 1;
@@ -63,7 +68,7 @@ html {
 	height: 4160px;
 	width: auto;
 	background-image:
-		url('../resources/static/image/andrew-s-ouo1hbizWwo-unsplash.jpg');
+		url('../../resources/static/image/andrew-s-ouo1hbizWwo-unsplash.jpg');
 	background-repeat: no-repeat;
 	background-size: 100%;
 	background-color: transparent;
@@ -134,7 +139,7 @@ footer img {
 		display: none;
 	}
 	.navbar .nav-item:hover .nav-link {
-		
+
 	}
 	.navbar .nav-item:hover .dropdown-menu {
 		display: block;
@@ -142,6 +147,44 @@ footer img {
 	.navbar .nav-item .dropdown-menu {
 		margin-top: 0;
 	}
+}
+
+/* 設定頂端表單區域 */
+.titleForm {
+	width: 33%;
+	height: 30px;
+	display: inline-block;
+}
+
+.btnTitle {
+	width: 99%;
+}
+
+/* 設定商品區域 */
+
+.product-image, .product-details, .product-price, .btn-addto-cart {
+	display: inline-block;
+}
+
+.card{
+ 	width: 33%;
+}
+
+.brand-name{
+	min-height: 50px;
+	font-size: 12px !important;
+}
+
+.old-price {
+	font-size: 14px !important;
+}
+
+.price {
+	font-size: 18px !important;
+}
+
+.page-link {
+	min-height: 55px !important;
 }
 </style>
 </head>
@@ -154,20 +197,23 @@ footer img {
 	<main>
 <div class="container">
 			<!-- 新增團購團申請測試區 -->
-
-			<form action="/CGA104G1/GroupBuyStartNewApplyListServlet">
+			<div class="headBlock">
+			<form action="/CGA104G1/GroupBuyStartNewApplyListServlet" class="titleForm">
 				<!-- 		<input type="hidden" name="gbitem_id"  value="${Group_Buy_ItemVO.gbitem_id}">  -->
-				<input type="hidden" name="gbitem_id" value="2"> <input
-					type="hidden" name="mem_id" value="1"> <input type="hidden"
-					name="action" value="insert">
-				<button class="btn btn-primary" type="submit">開新團購</button>
+				<input type="hidden" name="gbitem_id" value="2">
+ 				<input type="hidden" name="action" value="insert">
+				<button class="btn btn-primary btnTitle" type="submit">開新團購</button>
 			</form>
-			<form action="/CGA104G1/GroupBuyMasterApplyListServlet">
+			<form action="/CGA104G1/GroupBuyMasterApplyListServlet" class="titleForm">
 				<!-- 		<input type="hidden" name="gbitem_id"  value="${Group_Buy_ItemVO.gbitem_id}">  -->
-				<input type="hidden" name="mem_id" value="1"> <input
-					type="hidden" name="action" value="listAllMyGroupBuy">
-				<button class="btn btn-primary" type="submit">我的團購團</button>
+				 <input type="hidden" name="action" value="listAllMyGroupBuy">
+				<button class="btn btn-primary btnTitle" type="submit">我的團購團</button>
 			</form>
+			<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" name="form1" class="titleForm">
+						<input type="hidden" name="action" value="getOne_Display_ByMem">
+						<button class="btn btn-primary btnTitle" btnTitle type="submit">參團資料查詢</button>
+			</FORM>
+			</div>
 			<!-- 新增團購團申請測試區 -->
 
 			<div class="card-columns">
@@ -227,7 +273,7 @@ let jsonUrl = "/CGA104G1/GroupBuyGetAllJSONServlet";
       }).then((json) => {
         jsonData = json;
 //         console.log(jsonData)
-        
+
         let GroupBuyVOs = jsonData.GroupBuyVOs;
         let GroupBuyItemVOs = jsonData.GroupBuyItemVOs;
 
@@ -262,122 +308,57 @@ let jsonUrl = "/CGA104G1/GroupBuyGetAllJSONServlet";
         hasNext: currentPage < pageTotal,
       }
       displayData(data);
-      pageBtn(page);
     }
 
     function displayData(data) {
       let str = '';
       data.forEach((groupBuy) => {
-    	  
-//         moment.locale('zh-tw');
-//         // 取得現在時間
-//         let now = moment().valueOf();
-//         // 取得團購團時間
-//         let gbstartdate =  Date.parse(groupBuy.gbstart_date) < now ? moment(Date.parse(groupBuy.gbstart_date)).format('YYYY-MM-DD HH:mm:SS')+"即將開團" :  moment(Date.parse(groupBuy.gbstart_date)).format('YYYY-MM-DD HH:mm:SS');
-//         let gbenddate = Date.parse(groupBuy.gbend_date) >= now ? "團購關閉" : moment(Date.parse(groupBuy.gbend_date)).format('YYYY-MM-DD HH:mm:SS');
+
         str += `
         <div class="card">
         <div class="grid-products">
-					<div class="row">
-						<div class="item col-lg-4 col-md-4 col-6">
-							<div class="product-image">
-								<a href="/CGA104G1/frontend/groupBuy/NewFile.html?gb_id=${groupBuy.gb_id}&gbitem_id=${groupBuy.gbitem_id}" class="product-img">
+						<div class="item">
+							<div class="product-image item col-lg-4 col-md-4 col-6">
+								<a href="/CGA104G1/frontend/groupBuy/OneGroupBuyItem.html?gb_id=${groupBuy.gb_id}&gbitem_id=${groupBuy.gbitem_id}" class="product-img">
 									<img
 									class=""
 									data-src="/CGA104G1/groupBuyItemPicture/groupBuyItemPictureGetOne.do?gbitem_id=${groupBuy.gbitem_id}"
-									src="/CGA104G1/groupBuyItemPicture/groupBuyItemPictureGetOne.do?gbitem_id=${groupBuy.gbitem_id}"> 
-									
+									src="/CGA104G1/groupBuyItemPicture/groupBuyItemPictureGetOne.do?gbitem_id=${groupBuy.gbitem_id}">
+
 									<img
 									class="hover lazyload"
 									data-src="/CGA104G1/groupBuyItemPictureGetSecond?gbitem_id=${groupBuy.gbitem_id}"
 									src="/CGA104G1/groupBuyItemPictureGetSecond?gbitem_id=${groupBuy.gbitem_id}" >
-<!-- 									<div class="product-labels"> -->
-<!-- 										<span class="lbl on-sale">Sale</span> -->
-<!-- 									</div> -->
-                                     
-									 <input type="submit" value="檢視詳細資料">
+
 									 <input type="hidden" name="gbitem_id"  value="${groupBuy.gbitem_id}">
 								</a>
-								<div class="button-set style3">
-								</div>
-								
-								<!--倒數計時-->
-								
-								<div id="days"></div><div id="hours"></div><div id="minutes"></div><div id="secondss"></div>
-								
 								<!--End Product Button-->
 							</div>
+							<div class="product-image item col-lg-8 col-md-8 col-8">
 							<div class="product-details text-left">
-								<div class="brand-name" style="font-size:30px;">${groupBuy.gbitem_name}</div>
+								<div class="brand-name">${groupBuy.gbitem_name}</div>
 								<!--End Brand Name-->
 								</div>
 								<div class="product-price">
-									<span class="old-price" style="font-size:20px">原價$${groupBuy.gbitem_price}</span><span class="price" style="font-size:25px">團購價$${groupBuy.gbitem_price}</span>
+									<span class="old-price">原價$${groupBuy.gbitem_price}</span><span class="price">團購價$${groupBuy.gb_price}</span>
 								</div>
-								
+							</div>
 								<!--End Product Review-->
 								</ul>
-								<a href="index.html#pro-addtocart-popup" title="Add to Cart"
+								<a href="/CGA104G1/frontend/groupBuy/OneGroupBuyItem.html?gb_id=${groupBuy.gb_id}&gbitem_id=${groupBuy.gbitem_id}" title="Add to Cart"
 									class="btn-icon btn btn-addto-cart" data-bs-toggle="modal"
 									class="btn-icon btn btn-addto-cart" data-bs-toggle="modal"
-									data-bs-target="#pro-addtocart-popup"><i class="icon an an-shopping-cart"></i><span>立即參團GroupJoin</span></a>
-<!-- 								<a href="index.html#pro-addtocart-popup" title="Add to Cart" -->
-<!-- 									class="btn-icon btn btn-addto-cart" data-bs-toggle="modal" -->
-<!-- 									class="btn-icon btn btn-addto-cart" data-bs-toggle="modal" -->
-<!-- 									data-bs-target="#pro-addtocart-popup"><i -->
-<!-- 									class="icon an an-shopping-cart"></i><span>Add to Cart</span></a> -->
+									data-bs-target="/CGA104G1/frontend/groupBuy/OneGroupBuyItem.html?gb_id=${groupBuy.gb_id}&gbitem_id=${groupBuy.gbitem_id}"><i class="icon an an-shopping-cart"></i><span>立即參團GroupJoin</span></a>
 								<!--end Cart Button-->
 							</div>
 						</div>
 					</div>
-				</div>	
 				</div>`;
                 });
                 content.innerHTML = str;
-    
+
 
     }
-
-
-
-    
-    function pageBtn(page) {
-      let str = '';
-      const total = page.pageTotal;
-
-      if (page.hasPage) {
-        str += `<li class="page-item"><a class="page-link" href="#" data-page="${Number(page.currentPage) - 1}">Previous</a></li>`;
-      } else {
-        str += `<li class="page-item disabled"><span class="page-link">Previous</span></li>`;
-      }
-
-
-      for (let i = 1; i <= total; i++) {
-        if (Number(page.currentPage) === i) {
-          str += `<li class="page-item active"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
-        } else {
-          str += `<li class="page-item"><a class="page-link" href="#" data-page="${i}">${i}</a></li>`;
-        }
-      };
-
-      if (page.hasNext) {
-        str += `<li class="page-item"><a class="page-link" href="#" data-page="${Number(page.currentPage) + 1}">Next</a></li>`;
-      } else {
-        str += `<li class="page-item disabled"><span class="page-link">Next</span></li>`;
-      }
-
-      pageid.innerHTML = str;
-    }
-
-    function switchPage(e) {
-      e.preventDefault();
-      if (e.target.nodeName !== 'A') return;
-      const page = e.target.dataset.page;
-      pagination(GroupBuyVOs, page);
-    }
-
-    pageid.addEventListener('click', switchPage);
-    
 };
 
 //時間倒數
@@ -394,7 +375,7 @@ function remainTime(){
     const min = Math.floor(remain/1000/60)%60;
     const hour = Math.floor(remain/1000/60/60)%24;
     const day = Math.floor(remain/1000/60/60/24);
-    
+
     $('#days').text(timeExpress(day));
     $('#hours').text(timeExpress(hour));
     $('#minutes').text(timeExpress(min));
@@ -467,11 +448,11 @@ let queryString = window.location.search;
 		//取出一個groupbuyitem
 		getonegroupbuyitem(gbitem_id);
 		function getonegroupbuyitem(e) {
-	
 
-			fetch(`/CGA104G1/GroupBuyItemGetIOneJSONServlet?gbitem_id=${gbitem_id}`, { method: 'post' }) 
-				.then(resp => resp.json()) 
-				.then(item => { 
+
+			fetch(`/CGA104G1/GroupBuyItemGetIOneJSONServlet?gbitem_id=${gbitem_id}`, { method: 'post' })
+				.then(resp => resp.json())
+				.then(item => {
 
 					$(".mb-3").html(`<div>
 						${item.gbitem_name}
@@ -497,7 +478,7 @@ let queryString = window.location.search;
 				let div2 = document.querySelector(".itemdetail");
 				let groupBuyItemPictureHTML1 = "";
 				let groupBuyItemPictureHTML2 = "";
-				
+
 
 				for (let i = 1; i < pics.length; i++) {
 					groupBuyItemPictureHTML2 += `
@@ -597,7 +578,7 @@ let queryString = window.location.search;
 // 				// let photo = base64(image)
 // 				// photo="data:image/png;base64,"+photo
 // 				$("#test").append(`
-				
+
 // 				 <div class="col-md-3">
 // 		                <div class="outer">
 // 		                    <div class="upper"> <img src="data:image/png;base64,${e.itemPhoto}"  onclick="showItem(${e.itemId})" class="card-img-top">
@@ -623,9 +604,9 @@ let queryString = window.location.search;
 
 // 		}
 
-	
+
 // 	  	async function showItem(gbitem_id){
-//     	sessionStorage.setItem('gbitem_id', gbitem_id);  
+//     	sessionStorage.setItem('gbitem_id', gbitem_id);
 //     	location.assign("showOneGroupBuyItem.html");
 //     	/* location = "item_detail.html"; */
 // 	}
@@ -694,5 +675,8 @@ let queryString = window.location.search;
 
 </script>
 
+<script type="text/javascript" src="../../resources/static/js/getName.js"></script>
+<!--  Cart -->
+<script type="text/javascript" src="../../resources/static/js/cart.js"></script>
 
 </html>

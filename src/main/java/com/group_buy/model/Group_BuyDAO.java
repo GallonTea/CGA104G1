@@ -14,29 +14,29 @@ import javax.sql.DataSource;
 
 
 public class Group_BuyDAO implements Group_BuyDAO_interface{
-	
+
 	private static DataSource ds = null;
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/hikariCP-BaRei");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	private static final String INSERT_STMT = 
+
+
+	private static final String INSERT_STMT =
 			"INSERT INTO GROUP_BUY (MEM_ID, GBITEM_ID, GB_MIN, GB_AMOUNT, GBSTART_DATE, GBEND_DATE,GB_STATUS) VALUES (?, ?, ?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = 
+	private static final String GET_ALL_STMT =
 			"SELECT GB_ID, MEM_ID, GBITEM_ID, GB_MIN, GB_AMOUNT, GBSTART_DATE, GBEND_DATE,GB_STATUS FROM GROUP_BUY order by GB_ID";
-	private static final String GET_ONE_STMT = 
+	private static final String GET_ONE_STMT =
 			"SELECT GB_ID, MEM_ID, GBITEM_ID, GB_MIN, GB_AMOUNT, GBSTART_DATE, GBEND_DATE,GB_STATUS FROM GROUP_BUY where GB_ID = ?";
-	private static final String DELETE = 
+	private static final String DELETE =
 			"DELETE FROM GROUP_BUY where GB_ID = ?";
-	private static final String UPDATE = 
+	private static final String UPDATE =
 			"UPDATE GROUP_BUY set MEM_ID=?, GBITEM_ID=?, GB_MIN=?, GB_AMOUNT=?, GBSTART_DATE=?, GBEND_DATE=?, GB_STATUS=? where GB_ID = ?";
-	
+
 
 	@Override
 	public void insert(Group_BuyVO Group_BuyVO) {
@@ -240,7 +240,7 @@ public class Group_BuyDAO implements Group_BuyDAO_interface{
 				Group_BuyVO.setGbstart_date(rs.getTimestamp("gbstart_date"));
 				Group_BuyVO.setGbend_date(rs.getTimestamp("gbend_date"));
 				Group_BuyVO.setGb_status(rs.getInt("gb_status"));
-				list.add(Group_BuyVO); 
+				list.add(Group_BuyVO);
 			}
 
 		} catch (SQLException se) {
@@ -270,6 +270,66 @@ public class Group_BuyDAO implements Group_BuyDAO_interface{
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public List<Group_BuyVO> findByMemID(Integer mem_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateGbprice(Group_BuyVO Group_BuyVO) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Group_BuyVO findLast() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateGbAmount(Group_BuyVO Group_BuyVO) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void updateGbStatus(Group_BuyVO Group_BuyVO) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public List<Group_BuyVO> joinGBIGetAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Group_BuyVO> getAll2InProgress() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Group_BuyVO> getAll2End() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Group_BuyVO> joinGBIGetAllWhereMemID(Integer mem_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Group_BuyVO CheckByMemID(Integer mem_id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

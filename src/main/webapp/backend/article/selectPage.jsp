@@ -23,6 +23,14 @@
 <!--         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" -->
 <!--         crossorigin="anonymous"></script> -->
     <style>
+    	section {
+			height: 100%; 
+		    background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+		    background-color: #FFDEE9;
+		    background-repeat: no-repeat;
+		    background-size: cover;
+		    justify-content: center;
+		}
         .evenarticle {
             background-color: white;
             width: 100%;

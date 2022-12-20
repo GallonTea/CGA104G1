@@ -3,8 +3,6 @@ package com.item.controller;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Base64.Encoder;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -14,7 +12,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import com.google.gson.*;
-import com.itemType.model.ItemTypeService;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -22,8 +19,6 @@ import com.item.model.ItemService;
 import com.item.model.ItemVO;
 import com.itemPhotos.model.ItemPhotosService;
 import com.itemPhotos.model.ItemPhotosVO;
-
-//import net.coobird.thumbnailator.Thumbnails;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 10 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 @WebServlet("/item/items")
@@ -94,21 +89,34 @@ public class ItemServlet extends HttpServlet {
             String keyWords = req.getParameter("keyWords");
             Integer typeId = Integer.valueOf(req.getParameter("type"));
 
+
             ItemService itemService = new ItemService();
             JSONArray jsonArray = itemService.search(keyWords, typeId);
 
             Writer out = res.getWriter();
             out.write(jsonArray.toString());
 
+        } else if ("frontEndSearch".equals(action)) {
+
+            String keyWords = req.getParameter("keyWords");
+            Integer typeId = Integer.valueOf(req.getParameter("type"));
+
+            ItemService itemService = new ItemService();
+            JSONArray jsonArray = itemService.frontEndSearch(keyWords, typeId);
+
+            Writer out = res.getWriter();
+            out.write(jsonArray.toString());
+
         } else if ("getFavList".equals(action)) {
             HttpSession httpSession = req.getSession();
-            String memId =((Integer)  httpSession.getAttribute("mem_id")).toString();
+            String memId = ((Integer) httpSession.getAttribute("mem_id")).toString();
 
             ItemService itemService = new ItemService();
             String data = itemService.getFavList(memId);
 
             Writer out = res.getWriter();
             out.write(data);
+
         } else if ("moveFavList".equals(action)) {
             System.out.println("有執行！！！！！！！！！");
             String itemId = req.getParameter("id");
@@ -246,13 +254,13 @@ public class ItemServlet extends HttpServlet {
             JsonObject json = gson.fromJson(req.getReader(), JsonObject.class);
 
             HttpSession httpSession = req.getSession();
-            String memId =((Integer)  httpSession.getAttribute("mem_id")).toString();
+            String memId = ((Integer) httpSession.getAttribute("mem_id")).toString();
 
-             System.out.println(memId);
+            System.out.println(memId);
 
 
             ItemService itemService = new ItemService();
-            itemService.insertFavList(json,memId);
+            itemService.insertFavList(json, memId);
 
 
         }

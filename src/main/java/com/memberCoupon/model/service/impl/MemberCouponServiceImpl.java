@@ -77,9 +77,20 @@ public class MemberCouponServiceImpl implements MemberCouponService {
                 .map(MemberCoupon::getCouponId)
                 .toList();
 
+        List<MemberCoupon> used = own
+                .stream()
+                .filter(u -> u.getMcpnUse() == 1)
+                .toList();
+
+        List<Integer> usedId = used
+                .stream()
+                .map(MemberCoupon::getCouponId)
+                .toList();
+
         List<Integer> result = ownId
                 .stream()
                 .filter(o -> !notUseId.contains(o))
+                .filter(u -> !usedId.contains(u))
                 .toList();
 
         JSONArray jsonArr = new JSONArray();

@@ -12,6 +12,7 @@ pageContext.setAttribute("list", list);
 <head>
 <title>GroupBUy: Home</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
 <style>
   table#table-1 {
 	width: 450px;
@@ -31,6 +32,14 @@ pageContext.setAttribute("list", list);
     color: blue;
     display: inline;
   }
+  
+  section{
+  	text-align: center;
+  }
+  
+  .btn-primary{
+  	margin-bottom: 15px;
+  }
 </style>
 
 </head>
@@ -48,23 +57,18 @@ pageContext.setAttribute("list", list);
 		</c:forEach>
 	</ul>
 </c:if>
-
-<ul>
-  <li><a href='listAllDiscount.jsp'>List</a> all Discount.  <br><br></li>
+	<h3>團購折扣管理</h3>
+  <button onclick="location.href='<%=request.getContextPath()%>/backend/discount/listAllDiscount.jsp'" class="btn btn-primary btnIn">所有團購折扣</button>
   
-  
-  <li>
     <FORM METHOD="post" ACTION="DiscountServlet" >
         <b>輸入折扣編號:</b>
         <input type="text" name="discount_id">
         <input type="hidden" name="action" value="getOne_For_Display">
-        <input type="submit" value="送出">
+        <input class="btn btn-info btnIn btnSmall" type="submit" value="送出">
     </FORM>
-  </li>
 
   <jsp:useBean id="disSvc" scope="page" class="com.discount.model.DiscountService" /> 
    
-  <li>
      <FORM METHOD="post" ACTION="DiscountServlet" >
        <b>選擇折扣編號:</b>
        <select size="1" name="discount_id">
@@ -73,11 +77,9 @@ pageContext.setAttribute("list", list);
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="送出">
+       <input class="btn btn-info btnIn btnSmall" type="submit" value="送出">
     </FORM>
-  </li>
   
-  <li>
      <FORM METHOD="post" ACTION="DiscountServlet" >
        <b>選擇折扣說明:</b>
        <select size="1" name="discount_id">
@@ -86,17 +88,12 @@ pageContext.setAttribute("list", list);
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">
-       <input type="submit" value="送出">
+       <input class="btn btn-info btnIn btnSmall" type="submit" value="送出">
      </FORM>
-  </li>
-</ul>
 
 
-<h3>團購折扣管理</h3>
 
-<ul>
-  <li><a href='addDiscount.jsp'>Add</a> a new Discount.</li>
-</ul>
+	<button onclick="location.href='<%=request.getContextPath()%>/backend/discount/addDiscount.jsp'" class="btn btn-success btnIn">新增團購折扣</button>
 		</section>
 	</main>
 	

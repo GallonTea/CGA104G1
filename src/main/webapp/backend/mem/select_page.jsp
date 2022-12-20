@@ -13,7 +13,7 @@ MemVO memVO = (MemVO) session.getAttribute("memVO"); //EmpServlet.java(Concrolle
 <style>
 
 	section {
- 			height: 100%; 
+ 			height: 100%;
             background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
             background-color: #FFDEE9;
             background-repeat: no-repeat;
@@ -29,40 +29,40 @@ MemVO memVO = (MemVO) session.getAttribute("memVO"); //EmpServlet.java(Concrolle
 		align-items: center;
 		justify-content: center;
 	}
-	
+
 	.form{
 		margin-top: 50px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 	}
-	
+
 /* 	設定表單樣式 */
 	#f_date1{
 		margin-bottom: 20px;
 	}
-	
+
 	.btnIn {
 		min-width: 200px;
 		border-radius: 20px !important;
 	}
-	
+
 	.line {
 		margin-bottom: 10px;
 	}
-	
+
 	h3 {
 		color: black;
 		font-weight: 700 !important;
 	}
-	
+
 	#table-1 {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		margin-top: 20px;
 	}
-	
+
 	.select {
 		width: 195px;
 		height: 30px;
@@ -70,16 +70,16 @@ MemVO memVO = (MemVO) session.getAttribute("memVO"); //EmpServlet.java(Concrolle
 		text-align: center;
 		border: none;
 	}
-	
+
 	select:focus{
 		border: 2px solid pink;
 	}
-	
+
 	input {
 		border: none;
 		border-radius: 20px;
 	}
-	
+
 	input:focus{
 		border: 2px solid pink !important;
 	}
@@ -124,22 +124,22 @@ MemVO memVO = (MemVO) session.getAttribute("memVO"); //EmpServlet.java(Concrolle
         <b>查詢會員編號:</b>
        <select size="1" name="mem_id" class="select">
           <option value="">請選擇
-         <c:forEach var="memVO" items="${memSvc.all}" > 
+         <c:forEach var="memVO" items="${memSvc.all}" >
           <option value="${memVO.mem_id}">${memVO.mem_id}
-         </c:forEach>   
+         </c:forEach>
        </select><br>
     </div>
-       
+
     <div class="line">
        <b>查詢會員帳號:</b>
        <input type="text" name="mem_account" value=""><br>
     </div>
-    
+
     <div class="line">
        <b>查詢會員姓名:</b>
        <input type="text" name="mem_name" value=""><br>
     </div>
-    
+
     <div class="line">
        <b>查詢性別:</b>&ensp;&ensp;&ensp;&ensp;
        	<td>
@@ -149,8 +149,8 @@ MemVO memVO = (MemVO) session.getAttribute("memVO"); //EmpServlet.java(Concrolle
 		<input type="hidden" name="mem_sex" value="${memVO.mem_sex}">
 		</td><br>
 	</div>
-       
-    <div class="line">   
+
+    <div class="line">
        <b>查詢會員狀態:</b>
         <td>
        	<select  name="mem_status" class="select">
@@ -161,17 +161,14 @@ MemVO memVO = (MemVO) session.getAttribute("memVO"); //EmpServlet.java(Concrolle
 		</select>
 		</td><br>
 	</div>
-       
-    <div class="line">
-       <b>查詢會員生日:</b>
-	   <input name="mem_dob" id="f_date1" type="text"><br>
-	</div>
+
+
         <input type="hidden" name="action" value="MemSerchPro">
         &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
         <input type="submit" class="btn btn-success btnIn" value="送出">
-        
+
      </FORM>
-        
+
      </div>
      <div class="buttonBlock">
   		<button onclick="location.href='<%=request.getContextPath()%>/backend/mem/listAllMem.jsp'" class="btn btn-dark btnIn">查詢所有會員</button>

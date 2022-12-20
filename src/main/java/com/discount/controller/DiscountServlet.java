@@ -51,7 +51,7 @@ public class DiscountServlet extends HttpServlet {
 			Integer gbitem_status = Integer.valueOf(req.getParameter("gbitem_status"));
 			java.sql.Date gbitem_startdate = java.sql.Date.valueOf(req.getParameter("gbitem_startdate").trim());
 			java.sql.Date gbitem_enddate = java.sql.Date.valueOf(req.getParameter("gbitem_enddate").trim());
-			
+
 			DiscountService discountSvc = new DiscountService();
 			List<DiscountVO> discountVO = discountSvc.getoneGbitem_id(gbitem_id);
 			System.out.println(req.getParameter("gbitem_id"));
@@ -75,7 +75,7 @@ public class DiscountServlet extends HttpServlet {
 			session.setAttribute("gbitem_status", gbitem_status);
 			session.setAttribute("gbitem_startdate", gbitem_startdate);
 			session.setAttribute("gbitem_enddate", gbitem_enddate);
-			
+
 			String url = "/frontend/discount/choose.disvount.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
 			successView.forward(req, res);
@@ -139,11 +139,11 @@ public class DiscountServlet extends HttpServlet {
 		 ***************************************/
 		if ("getOne_For_Display_ByUser".equals(action)) { // 來自select_page.jsp的請求
 
-		
+
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 			Integer discount_id = Integer.valueOf(req.getParameter("discount_id"));
-		
+
 
 			/*************************** 2.開始查詢資料 *****************************************/
 			DiscountService discountService = new DiscountService();
@@ -274,24 +274,24 @@ public class DiscountServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
+			/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 
-			Integer gbitem_id = 1;
+
+			Integer gbitem_id = null;
 			String gbitemIdRange = "^[1-9]\\d*$";
 			try {
 				gbitem_id = Integer.valueOf(req.getParameter("gbitem_id").trim());
 				if (gbitem_id == null || !errorMsgs.isEmpty()) {
 					gbitem_id = 1;
 					errorMsgs.add("團購商品編號': 請勿空白");
-				} else if (!gbitem_id.toString().trim().matches(gbitemIdRange)) {
+				}else if (!gbitem_id.toString().trim().matches(gbitemIdRange)) {
 					errorMsgs.add("團購商品編號請填非0、小數、的數字.");
 				}
 			} catch (NumberFormatException e1) {
-				gbitem_id = 1;
 				errorMsgs.add("團購商品編號請填非小數數字.");
 				e1.printStackTrace();
 			}
-			System.out.println(111);
+
 			Integer discount_minamount = null;
 			try {
 				discount_minamount = Integer.valueOf(req.getParameter("discount_minamount").trim());
@@ -332,64 +332,35 @@ public class DiscountServlet extends HttpServlet {
 			if (discount_nar == null || discount_nar.trim().length() == 0) {
 				errorMsgs.add("折扣說明: 請勿空白");
 			}
-		}
 
-//			if ("insertdiscount".equals(action)) {  // 來自addDiscount.jsp的請求
-//				
-//				List<String> errorMsgs = new LinkedList<String>();
-//				req.setAttribute("errorMsgs", errorMsgs);
-//
-//					/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-//				req.getParameter("gbitem_id");
-//				req.getParameter("gborder_id");				
-//				req.getParameter("gb_id");
-//				req.getParameter("gitem_amount");
-//				req.getParameter("gboriginal_price");
-//				req.getParameter("discount_id");
-//				req.getParameter("gb_endprice");
-//				req.getParameter("gborder_date");
-//				req.getParameter("gborder_paying");
-//				req.getParameter("gborder_send");
-//				req.getParameter("gborder_status");
-//				req.getParameter("gborder_other");
-//				req.getParameter("tracking_num");
-//				req.getParameter("receiver_name");
-//				req.getParameter("receiver_address");
-//				req.getParameter("receiver_phone");
-//				req.getParameter("pickup_time");
-//			
-//				
-//			
-//			DiscountVO DiscountVO = new DiscountVO();
-//			DiscountVO.setGbitem_id(gbitem_id);
-//			DiscountVO.setDiscount_minamount(discount_minamount);
-//			DiscountVO.setDiscount_maxamount(discount_maxamount);
-//			DiscountVO.setDiscount_price(discount_price);
-//			DiscountVO.setDiscount_nar(discount_nar);
-//
-//
-//			System.out.println(111);
-//				if (!errorMsgs.isEmpty()) {
-//					req.setAttribute("DiscountVO", DiscountVO); // 含有輸入格式錯誤的empVO物件,也存入req
-//					RequestDispatcher failureView = req
-//							.getRequestDispatcher("/backend/discount/addDiscount.jsp"); 
-//					failureView.forward(req, res);
-//					return; //程式中斷
-//				}
-//				/***************************2.開始新增資料***************************************/
-//				
-//				DiscountService discountService = new DiscountService();
-//				DiscountVO = discountService.addDiscount(gbitem_id, discount_minamount, discount_maxamount,
-//						discount_price, discount_nar);
-//				System.out.println(111);
-//				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-//				String url = "/backend/discount/listAllDiscount.jsp";
-//				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
-//				successView.forward(req, res);				
-//				
-//				
-//		}
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+			DiscountVO DiscountVO = new DiscountVO();
+			DiscountVO.setGbitem_id(gbitem_id);
+			DiscountVO.setDiscount_minamount(discount_minamount);
+			DiscountVO.setDiscount_maxamount(discount_maxamount);
+			DiscountVO.setDiscount_price(discount_price);
+			DiscountVO.setDiscount_nar(discount_nar);
+
+
+
+			if (!errorMsgs.isEmpty()) {
+				req.setAttribute("DiscountVO", DiscountVO); // 含有輸入格式錯誤的empVO物件,也存入req
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/backend/discount/addDiscount.jsp");
+				failureView.forward(req, res);
+				return; //程式中斷
+			}
+			/***************************2.開始新增資料***************************************/
+
+			DiscountService discountService = new DiscountService();
+			DiscountVO = discountService.addDiscount(gbitem_id, discount_minamount, discount_maxamount,
+					discount_price, discount_nar);
+
+			/***************************3.新增完成,準備轉交(Send the Success view)***********/
+			String url = "/backend/discount/listAllDiscount.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+			successView.forward(req, res);
+		}
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		if ("delete".equals(action)) { // 來自listAllEmp.jsp
 
 			List<String> errorMsgs1 = new LinkedList<String>();

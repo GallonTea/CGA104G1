@@ -17,7 +17,7 @@ Group_Buy_ItemVO group_Buy_ItemVO = (Group_Buy_ItemVO) request.getAttribute("Gro
 <style>
 
 
-<style>
+	<style>
 table {
 	width: 800px;
 	min-height: 600px;
@@ -77,7 +77,7 @@ form {
 <button onclick="location.href='<%=request.getContextPath()%>/backend/group_Buy_Item/select_page.jsp'" class="btn btn-primary btnIn">回團購商品首頁</button>
 </div>
 <div class="titleBlock">修改團購商品資料</div>
-	<FORM METHOD="post" ACTION="groupBuyItem.do" name="form1">
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/group_Buy_Item/groupBuyItem.do" name="form1">
 		<table>
 			<tr>
 				<td>團購商品編號:</td>
@@ -138,18 +138,20 @@ form {
 				<td>團購商品下檔日期:</td>
 				<td><input name="gbitem_enddate" id="f_date2" type="text"></td>
 			</tr>
-			
+
 			<tr>
 				<td>團購商品類別</td>
 				<td><input type="TEXT" name="gbitem_type" size="45"
 					value="<%=group_Buy_ItemVO.getGbitem_type()%>"></td>
 			</tr>
-			
+
 		</table>
-		<br> 
+
+	</FORM>
+		<br>
 
 
-	
+
 <!-- 	圖片顯示區及刪除 -->
 	<div id="delete-form">
 		<form method="post"
@@ -175,7 +177,7 @@ form {
 				<input type="hidden" name="gbitem_startdate"value="${Group_Buy_ItemVO.gbitem_startdate}">
 				<input type="hidden" name="gbitem_enddate"value="${Group_Buy_ItemVO.gbitem_enddate}">
 				<input type="hidden" name="gbitem_type"value="${Group_Buy_ItemVO.gbitem_type}">
-				<input class="btn btn-danger btnIn btnSmall" type="submit"" value="刪除圖片">
+				<input class="btn btn-danger btnIn btnSmall" type="submit" value="刪除圖片">
 
 			</c:if>
 		</form>
@@ -185,16 +187,16 @@ form {
 		<form id="upload"
 			action="<%=request.getContextPath()%>/groupBuyItemPicture/groupBuyItemPictureInsertMulti.do"
 			method="POST" enctype="multipart/form-data" name="form2" onsubmit="return">
-			<a href="javascript:;" class="file"> 
+			<a href="javascript:;" class="file">
 			<input type="file" name="upfile1" multiple id="upfile" class="fileInput">
-			</a> 
+			</a>
 			<input type="hidden" name="gbitem_id" value="${Group_Buy_ItemVO.gbitem_id}">
-			<input type="hidden" name="gbitem_name"value="${Group_Buy_ItemVO.gbitem_name}"> 
-			<input type="hidden" name="gbitem_content"value="${Group_Buy_ItemVO.gbitem_content}"> 
-			<input type="hidden" name="gbitem_price"value="${Group_Buy_ItemVO.gbitem_price}"> 
-			<input type="hidden" name="gbitem_status"value="${Group_Buy_ItemVO.gbitem_status}"> 
-			<input type="hidden" name="gbitem_startdate"value="${Group_Buy_ItemVO.gbitem_startdate}"> 
-			<input type="hidden" name="gbitem_enddate"value="${Group_Buy_ItemVO.gbitem_enddate}"> 
+			<input type="hidden" name="gbitem_name"value="${Group_Buy_ItemVO.gbitem_name}">
+			<input type="hidden" name="gbitem_content"value="${Group_Buy_ItemVO.gbitem_content}">
+			<input type="hidden" name="gbitem_price"value="${Group_Buy_ItemVO.gbitem_price}">
+			<input type="hidden" name="gbitem_status"value="${Group_Buy_ItemVO.gbitem_status}">
+			<input type="hidden" name="gbitem_startdate"value="${Group_Buy_ItemVO.gbitem_startdate}">
+			<input type="hidden" name="gbitem_enddate"value="${Group_Buy_ItemVO.gbitem_enddate}">
 			<input type="hidden" name="gbitem_type"value="${Group_Buy_ItemVO.gbitem_type}">
 			<input class="button btn btn-dark btnIn btnSmall" type="submit" value="上傳圖片">
 		</form>
@@ -202,13 +204,12 @@ form {
 	</div>
 	<div class="subBlock">
 	<input type="hidden" name="action" value="update">
-			 <input type="hidden" name="gbitem_id" value="<%=group_Buy_ItemVO.getGbitem_id()%>"> 
+			 <input type="hidden" name="gbitem_id" value="<%=group_Buy_ItemVO.getGbitem_id()%>">
 			 <input type="submit" value="送出修改" class="btn btn-success btnIn">
 	</div>
-	</FORM>
 		</section>
 	</main>
-	
+
 </body>
 
 
@@ -299,8 +300,8 @@ try {
 
  window.addEventListener("load", function(){
 
-	
-		
+
+
  		let upfile = document.getElementById("upfile");
  		upfile.addEventListener("change", function(event) {
  			let files = event.target.files || event.dataTransfer.files;
@@ -311,7 +312,7 @@ try {
 
 
  		function previewfile(file) {
-			
+
  				let reader = new FileReader();
  				reader.onload = function(event) {
  					let image = new Image();
@@ -323,7 +324,7 @@ try {
  				reader.readAsDataURL(file);
  		}
 
-		
+
  		// 當upload重新選擇 清空舊有資料
  		$("#upload").change(function(){
  		    $("#picPreview").empty() // 清空當下預覽
@@ -331,6 +332,6 @@ try {
  		})
  })
 
- </script> 
+ </script>
 
 </html>

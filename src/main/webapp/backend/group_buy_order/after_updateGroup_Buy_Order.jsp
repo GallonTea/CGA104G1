@@ -2,22 +2,14 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.group_buy_order.model.*"%>
-<%@include file="/backend/backNavbar.jsp"%>
 <% Group_Buy_OrderVO group_Buy_OrderVO = (Group_Buy_OrderVO) request.getAttribute("group_Buy_OrderVO"); %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
 <title>查看更新資料</title>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
-	crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
-	crossorigin="anonymous"></script>
 <style>
 /* <!-- ===========================================樣式欄位================================================================== --> */
 
@@ -103,7 +95,7 @@ h4 {
 table {
 	margin-left: auto;
 	margin-right: auto;
-	width: 900px;
+	width: 95%;
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
@@ -114,6 +106,16 @@ th, td {
 
 	padding: 5px;
 	text-align: center;
+	font-size: 10px;
+}
+
+.btnTitle{
+	margin-bottom: 10px;
+}
+
+.titleIn {
+	font-size: 24px;
+	font-weight: 700;
 }
 
 /* th, td { display: block; } */
@@ -129,14 +131,14 @@ th, td {
 </style>
 </head>
 <body>
-<table id="table-1">
-		<tr>
-			<th><h3>所有員工資料</h3>
-				<h4>
-					<a class="btn btn-light" href="<%=request.getContextPath()%>/backend/group_buy_order/select_page.jsp">員工資料查詢首頁</a>
-				</h4></th>
-		</tr>
-	</table>
+		<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+			<div class="btnTitle">
+		<div class="titleIn">團購修改結果</div><br>
+		<button onclick="location.href='<%=request.getContextPath()%>/backend/group_buy_order/select_page.jsp'" class="btn btn-primary btnIn">回團購查詢</button>
+		</div>
 
 	<table class="styled-table">
 	
@@ -220,14 +222,23 @@ th, td {
 					<td>${group_buy_orderVO.receiver_phone}</td>
 					<td>${group_buy_orderVO.pickup_time}</td>
 
-					<td>
-					
+						<td>
+						<FORM METHOD="post" ACTION="Group_Buy_OrderServlet"
+							style="margin-bottom: 0px;">
+							<input class="btn btn-warning btnIn btnSmall" type="submit" value="修改"> <input type="hidden"
+								name="gborder_id" value="${group_buy_orderVO.gborder_id}"> <input
+								type="hidden" name="action" value="getOne_For_Backend_Display">
+						</FORM>
 					</td>
 				</tr>
 			
 		</tbody>
 
 	</table>
+		</section>
+	</main>
+		
+		
 
 
 </body>

@@ -13,6 +13,7 @@ pageContext.setAttribute("list", list);
 %>
 <html>
 <head>
+
 <title>員工資料修改</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 
@@ -135,6 +136,9 @@ select:focus, input:focus {
 .btnIn {
 	border-radius: 20px !important;
 }
+font {
+	font-size: 8px;
+}
 </style>
 
 </head>
@@ -144,87 +148,65 @@ select:focus, input:focus {
 	<main>
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
+
 <div class= "container">
+
 <table id="table-1">
 	<tr><td>
 		 <h3>員工資料新增 </h3>
 		 <h4><a href="<%=request.getContextPath()%>/backend/emp/select_page.jsp" class="btn btn-primary">回員工管理首頁</a></h4>
 	</td></tr>
 </table>
-	<FORM METHOD="post" ACTION="/backend/emp/EmpServlet" name="form1">
-	
+	<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/backend/emp/EmpServlet" name="form1">
+
 		<table>
 			<tr>
 				<td>員工名稱:</td>
 				<td><input type="TEXT" name="emp_name" size="45"
-					value="<%=(empVO == null) ? "無名氏" : empVO.getEmp_name()%>" /></td>
+					value="<%=(empVO == null) ? "無名氏" : empVO.getEmp_name()%>" />
+					</br><font color="red">${errorMsgs.emp_name}</font></td>
 			</tr>
-			
+
 			<tr>
 				<td>員工帳號:</td>
 				<td><input type="TEXT" name="account" size="45"
-					value="<%=(empVO == null) ? "123456" : empVO.getAccount()%>" /></td>
+					value="<%=(empVO == null) ? "123456" : empVO.getAccount()%>" /></br><font color="red">${errorMsgs.account}</font></td>
 			</tr>
 			<tr>
 				<td>員工密碼:</td>
 				<td><input type="password" name="password" size="45"
-					value="<%=(empVO == null) ? "123456" : empVO.getPassword()%>" /></td>
+					value="<%=(empVO == null) ? "123456" : empVO.getPassword()%>" /></br><font color="red">${errorMsgs.password}</font></td>
 			</tr>
-		
+
 			<tr>
 				<td>員工到職時間:</td>
-				<td><input name="onjob_date" id="f_date1" type="TEXT"  /></td>
+				<td><input name="onjob_date" id="f_date1" type="TEXT"  /></br><font color="red">${errorMsgs.onjob_date}</font></td>
 			</tr>
 			<tr>
 				<tr>
 				<td>員工狀態:</td>
 				<input type=hidden name="emp_status"  id ="status">
 				<td><select class="status" >
-						<option value=" "selected></option> 
- 						<option value="0">離職</option> 
-						<option value="1" >在職</option>			
-				</select></td></tr></table>
+						<option value=" "selected></option>
+ 						<option value="0">離職</option>
+						<option value="1" >在職</option>
+				</select></br><font color="red">${errorMsgs.emp_status}</font></td></td></tr></table>
 				<jsp:useBean id="effectSvc" scope="page" class="com.effect.model.EffectService"/>
 				<div  id = effectstert>
 				<table>
 				<tr>
+
 					<td>員工權限:&ensp;&ensp;&ensp;&ensp;</td>
-					
+
 						<td>
-<!-- 							<select   class="effect"  onchange="selectCreate(selectedIndex)"> -->
 							<select   class="effect" name="effect_id" >
-							<c:forEach var="effectVO" items="${effectSvc.all}" >										
- 								<option  id ="effectop" value="${effectVO.effect_id}">${effectVO.effect_name}</option> 
-							</c:forEach>			
+							<c:forEach var="effectVO" items="${effectSvc.all}" >
+ 								<option  id ="effectop" value="${effectVO.effect_id}">${effectVO.effect_name}</option>
+							</c:forEach>
 							</select>
 						</td>
-								
+
 					</tr>
-				
-
-			<%-- 			<jsp:useBean id="emp_effectSvc" scope="page" --%>
-			<%-- 				class="com.emp_effect.model.Emp_effectService" /> --%>
-			<%-- 			<jsp:useBean id="effectSvc" scope="page" --%>
-			<%-- 				class="com.effect.model.EffectService" /> --%>
-			<!-- 			<tr> -->
-			<!-- 				<td>權限編號:<font color=red><b>*</b></font></td> -->
-			<!-- 				<td><select size="1" name="emp_effect"> -->
-			<%-- 						<c:forEach var="emp_effectVO" items="${emp_effectSvc.all}"> --%>
-			<%-- 							<option value="${emp_effectVO.effect_id}" --%>
-			<%-- 								${(empVO.emp_id==emp_effectVO.emp_id)? 'selected':'' }>${emp_effectVO.effect_id} --%>
-			<%-- 						</c:forEach> --%>
-			<!-- 				</select></td> -->
-			<!-- 			</tr> -->
-			<!-- 			<tr> -->
-			<!-- 				<td>權限:<font color=red><b>*</b></font></td> -->
-			<!-- 				<td><select size="1" name="effect"> -->
-			<%-- 						<c:forEach var="effectVO" items="${effectSvc.all}"> --%>
-			<%-- 							<option value="${effectVO.effect_name}" --%>
-			<%-- 								${(emp_empVO.effect_id==effectVO.effect_name)? 'selected':'' }>${effectVO.effect_name} --%>
-			<%-- 						</c:forEach> --%>
-			<!-- 				</select></td> -->
-			<!-- 			</tr> -->
-
 
 		</table>
 		</div>	
@@ -239,7 +221,7 @@ select:focus, input:focus {
 
 <script type="text/javascript">
 $(document).ready(function() {
-	
+
 	switch($('#status').val()){
 		case '0':
 			$('.status').val(0)
@@ -251,7 +233,9 @@ $(document).ready(function() {
 		$('#status').val($('.status option:selected').val());
 	});
 });
+
 </script>
+
 
 <%
 java.sql.Date onjob_date = null;
@@ -280,6 +264,7 @@ try {
 	});
         
 </script>
+
 </body>
 
 

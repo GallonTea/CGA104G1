@@ -12,12 +12,13 @@
 
 
 
-
 <html>
 <head>
 <title>團購檢舉</title>
+
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
+
 
 <style>
 .styled-table {
@@ -58,6 +59,7 @@
 }
 
 /* <!-- ===========================================樣式欄位================================================================== --> */
+
 b{
 	color: black;
 }
@@ -113,6 +115,10 @@ tr:nth-child(even) {
 	margin-top: 0;
 }
 
+td{
+	font-weight: 700;
+}
+
 </style>
 
 </head>
@@ -123,6 +129,7 @@ tr:nth-child(even) {
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
 	<div class="titleBlock">團購檢舉管理</div>
+
 
 	<table class="styled-table">
 		<thead>
@@ -143,11 +150,11 @@ tr:nth-child(even) {
 	<c:forEach var="Group_Buy_ReportVO" items="${list}">
 		
 		<tr>
-			<td><b>${Group_Buy_ReportVO.gbfrep_id}</b></td>
-			<td><b>${Group_Buy_ReportVO.gborder_id}</b></td>
-			<td><b>${Group_Buy_ReportVO.mem_id}</b></td>
-			<td><b>${Group_Buy_ReportVO.frep_content}</b></td>
-			<td><b>${Group_Buy_ReportVO.frep_time}</b></td>
+			<td>${Group_Buy_ReportVO.gbfrep_id}</td>
+			<td>${Group_Buy_ReportVO.gborder_id}</td>
+			<td>${Group_Buy_ReportVO.mem_id}</td>
+			<td>${Group_Buy_ReportVO.frep_content}</td>
+			<td>${Group_Buy_ReportVO.frep_time}</td>
 
 
 
@@ -202,9 +209,6 @@ tr:nth-child(even) {
 
 	</table>
 
-
-		</section>
-	</main>
 
 <script>
 

@@ -44,24 +44,19 @@ Emp_effectVO emp_effectVO = (Emp_effectVO) request.getAttribute("Emp_effectVO");
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
 			<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
+			<div class="btnTitle">
+			<button onclick="location.href='<%=request.getContextPath()%>/backend/emp/listAllEmp.jsp'" class="btn btn-primary btnIn">回員工查詢</button>
+		</div>
 		<div class="btnTitle">
-			<button onclick="location.href='<%=request.getContextPath()%>/backend/emp_effect/select_page.jsp'" class="btn btn-primary btnIn">回員工權限管理首頁</button>
+			<button onclick="location.href='<%=request.getContextPath()%>/backend/emp_effect/select_page.jsp'" class="btn btn-primary btnIn">查詢權限</button>
 		</div>
 		<div class="titleBlock">新增員工權限</div>
-<FORM METHOD="post" ACTION="/backend/emp_effect/Emp_effectServlet" name="form1">
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/backend/emp_effect/Emp_effectServlet" name="form1">
 <table>
 	<tr>
 		<td>員工姓名:</td>
-		<td><input type="hidden" name="emp_id" size="45" 
-			 value="${emp_effectVO.emp_id}"/>${emp_effectVO.empVO.emp_name}</td>
+		<td><input type="${emp_effectVO.emp_id ==null? 'TEXT':'hidden'}" name="emp_id" size="45" 
+			 value="${emp_effectVO.emp_id}"  />${emp_effectVO.empVO.emp_name}</td>
 	</tr>
 	<tr>
 		<td>權限:</td>
@@ -72,6 +67,7 @@ Emp_effectVO emp_effectVO = (Emp_effectVO) request.getAttribute("Emp_effectVO");
 		<option value="${effectVO.effect_id}">${effectVO.effect_name}</option>
 		</c:forEach>
 		</select>
+		</br><font color="red">${errorMsgs.effect_id}</font>
 		</td>
 		
 	</tr>

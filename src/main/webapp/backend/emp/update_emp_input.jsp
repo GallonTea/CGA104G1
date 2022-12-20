@@ -128,6 +128,11 @@ select:focus, input:focus {
 .btnIn {
 	border-radius: 20px !important;
 }
+
+
+font {
+	font-size: 8px;
+}
 </style>
 
 </head>
@@ -146,37 +151,27 @@ select:focus, input:focus {
 </table>
 
 
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font style="color:red">請修正以下錯誤:</font>
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li style="color:red">${message}</li>
-		</c:forEach>
-	</ul>
-</c:if>
-
-<FORM METHOD="post" ACTION="/backend/emp/EmpServlet" name="form1">
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/backend/emp/EmpServlet" name="form1">
 		<table>
 		
 			<tr>
 				<td>員工姓名:</td>
 				<td><input type="TEXT" name="emp_name" size="45"
-					value="<%=empVO.getEmp_name()%>" /><font color=red>${errorMsgs.emp_name}</font></td>
+					value="<%=empVO.getEmp_name()%>" /><br><font color=red>${errorMsgs.emp_name}</font></td>
 			</tr>
 			<tr>
 				<td>員工帳號:</td>
 				<td><input type="TEXT" name="account" size="45"
-					value="<%=empVO.getAccount()%>" /><font color=red>${errorMsgs.account}</font></td>
+					value="<%=empVO.getAccount()%>" /><br><font color=red>${errorMsgs.account}</font></td>
 			</tr>
 			<tr>
 				<td>員工密碼:<font color=red><b>*</b></font></td>
 				<td><input type="password" name="password"  size="45"
-					value="<%=empVO.getPassword()%>" /><font color=red>${errorMsgs.password}</font></td>
+					value="<%=empVO.getPassword()%>" /><br><font color=red>${errorMsgs.password}</font></td>
 			</tr>
 			<tr>
 				<td>雇用日期:</td>
-				<td><input name="onjob_date" id="f_date1" type="text"><font color=red>${errorMsgs.f_date1}</font></td>
+				<td><input name="onjob_date" id="f_date1" type="text"><br><font color=red>${errorMsgs.f_date1}</font></td>
 			</tr>
 			<tr>
 				<td>員工狀態:</td>

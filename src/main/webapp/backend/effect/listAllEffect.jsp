@@ -8,10 +8,12 @@ EffectService effectSvc = new EffectService();
 List<EffectVO> list = effectSvc.getAll();
 pageContext.setAttribute("list", list);
 %>
+
 <html>
 <head>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
+
 <title>所有權限資料</title>
 
 <style>
@@ -98,8 +100,6 @@ pageContext.setAttribute("list", list);
 </table>
 		</section>
 	</main>
-
-
 
 
 

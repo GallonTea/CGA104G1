@@ -15,6 +15,7 @@ pageContext.setAttribute("list", list);
 <meta charset="UTF-8">
 <title>所有團購折扣</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
 <style>
 table#table-1 {
 	background-color: #CCCCFF;
@@ -37,9 +38,9 @@ h4 {
 <style>
 table {
 	width: 800px;
-	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	margin-left: 10%;
 }
 
 table, th, td {
@@ -50,6 +51,14 @@ th, td {
 	padding: 5px;
 	text-align: center;
 	color: black;
+}
+
+th{
+	color: white;
+}
+
+tr:nth-child(even) {
+	background-color: rgba(255,255,255,0.4);
 }
 </style>
 </head>
@@ -62,7 +71,7 @@ th, td {
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
 <!-- 		把原本body的東西貼到這邊 -->
-<a href="select_page.jsp">回首頁</a>
+<div class="titleBlock">所有團購折扣</div>
 	<table>
 		<tr>
 			<th>折扣編號</th>
@@ -71,6 +80,8 @@ th, td {
 			<th>商品數量上限</th>
 			<th>折扣價格</th>
 			<th>折扣說明</th>
+			<th></th>
+			<th></th>
 		</tr>
 		<c:forEach var="DiscountVO" items="${list}">
 			<tr>
@@ -83,13 +94,13 @@ th, td {
 				
 				<td>
 				  <FORM METHOD="post" ACTION="DiscountServlet" style="margin-bottom: 0px;">
-				     <input type="submit" value="修改">
+				     <input class="btn btn-warning btnIn btnSmall" type="submit" value="修改">
 				     <input type="hidden" name="discount_id"  value="${DiscountVO.discount_id}">
 				     <input type="hidden" name="action"	value="getOne_For_Update"></FORM>
 				</td>
 				<td>
 				  <FORM METHOD="post" ACTION="DiscountServlet" style="margin-bottom: 0px;">
-				     <input type="submit" value="刪除">
+				     <input class="btn btn-danger btnIn btnSmall" type="submit" value="刪除">
 				     <input type="hidden" name="discount_id"  value="${DiscountVO.discount_id}">
 				     <input type="hidden" name="action" value="delete"></FORM>
 				</td>

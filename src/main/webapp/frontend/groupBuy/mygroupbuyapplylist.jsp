@@ -130,6 +130,48 @@ footer img {
 		margin-top: 0;
 	}
 }
+
+.upPic {
+	width: 50px;
+	height: 50px;
+}
+
+body {
+	height: 100%; 
+    background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+    background-color: #FFDEE9;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+main {
+	text-align: center;
+}
+
+.titleBlock {
+	font-size: 20px;
+	font-weight: 700;
+}
+
+.titleName {
+	color: blue;
+}
+
+th {
+	background-color: black;
+	color: white;
+	font-size: 10px;
+}
+
+td {
+	font-size: 10px;
+}
+
+.btnSmall{
+padding: 0;
+ font-size: 12px;
+ width: 80px;
+}
 </style>
 
 </head>
@@ -145,23 +187,19 @@ footer img {
 				</c:forEach>
 			</ul>
 		</c:if>
-		<a
-			href="<%=request.getContextPath()%>/frontend/groupBuy/listallgroupbuy.html">返回團購首頁</a>
-		<table
-			class="table table-hover thead-light table-bordered table-sm .table-responsive">
+		
+		<span class="titleBlock">團購狀態頁<span class="titleName">(團購主)</span></span>
+		<table class="table table-hover thead-light table-bordered table-sm .table-responsive">
 			<tr>
-				<th>團購編號</th>
 				<th>團購團名稱</th>
-				<th>團購主編號</th>
-				<th>團購商品編號</th>
-				<th>團購商品數量低標</th>
-				<th>目前已下訂團購商品數量</th>
-				<th>團購開始</th>
-				<th>團購結束</th>
+				<th>團購商品</th>
+				<th>最低數量</th>
+				<th>目前已下訂</th>
+				<th>開始時間</th>
+				<th>結束時間</th>
 				<th>團購狀態</th>
-				<th>團購原始價格</th>
-				<th>團購折扣價格</th>
-				<th></th>
+				<th>原始價格</th>
+				<th>團購價格</th>
 				<th></th>
 				<th></th>
 				<th></th>
@@ -171,10 +209,8 @@ footer img {
 			<c:forEach var="Group_BuyVO" items="${list}">
 
 				<tr>
-					<td>${Group_BuyVO.gb_id}</td>
 					<td>${Group_BuyVO.gb_name}</td>
-					<td>${Group_BuyVO.mem_id}</td>
-					<td>${Group_BuyVO.gbitem_id}</td>
+					<td>${Group_BuyVO.gbitem_name}</td>
 					<td>${Group_BuyVO.gb_min}</td>
 					<td>${Group_BuyVO.gb_amount}</td>
 					<td>${Group_BuyVO.gbstart_date}</td>
@@ -210,29 +246,8 @@ footer img {
 					</c:if>
 
 
-
-
-
-
 					<td>${Group_BuyVO.gbitem_price}</td>
 					<td>${Group_BuyVO.gb_price}</td>
-
-
-					<!-- 						<td> -->
-					<!-- 						<FORM METHOD="post" -->
-					<%-- 							ACTION="<%=request.getContextPath()%>/GroupBuyServlet" --%>
-					<!-- 							style="margin-bottom: 0px;"> -->
-					<%-- 							<c:if test="${Group_BuyVO.gb_mstatus != '9'}"> --%>
-					<!-- 							<input type="submit" value="取消團購">  -->
-					<%-- 							</c:if> --%>
-					<%-- 							<c:if test="${Group_BuyVO.gb_mstatus == '9'}"> --%>
-					<!-- 							<input type="submit" value="取消團購">  -->
-					<%-- 							</c:if> --%>
-					<%-- 							<input type="hidden" name="gb_id" value="${Group_BuyVO.gb_id}">  --%>
-					<%-- 							<input type="hidden" name="mem_id" value="${Group_BuyVO.mem_id}"> --%>
-					<!-- 							<input type="hidden" name="action" value="deleteByGroupBuyMaster"> -->
-					<!-- 						</FORM> -->
-					<!-- 						</td> -->
 
 
 					<td><FORM METHOD="post"
@@ -241,15 +256,16 @@ footer img {
 
 							<c:if
 								test="${Group_BuyVO.gb_status != '8' && Group_BuyVO.gb_status != '9' && Group_BuyVO.gb_status != '3' && Group_BuyVO.gb_status != '4'}">
-								<input type="submit" value="修改團購資訊">
+								<input class="btn btn-warning btnSmall" type="submit" value="修改團購資訊">
 							</c:if>
 							<c:if
 								test="${Group_BuyVO.gb_status == '8' || Group_BuyVO.gb_status == '9' || Group_BuyVO.gb_status == '3' || Group_BuyVO.gb_status == '4'}">
-								<input type="submit" value="修改團購資訊" disabled="disabled">
+								<input class="btn btn-warning btnSmall" type="submit" value="修改團購資訊" disabled="disabled">
 							</c:if>
 
 							<input type="hidden" name="gb_id" value="${Group_BuyVO.gb_id}">
 							<input type="hidden" name="mem_id" value="${Group_BuyVO.mem_id}">
+							<input type="hidden" name="gbitem_id" value="${Group_BuyVO.gbitem_id}">
 							<input type="hidden" name="action"
 								value="getOneMyGroupBuy_For_Update">
 						</FORM></td>
@@ -258,17 +274,17 @@ footer img {
 							ACTION="<%=request.getContextPath()%>/Group_Buy_OrderServlet"
 							style="margin-bottom: 0px;">
 
-							<c:if test="${Group_BuyVO.gb_min <= Group_BuyVO.gb_amount}">
-								<input type="submit" value="立即結帳">
-							</c:if>
-							<c:if test="${Group_BuyVO.gb_min > Group_BuyVO.gb_amount}">
-								<input type="submit" value="立即結帳" disabled="disabled">
-							</c:if>
+							  <c:if test="${Group_BuyVO.gb_min <= Group_BuyVO.gb_amount}">
+						        <input type="submit" value="立即結帳">
+						       </c:if>
+						       <c:if test="${Group_BuyVO.gb_min > Group_BuyVO.gb_amount}">
+						        <input type="submit" value="立即結帳" disabled="disabled">
+						       </c:if>
 
 
 							<input type="hidden" name="gb_price"
 								value="${Group_BuyVO.gb_price}"> <input type="hidden"
-								name="gbitem_name" value="${Group_BuyVO.gbitem_id}"> <input
+								name="gbitem_name" value="${Group_BuyVO.gbitem_name}"> <input
 								type="hidden" name="gb_id" value="${Group_BuyVO.gb_id}">
 							<input type="hidden" name="mem_id" value="${Group_BuyVO.mem_id}"><br>
 							<input type="hidden" name="gbitem_id"
@@ -295,8 +311,8 @@ footer img {
 					<td><FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" name="form1">
 						<!-- 		<input type="hidden" name="gb_price" value="200">  -->
 						<!-- 		<input type="hidden" name="gbitem_name" value="Petkit 小佩智能感應式除臭貓砂盆">  -->
-						<input type="hidden" name="gb_name" value="${Group_BuyVO.gb_name}">
-						<input type="hidden" name="gb_id" value="${Group_BuyVO.gb_id}">
+<%-- 						<input type="hidden" name="gb_name" value="${Group_BuyVO.gb_name}"> --%>
+<%-- 						<input type="hidden" name="gb_id" value="${Group_BuyVO.gb_id}"> --%>
 						<!-- 		<input type="hidden" name="discount_price" value="9">  -->
 						<!-- 		<input type="hidden" name="mem_id" value="1"><br>  -->
 						<!-- 		<input type="hidden" name="gbitem_id" value="1">  -->
@@ -305,8 +321,8 @@ footer img {
 						<!-- 		<input type="hidden" name="gbstart_date" value="2022-10-11 09:10:40">  -->
 						<!-- 		<input type="hidden" name="gbend_date" value="2022-10-11 09:10:40">  -->
 						<!-- 		<input type="hidden" name="gb_status" value="1">  -->
-						<input type="submit" value="查詢參團資料查詢"> <input
-							type="hidden" name="action" value="getOneGB_For_Display">
+						<input class="btn btn-dark btnSmall" type="submit" value="參團資料查詢"> <input
+							type="hidden" name="action" value="getOne_Display_ByMem">
 					</FORM></td>
 
 
@@ -322,6 +338,10 @@ footer img {
 					<!-- 						</FORM></td> -->
 			</c:forEach>
 		</table>
+<!-- 		<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" name="form1"> -->
+<!-- 						<input class="btn btn-warning" type="submit" value="參團資料查詢"> -->
+<!-- 						<input type="hidden" name="action" value="getOne_Display_ByMem"> -->
+<!-- 					</FORM> -->
 		<%-- 		<%@ include file="page2.file" %> --%>
 	</main>
 
@@ -336,9 +356,10 @@ footer img {
 		crossorigin="anonymous"></script>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<!--  NavBar  -->
-	<script src="../../resources/static/js/navbar.js"></script>
-	<!--  Footer  -->
-	<script src="../../resources/static/js/footer.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/static/js/navbar.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/static/js/getName.js"></script>
+	<!--  Cart -->
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/static/js/cart.js"></script>
 </body>
 
 </html>

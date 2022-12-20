@@ -25,7 +25,7 @@
             rel="stylesheet">
 
     <!-- import css stylesheet -->
-<!--    <link rel="stylesheet" href="./css/style.css">-->
+    <!--    <link rel="stylesheet" href="./css/style.css">-->
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css">
@@ -37,8 +37,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.js"></script>
 
     <!-- import icon -->
-<!--    <script src="https://kit.fontawesome.com/b5ef6b60f3.js" crossorigin="anonymous"></script>-->
-<!--    <link rel="stylesheet" type="text/css" href="../../resources/css/item_detail.css">-->
+    <!--    <script src="https://kit.fontawesome.com/b5ef6b60f3.js" crossorigin="anonymous"></script>-->
+    <!--    <link rel="stylesheet" type="text/css" href="../../resources/css/item_detail.css">-->
 
     <!-- slider -->
     <link href="https://cdn.bootcss.com/flexslider/2.6.3/flexslider.min.css" rel="stylesheet">
@@ -60,6 +60,9 @@
         margin: 0;
         padding: 0;
         overflow-x: hidden;
+    }
+    [v-cloak] {
+        display: none;
     }
 
     .clearfix {
@@ -447,7 +450,7 @@
 
 
 
-<div id="app">
+<div id="app" v-cloak>
     <main>
         <div class="container">
 
@@ -456,11 +459,11 @@
 
                 <article class="product" v-for="(item,index) in favList" :key="item.itemId">
                     <header>
-                        <button class="remove" @click="remove(item.itemId)">
-                            <img :src="'data:image/jpeg;base64,'+item.photo" alt="">
+                        <!--                        <button class="remove" >-->
+                        <img :src="'data:image/jpeg;base64,'+item.photo" alt="" @click="remove(item.itemId)">
 
-                            <h3>Remove product</h3>
-                        </button>
+                        <h3>Remove product</h3>
+                        <!--                        </button>-->
                     </header>
 
                     <div class="content">
@@ -531,21 +534,39 @@
     let vm = Vue.createApp({
         data() {
             return {
-                favList: []
+                favList: [],
+
             }
 
 
         },
-        mounted() {
+        beforeCreate() {
+
+
             let pjName=getProjectName();
-            // let mem=JSON.parse(sessionStorage.getItem("mem-info"));
-            // let memId=mem.memberId;
+
             axios.get(pjName+"/item/items?action=getFavList")
                 .then((resp)=>{
                     this.favList=resp.data;
                     console.log(resp.data)
-
+                    if (resp.data.length===0) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: '你的追蹤清單還沒有東西喔!',
+                            footer: '<a href="/CGA104G1/frontend/item/shop.html">快去看看吧!</a>'
+                        })
+                        setTimeout(function () {
+                            window.location.assign('/CGA104G1/frontend/item/shop.html')
+                        }, 2000)
+                    }
                 })
+            let partstr=sessionStorage.getItem("part");
+            let part=partstr?JSON.parse(partstr):[];
+            if (part) {
+                document.getElementById("lblCartCount").append(part.length);
+            }else{
+                document.getElementById("lblCartCount").append('');
+            }
 
 
         },
@@ -588,7 +609,16 @@
                     showConfirmButton: false,
                     timer: 1500
                 })
+                if (part.length===0) {
+                    document.getElementById("lblCartCount").append('');
+
+                }else{
+                    document.getElementById("lblCartCount").innerHTML="";
+                    document.getElementById("lblCartCount").append(part.length);
+                }
+
             }
+
 
 
         }

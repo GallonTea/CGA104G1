@@ -3,8 +3,10 @@
 <% 
 EffectVO effectVO = (EffectVO) request.getAttribute("effectVO");
 %>
+
 <html>
 <head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <title>權限資料</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
@@ -42,7 +44,9 @@ EffectVO effectVO = (EffectVO) request.getAttribute("effectVO");
 </style>
 
 </head>
+
 <body>
+
 
 <nav><%@include file="/backend/topNavbar.jsp"%></nav>
 	<main>

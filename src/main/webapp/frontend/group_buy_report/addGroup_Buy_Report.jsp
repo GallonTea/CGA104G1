@@ -10,7 +10,6 @@ Group_Buy_ReportVO Group_Buy_ReportVO = (Group_Buy_ReportVO) request.getAttribut
 <html>
 <head>
 <title>團購檢舉</title>
-<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -20,7 +19,6 @@ Group_Buy_ReportVO Group_Buy_ReportVO = (Group_Buy_ReportVO) request.getAttribut
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
 	integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
 	crossorigin="anonymous"></script>
-
 <style>
 /* <!-- ===========================================樣式欄位================================================================== --> */
 
@@ -114,23 +112,56 @@ th, td {
 	text-align: left;
 }
 
+body {
+	height: 100%; 
+    background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+    background-color: #FFDEE9;
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+}
+
+.titleBlock {
+	text-align: center;
+	font-size: 24px;
+	font-weight: 700;
+}
+
+input {
+	height: 40px;
+}
+
+.subBlock {
+	text-align: center;
+}  
+
+.btnIn {
+	width: 200px;
+	border-radius: 20px !important;
+} 
+
+select, input {
+    	width: 300px;
+    	height: 30px;
+    	border-radius: 20px;
+    	border: none;
+    	text-align: center;
+    }
+    
+select:focus, input:focus {
+	border: 2px solid pink !important;
+}  
+
 </style>
 
 </head>
 <body bgcolor='white'>
 
-	<nav><%@include file="/backend/topNavbar.jsp"%></nav>
 	<main>
-		<%@include file="/backend/leftside.jsp"%>
 		<section>
-<table id="table-1">
-	<tr><td> 
-	<h3>團購檢舉新增 </h3>
-			<button onclick="location.href='<%=request.getContextPath()%>/index.html'">回到首頁</button>
-	</td></tr>
-</table>
 
 
+<h3>團購檢舉</h3>
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font style="color:red">請修正以下錯誤:</font>
@@ -155,7 +186,7 @@ th, td {
 	<tr>
 		<td><b>團購訂單編號:</b></td>
 		<td><input type="TEXT"  name="gborder_id" size="35" 
-			 value="<%= (Group_Buy_ReportVO==null)? " " : Group_Buy_ReportVO.getGborder_id()%>" /></td>
+			 value="<%= (Group_Buy_ReportVO==null)? "" : Group_Buy_ReportVO.getGborder_id()%>" /></td>
 			 <td style="color:red">${errorMsgs.gborder_id}</td>
 	</tr>
 	<tr>
@@ -234,13 +265,19 @@ th, td {
 
 </table>
 <br>
-<input type="hidden" name="action" value="insert" >
+<div class="subBlock">
+</div><input type="hidden" name="action" value="insert" >
 <input type="hidden" name="emp_id" value="3">
-<input type="submit" style="margin-left:38%" value="送出"></FORM>
+<input class="btn btn-success btnIn" type="submit" value="送出">
+</div></FORM>
 		</section>
 	</main>
 
-
+<!--  NavBar  -->
+<script src="<%=request.getContextPath() %>/resources/static/js/navbar.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/static/js/getName.js"></script>
+<!--  Cart -->
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/static/js/cart.js"></script>
 </body>
 
 

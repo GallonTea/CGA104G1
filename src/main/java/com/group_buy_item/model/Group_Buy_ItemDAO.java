@@ -18,7 +18,7 @@ public class Group_Buy_ItemDAO implements Group_Buy_ItemDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/hikariCP-BaRei");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -92,7 +92,7 @@ public class Group_Buy_ItemDAO implements Group_Buy_ItemDAO_interface {
 			pstmt.setDate(5, Group_Buy_ItemVO.getGbitem_startdate());
 			pstmt.setDate(6, Group_Buy_ItemVO.getGbitem_enddate());
 			pstmt.setInt(7, Group_Buy_ItemVO.getGbitem_id());
-			
+
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
@@ -117,7 +117,7 @@ public class Group_Buy_ItemDAO implements Group_Buy_ItemDAO_interface {
 			}
 		}
 
-		
+
 	}
 
 	@Override
@@ -155,11 +155,11 @@ public class Group_Buy_ItemDAO implements Group_Buy_ItemDAO_interface {
 		}
 
 	}
-	
+
 
 	@Override
 	public Group_Buy_ItemVO findByPrimaryKey(Integer gbitem_id) {
-		
+
 		Group_Buy_ItemVO Group_Buy_ItemVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -241,7 +241,7 @@ public class Group_Buy_ItemDAO implements Group_Buy_ItemDAO_interface {
 				Group_Buy_ItemVO.setGbitem_status(rs.getInt("gbitem_status"));
 				Group_Buy_ItemVO.setGbitem_startdate(rs.getDate("gbitem_startdate"));
 				Group_Buy_ItemVO.setGbitem_enddate(rs.getDate("gbitem_enddate"));
-				list.add(Group_Buy_ItemVO); 
+				list.add(Group_Buy_ItemVO);
 			}
 
 		} catch (SQLException se) {

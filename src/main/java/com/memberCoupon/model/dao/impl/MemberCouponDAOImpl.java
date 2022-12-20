@@ -196,6 +196,24 @@ public class MemberCouponDAOImpl implements MemberCouponDAO {
     }
 
     @Override
+    public List<MemberCoupon> getById(Integer couponId) {
+        List<MemberCoupon> list = null;
+        try {
+            beginTransaction();
+            final String sql = "SELECT * FROM member_coupon where COUPON_ID = :id";
+            list = getSession()
+                    .createNativeQuery(sql, MemberCoupon.class)
+                    .setParameter("id", couponId)
+                    .list();
+            commit();
+        } catch (Exception e) {
+            rollback();
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<MemberCoupon> selectAll() {
         List<MemberCoupon> list = null;

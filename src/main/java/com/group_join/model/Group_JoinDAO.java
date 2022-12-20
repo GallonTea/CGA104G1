@@ -1,7 +1,6 @@
 package com.group_join.model;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,16 +13,13 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.emp.model.EmpNoEffect;
-import com.emp.model.EmpVO;
-
 public class Group_JoinDAO implements Group_JoinDAO_interface {
 
 	private static DataSource ds = null;
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/hikariCP-BaRei");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
@@ -31,6 +27,9 @@ public class Group_JoinDAO implements Group_JoinDAO_interface {
 
 	private static final String INSERT_STMT = "INSERT INTO GROUP_JOIN (GB_ID, MEM_ID, GBPAY_STATUS, PICKUP_STATUS, DELIVER_STATUS, GBBUY_AMOUNT ,GBBUY_PRICE) VALUES (?, ?, ?, ?, ? ,? ,?)";
 	private static final String GET_ALL_STMT = "SELECT GB_ID, MEM_ID, GBPAY_STATUS, PICKUP_STATUS, DELIVER_STATUS  ,GBBUY_AMOUNT ,GBBUY_PRICE FROM  GROUP_JOIN order by GB_ID ";
+	//參完查詢
+	private static final String GET_ALL_BYMEM = "SELECT GB_ID, MEM_ID, GBPAY_STATUS, PICKUP_STATUS, DELIVER_STATUS  ,GBBUY_AMOUNT ,GBBUY_PRICE FROM  GROUP_JOIN where (MEM_ID = ?) order by GB_ID";
+	//
 	private static final String GET_ONE_STMT = "SELECT GB_ID, MEM_ID, GBPAY_STATUS, PICKUP_STATUS, DELIVER_STATUS  ,GBBUY_AMOUNT ,GBBUY_PRICE FROM GROUP_JOIN where GB_ID = ? and MEM_ID =?";
 	private static final String GET_ALL_GB = "SELECT GB_ID, MEM_ID, GBPAY_STATUS, PICKUP_STATUS, DELIVER_STATUS  ,GBBUY_AMOUNT ,GBBUY_PRICE FROM GROUP_JOIN where GB_ID = ?";
 	private static final String DELETE = "DELETE FROM GROUP_JOIN where GB_ID = ? and MEM_ID = ? ";
@@ -38,6 +37,50 @@ public class Group_JoinDAO implements Group_JoinDAO_interface {
 	private static final String UPDATEPAY = "UPDATE GROUP_JOIN set  GBPAY_STATUS=? where (GB_ID = ?) and (MEM_ID = ?)";
 	private static final String UPDATEPICKUP = "UPDATE GROUP_JOIN set  PICKUP_STATUS=? where (GB_ID = ?) and (MEM_ID = ?)";
 	private static final String UPDATEDELIVER = "UPDATE GROUP_JOIN set  DELIVER_STATUS=? where (GB_ID = ?) and (MEM_ID = ?)";
+
+
+	public List<Group_JoinVO> findByMem(Integer mem_id) {
+
+		List<Group_JoinVO> list = new ArrayList<Group_JoinVO>();
+		Group_JoinVO group_joinVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_BYMEM);
+			pstmt.setInt(1, mem_id);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				group_joinVO = new Group_JoinVO();
+				group_joinVO.setGb_id(rs.getInt("gb_id"));
+				group_joinVO.setMem_id(rs.getInt("mem_id"));
+				group_joinVO.setGbpay_status(rs.getInt("gbpay_status"));
+				group_joinVO.setPickup_status(rs.getInt("pickup_status"));
+				group_joinVO.setDeliver_status(rs.getInt("deliver_status"));
+				group_joinVO.setGbbuy_amount(rs.getInt("gbbuy_amount"));
+				group_joinVO.setGbbuy_price(rs.getInt("gbbuy_price"));
+				list.add(group_joinVO);
+				System.out.println(rs.getInt("gb_id"));
+			}
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null || con != null) {
+				try {
+					rs.close();con.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+
 
 	@Override
 	public void insert(Group_JoinVO Group_JoinVO) {
@@ -54,15 +97,8 @@ public class Group_JoinDAO implements Group_JoinDAO_interface {
 			pstmt.setInt(3, Group_JoinVO.getGbpay_status());
 			pstmt.setInt(4, Group_JoinVO.getPickup_status());
 			pstmt.setInt(5, Group_JoinVO.getDeliver_status());
-
-			System.out.println("數量");
-			System.out.println(Group_JoinVO.getGbbuy_amount());
-
-			System.out.println("數量");
 			pstmt.setInt(6, Group_JoinVO.getGbbuy_amount());
 			pstmt.setInt(7, Group_JoinVO.getGbbuy_price());
-
-			System.out.println(Group_JoinVO.getGbbuy_amount());
 			pstmt.executeUpdate();
 
 			// Handle any SQL errors

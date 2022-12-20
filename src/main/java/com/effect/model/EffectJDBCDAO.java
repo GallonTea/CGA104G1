@@ -14,7 +14,7 @@ public class EffectJDBCDAO implements EffectDAO_interface {
 	String userid = "root";
 	String password = "password";
 
-	private static final String INSER_STMT = "INSERT INTO effect (effect_id, effect_name, effect_info) VALUES (?, ?, ?)";
+	private static final String INSER_STMT = "INSERT INTO effect (effect_name, effect_info) VALUES ( ?, ?)";
 	private static final String GET_ALL_STMT = "SELECT effect_id,effect_name,effect_info FROM effect order by effect_id";
 	private static final String GET_ONE_STMT = "SELECT effect_id,effect_name,effect_info FROM effect where effect_id = ?";
 	private static final String DELETE = "DELETE FROM effect where effect_id = ?";
@@ -32,9 +32,8 @@ public class EffectJDBCDAO implements EffectDAO_interface {
 			con = DriverManager.getConnection(url, userid, password);
 			pstmt = con.prepareStatement(INSER_STMT);
 
-			pstmt.setInt(1, effectVO.getEffect_id());
-			pstmt.setString(2, effectVO.getEffect_name());
-			pstmt.setString(3, effectVO.getEffect_info());
+			pstmt.setString(1, effectVO.getEffect_name());
+			pstmt.setString(2, effectVO.getEffect_info());
 
 			pstmt.executeUpdate();
 		} catch (ClassNotFoundException e) {

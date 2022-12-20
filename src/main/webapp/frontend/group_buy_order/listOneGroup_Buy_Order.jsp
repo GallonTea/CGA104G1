@@ -3,6 +3,7 @@
 <%@ page import="com.group_buy_order.model.*"%>
 <%@ page import="com.discount.model.*"%>
 <%@ page import="com.group_buy_item.model.*"%>
+<%@include file="/frontend/frontNavbar.jsp"%>
 
 <%
 Group_Buy_OrderVO group_buy_orderVO = (Group_Buy_OrderVO) request.getAttribute("group_buy_orderVO");
@@ -12,7 +13,6 @@ Group_Buy_OrderVO group_buy_orderVO = (Group_Buy_OrderVO) request.getAttribute("
 	class="com.group_buy_item.model.Group_Buy_ItemService" />
 <html>
 <head>
-
 <title>團購訂單資料</title>
 <style>
 table#table-1 {
@@ -35,10 +35,10 @@ h4 {
 
 <style>
 table {
-	width: 80%;
-	background-color: white;
+	width: 90%;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	margin-left: 5%;
 }
 
 table, th, td {
@@ -49,22 +49,37 @@ th, td {
 	padding: 5px;
 	text-align: center;
 }
+
+body {
+	height: 100%; 
+    background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+    background-color: #FFDEE9;
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+}
+
+th {
+	color: white;
+	background-color: black;
+}
+
+tr:nth-child(even) {
+	background-color: rgba(255,255,255,0.4);
+}
+
+.titleBlock {
+	font-weight: 700;
+	font-size: 24px;
+}
 </style>
 
 </head>
-<body bgcolor='white'>
-
-	<table id="table-1">
-		<tr>
-			<td>
-				<h3>我的訂單</h3>
-				<h4>
-					<a
-						href="<%=request.getContextPath()%>/frontend/group_buy_order/select_page.jsp">回團購訂單查詢</a>
-				</h4>
-			</td>
-		</tr>
-	</table>
+<body>
+	<div class="btnTitle">
+			<button onclick="location.href='<%=request.getContextPath()%>/frontend/group_buy_order/select_page.jsp'" class="btn btn-warning btnIn">回團購查詢首頁</button>
+		</div>
+		<div class="titleBlock">團購一覽(團員)</div>
 	<table>
 		<tr>
 			<th>團購訂單編號</th>
@@ -144,6 +159,5 @@ th, td {
 
 		</tr>
 	</table>
-
 </body>
 </html>

@@ -17,7 +17,7 @@ public class Article_sorttypeDAO implements Article_sorttypeDAO_interface{
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/hikariCP-BaRei");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}

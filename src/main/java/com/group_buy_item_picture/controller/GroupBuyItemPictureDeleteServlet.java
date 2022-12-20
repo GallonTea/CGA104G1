@@ -97,6 +97,15 @@ public class GroupBuyItemPictureDeleteServlet extends HttpServlet {
 				errorMsgs.add("請輸入日期!");
 			}
 
+			Integer gbitem_type = null;
+
+			try {
+				gbitem_type = Integer.valueOf(req.getParameter("gbitem_type").trim());
+			} catch (Exception e) {
+				e.printStackTrace();
+				errorMsgs.add("團購商品類別不可為空");
+			}
+
 			Group_Buy_ItemVO group_Buy_ItemVO = new Group_Buy_ItemVO();
 			group_Buy_ItemVO.setGbitem_id(gbitem_id);
 			group_Buy_ItemVO.setGbitem_name(gbitem_name);
@@ -105,11 +114,12 @@ public class GroupBuyItemPictureDeleteServlet extends HttpServlet {
 			group_Buy_ItemVO.setGbitem_status(gbitem_status);
 			group_Buy_ItemVO.setGbitem_startdate(gbitem_startdate);
 			group_Buy_ItemVO.setGbitem_enddate(gbitem_enddate);
+			group_Buy_ItemVO.setGbitem_type(gbitem_type);
 
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("Group_Buy_ItemVO", group_Buy_ItemVO);
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/backend/Group_Buy_Item/update_groupBuyItem_input.jsp");
+						.getRequestDispatcher("/backend/group_Buy_Item/update_groupBuyItem_input.jsp");
 				failureView.forward(req, res);
 				return;
 			}
@@ -127,7 +137,7 @@ public class GroupBuyItemPictureDeleteServlet extends HttpServlet {
 				req.setAttribute("List", list);
 				req.setAttribute("Group_Buy_ItemVO", group_Buy_ItemVO);
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/backend/Group_Buy_Item/update_groupBuyItem_input.jsp");
+						.getRequestDispatcher("/backend/group_Buy_Item/update_groupBuyItem_input.jsp");
 				failureView.forward(req, res);
 				return;// 程式中斷
 			}
@@ -144,7 +154,7 @@ public class GroupBuyItemPictureDeleteServlet extends HttpServlet {
 			req.setAttribute("list2", list2);
 
 			req.setAttribute("Group_Buy_ItemVO", group_Buy_ItemVO);
-			String url = "/backend/Group_Buy_Item/update_groupBuyItem_input.jsp";
+			String url = "/backend/group_Buy_Item/update_groupBuyItem_input.jsp";
 
 			// 刪除成功後,轉交回送出刪除的來源網頁
 			RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -158,7 +168,7 @@ public class GroupBuyItemPictureDeleteServlet extends HttpServlet {
 		} catch (Exception e) {
 			errorMsgs.add("刪除資料失敗:" + e.getMessage());
 			e.printStackTrace();
-			RequestDispatcher failureView = req.getRequestDispatcher("/backend/Group_Buy_Item/update_groupBuyItem_input.jsp");
+			RequestDispatcher failureView = req.getRequestDispatcher("/backend/group_Buy_Item/update_groupBuyItem_input.jsp");
 			failureView.forward(req, res);
 		}
 

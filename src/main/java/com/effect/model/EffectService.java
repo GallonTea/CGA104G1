@@ -13,11 +13,10 @@ public class EffectService {
 	}
 	
 	
-	public EffectVO addEffect( Integer effect_id, String effect_name, String effect_info) {
+	public EffectVO addEffect(String effect_name, String effect_info) {
 		
 		EffectVO effectVO = new EffectVO();
 		
-		effectVO.setEffect_id(effect_id);
 		effectVO.setEffect_name(effect_name);
 		effectVO.setEffect_info(effect_info);
 		dao.insert(effectVO);

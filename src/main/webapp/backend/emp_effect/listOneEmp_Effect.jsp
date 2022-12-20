@@ -4,12 +4,12 @@
 <%@ page import="java.util.*"%>
 <jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
 <jsp:useBean id="effectSvc" scope="page" class="com.effect.model.EffectService" />
-<%
-Integer emp_id =(Integer)request.getAttribute("emp_id");
-Emp_effectService emp_effectSvc = new Emp_effectService();
-List<Emp_effectVO> list = emp_effectSvc.getOneEmp(emp_id);
-pageContext.setAttribute("list", list);
-%>
+<%-- <% --%>
+<!-- // Integer emp_id =(Integer)request.getAttribute("emp_id"); -->
+<!-- // Emp_effectService emp_effectSvc = new Emp_effectService(); -->
+<!-- // List<Emp_effectVO> list = emp_effectSvc.getOneEmp(emp_id); -->
+<!-- // pageContext.setAttribute("list", list); -->
+<%-- %> --%>
 
 <html>
 <head>
@@ -44,7 +44,10 @@ pageContext.setAttribute("list", list);
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
 				<div class="btnTitle">
-			<button onclick="location.href='<%=request.getContextPath()%>/backend/emp_effect/select_page.jsp'" class="btn btn-primary btnIn">回員工權限管理首頁</button>
+			<button onclick="location.href='<%=request.getContextPath()%>/backend/emp/listAllEmp.jsp'" class="btn btn-primary btnIn">回查詢員工資料</button>
+		</div>
+				<div class="btnTitle">
+			<button onclick="location.href='<%=request.getContextPath()%>/backend/emp_effect/select_page.jsp'" class="btn btn-primary btnIn">回查詢權限資料</button>
 		</div>
 		<div class="titleBlock">單一員工權限列表</div>
 			<table>
@@ -54,7 +57,7 @@ pageContext.setAttribute("list", list);
 		<th colspan="2">資料變更</th>
 		
 	</tr>
-	<c:forEach var="emp_effectVO" items="${list}" >
+	<c:forEach var="emp_effectVO" items="${emp_effectVO}" >
 	<tr>
 		<td>${emp_effectVO.empVO.emp_name}</td>
 		<td>${emp_effectVO.effectVO.effect_name}</td>

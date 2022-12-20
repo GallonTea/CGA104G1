@@ -56,7 +56,10 @@ public class EmpService {
 		return dao.findBypk(emp_id);
 	}
 	
-
+	public EmpVO getOneAc(String account) {
+		return dao.findByAc(account);
+	}
+	
 	public List<EmpVO> getAll() {
 		return dao.getAll();
 	}

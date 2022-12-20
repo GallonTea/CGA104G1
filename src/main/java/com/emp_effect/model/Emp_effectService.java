@@ -36,9 +36,17 @@ public class Emp_effectService {
 	public void deleteEmp(Integer emp_id,Integer effect_id) {
 		dao.delete(emp_id,effect_id);
 	}
+	
+	public Emp_effectVO getEffect(Integer emp_id,Integer effect_id) {
+		return dao.getEffect(emp_id,effect_id);
+	}
 
 	public List <Emp_effectVO> getOneEmp(Integer emp_id) {
 		return dao.findBypk(emp_id);
+	}
+	
+	public List <Emp_effectVO> getOneEffect(Integer effect_id) {
+		return dao.findByEffect(effect_id);
 	}
 
 	public List<Emp_effectVO> getAll() {

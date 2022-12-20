@@ -93,5 +93,9 @@ public class MemVO implements java.io.Serializable {
 		this.mem_status = mem_status;
 	}
 	
-
+	public com.article_identity.model.Article_identityVO getArticle_identityVO() {
+		com.article_identity.model.Article_identityService article_identitySvc = new com.article_identity.model.Article_identityService();
+		com.article_identity.model.Article_identityVO article_identityVO = article_identitySvc.getOneArticle_picture(mem_id);
+	    return article_identityVO;
+	}
 }

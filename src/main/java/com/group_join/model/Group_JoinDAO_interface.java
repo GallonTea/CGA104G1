@@ -20,7 +20,9 @@ public interface Group_JoinDAO_interface {
 	public Group_JoinVO findByPrimaryKey(Integer gb_id,Integer mem_id);
 	
 	public List<Group_JoinVO> findBygbid(Integer gb_id);
-
+	
+	public List<Group_JoinVO> findByMem(Integer mem_id);
+	
 	public List<Group_JoinVO> getAll();
 	
 	public List<Group_JoinVO> getAll(Map<String, String[]> map);

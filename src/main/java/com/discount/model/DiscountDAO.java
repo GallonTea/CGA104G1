@@ -13,33 +13,32 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 
-public class DiscountDAO implements DiscountDAO_interface{
+public class DiscountDAO {
 
 	private static DataSource ds = null;
 //	static {
 //		try {
 //			Context ctx = new InitialContext();
-//			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
+//			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/hikariCP-BaRei");
 //		} catch (NamingException e) {
 //			e.printStackTrace();
 //		}
 //	}
 
-	private static final String INSERT_STMT = 
+	private static final String INSERT_STMT =
 		"INSERT INTO `ba_rei`.`DISCOUNT` (`GBITEM_ID`, `DISCOUNT_MINAMOUNT`, `DISCOUNT_MAXAMOUNT`, `DISCOUNT_PRICE`, `DISCOUNT_NAR`) VALUES (?, ?, ?, ?, ?)";
-	private static final String GET_ALL_STMT = 
+	private static final String GET_ALL_STMT =
 		"SELECT `DISCOUNT_ID`,`GBITEM_ID`, `DISCOUNT_MINAMOUNT`, `DISCOUNT_MAXAMOUNT`, `DISCOUNT_PRICE`, `DISCOUNT_NAR` FROM `ba_rei`.`DISCOUNT` order by `DISCOUNT_ID`";
-	private static final String GET_ONE_STMT = 
+	private static final String GET_ONE_STMT =
 		"SELECT `DISCOUNT_ID`,`GBITEM_ID`, `DISCOUNT_MINAMOUNT`, `DISCOUNT_MAXAMOUNT`, `DISCOUNT_PRICE`, `DISCOUNT_NAR` FROM `ba_rei`.`DISCOUNT` where `DISCOUNT_ID` = ?";
-	private static final String DELETE = 
+	private static final String DELETE =
 		"DELETE FROM `ba_rei`.`DISCOUNT` where `DISCOUNT_ID` = ?";
-	private static final String UPDATE = 
+	private static final String UPDATE =
 		"UPDATE `ba_rei`.`DISCOUNT` set `GBITEM_ID`=?, `DISCOUNT_MINAMOUNT`=?, `DISCOUNT_MAXAMOUNT`=?, `DISCOUNT_PRICE`=?, `DISCOUNT_NAR`=? where `DISCOUNT_ID` = ?";
-	private static final String GET_ONE2_STMT = 
+	private static final String GET_ONE2_STMT =
 			"SELECT `DISCOUNT_ID`,`GBITEM_ID`, `DISCOUNT_MINAMOUNT`, `DISCOUNT_MAXAMOUNT`, `DISCOUNT_PRICE`, `DISCOUNT_NAR` FROM `ba_rei`.`DISCOUNT` where `GBITEM_ID` = ?";
-	
-	
-	@Override
+
+
 	public void insert(DiscountVO discountVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -80,7 +79,6 @@ public class DiscountDAO implements DiscountDAO_interface{
 		}
 	}
 
-	@Override
 	public void update(DiscountVO discountVO) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -121,7 +119,6 @@ public class DiscountDAO implements DiscountDAO_interface{
 		}
 	}
 
-	@Override
 	public void delete(Integer discount_id) {
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -158,7 +155,6 @@ public class DiscountDAO implements DiscountDAO_interface{
 		}
 	}
 
-	@Override
 	public DiscountVO findByPrimaryKey(Integer discount_id) {
 		DiscountVO discountVO = null;
 		Connection con = null;
@@ -212,9 +208,8 @@ public class DiscountDAO implements DiscountDAO_interface{
 		}
 		return discountVO;
 	}
-	
 
-	@Override
+
 	public List<DiscountVO> getAll() {
 		List<DiscountVO> list = new ArrayList<DiscountVO>();
 		DiscountVO discountVO = null;
@@ -237,7 +232,7 @@ public class DiscountDAO implements DiscountDAO_interface{
 				discountVO.setDiscount_maxamount(rs.getInt("discount_maxamount"));
 				discountVO.setDiscount_price(rs.getInt("discount_price"));
 				discountVO.setDiscount_nar(rs.getString("discount_nar"));
-				list.add(discountVO); 
+				list.add(discountVO);
 			}
 
 		} catch (SQLException se) {
@@ -267,6 +262,11 @@ public class DiscountDAO implements DiscountDAO_interface{
 			}
 		}
 		return list;
+	}
+
+	public List<DiscountVO> findDiscountByPrimaryKey(Integer gbitem_id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

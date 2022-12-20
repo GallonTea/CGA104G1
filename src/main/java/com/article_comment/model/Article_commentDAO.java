@@ -14,7 +14,7 @@ public class Article_commentDAO implements Article_commentDAO_interface {
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/hikariCP-BaRei");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}

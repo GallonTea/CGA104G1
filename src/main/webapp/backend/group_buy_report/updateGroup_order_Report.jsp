@@ -11,12 +11,13 @@ Group_Buy_ReportVO Group_Buy_ReportVO = (Group_Buy_ReportVO) request.getAttribut
 %>
 
 <%= Group_Buy_ReportVO==null %>
-
 <html>
 <head>
 <title>團購檢舉修改</title>
+
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
+
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -106,7 +107,7 @@ th, td {
 .btn-warning{
   	margin-top: 15px;
   }
-  
+
   .btnTitle{
   	margin-top: 25px;
   }
@@ -151,8 +152,7 @@ th, td {
 	  <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
 	<tr>
 		<td style="color: gray"><b>會員編號:</b></td>
-		<td><input type="TEXT" readonly style="color: gray" size="45" value="${Group_Buy_ReportVO.mem_id}-${Group_Buy_ReportVO.memVO.mem_name}"/></td>
-		<td><input type="hidden" name="mem_id"  value="${Group_Buy_ReportVO.mem_id}"/></td>
+		<td><input type="TEXT" name="mem_id" readonly style="color: gray" size="45" value="<%=Group_Buy_ReportVO.getMem_id()%>" /></td>
 	</tr>
 	<tr>
 		<td><b style="color: gray">團購檢舉內容:</b></td>
@@ -167,9 +167,9 @@ th, td {
 <%-- 		<input type="hidden" name="frep_status" value="${Group_Buy_ReportVO.frep_status}"> --%>
 <!-- 		</td> -->
 <!-- 		</tr> -->
-		
+
 	<tr >
-		<td style="color:black"><b>團購檢舉審核結果:</b><font color=red><b>*</b></font></td>
+		<td><b>團購檢舉審核結果:</b><font color=red><b>*</b></font></td>
 		<td><select size="1" name="frep_result">
 				<option value="0" ${(Group_Buy_ReportVO.frep_result==0)? 'selected':'' } >尚未審核完畢</option>
 				<option value="1" ${(Group_Buy_ReportVO.frep_result==1)? 'selected':'' } >檢舉屬實</option>
@@ -184,23 +184,23 @@ th, td {
 <%-- 				<option value="2" ${(Group_Buy_ReportVO.emp_id==2)? 'selected':'' } >已驗證</option> --%>
 <!-- 		</select></td> -->
 <!-- 	</tr> -->
-	
+
 	  <jsp:useBean id="empSvc" scope="page" class="com.emp.model.EmpService" />
        	<tr >
-		<td style="color:black"><b>選擇員工:</b></td>
+		<td><b>選擇員工:</b></td>
        	  <td><select size="1" name=emp_id>
-          <c:forEach var="EmpVO" items="${empSvc.all}" > 
+          <c:forEach var="EmpVO" items="${empSvc.all}" >
           <option value="${EmpVO.emp_id}">${EmpVO.emp_id} -【${EmpVO.emp_name}】
 
-         </c:forEach>   
+         </c:forEach>
        </select>
        </td>
-       
-       
+
+
 	</tr>
-	
-	
-	
+
+
+
 </table>
 <br>
 <input type="hidden" name="action" value="update">
@@ -209,7 +209,6 @@ th, td {
 </FORM>
 		</section>
 	</main>
-
 
 </body>
 

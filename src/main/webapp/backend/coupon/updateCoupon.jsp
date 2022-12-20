@@ -10,7 +10,6 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="com.coupon.model.entity.Coupon" %>
 
-<%@include file="/backend/backNavbar.jsp" %>
 <%
     String path = request.getContextPath();
     Coupon coupon = (Coupon) request.getAttribute("coupon");
@@ -36,7 +35,8 @@
 
 
     <link rel="stylesheet" type="text/css" href="../../resources/static/css/orderDetails.css"/>
-
+  <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/static/css/orderDetails.css"/>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/static/css/backendDetail.css"/>
     <link rel="stylesheet" type="text/css" href="../../resources/static/css/backendDetail.css"/>
     <style>
         body {

@@ -11,34 +11,34 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 public class Article_identityDAO implements Article_identityDAO_interface {
-	
+
 	private static DataSource ds = null;
 	static {
 		try {
 			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/TestDB2");
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/hikariCP-BaRei");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private static final String INSERT_STMT = 
+	private static final String INSERT_STMT =
 			"INSERT INTO article_identity (article_pic, mem_id) VALUES (?, ?)";
-		private static final String GET_ONE_STMT = 
+		private static final String GET_ONE_STMT =
 			"SELECT article_picno, article_pic, mem_id, upload_time FROM article_identity WHERE upload_time = (select MAX(upload_time) FROM article_identity WHERE mem_id = ?)";
 		@Override
 		public void insert(Article_identityVO article_identityVO) {
 			Connection con = null;
 			PreparedStatement ps = null;
-			
+
 			try {
-				
-				
+
+
 				con = ds.getConnection();
 				ps = con.prepareStatement(INSERT_STMT);
 				ps.setString(1, article_identityVO.getArticle_pic());
 				ps.setInt(2, article_identityVO.getMem_id());
-				
+
 				ps.executeUpdate();
 			} catch (SQLException se) {
 				throw new RuntimeException("A database error occured. "
@@ -70,7 +70,7 @@ public class Article_identityDAO implements Article_identityDAO_interface {
 
 			try {
 
-				
+
 				con = ds.getConnection();
 				ps = con.prepareStatement(GET_ONE_STMT);
 
@@ -117,7 +117,7 @@ public class Article_identityDAO implements Article_identityDAO_interface {
 			}
 			return article_identityVO;
 		}
-		
+
 		public static void main(String[] args) {
 
 			Article_identityJDBCDAO dao = new Article_identityJDBCDAO();

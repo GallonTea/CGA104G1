@@ -4,6 +4,7 @@ const navbar =  `<header>
                             <a class="navbar-brand" href="/CGA104G1/backend/index.jsp"><img
                                     src="/CGA104G1/backend/asset/img/share_icon/ba-rei 02.png"
                                     width="100px" height="40px"></a>
+                                 
                             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                                 aria-expanded="false" aria-label="Toggle navigation">
@@ -58,9 +59,7 @@ const navbar =  `<header>
                                         </ul>
                                     </li>
                                 </ul>
-                                  <a class="d-flex log" href="CGA104G1/backend/emp/backLogin.html">
-									<button class="btn btn-warning">員工登入</button>
-								</a>
+                                   <div id="myDropdown"></div>
                             </div>
                         </div>
                     </nav>

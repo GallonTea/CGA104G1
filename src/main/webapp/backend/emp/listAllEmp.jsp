@@ -16,6 +16,7 @@ pageContext.setAttribute("list2", list2);
 %>
 <html>
 <head>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <title>所有員工資料</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
 <style>
@@ -81,15 +82,18 @@ tr:nth-child(even) {
 </style>
 
 </head>
-<body>
 <nav><%@include file="/backend/topNavbar.jsp"%></nav>
 	<main>
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
+
 			<div class="btnTitle">
 			<div class="titleIn">所有員工資料</div><br>
 			<button onclick="location.href='<%=request.getContextPath()%>/backend/emp/select_page.jsp'" class="btn btn-primary btnIn">回員工管理首頁</button>
 			</div>
+			<div class="btnTitle">
+			<button onclick="location.href='<%=request.getContextPath()%>/backend/emp_effect/select_page.jsp'" class="btn btn-primary btnIn">員工權限查詢</button>
+		</div>
 <table>
 	<tr >
 		<th>員工姓名</th>

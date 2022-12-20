@@ -1,119 +1,79 @@
 package com.group_buy.controller;
 
+import com.group_buy.model.Group_BuyService;
+import com.group_buy.model.Group_BuyVO;
+import com.item.model.ItemService;
+import com.item.model.ItemVO;
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import com.group_buy.model.Group_BuyService;
-import com.group_buy.model.Group_BuyVO;
-
-@WebServlet("/GroupBuyStatusServlet")
+@WebServlet(name = "GroupBuyStatusServlet", urlPatterns = { "/GroupBuyStatusServlet" }, loadOnStartup = 2)
 public class GroupBuyStatusServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	Timer timer;   
-    public GroupBuyStatusServlet() {
-        super();
-    }
 
-	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		doPost(req, res);
-	}
+	Timer timer = new Timer();
+	    Calendar cal = Calendar.getInstance();
 
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		
-		
-		
-//		    ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);  
-//		    long oneDay = 24 * 60 * 60 * 1000;  
-//		    long initDelay  = getTimeMillis("20:00:00") - System.currentTimeMillis();  
-//		    initDelay = initDelay > 0 ? initDelay : oneDay + initDelay;  
-//		  
-//		    executor.scheduleAtFixedRate(new EchoServer(),initDelay,oneDay,TimeUnit.MILLISECONDS);  
-		
-		
-		
-	}
+	    @Override
+	    public void init() throws ServletException {
+	        timer.scheduleAtFixedRate(getAllInProgress, cal.getTime(), 10000);
+	        timer.scheduleAtFixedRate(getAll2End, cal.getTime(), 10000);
+//	        System.out.println("i am GroupBuyStatusServlet");
+	    }
+	    //將所有gb_status=0的團購團，在現在時間大於開團時間後，更新狀態為1
+	    TimerTask getAllInProgress = new TimerTask() {
+	    	
+	        @Override
+	        public void run() {
+//	        	 System.out.println("我是run方法getAllInProgress");
+	        	List<Group_BuyVO> list = new ArrayList<>();
+				Group_BuyService group_BuyService = new Group_BuyService();
+				list = group_BuyService.getAll2InProgress();
+//				System.out.println("我是list"+list);
+				for (Group_BuyVO Group_BuyVO : list) {
+//					System.out.println("我是Group_BuyVO.getGb_id()"+Group_BuyVO.getGb_id());
+					group_BuyService.updateGroup_Buy_GBStatus(Group_BuyVO.getGb_id(), 1);
+//					System.out.println(1);
+				}      
+	        }
+	    };
+	    //將所有gb_status=1的團購團，在現在時間大於截止時間後，且訂購數量小於標準，更新狀態為8
+	    TimerTask getAll2End = new TimerTask() {
+	    	
+	    	@Override
+	    	public void run() {
+//	    		System.out.println("我是run方法getAll2End");
+	    		List<Group_BuyVO> list = new ArrayList<>();
+				Group_BuyService group_BuyService = new Group_BuyService();
 
-//	private long getTimeMillis(String string) {
-//		return 0;
-//	}
+				// 拿到全部團購團
+				list = group_BuyService.getAll2End();
 
-	// 初始化時建立 timer 並放置於實體變數
-			public void init() {
-				
-				timer = new Timer();
-				// 設定何時開始
-				Calendar cal = new GregorianCalendar(2022, Calendar.NOVEMBER, 26, 0, 0, 0);
-
-				
-				// 查詢團購狀態等於0的(團購尚未開始)，且團購開始時間大於現在時間(為了要設定為gb_status = 1)
-		        TimerTask getAllInProgress = new TimerTask() {
-
-					@Override
-					public void run() {
-						List<Group_BuyVO> list = new ArrayList<>();
-						Group_BuyService group_BuyService = new Group_BuyService();
-						
-						// 取得大於三十分鐘沒結帳的list
-						list = group_BuyService.getAll2InProgress();
-						
-						for (Group_BuyVO Group_BuyVO : list) {
-							// 將競標商品狀態改為狀態 3 棄標
-//							bidProductSvc.updateBidState(new Integer(3), bidProductVO.getBidProductNo());
-							group_BuyService.updateGroup_Buy_GBStatus(Group_BuyVO.getGb_id(), 1);
-						}
+				for (Group_BuyVO Group_BuyVO : list) {
+					// 判斷狀態
+					 if (Group_BuyVO.getGb_min() > Group_BuyVO.getGb_amount()) {
+						group_BuyService.updateGroup_Buy_GBStatus(Group_BuyVO.getGb_id(), 8);
+//						System.out.print("送出狀態"+8);
+					}else {
+						group_BuyService.updateGroup_Buy_GBStatus(Group_BuyVO.getGb_id(), 3);
 					}
-		        	
-		        };
-		        
-		        
-		      //查詢團購狀態等於1的(團購進行中)，而且現在時間>=團購結束時間(為了要更改狀態為團購關閉OR結束)
-		        TimerTask getAll2End = new TimerTask() {
+					;
+				}
+	    	}
+	    };
 
-					@Override
-					public void run() {
-						List<Group_BuyVO> list = new ArrayList<>();
-						Group_BuyService group_BuyService = new Group_BuyService();
-						
-						// 取得大於三十分鐘沒結帳的list
-						list = group_BuyService.getAll2End();
-						
-						for (Group_BuyVO Group_BuyVO : list) {
-							// 將競標商品狀態改為狀態 3 棄標
-							if(Group_BuyVO.getGb_min() <= Group_BuyVO.getGb_amount()) {
-								group_BuyService.updateGroup_Buy_GBStatus(Group_BuyVO.getGb_id(), 3);
-							}else if(Group_BuyVO.getGb_min() > Group_BuyVO.getGb_amount()) {
-								group_BuyService.updateGroup_Buy_GBStatus(Group_BuyVO.getGb_id(), 8);
-							};
-						}
-					}
-		        	
-		        };
-
-		        timer.scheduleAtFixedRate(getAllInProgress, cal.getTime(), 600000); 
-				timer.scheduleAtFixedRate(getAll2End, cal.getTime(), 600000);
-			}
-		        
-		        
-
-			@Override
-			public void destroy() {
-				timer.cancel();
-			}
-	
-	
-	
+	    @Override
+	    public void destroy() {
+	        timer.cancel();
+	    }
 }

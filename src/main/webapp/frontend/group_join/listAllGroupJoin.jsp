@@ -3,20 +3,35 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.group_join.model.*"%>
 <%@ page import="java.util.*"%>
-<%
-Boolean verify = (boolean)session.getAttribute("verify");
 
-Integer gb_id = (Integer) request.getAttribute("gb_id");
-Group_JoinService group_joinSvc = new Group_JoinService();
-List<Group_JoinVO> group_joinVO = group_joinSvc.getOneGb(gb_id);
-pageContext.setAttribute("group_joinVO", group_joinVO);
-%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<!-- import bootstrap 5.2.1 -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+		  integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+
+	<!-- import jquery-3.6.0 -->
+	<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://demeter.5fpro.com/tw/zipcode-selector.js"></script>
+	<!-- import font-style -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
+
+	<!-- import icon -->
+	<script src="https://kit.fontawesome.com/b5ef6b60f3.js" crossorigin="anonymous"></script>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/static/css/main.css"/>
 <style type="text/css">
+
+
+	#dropdownMenuLink {
+		display: none;
+	}
 .styled-table {
 	margin-left: auto;
 	margin-right: auto;
@@ -56,10 +71,11 @@ width: 830px;
 	color: #212529;
 }
 
-.ok{
-float:right;
-margin-right:162px;
-margin-top: 13px; 
+
+.back{
+float:left;
+margin-left:162px;
+margin-top: 13px;
 
 
 }
@@ -101,7 +117,7 @@ h4 {
 table {
 	margin-left: auto;
 	margin-right: auto;
-	
+
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
@@ -113,15 +129,29 @@ th, td {
 	padding: 5px;
 	text-align: center;
 }
-/*   td:first-child{ */
-/*   border-top-left-radius: 10px; */
-/*   border-bottom-left-radius: 10px; */
-/* } */
 
-/* td:last-child{ */
-/*   border-top-right-radius: 10px; */
-/*   border-bottom-right-radius: 10px; */
-/* } */
+body {
+	min-height: 450px; 
+    background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+    background-color: #FFDEE9;
+    background-repeat: no-repeat;
+    background-size: cover;
+    justify-content: center;
+}
+
+tr:nth-child(even) {
+	background-color: rgba(255,255,255,0.4);
+}
+
+.btnBlock {
+	margin-left: 9%;
+}
+
+.btnSmall {
+	padding: 0;
+	width: 70px;
+	height: 30px;
+}
 </style>
 
 </head>
@@ -129,7 +159,6 @@ th, td {
 	<table class="styled-table">
 		<thead>
 			<tr>
-				<!-- 				<th>購買商品</th> -->
 				<th>團購團編號</th>
 				<th>會員編號</th>
 				<th>團購付款狀態</th>
@@ -147,12 +176,12 @@ th, td {
 			<c:forEach var="group_joinVO" items="${group_joinVO}">
 				<tr class="active-row" align='center' valign='middle'>
 					<%-- 					<td>${group_joinVO.emp_id}</td> --%>
-					<td>${group_joinVO.gb_id}</td>
-					<td>${group_joinVO.mem_id}</td>
+					<td>[${group_joinVO.gb_id}]-${group_joinVO.group_BuyVO.gb_name}</td>
+					<td>[${group_joinVO.mem_id}]-${group_joinVO.memVO.mem_name}</td>
 					<td>${group_joinVO.gbpay_status==0 ? '未付款':'已付款'}</td>
 					<td>${group_joinVO.pickup_status==0 ? '未取貨':'已取貨'}</td>
-					
-					
+
+
 					<c:if test="${group_joinVO.deliver_status==0}">
 				<td><c:out value="未出貨"></c:out></td>
 					</c:if>
@@ -170,8 +199,8 @@ th, td {
 
 					<td>
 						<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" style="margin-bottom: 0px;">
-							<input type="submit" value="已繳費" ${group_joinVO.gbpay_status>0 ? 'disabled=" "' :' '} > 
-							<input type="hidden"name="gbpay_status" value="1"> 
+							<input class="btn btn-success btnSmall" type="submit" value="已繳費" ${group_joinVO.gbpay_status>0 ? 'disabled=" "' :' '} >
+							<input type="hidden"name="gbpay_status" value="1">
 							<input type="hidden" name="gb_id" value="${group_joinVO.gb_id}">
 							<input type="hidden" name="mem_id" value="${group_joinVO.mem_id}">
 							<input type="hidden" name="action" value="updatePay">
@@ -179,8 +208,8 @@ th, td {
 					</td>
 					<td>
 						<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" style="margin-bottom: 0px;">
-							<select class="status" name="deliver_status" 
-							${group_joinVO.deliver_status==3 ? 'disabled=" "' :' '} 
+							<select class="status" name="deliver_status"
+							${(group_joinVO.deliver_status==3 || group_joinVO.gbpay_status==0) ? 'disabled=" "' :' '}
 							>
 								<option value="0"
 									${(group_joinVO.deliver_status==0)? 'selected': ''}>未出貨</option>
@@ -193,15 +222,15 @@ th, td {
 
 							</select> <input type="hidden" name="action" value="updateDeliver">
 									  <input type="hidden" name="gb_id" value="${group_joinVO.gb_id}">
-									  <input type="hidden" name="mem_id" value="${group_joinVO.mem_id}"> 
-									  <input type="submit" value="送出修改" ${group_joinVO.deliver_status==3 ? 'disabled=" "' :' '} >
+									  <input type="hidden" name="mem_id" value="${group_joinVO.mem_id}">
+									  <input class="btn btn-warning btnSmall" type="submit" value="送出修改"${(group_joinVO.deliver_status==3 || group_joinVO.gbpay_status==0) ? 'disabled=" "' :' '}  >
 						</FORM>
 					</td>
 					<td>
 						<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" style="margin-bottom: 0px;">
-							<input type="submit" value="已取貨" ${group_joinVO.pickup_status>0 ? 'disabled=" "' :' '}> 
+							<input class="btn btn-success btnSmall" type="submit" value="已取貨" ${(group_joinVO.pickup_status>0 || group_joinVO.deliver_status<3) ? 'disabled=" "' :' '}>
 							<input type="hidden" name="pickup_status" value="1">
-							<input type="hidden" name="gb_id" value="${group_joinVO.gb_id}"> 
+							<input type="hidden" name="gb_id" value="${group_joinVO.gb_id}">
 							<input type="hidden" name="mem_id" value="${group_joinVO.mem_id}">
 							<input type="hidden" name="action" value="updatePickup">
 						</FORM>
@@ -211,13 +240,28 @@ th, td {
 				</tr>
 			</c:forEach>
 		</tbody>
-	</table>
-<%-- 	<c:forEach var="group_joinVO" items="${group_joinVO}"> --%>
-						<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" style=" " class = "ok">
-							<input type= "${verify==true ? 'submit' : 'hidden'}" value="已取貨" >
-							<input type="hidden" name="gb_id" value="${gb_id}">  
+	</table><br>
+						<div class="btnBlock">
+						<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" style="display:inline-block">
+							<input class="btn btn-dark" type= submit value="回參團查詢" class = "back" >
+							<input type="hidden" name="action" value="getOne_Display_ByMem">
+						</FORM>
+						<div style="display:inline-block; width: 69%;"></div>&ensp;
+						<FORM METHOD="post" ACTION="/CGA104G1/Group_JoinServlet" style="display:inline-block" class = "ok">
+							<input class="btn btn-success" type= "${(verify==true&& amount==0) ? 'submit' : 'hidden'}" value="去完成團購團" >
+							<input type="hidden" name="gb_id" value="${gb_id}">
 							<input type="hidden" name="action" value="update_gb_status">
 						</FORM>
-<%-- 						</c:forEach> --%>
+						</div>
+
+	<!--  NavBar  -->
+	<script src="<%=request.getContextPath() %>/resources/static/js/navbar.js"></script>
+	<!--  Footer  -->
+<%-- 	<script src="<%=request.getContextPath() %>/resources/static/js/footer.js"></script> --%>
+
+
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/static/js/getName.js"></script>
+	<!--  Cart -->
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/static/js/cart.js"></script>
 </body>
 </html>

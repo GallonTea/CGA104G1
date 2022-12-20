@@ -16,7 +16,7 @@ Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribut
 
 <style>
 	section {
- 			height: 100%; 
+ 			height: 100%;
             background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
             background-color: #FFDEE9;
             background-repeat: no-repeat;
@@ -51,36 +51,36 @@ Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribut
   th, td {
     padding: 1px;
   }
-  
+
   h3 {
   	text-align: center;
   	color: black;
   	font-weight: 700 !important;
   }
-  
+
   .container {
   	text-align: center;
   }
-  
+
   .block{
   	texe-align: center;
   	margin-top: 15px;
   }
-  
+
   table{
   	width: 100%;
   }
-  
+
   .btnIn{
   	border-radius: 20px !important;
   	width: 200px;
   	margin-bottom: 20px;
   }
-  
+
   .formIn{
   	margin-left: 25%;
   }
-  
+
   .btn-warning{
   	margin-top: 15px;
   }
@@ -127,8 +127,8 @@ Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribut
 <jsp:useBean id="memSvc" scope="page" class="com.mem.model.MemService" />
 		<tr>
 		<td style="color:gray"><b>會員編號:</b></td>
-		<td><input type="TEXT" name="mem_id" readonly style="color:gray" size="45" 
-			value="${qualified_doctorVO.mem_id}- 【${memVO.mem_name}】"></td>
+		<td><input type="TEXT" name="mem_id" readonly style="color:gray" size="45"
+			value="${qualified_doctorVO.mem_id}"></td>
 <%-- 			 value="<%= (qualified_doctorVO==null)? "1" : qualified_doctorVO.getMem_id()%>" /></td> --%>
 	</tr>
 
@@ -159,7 +159,7 @@ Qualified_doctorVO qualified_doctorVO = (Qualified_doctorVO) request.getAttribut
 		</td><td style="color:red">${errorMsgs.doc_status}</td>
 		</tr>
 
-	
+
 </table>
 </div>
 <br>

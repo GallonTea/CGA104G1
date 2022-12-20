@@ -9,7 +9,7 @@ MemVO memVO = (MemVO) request.getAttribute("memVO");
 EmpService empSvc = new EmpService();
 List<EmpVO> list = empSvc.login((String)session.getAttribute("account"),(String)session.getAttribute("password"));
 session.setAttribute("list", list);
-%> 
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,26 +23,26 @@ session.setAttribute("list", list);
 <style>
 		/* 設定版型與背景 */
 		html, body {
- 			height: 100%; 
+ 			height: 100%;
             background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
             background-color: #FFDEE9;
             background-repeat: no-repeat;
             background-size: cover;
         }
-        
+
 		.container {
 			width: 80%;
 		}
-		
+
         #statusOutput {
         	display: none;
             height: 1px;
         }
-        
+
         .none {
         	width: 50%
         }
-        
+
 		/* 標題設定 */
 		.serviceName{
 			display: flex;
@@ -50,7 +50,7 @@ session.setAttribute("list", list);
 			margin-top: 15px;
 			margin-bottom: 15px;
 		}
-		
+
 		.blockName{
 			font-size: 14px;
 			font-weight: 700;
@@ -60,22 +60,22 @@ session.setAttribute("list", list);
         .chatroom {
             width: 60%;
         }
-        
+
         .panel {
             width: 50%;
-            position: absolute; 
- 	        top: 87%; 
- 	        left: 50%; 
- 	        transform: translate(-50%,-50%); 
+            position: absolute;
+ 	        top: 87%;
+ 	        left: 50%;
+ 	        transform: translate(-50%,-50%);
         }
-        
+
         #messagesArea {
         	width: 50%;
         	height: 350px;
-         	position: absolute; 
- 	        top: 60%; 
- 	        left: 50%; 
- 	        transform: translate(-50%,-50%); 
+         	position: absolute;
+ 	        top: 60%;
+ 	        left: 50%;
+ 	        transform: translate(-50%,-50%);
 	        border-radius: 5px;
 	        padding: 5px 0;
 	        background-repeat: no-repeat;
@@ -85,12 +85,12 @@ session.setAttribute("list", list);
             background-blend-mode: multiply;
             opacity: 60%;
         }
-        
+
         .input-area{
         	height: 50px;
         	padding: 5px 0;
         }
-        
+
         #area {
         	width: 100%;
         	height: 345px;
@@ -98,19 +98,19 @@ session.setAttribute("list", list);
         	overflow-x:hidden;
 			overflow-y:auto;
         }
-        
+
         #message {
         	height: 36px;
         	width: 88%;
         	border: none;
         	border-radius: 5px;
         }
-        
+
         #sendMessage{
         	float: right;
         	height: 36px;
         }
-		
+
 		ul{
 			list-style: none;
 			margin: 0;
@@ -124,7 +124,7 @@ session.setAttribute("list", list);
 			border-radius: 30px;
 			margin-bottom: 2px;
 			}
-			
+
 	    .friend{
   			background: #eee;
  			 float: left;
@@ -135,7 +135,7 @@ session.setAttribute("list", list);
 			background: #0084ff;
 			color: #fff;
 		}
-		
+
 		/* 設定聊天室捲軸 */
 		::-webkit-scrollbar {
   			width: 10px;
@@ -162,7 +162,7 @@ session.setAttribute("list", list);
 		<span class="blockName">Barei客服中心</span>
 	</div>
     <div class="chatroom">
-    	
+
         <div id="messagesArea" class="panel message-area">
         </div>
         <div class="panel input-area">
@@ -223,14 +223,14 @@ session.setAttribute("list", list);
 			} else if ("close" === jsonObj.type) {
 // 				refreshFriendList(jsonObj);
 			}
-			
+
 		};
 
 		webSocket.onclose = function(event) {
 			console.log("Disconnected!");
 		};
 	}
-	
+
 	function sendMessage() {
 		var inputMessage = document.getElementById("message");
 		var friend = statusOutput.textContent;
@@ -256,9 +256,9 @@ session.setAttribute("list", list);
 		var scrollHeight = $('#area').prop("scrollHeight");
 	      $('#area').scrollTop(scrollHeight,5000);
 	}
-	
-	$(document).ready(showMessage()); 
-	
+
+	$(document).ready(showMessage());
+
 	function showMessage() {
 		var friend = "admin";
 		updateFriendName(friend);
@@ -272,15 +272,16 @@ session.setAttribute("list", list);
 			webSocket.send(JSON.stringify(jsonObj));
 		}, 50)
 	}
-	
-	
+
+
 	function disconnect() {
 		webSocket.close();
 		document.getElementById('sendMessage').disabled = true;
 	}
-	
+
 	function updateFriendName(name) {
 		statusOutput.innerHTML = name;
 	}
 </script>
+
 </html>

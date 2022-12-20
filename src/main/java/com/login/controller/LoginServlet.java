@@ -69,17 +69,19 @@ public class LoginServlet extends HttpServlet {
 			/*************************** 2.開始查詢資料 *****************************************/
 			EmpService empSvc = new EmpService();
 			List<EmpVO> empVO = empSvc.login(account, password);
-			
+
 			Integer effectid = null;
 			for (EmpVO a : empVO) {
 				effectid = a.getEffect_id();
-				
+
 			}
 			System.out.println(effectid);
-			
+
 			String name = null;
+			Integer empNo = null;
 			for (EmpVO a : empVO) {
 				name = a.getEmp_name();
+				empNo = a.getEmp_id();
 			}
 
 			if (empVO == null || name == null) {
@@ -95,6 +97,7 @@ public class LoginServlet extends HttpServlet {
 				session.setAttribute("account", ac);
 				session.setAttribute("password", pa);
 				session.setAttribute("empVO", empVO);
+				session.setAttribute("empId", empNo);
 				try {
 					String location = (String) session.getAttribute("location");
 					if (location != null) {

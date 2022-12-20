@@ -1,11 +1,42 @@
-html {
-    /*font-size: 20px;*/
-}
-
 nav {
     background-color: #ffffff17;
     font-size: 20px;
     position: fixed;
+}
+
+@media screen and (max-width: 600px) {
+    header {
+        margin-bottom: 30%;
+    }
+}
+
+.jumbotron {
+    padding: 4rem 2rem;
+    margin-bottom: 2rem;
+    background-color: var(--bs-light);
+    border-radius: .3rem;
+}
+
+header {
+    margin-bottom: 10%;
+}
+
+.dropdown-menu li:hover .sub-menu {
+    visibility: visible;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+@media screen and( max-width: 576px) {
+    #dropdownMenuLink {
+        display: none;
+    }
+}
+
+.dropdown-item {
+    font-size: 20px;
 }
 
 .badge {
@@ -77,20 +108,51 @@ footer img {
     }
 }
 
-#myCart {
-    bottom: 35px;
-    right: 20px;
-    padding-left: 10px;
-    float: right;
+[v-cloak] {
+    display: none;
 }
 
-@media (min-width: 1000px) {
-    #myCart {
-        position: absolute;
+@media screen and (min-width: 768px) {
+    #outerSlider {
+        display: none;
+    }
+
+    header {
+        margin-bottom: 60%;
     }
 }
 
-[v-clock] {
-    display: none;
+#memberImg img {
+    width: 60px !important;
+    border: 1px solid rgba(12, 12, 12, 0.2);
+    border-radius: 50% !important;
+}
+
+
+#profileImg img {
+    width: 200px !important;
+    border: 2px solid rgba(12, 12, 12, 0.2);
+    border-radius: 50% !important;
+}
+
+@media screen and (max-width: 990px) {
+    #dropdownMenuLink {
+        display: none;
+    }
+
+    #memberName {
+        margin-top: 2%;
+        display: inline-block;
+        float: right;
+    }
+
+    #memberImg {
+        float: right;
+    }
+
+    .bi-cart3, #lblCartCount {
+        margin-top: 2%;
+    }
+
 }
 

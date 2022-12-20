@@ -130,7 +130,6 @@ public class MemServlet extends HttpServlet {
                 errorMsgs.add("密碼請勿空白");
             }
 
-
             String mem_name = req.getParameter("mem_name");
             String mem_nameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
             if (mem_name == null || mem_name.trim().length() == 0) {
@@ -195,7 +194,7 @@ public class MemServlet extends HttpServlet {
             // Send the use back to the form, if there were errors
             if (!errorMsgs.isEmpty()) {
                 req.setAttribute("memVO", memVO); // 含有輸入格式錯誤的memVO物件,也存入req
-                RequestDispatcher failureView = req.getRequestDispatcher("/backend/mem/update_mem_input.jsp.jsp");
+                RequestDispatcher failureView = req.getRequestDispatcher("/backend/mem/update_mem_input.jsp");
                 failureView.forward(req, res);
                 return; // 程式中斷
             }
@@ -565,10 +564,13 @@ public class MemServlet extends HttpServlet {
 
 
         if ("login".equals(action)) { // 來自addEmp.jsp的請求
+
             MemService memSvc = new MemService();
+
 
             String account = req.getParameter("account");
             String password = req.getParameter("password");
+
 
             MemVO memVO = memSvc.login(account, password);
 
@@ -581,35 +583,24 @@ public class MemServlet extends HttpServlet {
                 Integer mem_id = (memVO.getMem_id());
                 Integer mem_status = (memVO.getMem_status());
                 String mem_email = (memVO.getMem_email());
+                session.setAttribute("memVO", memVO); // 資料庫取出的物件,存入session
+                session.setAttribute("account", account);
                 session.setAttribute("mem_id", mem_id); // 資料庫取出的物件,存入session
                 session.setAttribute("mem_email", mem_email); // 資料庫取出的物件,存入session
                 session.setAttribute("mem_status", mem_status); // 資料庫取出的物件,存入session
-                session.setAttribute("account", account);
-				session.setAttribute("password", password);
-                session.setAttribute("memVO", memVO); // 資料庫取出的物件,存入session
-                
-                String location = (String) session.getAttribute("location");
                 try {
-					if (location != null) {
-						if(location.equals("/CGA104G1/Article_commentServlet") || location.equals("/CGA104G1/Article_reortServlet")) {
-							session.removeAttribute("location");
-							res.sendRedirect("frontend/article/select_page.jsp");
-							return;
-						} else {
-							session.removeAttribute("location");
-							res.sendRedirect(location);
-						return;
-						}
-					}
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-				}
-
+                    String location = (String) session.getAttribute("location");
+                    if (location != null) {
+                        session.removeAttribute("location"); // *工作2: 看看有無來源網頁 (-->如有來源網頁:則重導至來源網頁)
+                        res.sendRedirect(location);
+                        return;
+                    }
+                } catch (IllegalStateException e) {
+                    e.printStackTrace();
+                }
 
                 String url = "/CGA104G1/frontend/index.html";
                 res.sendRedirect(url);
-//                RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交select_page.jsp
-//                successView.forward(req, res);
             }
         }
 

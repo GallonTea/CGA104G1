@@ -15,7 +15,6 @@ import com.group_buy_item.model.Group_Buy_ItemService;
 import com.group_buy_item.model.Group_Buy_ItemVO;
 import com.group_buy_item_picture.model.groupBuyItemPictureService;
 import com.group_buy_item_picture.model.groupBuyItemPictureVO;
-
 @WebServlet("/Group_Buy_Item/groupBuyItem.do")
 public class Group_Buy_ItemServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -100,23 +99,23 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 				Group_Buy_ItemVO group_Buy_ItemVO = group_Buy_ItemService.getOneGbi(gbitem_id);
 				/*************************** 3.查詢完成,準備轉交(Send the Success view) ************/
 				req.setAttribute("Group_Buy_ItemVO", group_Buy_ItemVO);
-				
+
 				// 從資料庫讀取 groupBuyItemPictureVO 存入 list 中
-				
+
 				groupBuyItemPictureService gbipSvc = new groupBuyItemPictureService();
 				List<groupBuyItemPictureVO> list2 = gbipSvc.getAllGroupBuyItemPictureByGbitemID(gbitem_id);
-				
+
 				//以下兩種移除null的方式
 //				list2.removeAll(Collections.singleton(null));
-				
-				
+
+
 //				List<groupBuyItemPictureVO> listWithoutNulls = list2.stream()
 //						.filter(Objects::nonNull)
 //						.collect(Collectors.toList());
-				
+
 				req.setAttribute("list2", list2);
 //				System.out.println(list2);
-				
+
 				// 成功轉交 update_groupBuyItem_input.jsp
 				String url = "/backend/group_Buy_Item/update_groupBuyItem_input.jsp";
 				RequestDispatcher failView = req.getRequestDispatcher(url);
@@ -147,14 +146,14 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 				errorMsgs.add("團購商品編號請填數字.");
 				e1.printStackTrace();
 			}
-			
-			
+
+
 			String gbitem_name = req.getParameter("gbitem_name");
-			
+
 //			String gbitemNameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]$";
 			if (gbitem_name == null || gbitem_name.trim().length() == 0) {
 				errorMsgs.add("團購商品名稱: 請勿空白");
-			} 
+			}
 //			else if (!gbitem_name.trim().matches(gbitemNameReg)) {
 //				errorMsgs.add("團購商品名稱: 只能是中、英文字母、數字和_ ");
 //			}
@@ -218,8 +217,8 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 			} catch (NumberFormatException e) {
 				errorMsgs.add("團購商品類別請填數字");
 				e.printStackTrace();
-			}	
-			
+			}
+
 			Group_Buy_ItemVO group_Buy_ItemVO = new Group_Buy_ItemVO();
 			group_Buy_ItemVO.setGbitem_id(gbitem_id);
 			group_Buy_ItemVO.setGbitem_name(gbitem_name);
@@ -259,7 +258,7 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 			String gbitem_name = req.getParameter("gbitem_name");
 			if (gbitem_name == null || gbitem_name.trim().length() == 0) {
 				errorMsgs.add("團購商品名稱: 請勿空白");
-			} 
+			}
 
 			String gbitem_content = req.getParameter("gbitem_content");
 			if (gbitem_content == null || gbitem_content.trim().length() == 0) {
@@ -309,7 +308,7 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 				e.printStackTrace();
 				errorMsgs.add("請輸入日期!");
 			}
-			
+
 			Integer gbitem_type = null;
 
 			try {
@@ -320,7 +319,7 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 			} catch (NumberFormatException e) {
 				errorMsgs.add("團購商品類別請填數字");
 				e.printStackTrace();
-			}	
+			}
 
 			Group_Buy_ItemVO gbiVO = new Group_Buy_ItemVO();
 			gbiVO.setGbitem_name(gbitem_name);
@@ -347,26 +346,26 @@ public class Group_Buy_ItemServlet extends HttpServlet {
 			RequestDispatcher successView = req.getRequestDispatcher(url);
 			successView.forward(req, res);
 		}
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////			
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		if ("delete".equals(action)) { // 來自listAllEmp.jsp
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-	
+
 				/***************************1.接收請求參數***************************************/
 				Integer gbitem_id = Integer.valueOf(req.getParameter("gbitem_id"));
-				
+
 				/***************************2.開始刪除資料***************************************/
 				Group_Buy_ItemService group_Buy_ItemService = new Group_Buy_ItemService();
 				group_Buy_ItemService.deleteGbi(gbitem_id);
-				
-				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
+
+				/***************************3.刪除完成,準備轉交(Send the Success view)***********/
 				String url = "/backend/group_Buy_Item/listAllGroupBuyItem.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
-				
+
 		}
-			
+
 
 	}
 

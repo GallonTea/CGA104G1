@@ -142,15 +142,46 @@ footer img {
 		margin-top: 0;
 	}
 }
+
+body {
+	height: 100%; 
+    background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+    background-color: #FFDEE9;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+}
+
+.upPic {
+	width: 50px;
+	height: 50px;
+}
+
+.btn-success{
+	width: 412px !important;
+	border-radius: 20px !important;
+}
 </style>
 </head>
 <body>
 	<main>
-
+	<div style="height: 150px;"></div>
+	<%-- 錯誤表列 --%>
+				<c:if test="${not empty errorMsgs}">
+					<font style="color: red">請修正以下錯誤:</font>
+					<ul>
+						<c:forEach var="message" items="${errorMsgs}">
+							<li style="color: red">${message}</li>
+						</c:forEach>
+					</ul>
+				</c:if>
 	<form
 		action="<%=request.getContextPath()%>/GroupBuyMasterApplyListServlet">
 
 		<br> <b>選擇折扣:</b> <select size="1" name="discount_price" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<%-- 			<option value="${Group_Buy_ItemVO.gbitem_price}" selected>原始價格為${Group_Buy_ItemVO.gbitem_price}，暫無折扣 --%>
+			<option value="100" selected>原始價格為${Group_Buy_ItemVO.gbitem_price}，暫無折扣
 			<c:forEach var="DiscountVO" items="${list}">
 				<option value="${DiscountVO.discount_price}">
 					${DiscountVO.discount_nar} , 原始價格為${Group_Buy_ItemVO.gbitem_price}
@@ -159,30 +190,42 @@ footer img {
 				
 			</c:forEach>
 		</select> 
-		<br>
+		<br><br>
 		
+			
+			
+			<input type="hidden" name="mem_id" value="${Group_BuyVO.mem_id}">
+			<input type="hidden" name="gbitem_id" value="${Group_BuyVO.gbitem_id}">
+			<input type="hidden" name="gb_min" value="${Group_BuyVO.gb_min}">
+			<input type="hidden" name="gb_amount" value="${Group_BuyVO.gb_amount}">
+			<input type="hidden" name="gbstart_date" value="${Group_BuyVO.gbstart_date}">
+			<input type="hidden" name="gbend_date" value="${Group_BuyVO.gbend_date}">
+			<input type="hidden" name="gb_status" value="${Group_BuyVO.gb_status}">
+			<input type="hidden" name="gb_price" value="${Group_BuyVO.gb_price}">
+			<input type="hidden" name="gb_name" value="${Group_BuyVO.gb_name}">
+			
+			
 			<input type="hidden" name="gbitem_price"value="${Group_Buy_ItemVO.gbitem_price}"> 
 			<input type="hidden" name="gb_id" value="${Group_BuyVO.gb_id}"> 
-			<input type="hidden" name="gb_price" value="${Group_BuyVO.gb_price}">
-			<input type="hidden" name="mem_id" value="${Group_BuyVO.mem_id}">
 			<input type="hidden" name="action" value="confirmGroupBuy"> 
-			<input type="submit" value="確認開團">
+			<input type="submit" class="btn btn-success" value="確認開團">
 	</form>
-	<FORM METHOD="post"
-		ACTION="<%=request.getContextPath()%>/GroupBuyServlet"
-		style="margin-bottom: 0px;">
-		<input type="submit" value="取消開團"> 
-		<input type="hidden"name="gb_id" value="${Group_BuyVO.gb_id}"> 
-		<input type="hidden" name="mem_id" value="${Group_BuyVO.mem_id}"> 
-		<input type="hidden" name="action" value="deleteByGroupBuyMaster">
-	</FORM>
+<!-- 	<FORM METHOD="post" -->
+<%-- 		ACTION="<%=request.getContextPath()%>/GroupBuyServlet" --%>
+<!-- 		style="margin-bottom: 0px;"> -->
+<!-- 		<input type="submit" value="取消開團">  -->
+<%-- 		<input type="hidden"name="gb_id" value="${Group_BuyVO.gb_id}">  --%>
+<%-- 		<input type="hidden" name="mem_id" value="${Group_BuyVO.mem_id}">  --%>
+<!-- 		<input type="hidden" name="action" value="deleteByGroupBuyMaster"> -->
+<!-- 	</FORM> -->
 
 </main>
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<!--  NavBar  -->
-	<script src="../../resources/static/js/navbar.js"></script>
-	<!--  Footer  -->
-	<script src="../../resources/static/js/footer.js"></script>
+	<script src="<%=request.getContextPath() %>/resources/static/js/navbar.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/static/js/getName.js"></script>
+	<!--  Cart -->
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/static/js/cart.js"></script>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>

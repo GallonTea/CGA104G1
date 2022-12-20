@@ -6,13 +6,6 @@
 <%@ page import="com.group_buy_item.model.*"%>
 <jsp:useBean id="discountSvc" scope="page"
 	class="com.discount.model.DiscountService" />
-<%-- <jsp:useBean id="discountSvc" scope="page" class="com.discount.model.DiscountService" /> --%>
-<%
-// EmpService empSvc = new EmpService();
-// List<EmpVO> list = empSvc.getAll();             未改
-// pageContext.setAttribute("list", list);
-%>
-<%@include file="/backend/backNavbar.jsp"%>
 <html>
 <head>
 <link
@@ -30,7 +23,22 @@
 <title>團購訂單新增資料</title>
 <!-- ===============================來自團購團資料============================================= -->
 
-<style>
+
+	<!-- import jquery-3.6.0 -->
+	<script src="http://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://demeter.5fpro.com/tw/zipcode-selector.js"></script>
+	<!-- import font-style -->
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
+
+	<!-- import icon -->
+	<script src="https://kit.fontawesome.com/b5ef6b60f3.js" crossorigin="anonymous"></script>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+	<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/static/css/main.css"/>
+	<style type="text/css">
+
 .xdsoft_datetimepicker .xdsoft_datepicker {
 	width: 300px; /* width:  300px; */
 }
@@ -38,55 +46,84 @@
 .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box {
 	height: 151px; /* height:  151px; */
 }
+
+body {
+	height: 100%; 
+    background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+    background-color: #FFDEE9;
+    background-repeat: no-repeat;
+    background-size: cover;
+    text-align: center;
+}
+
+th {
+	color: white;
+	background-color: black;
+}
+
+.titleBlock {
+	font-weight: 700;
+	font-size: 24px;
+}
+
+table {
+	margin-left: 30%;
+}
+
+select, input {
+    	width: 300px;
+    	height: 30px;
+    	border: none;
+    	text-align: center;
+    }
+    
+select:focus, input:focus {
+	border: 2px solid pink !important;
+}  
+
+.tdContent {
+	width: 300px;
+	text-align: center;
+}
 </style>
 
 
 </head>
 <body bgcolor='white'>
 
-	<table id="table-1">
-		<tr>
-			<td>
-				<h3>訂單新增</h3>
-			</td>
-			<td>
-			</td>
-		</tr>
-	</table>
-
-	<h3>資料新增:</h3>
+	<h3>訂單新增:</h3>
 	<FORM METHOD="post" ACTION="/CGA104G1/Group_Buy_OrderServlet" name="form1">
 		<table>
 			<tr>
 				<td>團購團名稱:</td>
-				<td><input type="TEXT" name="gb_name" size="45" value="${gb_name}" /></td>			
+				<td class="tdContent"><input type="hidden" name="gb_id" size="45" value="${group_buy_orderVO.group_BuyVO.gb_id }" readonly />${group_buy_orderVO.group_BuyVO.gb_name }</td>
 			</tr>
 			<tr>
 				<td>團購商品名稱:</td>
-				<td><input type="TEXT" name="gbitem_name" size="45"
-					value="${gbitem_name}" /></td>
+				<td class="tdContent"><input type="hidden" name="gbitem_id" size="45"
+					value="${group_buy_orderVO.gbitem_id}"readonly />${group_buy_orderVO.group_buy_itemVO.gbitem_name}</td>
 			</tr>
 			<tr>
 				<td>團購商品內容:</td>
-				<td><input type="TEXT" name="gbitem_content" size="45"
-					value="${gbitem_content}" /></td>
+				<td class="tdContent"><input type="hidden" name="gbitem_content" size="45"
+					value="${group_buy_orderVO.group_buy_itemVO.gbitem_content}" readonly/>${group_buy_orderVO.group_buy_itemVO.gbitem_content}</td>
 			</tr>
 			<tr>
 				<td>團購數量:</td>
-				<td><input type="TEXT" name="gbitem_amount" size="45"
-					value="${gb_min}" readonly="readonly" /></td>
+				<td class="tdContent"><input type="hidden" name="gbitem_amount" size="45"
+					value="${group_buy_orderVO.group_BuyVO.gb_min}" readonly="readonly" />${group_buy_orderVO.group_BuyVO.gb_min}</td>
 			</tr>
 
 			<tr>
 				<td>原價:</td>
-				<td><input type="TEXT" name="gboriginal_price" size="45"
-					value="${gbitem_price*gb_min}"
-					readonly="readonly" />假資料</td>
+				<td class="tdContent"><input type="hidden" name="gboriginal_price" size="45"
+					value="${group_buy_orderVO.group_buy_itemVO.gbitem_price*group_buy_orderVO.group_BuyVO.gb_min}"
+					readonly  />${group_buy_orderVO.group_buy_itemVO.gbitem_price*group_buy_orderVO.group_BuyVO.gb_min}</td>
 			</tr>
 			<tr>
 				<td>團購價:</td>
-				<td><input type="TEXT" name="gb_endprice" size="45"
-					value="${gb_min*gb_price}" /></td>
+				<td class="tdContent"><input type="hidden" name="gb_endprice" size="45"
+					value="${group_buy_orderVO.group_BuyVO.gb_min*group_buy_orderVO.group_BuyVO.gb_price}" readonly/>${group_buy_orderVO.group_BuyVO.gb_min*group_buy_orderVO.group_BuyVO.gb_price}</td>
 			</tr>
 			<tr>
 				<td>團購付款方式:</td>
@@ -120,9 +157,9 @@
 			</tr>
 			<tr>
 				<td>收件人姓名:</td>
-				<td><input type="TEXT" name="receiver_name" size="45" placeholder="請輸入姓名"  required/></td><td><font color=red>${errorMsgs.receiver_name}</font></td>
+				<td><input type="TEXT" name="receiver_name" size="45"  pattern="^[\u4e00-\u9fa5]+$|^[a-zA-Z\s]+$"  placeholder="請輸入姓名"  required/></td><td><font color=red>${errorMsgs.receiver_name}</font></td>
 			</tr>
-			
+
 			<tr>
 				<td>收件人地址:</td>
 				<!--  ==============================團購主確認================================== -->
@@ -131,53 +168,22 @@
 			<tr>
 				<td>收件人電話:</td>
 				<!--  ==============================團購主確認================================== -->
-				<td><input type="TEXT" name="receiver_phone" size="45" placeholder="請輸入電話"  required/></td><td><font color=red>${errorMsgs.receiver_phone}</font></td>
+				<td><input  type="TEXT" id="phone" name="receiver_phone" pattern="[0][9][0-9]{2}[0-9]{3}[0-9]{3}"  size="45" placeholder="請輸入電話"  required/></td><td><font color=red>${errorMsgs.receiver_phone}</font></td>
 			</tr>
 		</table>
 		<br>
 		<br> <input type="hidden" name="action" value="insert_NewOrder"> <input
-			type="submit" value="送出新增"class="btn btn-warning">		
+			type="submit" value="送出新增"class="btn btn-warning">
 	</FORM>
 	<script type="text/javascript">
 	let type = $('#select option:selected') .val();
-	
-	
-	
+
+
+
 	$("#selector").on("change", function() {
 		  $("#selector option:selected")
 		  });
-	
-// $(document).ready(function() {
-	
-// 	switch($('#status').val()){
-// 		case '0':
-// 			$('.status').val(0)
-// 			break;
-// 		case '1':
-// 			$('.status').val(1)
-// 		case '2':
-// 			$('.status').val(2)
-// 	}
-// 	$('.status').change(function () {
-// 		$('#status').val($('.status option:selected').val());
-// 	});
-// });
-// $(document).ready(function() {
-	
-// 	switch($('#status2').val()){
-// 		case '0':
-// 			$('.status2').val(0)
-// 			break;
-// 		case '1':
-// 			$('.status2').val(1)
-// 		case '2':
-// 			$('.status2').val(2)
-// 	}
-// 	$('.status').change(function () {
-// 		$('#status2').val($('.status2 option:selected').val());
-// 	});
-// });
-<!-- // ===============================兩種 sumit ========================================== -->
+
 
 // function act1(){
 // 	document.form1.action="DiscountServlet?action=insertdiscount";
@@ -200,31 +206,18 @@
 		crossorigin="anonymous"></script>
 </body>
 
-<%
-// java.sql.Date onjob_date = null;
-// try {
-// 	onjob_date = empVO.getOnjob_date();
-// } catch (Exception e) {
-// 	onjob_date = new java.sql.Date(System.currentTimeMillis());
-// }
-%>
 <link rel="stylesheet" type="text/css"
 	href="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.css" />
 <script src="<%=request.getContextPath()%>/datetimepicker/jquery.js"></script>
 <script
 	src="<%=request.getContextPath()%>/datetimepicker/jquery.datetimepicker.full.js"></script>
-<script>
-//         $.datetimepicker.setLocale('zh');
-//         $('#f_date1').datetimepicker({
-// 	       theme: '',              //theme: 'dark',
-// 	       timepicker:false,       //timepicker:true,
-// 	       step: 1,                //step: 60 (這是timepicker的預設間隔60分鐘)
-// 	       format:'Y-m-d',         //format:'Y-m-d H:i:s',
-<%-- 		   value: '<%=onjob_date%>' , // value:   new Date(), --%>
-	//disabledDates:        ['2017/06/08','2017/06/09','2017/06/10'], // 去除特定不含
-	//startDate:	            '2017/07/10',  // 起始日
-	//minDate:               '-1970-01-01', // 去除今日(不含)之前
-	//maxDate:               '+1970-01-01'  // 去除今日(不含)之後
-// 	});
-</script>
+
+<!--  NavBar  -->
+<script src="<%=request.getContextPath() %>/resources/static/js/navbar.js"></script>
+<!--  Footer  -->
+
+
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/static/js/getName.js"></script>
+<!--  Cart -->
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/static/js/cart.js"></script>
 </html>

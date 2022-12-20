@@ -9,6 +9,7 @@ DiscountVO discountVO = (DiscountVO) request.getAttribute("DiscountVO");
 <head>
 <title>團購折扣資料 - listOneDiscount.jsp</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
 <style>
 table#table-1 {
 	background-color: #CCCCFF;
@@ -31,9 +32,9 @@ h4 {
 <style>
 table {
 	width: 600px;
-	background-color: white;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	margin-left: 20%;
 }
 
 table, th, td {
@@ -44,6 +45,14 @@ th, td {
 	padding: 5px;
 	text-align: center;
 	color: black;
+}
+
+th{
+	color: white;
+}
+
+tr:nth-child(even) {
+	background-color: rgba(255,255,255,0.4);
 }
 </style>
 
@@ -57,16 +66,7 @@ th, td {
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
 <!-- 		把原本body的東西貼到這邊 -->
-<table id="table-1">
-		<tr>
-			<td>
-				<h3>團購折扣資料 - listOneDiscount.jsp</h3>
-				<h4>
-					<a href="./select_page.jsp">回首頁</a>
-				</h4>
-			</td>
-		</tr>
-	</table>
+<div class="titleBlock">團購折扣查詢結果</div>
 
 	<table>
 		<tr>

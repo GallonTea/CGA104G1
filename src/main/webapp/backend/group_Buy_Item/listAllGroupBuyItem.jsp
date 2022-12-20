@@ -64,7 +64,7 @@ tr:nth-child(even) {
 			<th></th>
 			<th></th>
 		</tr>
-		<%@ include file="page1.file" %> 
+		<%@ include file="page1.file" %>
 		<c:forEach var="Group_Buy_ItemVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 			<tr>
 				<td>${Group_Buy_ItemVO.gbitem_id}</td>
@@ -79,8 +79,8 @@ tr:nth-child(even) {
 				<td>${Group_Buy_ItemVO.gbitem_startdate}</td>
 				<td>${Group_Buy_ItemVO.gbitem_enddate}</td>
 				<td>${Group_Buy_ItemVO.gbitem_type}</td>
-				
-				
+
+
 				<td>
 				  <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/Group_Buy_Item/groupBuyItem.do" style="margin-bottom: 0px;">
 				     <input type="submit" value="修改" class="btn btn-warning btnIn btnSmall">
@@ -106,22 +106,7 @@ tr:nth-child(even) {
 </body>
 <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
 <!-- <script type="text/javascript"> -->
-// 	var gbitemStatus = ["超出團購期限下架", "上架中", "無庫存", "有庫存"];
-// 	var txt = "";
-	
-	
-	
-	
-// 	$(document).ready(function(){
-// 		if($("td:nth-child(5)") == 0){
-// 			$("td:nth-child(5)").after("超出團購期限下架")
-// 		}
-// 		  });
-	
-// 	console.log(	
-// 			$("td:nth-child(5)").after("超出團購期限下架")
-// 		  	);
-	
+
 
 <!-- </script> -->
 

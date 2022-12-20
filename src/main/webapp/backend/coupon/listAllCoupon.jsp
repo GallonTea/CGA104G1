@@ -36,12 +36,22 @@
     <!-- import icon -->
     <script src="https://kit.fontawesome.com/b5ef6b60f3.js" crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="../../resources/static/css/backend.css">
-    <link rel="stylesheet" type="text/css" href="../../resources/static/css/orderDetails.css"/>
-    <link rel="stylesheet" type="text/css" href="../../resources/static/css/backendDetail.css"/>
+
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
+
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/static/css/orderDetails.css"/>
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/resources/static/css/backendDetail.css"/>
     <style>
 
 
+        select, input {
+            width: 200px;
+            height: 30px;
+            border-radius: 20px;
+            border: none;
+            text-align: center;
+        }
 
         #add_coupon {
             position: relative;
@@ -116,13 +126,14 @@
                                     <td>${coupon.minimum}</td>
                                     <td class="gap-2">
                                         <form method="post" action="updateCoupon.do" style="margin-bottom: 0px;">
-                                            <input class="btn btn-primary" type="submit" value="修改">
+                                            <input class="btn btn-light" type="submit" value="修改">
                                             <input type="hidden" name="coupon_id" value="${coupon.couponId}">
                                             <input type="hidden" name="action" value="getOne_For_Update"></form>
                                         <form method="post" action="removeCoupon.do" style="margin-bottom: 0px;">
-                                            <input class="btn btn-primary" type="submit" value="刪除">
+                                            <input class="btn btn-light" type="submit" value="刪除">
                                             <input type="hidden" name="coupon_id" value="${coupon.couponId}">
-                                            <input type="hidden" name="action" value="delete"></form>
+                                            <input class="btn btn-light" type="hidden" name="action" value="delete">
+                                        </form>
                                     </td>
 
                                 </tr>

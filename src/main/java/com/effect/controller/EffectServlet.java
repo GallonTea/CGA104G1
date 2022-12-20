@@ -1,8 +1,8 @@
 package com.effect.controller;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,15 +32,13 @@ public class EffectServlet  extends HttpServlet{
 		String action = req.getParameter("action");
 		if ("getOne_For_Display".equals(action)) {
 //			 Select.jsp請求
-
-			List<String> errorMsgs = new LinkedList<String>();
-
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			// 請求參數,錯誤處理
 			String eff = req.getParameter("effect_id");
 			// 去除空白後長度為0
 			if (eff == null || (eff.trim()).length() == 0) {
-				errorMsgs.add("請輸入會員編號");
+				errorMsgs.put("effect_id","請輸入權限編號");
 			}
 			// 是否為空字串(非空白)
 			if (!errorMsgs.isEmpty()) {
@@ -54,7 +52,7 @@ public class EffectServlet  extends HttpServlet{
 			try {
 				effect_id = Integer.valueOf(eff);
 			} catch (NumberFormatException e) {
-				errorMsgs.add("會員編號不正確");
+				errorMsgs.put("effect_id","權限編號不正確");
 			}
 			if (!errorMsgs.isEmpty()) {
 				RequestDispatcher fail = req.getRequestDispatcher("/backend/effect/select_page.jsp");
@@ -66,7 +64,7 @@ public class EffectServlet  extends HttpServlet{
 			EffectService effectSvc = new EffectService();
 			EffectVO effectVO = effectSvc.getOnEffect(effect_id);
 			if (effectVO == null) {
-				errorMsgs.add("查無資料");
+				errorMsgs.put("effect_id","查無資料");
 			}
 			if (!errorMsgs.isEmpty()) {
 				RequestDispatcher fail = req.getRequestDispatcher("/backend/effect/select_page.jsp");
@@ -83,9 +81,8 @@ public class EffectServlet  extends HttpServlet{
 
 		if ("getOne_For_Update".equals(action)) {
 
-			List<String> errorMsgs = new LinkedList<String>();
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-
 			Integer effect_id = Integer.valueOf(req.getParameter("effect_id"));
 
 			EffectService effectSvc  = new EffectService();
@@ -99,18 +96,18 @@ public class EffectServlet  extends HttpServlet{
 		}
 
 		if ("update".equals(action)) {
-			List<String> errorMsgs = new LinkedList<String>();
-
+			
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			Integer effect_id = Integer.valueOf(req.getParameter("effect_id").trim());
 			String effect_name = req.getParameter("effect_name");
 		if(effect_name == null || effect_name.trim().length() == 0 ) {
-			errorMsgs.add("請輸入權限名稱");
+			errorMsgs.put("effect_name","請輸入權限名稱");
 		}
 		String effect_info = req.getParameter("effect_info");
 		if(effect_info == null || effect_info.trim().length() == 0 ) {
-			errorMsgs.add("請輸入權限說明");
+			errorMsgs.put("effect_info","請輸入權限說明");
 		}
 			EffectVO effectVO = new EffectVO();
 			effectVO.setEffect_id(effect_id);
@@ -118,7 +115,7 @@ public class EffectServlet  extends HttpServlet{
 			effectVO.setEffect_info(effect_info);
 
 			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("EffectVO", effectVO);
+				req.setAttribute("effectVO", effectVO);
 				RequestDispatcher fail = req.getRequestDispatcher("/backend/effect/update_effect_input.jsp");
 				fail.forward(req, res);
 				return;
@@ -135,29 +132,19 @@ public class EffectServlet  extends HttpServlet{
 			successView.forward(req, res);
 		}
 		if ("insert".equals(action)) {
-
-			List<String> errorMsgs = new LinkedList<String>();
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-			Integer effect_id = null;
-			try {
-				effect_id = Integer.valueOf(req.getParameter("effect_id").trim());
-			} catch (NumberFormatException e) {
-				effect_id = 0;
-				errorMsgs.add("員工編號請勿空白");
-			}
-
 			String effect_name = req.getParameter("effect_name").trim();
 			if (effect_name == null || effect_name.trim().length() == 0) {
-				errorMsgs.add("權限名稱請勿留白");
+				errorMsgs.put("effect_name","權限名稱請勿留白");
 			}
 			
 			String effect_info = req.getParameter("effect_info").trim();
 			if (effect_info == null || effect_info.trim().length() == 0) {
-				errorMsgs.add("權限說明請勿留白");
+				errorMsgs.put("effect_info","權限說明請勿留白");
 			}
 			
 			EffectVO effectVO =new EffectVO();
-			effectVO.setEffect_id(effect_id);
 			effectVO.setEffect_name(effect_name);
 			effectVO.setEffect_info(effect_info);
 
@@ -170,7 +157,7 @@ public class EffectServlet  extends HttpServlet{
 
 			// 新增資料
 			EffectService effectSvc = new EffectService();
-			effectVO = effectSvc.addEffect(effect_id, effect_name, effect_info);
+			effectVO = effectSvc.addEffect(effect_name, effect_info);
 //			
 			// 完成,轉交
 			req.setAttribute("effectVO", effectVO);
@@ -180,7 +167,7 @@ public class EffectServlet  extends HttpServlet{
 		}
 		
 		if("delete".equals(action)) {
-			List<String> errorMsgs = new LinkedList<String>();
+			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 			
 			//接收請求

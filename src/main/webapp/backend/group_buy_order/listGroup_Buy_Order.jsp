@@ -2,12 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.group_buy_order.model.*"%>
-<%@include file="/backend/backNavbar.jsp"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>符合條件訂單查詢</title>
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css"
 	rel="stylesheet"
@@ -67,7 +68,6 @@
 
 /* <!-- ===========================================樣式欄位================================================================== --> */
 table#table-1 {
-	background-color: #212529;
 	border: 2px solid black;
 	text-align: center;
 	margin-left: auto;
@@ -92,17 +92,13 @@ h4 {
 	display: inline;
 }
 
-/*   a{ */
-/*     color: white; */
-/*     display: inline; */
-/*   } */
 </style>
 
 <style>
 table {
 	margin-left: auto;
 	margin-right: auto;
-	width: 900px;
+	width: 95%;
 	margin-top: 5px;
 	margin-bottom: 5px;
 }
@@ -113,23 +109,31 @@ th, td {
 
 	padding: 5px;
 	text-align: center;
+	font-size: 10px;
 }
 
-/* th, td { display: block; } */
-/*   td:first-child{ */
-/*   border-top-left-radius: 10px; */
-/*   border-bottom-left-radius: 10px; */
-/* } */
+.btnTitle{
+	margin-bottom: 10px;
+}
 
-/* td:last-child{ */
-/*   border-top-right-radius: 10px; */
-/*   border-bottom-right-radius: 10px; */
-/* } */
+.titleIn {
+	font-size: 24px;
+	font-weight: 700;
+}
+
 </style>
 </head>
 <body>
 
-	<table class="styled-table">
+<nav><%@include file="/backend/topNavbar.jsp"%></nav>
+	<main>
+		<%@include file="/backend/leftside.jsp"%>
+		<section>
+		<div class="btnTitle">
+		<div class="titleIn">團購查詢結果</div><br>
+		<button onclick="location.href='<%=request.getContextPath()%>/backend/group_buy_order/select_page.jsp'" class="btn btn-primary btnIn">回團購查詢</button>
+		</div>
+			<table class="styled-table">
 		<thead>
 			<tr>
 				<th>團購訂單編號</th>
@@ -213,7 +217,7 @@ th, td {
 					<td>
 						<FORM METHOD="post" ACTION="Group_Buy_OrderServlet"
 							style="margin-bottom: 0px;">
-							<input type="submit" value="修改"> <input type="hidden"
+							<input class="btn btn-warning btnSmall" type="submit" value="修改"> <input type="hidden"
 								name="gborder_id" value="${group_buy_orderVO.gborder_id}"> <input
 								type="hidden" name="action" value="getOne_For_Backend_Display">
 						</FORM>
@@ -225,6 +229,10 @@ th, td {
 		</tbody>
 
 	</table>
+		</section>
+	</main>
+
+	
 
 
 </body>

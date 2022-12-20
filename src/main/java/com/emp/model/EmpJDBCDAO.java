@@ -36,8 +36,9 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 	
 	private static final String INSERT_EFFECT = "INSERT INTO emp_effect (emp_id, effect_id) VALUES (?, ?)";
 	private static final String MAXID = "SELECT max(emp_id) EMP_ID from EMP";
-	
-//	private static final String listall = "SELECT e.emp_id,emp_name,account,password,onjob_date,emp_status,ef.effect_id  FROM emp e join emp_effect ef on e.emp_id = ef.emp_id ;";
+			//驗證帳號重複
+	private static final String GET_ONE_ACCOUNT = "SELECT account,emp_id  FROM emp where account  = ?";
+
 	
 	
 	
@@ -226,6 +227,55 @@ public class EmpJDBCDAO implements EmpDAO_interface {
 		}
 	}
 
+	
+	
+	
+	
+	//帳號驗證	
+	public EmpVO findByAc(String account) {
+
+		EmpVO empVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, password);
+			pstmt = con.prepareStatement(GET_ONE_ACCOUNT);
+
+			pstmt.setString(1, account);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				empVO = new EmpVO();
+				empVO.setAccount(rs.getString("account"));
+				empVO.setEmp_id(rs.getInt("emp_id"));
+			}
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null || pstmt != null || con != null) {
+				try {
+					rs.close();
+					pstmt.close();
+					con.close();
+					
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+		}
+		
+		return empVO;
+	}
+	
+	
+	
+	
 	@Override
 	public EmpVO findBypk(Integer emp_id) {
 
@@ -308,24 +358,17 @@ public List<EmpVO> login(String account , String password) {
 					list.add(empVO);				
 				}
 	            
-//	            while (rs.next()) {
-//	            	emp_effectVO = new Emp_effectVO();
-//	            	effectVO = new EffectVO();
-//	            	
-//	            	emp_effectVO.setEffect_id(rs.getInt("effect_id"));
-//	            	effectVO.setEffect_name(rs.getString("effect_name"));
-//	            }
-				
-			
+
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 		} finally {
-			if (pstmt != null || con != null) {
+			if (pstmt != null || con != null ||rs!= null) {
 				try {
 					pstmt.close();
 					con.close();
+					rs.close();
 				} catch (SQLException se) {
 					se.printStackTrace(System.err);
 				}

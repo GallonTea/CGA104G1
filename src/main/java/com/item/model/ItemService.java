@@ -8,7 +8,6 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import org.json.JSONArray;
@@ -18,8 +17,6 @@ import com.itemPhotos.model.ItemPhotosVO;
 import com.util.ServiceCommon;
 import com.itemPhotos.model.ItemPhotosInterface;
 import org.json.JSONObject;
-
-import javax.persistence.criteria.CriteriaBuilder;
 
 public class ItemService implements ServiceCommon {
 	private ItemDAO_interface itemDao;
@@ -59,7 +56,7 @@ public class ItemService implements ServiceCommon {
 	//可刪
 	public ItemVO addItem(String itemName, String itemContent, Integer itemPrice, Integer itemAmount,
 
-			Date startDate, Date enddate, Integer itemStatus, Integer itemtId, List<byte[]> item_photo) {
+						  Date startDate, Date enddate, Integer itemStatus, Integer itemtId, List<byte[]> item_photo) {
 
 		try {
 			beginTranscation();
@@ -95,7 +92,7 @@ public class ItemService implements ServiceCommon {
 
 	//可刪
 	public void update(String itemName, String itemContent, Integer itemPrice, Integer itemAmount, Date startDate,
-			Date endDate, Integer itemStatus, Integer itemtType, List<byte[]> itemPhoto, Integer itemId) {
+					   Date endDate, Integer itemStatus, Integer itemtType, List<byte[]> itemPhoto, Integer itemId) {
 		try {
 			beginTranscation();
 			ItemVO itemVO = new ItemVO();
@@ -158,13 +155,13 @@ public class ItemService implements ServiceCommon {
 			ItemVO itemVO=itemDao.findByPrimaryKey(itemId);
 			commit();
 			return itemVO;
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			rollback();
 			return null;
 		}
-		
+
 	}
 
 	public void deleteItem(Integer itemId) {
@@ -177,11 +174,11 @@ public class ItemService implements ServiceCommon {
 			e.printStackTrace();
 			rollback();
 		}
-		
+
 
 	}
 
-//	shop1.html
+	//	shop1.html
 	public JSONArray getAllJs(int pageNumber) {
 		try {
 			beginTranscation();
@@ -193,9 +190,9 @@ public class ItemService implements ServiceCommon {
 			rollback();
 			return null;
 		}
-		
-		
-		
+
+
+
 	}
 
 	public void insertFavList(JsonObject obj, String memId){
@@ -259,6 +256,19 @@ public class ItemService implements ServiceCommon {
 		try{
 			beginTranscation();
 			JSONArray jsonArray=itemDao.search(keyWords,typeId);
+			commit();
+			return jsonArray;
+		}catch (Exception e){
+			e.printStackTrace();
+			rollback();
+			return null;
+		}
+	}
+
+	public JSONArray frontEndSearch(String keyWords, Integer typeId){
+		try{
+			beginTranscation();
+			JSONArray jsonArray=itemDao.frontEndSearch(keyWords,typeId);
 			commit();
 			return jsonArray;
 		}catch (Exception e){

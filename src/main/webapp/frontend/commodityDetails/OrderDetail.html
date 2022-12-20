@@ -121,9 +121,9 @@
                     </button>
                     <div class="row gap-2 mx-auto justify-content-md-end"
                          v-if="orders.ORDER_STATUS === '0'">
-                        <!--                        <button class="col-md-2 float-right btn btn-outline-danger"-->
-                        <!--                                @click="cancelOrder(orders, index)">取消訂單-->
-                        <!--                        </button>-->
+                        <button class="col-md-2 float-right btn btn-outline-danger"
+                                @click="repay(orders, index)">繼續完成付款
+                        </button>
                     </div>
                     <div class="row gap-2 mx-auto justify-content-md-end"
                          v-else-if="orders.ORDER_STATUS === '3'">
@@ -163,7 +163,7 @@
                             <h5 class="modal-title">商品詳情</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-
+                        <div id="orderForm"></div>
                         <div class="modal-body">
 
                             <table class="container media align-items-lg-center flex-column flex-lg-row p-3">
@@ -224,6 +224,17 @@
 <script src="https://unpkg.com/vue@3"></script>
 <script src="https://unpkg.com/vue-router@4"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+
+<!--  NavBar  -->
+<script src="../../resources/static/js/navbar.js"></script>
+<!--  Footer  -->
+<script src="../../resources/static/js/footer.js"></script>
+
+
+<script type="text/javascript" src="../../resources/static/js/getName.js"></script>
+<!--  Cart -->
+<script type="text/javascript" src="../../resources/static/js/cart.js"></script>
 
 <script>
 
@@ -290,7 +301,7 @@
                         return '退/換貨申請中'
                     case '8':
                         return '退/換貨處理中'
-                    default:
+                    case '9':
                         return '訂單已取消'
                 }
             },
@@ -307,8 +318,18 @@
                         console.log(err);
                     })
             },
-            cancelOrder: function (orders, index) {
-
+            repay: function (orders, index) {
+                var qs = Qs
+                axios.post('/CGA104G1/UpdateOrderServlet', qs.stringify({
+                    orderId: this.orders[index].ORDER_ID, action: 'repay'
+                }))
+                    .then(res => {
+                        console.log(res);
+                        $("#orderForm").html(res.data)
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
             },
             returnOrder: async function (orders, index) {
                 const {value: formValues} = await Swal.fire({
@@ -413,14 +434,5 @@
 
 
 </body>
-<!--  NavBar  -->
-<script src="../../resources/static/js/navbar.js"></script>
-<!--  Footer  -->
-<script src="../../resources/static/js/footer.js"></script>
-
-<!--  Cart -->
-<script type="text/javascript" src="../../resources/static/js/cart.js"></script>
-
-<link rel="stylesheet" type="text/css" href="../../resources/static/css/main.css"/>
 
 </html>

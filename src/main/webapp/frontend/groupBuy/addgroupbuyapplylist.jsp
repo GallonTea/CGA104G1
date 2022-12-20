@@ -30,7 +30,62 @@ pageContext.setAttribute("Group_Buy_Item", Group_Buy_Item);
 	crossorigin="anonymous">
 <meta charset="UTF-8">
 <title>團購團申請單</title>
+<style>
+body {
+	height: 100%; 
+    background-image: linear-gradient(0deg, #FFDEE9 0%, #B5FFFC 100%);
+    background-color: #FFDEE9;
+    background-repeat: no-repeat;
+    background-size: cover;
+    justify-content: center;
+}
 
+.upPic {
+	width: 50px;
+	height: 50px;
+}
+
+.memName {
+	display: inline-block;
+}
+
+.container {
+	display: flex;
+	justify-content: center;
+}
+
+form {
+	height: 500px;
+}
+
+.form-group {
+	text-align: center;
+}
+
+select, input {
+    	width: 450px;
+    	height: 30px;
+    	border-radius: 20px;
+    	border: none;
+    	text-align: center;
+    }
+    
+select:focus, input:focus {
+	border: 2px solid pink !important;
+}
+
+.btnSmall {
+	width: 290px;
+	height: 40px;
+	vertical-align: center;
+	border-radius: 20px !important;
+}
+
+.btnGo {
+	width: 586px;
+	border-radius: 20px !important;
+}
+</style>
 
 
 </head>
@@ -44,37 +99,47 @@ pageContext.setAttribute("Group_Buy_Item", Group_Buy_Item);
 	<main>
 
 		<div class="container">
-
-			<form
-				action="<%=request.getContextPath()%>/GroupBuyApplyListInsertServlet">
+				<%-- 錯誤表列 --%>
+				<div>
+				<c:if test="${not empty errorMsgs}">
+					<font style="color: red">請修正以下錯誤:</font>
+					<ul>
+						<c:forEach var="message" items="${errorMsgs}">
+							<li style="color: red">${message}</li>
+						</c:forEach>
+					</ul>
+				</c:if>
+				</div>
+			
+			
+			<form action="<%=request.getContextPath()%>/GroupBuyApplyListInsertServlet">
 				<div class="form-group">
-					<label for="formGroupExampleInput2">團購主帳號</label> 
-					<div><h6>${Group_BuyVO.mem_id}</h6></div>
+					<label for="formGroupExampleInput2"><b>團購主帳號:</b></label> 
+					<div class="memName"><b>[${Group_BuyVO.mem_id}]-${Group_BuyVO.memVO.mem_name}</b></div>
 					<input type="hidden" name="mem_id" value="${Group_BuyVO.mem_id}"> 
 <!-- 					<input type="hidden" name="mem_id" value="1">  -->
 				</div>
-					<b>團購名稱:<b>
-					<div><input type="TEXT" name="gb_name" size="45" placeholder = "請輸入文字"
-					value="<%=(group_BuyVO == null) ? "" : group_BuyVO.getGb_name()%>" /></div>
-				<tr>
+					<b>團購名稱設定:</b>&ensp;&ensp;&ensp;&ensp;
+					<div class="memName"><input type="TEXT" name="gb_name" size="45" placeholder = "請輸入文字"
+					value="<%=(group_BuyVO.getGb_name() == null) ? "" : group_BuyVO.getGb_name()%>"  required /></div><br><br>
+				 
 				
-					<b>選擇開團商品:</b><br> <select size="1" name="gbitem_id">
+					<b>請選擇可開團商品:</b> <select size="1" name="gbitem_id">
 						<c:forEach var="Group_Buy_ItemVO" items="${Group_Buy_Item}">
 							<option value="${Group_Buy_ItemVO.gbitem_id}">${Group_Buy_ItemVO.gbitem_name}
 						</c:forEach>
-					</select> 
-				</td>
-				</tr>
+					</select> <br><br>
+				 
+				 
 
-				<tr>
-				<td>
+				 
+				 
 				<div class="form-group">
-					<label for="formGroupExampleInput2">團購商品結單數量[數量達標系統自動結單]</label> <input
-						name="gb_min" type="text" class="form-control"
-						id="formGroupExampleInput2" placeholder="Another input">
+					<label for="formGroupExampleInput2"><b>團購商品結單數量:</b></label> 
+					<input name="gb_min" type="text" placeholder="請輸入數量" required>
 				</div>
-				</td>
-				</tr>
+				 
+				 
 				<div class="form-group">
 <!-- 					<label for="formGroupExampleInput2">團購商品已累計總數</label> -->
 					<input type="hidden" name="gb_amount" value="0">
@@ -82,34 +147,26 @@ pageContext.setAttribute("Group_Buy_Item", Group_Buy_Item);
 				
 
 				
-				<tr>
-					<td>團購開始日期:</td>
-					<td><input name="gbstart_date" id="f_date1" type="text"></td>
-				</tr>
-				<tr>
-					<td>團購結束下檔日期:</td>
-					<td><input name="gbend_date" id="f_date2" type="text"></td>
-				</tr>
+				 
+					 <b>團購開始日期: </b>&ensp;&ensp;&ensp;
+					 <input name="gbstart_date" id="f_date1" type="text" required> <br><br>
+				 
+				 
+					 <b>團購結束下檔日期: </b>
+					 <input name="gbend_date" id="f_date2" type="text" required> <br><br>
+				 
 
-<!-- 				<div class="form-group col-md-4"> -->
-<!-- 					<label for="inputState">團購狀態</label> <select id="inputState" -->
-<!-- 						name="gb_status" class="form-control"> -->
-<!-- 						<option value="0" selected>參團人數不足</option> -->
-<!-- 						<option value="1">參團人數已達標</option> -->
-<!-- 					</select> -->
-<!-- 				</div> -->
 				<input type="hidden" name="gb_status" value="0">
 				<input type="hidden" name="gb_price" value="0">
 				<input type="hidden" name="action" value="insert">
-				<button class="btn btn-primary" type="submit">選擇折扣</button>
-				<input type="reset" class="btn btn-primary" value="重設">
+				<input type="reset" class="btn btn-danger btnSmall" value="重設">
+				<a class="btn btn-dark btnSmall" href="<%=request.getContextPath()%>/frontend/groupBuy/listallgroupbuy.html">返回團購首頁</a>
+				<br><br>
+				<button class="btn btn-success btnGo" type="submit">下一步>>選擇折扣</button>
 			</form>
 			<br>
 			<br>
-			<form
-				action="<%=request.getContextPath()%>/frontend/groupBuy/listallgroupbuuy.jsp">
-				<button class="btn btn-primary" type="submit">返回團購首頁</button>
-			</form>
+			
 		</div>
 
 	</main>
@@ -163,7 +220,11 @@ pageContext.setAttribute("Group_Buy_Item", Group_Buy_Item);
 	height: 151px; /* height:  151px; */
 }
 </style>
-
+	<!--  NavBar  -->
+	<script src="<%=request.getContextPath() %>/resources/static/js/navbar.js"></script>
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/static/js/getName.js"></script>
+	<!--  Cart -->
+	<script type="text/javascript" src="<%=request.getContextPath() %>/resources/static/js/cart.js"></script>
 	<script>
         $.datetimepicker.setLocale('zh');
         $('#f_date1').datetimepicker({

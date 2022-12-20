@@ -18,7 +18,6 @@ import com.emp.model.*;
 import com.emp_effect.model.*;
 import com.group_buy_order.model.Group_Buy_OrderVO;
 
-
 @WebServlet("/backend/emp/EmpServlet")
 public class EmpServlet extends HttpServlet {
 
@@ -35,8 +34,6 @@ public class EmpServlet extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		HttpSession session = req.getSession();
-
-
 
 		if ("getOne_For_Display".equals(action)) {
 
@@ -107,31 +104,42 @@ public class EmpServlet extends HttpServlet {
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+			EmpService empSvc = new EmpService();
+			EmpVO empVO = new EmpVO();
 
 			/*************************** 1.接收請求參數 - 輸入格式的錯誤處理 **********************/
 
 			String emp_name = req.getParameter("emp_name");
 			String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 			if (emp_name == null || emp_name.trim().length() == 0) {
-				errorMsgs.put("emp_name", "員工姓名: 請勿空白");
+				errorMsgs.put("emp_name", "請勿空白");
 			} else if (!emp_name.trim().matches(enameReg)) {
-				errorMsgs.put("emp_name", "員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+				errorMsgs.put("emp_name", "只能是中、英文字母、數字和_ 長度在2到10之間");
 			}
 
 			String account = req.getParameter("account").trim();
-			String accountReg = "^[(a-zA-Z0-9_)]{6,10}$";
-			if (account == null || account.trim().length() == 0) {
-				errorMsgs.put("account", "員工帳號: 請勿空白");
-			} else if (!account.trim().matches(accountReg)) {
-				errorMsgs.put("account", "員工帳號: 英文字母、數字和_ , 且長度必需在6到10之間");
+			String accountReg = "^[(a-zA-Z0-9_)]{5,10}$";
+			try {
+				account = req.getParameter("account").trim();
+				if (account == null || account.trim().length() == 0) {
+					errorMsgs.put("account", " 請勿空白");
+				} else if (!account.trim().matches(accountReg)) {
+					errorMsgs.put("account", "英文字母、數字和_ , 且長度必需在5到10之間");
+					empVO = empSvc.getOneAc(account);
+				} 
+				empVO = empSvc.getOneAc(account);
+				if(empVO.getEmp_id()!= null) {
+					errorMsgs.put("account", "帳號不可以重複");
+					}
+			} catch (Exception e1) {
+				e1.printStackTrace();
 			}
-
 			String password = req.getParameter("password").trim();
-			String passwordReg = "^[(a-zA-Z0-9_)]{6,10}$";
+			String passwordReg = "^[(a-zA-Z0-9_)]{5,10}$";
 			if (password == null || password.trim().length() == 0) {
-				errorMsgs.put("password", "員工密碼: 請勿空白");
+				errorMsgs.put("password", "請勿空白");
 			} else if (!password.trim().matches(passwordReg)) {
-				errorMsgs.put("password", "員工密碼: 英文字母、數字和_ , 且長度必需在6到10之間");
+				errorMsgs.put("password", "只能是英文字母、數字和_長度在5到10之間");
 			}
 
 			java.sql.Date onjob_date = null;
@@ -144,13 +152,13 @@ public class EmpServlet extends HttpServlet {
 
 			Integer emp_status = Integer.valueOf(req.getParameter("emp_status").trim());
 			if (emp_status == null) {
-				errorMsgs.put("emp_status", "員工狀態: 請勿空白");
+				errorMsgs.put("emp_status", "請勿空白");
 			} else if (emp_status > 1) {
-				errorMsgs.put("emp_status", "員工狀態: 只能是0或1");
+				errorMsgs.put("emp_status", "只能是0或1");
 			}
 			Integer emp_id = Integer.valueOf(req.getParameter("emp_id").trim());
 
-			EmpVO empVO = new EmpVO();
+			empVO = new EmpVO();
 
 			empVO.setEmp_name(emp_name);
 			empVO.setAccount(account);
@@ -159,20 +167,19 @@ public class EmpServlet extends HttpServlet {
 			empVO.setEmp_status(emp_status);
 			empVO.setEmp_id(emp_id);
 
-			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
-				req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
+				req.setAttribute("empVO", empVO);
 				RequestDispatcher fail = req.getRequestDispatcher("/backend/emp/update_emp_input.jsp");
 				fail.forward(req, res);
 				return; // 程式中斷
 			}
 
 			/*************************** 2.開始修改資料 *****************************************/
-			EmpService empSvc = new EmpService();
+			empSvc = new EmpService();
 			empVO = empSvc.updateEmp(emp_id, emp_name, account, password, onjob_date, emp_status);
 
 			/*************************** 3.修改完成,準備轉交(Send the Success view) *************/
-			req.setAttribute("empVO", empVO); // 資料庫update成功後,正確的的empVO物件,存入req
+			req.setAttribute("empVO", empVO);
 			String url = "/backend/emp/listOneEmp.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 			successView.forward(req, res);
@@ -180,40 +187,45 @@ public class EmpServlet extends HttpServlet {
 		if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 
 			Map<String, String> errorMsgs = new LinkedHashMap<String, String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			/*********************** 1.接收請求參數 - 輸入格式的錯誤處理 *************************/
 
+			EmpService empSvc = new EmpService();
+			EmpVO empVO = new EmpVO();
 			String emp_name = req.getParameter("emp_name");
 			String enameReg = "^[(\u4e00-\u9fa5)(a-zA-Z0-9_)]{2,10}$";
 			if (emp_name == null || emp_name.trim().length() == 0) {
-				errorMsgs.put("emp_name", "員工姓名: 請勿空白");
+				errorMsgs.put("emp_name", " 請勿空白");
 			} else if (!emp_name.trim().matches(enameReg)) {
-				errorMsgs.put("emp_name", "員工姓名: 只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
+				errorMsgs.put("emp_name", "只能是中、英文字母、數字和_ , 且長度必需在2到10之間");
 			}
 
 			String account = null;
-			String accountReg = "^[(a-zA-Z0-9_)]{6,10}$";
+			String accountReg = "^[(a-zA-Z0-9_)]{5,10}$";
 
 			try {
 				account = req.getParameter("account").trim();
 				if (account == null || account.trim().length() == 0) {
-					errorMsgs.put("account", "員工帳號: 請勿空白");
-				} else if (!account.trim().matches(accountReg)) {
-					errorMsgs.put("account", "員工帳號: 英文字母、數字和_ , 且長度必需在6到10之間");
-				}
+					errorMsgs.put("account", " 請勿空白");
+				}  else if(!account.trim().matches(accountReg)) {
+					errorMsgs.put("account", "英文字母、數字和_ , 且長度必需在5到10之間");
+					
+				} 
+				empVO = empSvc.getOneAc(account);
+				if(empVO.getEmp_id()!= null) {
+					errorMsgs.put("account", "帳號不可以重複");
+					}
 			} catch (Exception e1) {
 				e1.printStackTrace();
 			}
 
 			String password = req.getParameter("password").trim();
-			String passwordReg = "^[(a-zA-Z0-9_)]{6,10}$";
+			String passwordReg = "^[(a-zA-Z0-9_)]{5,10}$";
 			if (password == null || password.trim().length() == 0) {
-				errorMsgs.put("password", "員工密碼: 請勿空白");
+				errorMsgs.put("password", "請勿空白");
 			} else if (!password.trim().matches(passwordReg)) {
-				errorMsgs.put("password", "員工密碼: 英文字母、數字和_ , 且長度必需在6到10之間");
+				errorMsgs.put("password", "英文字母、數字和_ , 且長度必需在5到10之間");
 			}
 
 			java.sql.Date onjob_date = null;
@@ -236,19 +248,17 @@ public class EmpServlet extends HttpServlet {
 			}
 			Integer effect_id = Integer.valueOf(req.getParameter("effect_id").trim());
 			System.out.println(effect_id);
-			
-			
-			EmpVO empVO = new EmpVO();
+
+			empVO = new EmpVO();
 			empVO.setEmp_name(emp_name);
 			empVO.setAccount(account);
 			empVO.setPassword(password);
 			empVO.setOnjob_date(onjob_date);
 			empVO.setEmp_status(emp_status);
-			
+
 			Emp_effectVO emp_effectVO = new Emp_effectVO();
 			emp_effectVO.setEffect_id(effect_id);
 
-			// Send the use back to the form, if there were errors
 			if (!errorMsgs.isEmpty()) {
 				req.setAttribute("empVO", empVO); // 含有輸入格式錯誤的empVO物件,也存入req
 				RequestDispatcher failureView = req.getRequestDispatcher("/backend/emp/addEmp.jsp");
@@ -257,8 +267,10 @@ public class EmpServlet extends HttpServlet {
 			}
 
 			/*************************** 2.開始新增資料 ***************************************/
-			EmpService empSvc = new EmpService();
+			empSvc = new EmpService();
 			empVO = empSvc.addEmp(emp_name, account, password, onjob_date, emp_status, effect_id);
+			
+	
 			/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
 			String url = "/backend/emp/listAllEmp.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
@@ -278,9 +290,11 @@ public class EmpServlet extends HttpServlet {
 			/*************************** 2.開始刪除資料 ***************************************/
 			EmpService empSvc = new EmpService();
 			empSvc.deleteEmp(empno);
+			
+		
 
 			/*************************** 3.刪除完成,準備轉交(Send the Success view) ***********/
-			String url = "/backend/emp/listAllEmpNoEffect.jsp";
+			String url = "/backend/emp/listAllEmp.jsp";
 			RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 			successView.forward(req, res);
 		}
@@ -296,12 +310,16 @@ public class EmpServlet extends HttpServlet {
 			}
 			EmpService empSvc = new EmpService();
 			List<EmpVO> list = empSvc.getAll(map);
-			for(EmpVO a : list ) {
-				System.out.println(a);
+
+			if (list.isEmpty()) {
+				errorMsgs.put("fail", "查無資料");
+				RequestDispatcher successView = req.getRequestDispatcher("/backend/emp/select_page.jsp");
+				successView.forward(req, res);
+				return;
 			}
 
 			req.setAttribute("listemp_and_effect", list);
-			RequestDispatcher successView = req.getRequestDispatcher("/backend/emp/listAllEmpNoEffect.jsp");
+			RequestDispatcher successView = req.getRequestDispatcher("/backend/emp/listAllEmp.jsp");
 			successView.forward(req, res);
 
 		}

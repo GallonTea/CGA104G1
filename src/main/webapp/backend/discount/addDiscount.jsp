@@ -10,6 +10,7 @@ DiscountVO discountVO = (DiscountVO) request.getAttribute("DiscountVO");
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title>團購折扣資料新增 - addDiscount.jsp</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
+<link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backendStyle.css">
 <style>
 table#table-1 {
 	background-color: #CCCCFF;
@@ -31,10 +32,10 @@ h4 {
 
 <style>
 table {
-	width: 800px;
-	background-color: white;
+	width: 500px;
 	margin-top: 1px;
 	margin-bottom: 1px;
+	margin-left: 20%;
 }
 
 table, th, td {
@@ -45,6 +46,8 @@ th, td {
 	padding: 1px;
 	color: black;
 }
+
+
 </style>
 
 </head>
@@ -57,20 +60,8 @@ th, td {
 		<%@include file="/backend/leftside.jsp"%>
 		<section>
 <!-- 		把原本body的東西貼到這邊 -->
-<table id="table-1">
-		<tr>
-			<td>
-				<h3>團購折扣資料新增 - addDiscount.jsp</h3>
-			</td>
-			<td>
-				<h4>
-					<a href="select_page.jsp">回首頁</a>
-				</h4>
-			</td>
-		</tr>
-	</table>
+<div class="titleBlock">新增團購折扣</div>
 
-	<h3>資料新增:</h3>
 
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
@@ -119,7 +110,9 @@ th, td {
 		</table>
 		<br> 
 		<input type="hidden" name="action" value="insert">
-		<input type="submit" value="送出新增">
+		<div class="subBlock">
+		<input class="btn btn-success btnIn" type="submit" value="送出新增">
+		</div>
 	</FORM>
 		</section>
 	</main>

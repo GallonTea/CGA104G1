@@ -6,8 +6,9 @@ EmpVO empVO = (EmpVO) request.getAttribute("empVO");
 %>
 <html>
 <head>
-<title>所有員工資料</title>
 <link rel="stylesheet" href="<%=request.getContextPath()%>/resources/static/css/backend.css">
+<title>員工資料</title>
+
 <style>
 section {
  			height: 100%; 
@@ -71,6 +72,7 @@ tr:nth-child(even) {
 </style>
 
 </head>
+
 <body>
 <nav><%@include file="/backend/topNavbar.jsp"%></nav>
 	<main>
@@ -109,5 +111,9 @@ tr:nth-child(even) {
 		</section>
 	</main>
 
+		</section>
+	</main>
+
+	
 </body>
 </html>

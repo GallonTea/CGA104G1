@@ -20,6 +20,11 @@
 		.log{
 			text-decoration: none;
 		}
+		
+		.upPic {
+			width: 50px;
+			height: 50px;
+		}
 	</style>
 </head>
 <body>
@@ -85,7 +90,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                       <a class="nav-link" href="<%=request.getContextPath()%>/frontend/question/question.html">常見問題Q&A</a>
+                       <a class="nav-link" href="<%=request.getContextPath()%>/frontend/question/question.jsp">常見問題Q&A</a>
                    	</li>
                 </ul>
                 <c:if test="${memVO == null}">
@@ -96,6 +101,9 @@
 				
 				<c:if test="${memVO != null}">
 					<div class="identity">
+					<c:if test="${memVO.article_identityVO.article_pic!=null}">
+					${memVO.article_identityVO.article_pic}
+					</c:if>
              		<span class="name">${memVO.mem_name}&ensp;您好</span>&ensp;
 					<FORM ACTION="/CGA104G1/MemServlet" method="post" style="display:inline-block">
 						<input type="hidden" name="action" value="logout">

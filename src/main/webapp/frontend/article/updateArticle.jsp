@@ -1,9 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.article.model.*"%>
-<%@include file="/frontend/frontNavbar.jsp"%>
 <%
-  ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO"); 
+  ArticleVO articleVO = (ArticleVO) request.getAttribute("articleVO");
 %>
 
 <!DOCTYPE html>
@@ -13,7 +12,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <!-- import font-style -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300&display=swap" rel="stylesheet">
 
+    <!-- import icon -->
+    <script src="https://kit.fontawesome.com/b5ef6b60f3.js" crossorigin="anonymous"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/resources/static/css/main.css"/>
     <style>
         .none {
             height: 60px;
@@ -73,12 +81,12 @@
             color: white;
             font-weight: 600;
         }
-        
+
         #logo {
 			width: 100px;
 			height: 40px;
 		}
-		
+
 		.displayBox{
 			min-height: 355px;
 		    background-color:white;
@@ -109,7 +117,7 @@
         <div class="title">編輯文章</div>
         <div class="form">
             <form method="post" action="/CGA104G1/ArticleServlet" name="form1">
-                
+
                <div class="asort">
 				<jsp:useBean id="article_sorttypeSvc" scope="page" class="com.article_sorttype.model.Article_sorttypeService" />
 
@@ -118,11 +126,11 @@
 							<option value="${article_sorttypeVO.sort_id}" ${(articleVO.sort_id==article_sorttypeVO.sort_id)? 'selected':'' }>${article_sorttypeVO.sort_content}</option>
 						</c:forEach>
 					</select>
-					
+
 				</div>
                 <div class="atitle"><input type="text" class="ititle" name="article_title" value="${param.article_title}" placeholder="請輸入文章標題"></div>
                 <div class="acontent">
-                
+
                     <span id="tcontent">文章內容</span>
                     <textarea name="article_content" class="editor" value="${param.article_content}">${param.article_content}</textarea>
                 </div>
@@ -161,7 +169,7 @@
     .then(editor => {
         console.log(editor);
     });
-	
+
 	$('.btn-warning').click(function(e){
 		e.preventDefault();
 		var form = $(this).parents('form');
@@ -177,9 +185,19 @@
 			    setTimeout(function(){
 			    	form.submit();
 				},1000);
-			  } 
+			  }
 			})
 	})
 	</script>
+<!--  NavBar  -->
+<script src="<%=request.getContextPath() %>/resources/static/js/navbar.js"></script>
+<!--  Footer  -->
+<script src="<%=request.getContextPath() %>/resources/static/js/footer.js"></script>
+
 </body>
+
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/static/js/getName.js"></script>
+<!--  Cart -->
+<script type="text/javascript" src="<%=request.getContextPath() %>/resources/static/js/cart.js"></script>
+
 </html>
